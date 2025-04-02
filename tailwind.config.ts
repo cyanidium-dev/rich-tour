@@ -10,8 +10,13 @@ export default {
     extend: {
       screens: {},
       fontFamily: {},
-      container: {},
-
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "25px",
+          xl: "80px",
+        },
+      },
       fontSize: {},
       colors: {},
       backgroundImage: {},
