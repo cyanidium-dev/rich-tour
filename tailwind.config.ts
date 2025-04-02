@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {
       screens: {},
-      fontFamily: {},
+      fontFamily: { montserrat: ["var(--font-montserrat)"] },
       container: {
         center: true,
         padding: {
