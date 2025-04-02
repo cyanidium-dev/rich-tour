@@ -18,7 +18,7 @@ export default {
         },
       },
       fontSize: {},
-      colors: {},
+      colors: { white: "#FFFFFF", black: "#18181B", main: "#E43A3A" },
       backgroundImage: {},
       boxShadow: {},
       keyframes: {},
