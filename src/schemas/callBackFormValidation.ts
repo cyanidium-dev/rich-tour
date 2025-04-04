@@ -8,7 +8,7 @@ export const callBackValidation = () => {
       .min(2, "Ім’я повинно містити від 2 до 30 символів")
       .max(30, "Ім’я повинно містити від 2 до 30 символів")
       .matches(nameRegex, "Допустимі літери та дефіс, апостроф, лапки")
-      .required("Дане поле є обов'язковим до заповнення"),
+      .required("Дане поле обов'язкове до заповнення"),
     phone: yup
       .string()
       .matches(phoneRegex, "Вкажіть правильний номер телефону")
@@ -17,7 +17,7 @@ export const callBackValidation = () => {
         "Після +38 має бути цифра 0",
         (value) => !!value && value.length >= 6 && value[5] === "0"
       )
-      .required("Дане поле є обов'язковим до заповнення"),
+      .required("Дане поле обов'язкове до заповнення"),
     message: yup.string(),
   });
 

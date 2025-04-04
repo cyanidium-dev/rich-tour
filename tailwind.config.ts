@@ -19,6 +19,7 @@ export default {
         },
       },
       fontSize: {
+        "9reg": ["9px", { fontWeight: "400", lineHeight: "1.2" }],
         "10reg": ["10px", { fontWeight: "400", lineHeight: "1.2" }],
         "10med": ["10px", { fontWeight: "500", lineHeight: "1.2" }],
         "10bold": ["10px", { fontWeight: "700", lineHeight: "1.2" }],
