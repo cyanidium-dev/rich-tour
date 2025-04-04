@@ -8,12 +8,13 @@ export default {
   ],
   theme: {
     extend: {
-      screens: {},
+      screens: { xs: "375px" },
       fontFamily: { montserrat: ["var(--font-montserrat)"] },
       container: {
         center: true,
         padding: {
-          DEFAULT: "25px",
+          DEFAULT: "16px",
+          xs: "25px",
           xl: "80px",
         },
       },

@@ -1,4 +1,9 @@
+import { Dispatch, SetStateAction } from "react";
 import NavMenuItem from "./NavMenuItem";
+
+interface NavMenuProps {
+  setIsHeaderMenuOpened?: Dispatch<SetStateAction<boolean>>;
+}
 
 const navMenuList = [
   { title: "Тури", link: "/tours" },
@@ -10,11 +15,15 @@ const navMenuList = [
   { title: "Відгуки", link: "/reviews" },
 ];
 
-export default function NavMenu() {
+export default function NavMenu({ setIsHeaderMenuOpened }: NavMenuProps) {
   return (
-    <ul className="flex gap-x-4">
+    <ul className="flex flex-col xl:flex-row gap-x-4">
       {navMenuList.map((menuItem, idx) => (
-        <NavMenuItem key={idx} menuItem={menuItem} />
+        <NavMenuItem
+          key={idx}
+          menuItem={menuItem}
+          setIsHeaderMenuOpened={setIsHeaderMenuOpened}
+        />
       ))}
     </ul>
   );
