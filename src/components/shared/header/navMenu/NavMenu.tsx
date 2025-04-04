@@ -12,7 +12,6 @@ const navMenuList = [
   { title: "Корпоративне обслуговування", link: "/corporate" },
   { title: "STEP", link: "/#step" },
   { title: "Контакти", link: "/contacts" },
-  { title: "Відгуки", link: "/reviews" },
 ];
 
 export default function NavMenu({ setIsHeaderMenuOpened }: NavMenuProps) {
