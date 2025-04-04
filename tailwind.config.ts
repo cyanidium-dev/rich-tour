@@ -25,6 +25,7 @@ export default {
         "12reg": ["12px", { fontWeight: "400", lineHeight: "1.2" }],
         "12med": ["12px", { fontWeight: "500", lineHeight: "1.2" }],
         "12semi": ["12px", { fontWeight: "600", lineHeight: "1.2" }],
+        "12bold": ["12px", { fontWeight: "700", lineHeight: "1.2" }],
         "14light": ["14px", { fontWeight: "300", lineHeight: "1.2" }],
         "14reg": ["14px", { fontWeight: "400", lineHeight: "1.2" }],
         "14med": ["14px", { fontWeight: "500", lineHeight: "1.2" }],
