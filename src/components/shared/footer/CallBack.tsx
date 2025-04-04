@@ -3,6 +3,7 @@
 import { useState } from "react";
 import CallBackForm from "../forms/CallBackForm";
 import NotificationPopUp from "../pop-ups/NotificationPopUp";
+import Backdrop from "../backdrop/Backdrop";
 
 interface CallBackProps {
   className?: string;
@@ -25,11 +26,15 @@ export default function CallBack({ className }: CallBackProps) {
         }
         description={
           isError
-            ? "Спробуйте відправити форму ще раз або зателефонуйте нам"
-            : "Наш менеджер скоро зв'яжеться з вами"
+            ? "Спробуйте відправити форму ще раз або зателефонуйте нам."
+            : "Наш менеджер скоро зв'яжеться з вами."
         }
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
+      />
+      <Backdrop
+        isVisible={isNotificationShown}
+        onClick={() => setIsNotificationShown(false)}
       />
     </>
   );

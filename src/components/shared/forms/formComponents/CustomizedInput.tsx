@@ -8,7 +8,6 @@ interface Values {
 
 interface CustomizedInputProps {
   fieldName: string;
-  required: boolean;
   placeholder: string;
   errors: FormikErrors<Values>;
   touched: FormikTouched<Values>;

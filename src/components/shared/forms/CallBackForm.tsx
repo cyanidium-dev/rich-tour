@@ -13,6 +13,7 @@ import SubmitButton from "./formComponents/SubmitButton";
 export interface ValuesCallBackFormType {
   name: string;
   phone: string;
+  message: string;
 }
 
 interface CallBackFormProps {
@@ -33,6 +34,7 @@ export default function CallBackForm({
   const initialValues = {
     name: "",
     phone: "",
+    message: "",
   };
 
   const validationSchema = callBackValidation();
@@ -42,9 +44,10 @@ export default function CallBackForm({
     formikHelpers: FormikHelpers<ValuesCallBackFormType>
   ) => {
     const data =
-      `<b>Заявка з сайту LIGA FINANCE</b>\n` +
-      `Ім'я: ${values.name.trim()}\n` +
-      `Телефон: ${values.phone.replace(/[^\d+]/g, "")}\n`;
+      `<b>Заявка з сайту Rich Tour</b>\n` +
+      `<b>Ім'я:</b> ${values.name.trim()}\n` +
+      `<b>Телефон:</b> ${values.phone.replace(/[^\d+]/g, "")}\n` +
+      `<b>Повідомлення:</b> ${values.message.trim()}\n`;
 
     await handleSubmitForm<ValuesCallBackFormType>(
       formikHelpers,
@@ -65,13 +68,11 @@ export default function CallBackForm({
       {({ errors, touched, dirty, isValid }) => (
         <Form className={`${className}`}>
           <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
-            {" "}
             <CustomizedInput
               fieldName="name"
               placeholder="Ім’я"
               errors={errors}
               touched={touched}
-              required={true}
             />
             <CustomizedInput
               fieldName="phone"
@@ -81,7 +82,6 @@ export default function CallBackForm({
               touched={touched}
               as={MaskedInput}
               mask={phoneMask}
-              required={true}
             />
             <CustomizedInput
               fieldName="message"
@@ -89,7 +89,6 @@ export default function CallBackForm({
               placeholder="Повідомлення"
               errors={errors}
               touched={touched}
-              required={true}
             />
           </div>
           <SubmitButton
