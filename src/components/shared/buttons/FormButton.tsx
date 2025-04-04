@@ -19,11 +19,12 @@ export default function FormButton({
   isLoading = false,
   onClick,
 }: FormButtonProps) {
+  console.log(children);
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`flex justify-center items-center px-4 py-[10px] rounded-[6px] text-12semi text-white disabled:opacity-50 enabled:xl:hover:brightness-[115%] 
+      className={`relative flex justify-center items-center px-4 py-[13px] rounded-[6px] text-12semi text-white disabled:opacity-50 enabled:xl:hover:brightness-[115%] 
         enabled:focus-visible:brightness-[115%] transition duration-300 ease-in-out ${
           variant === "red" ? "bg-main" : "bg-black"
         } ${className}`}
