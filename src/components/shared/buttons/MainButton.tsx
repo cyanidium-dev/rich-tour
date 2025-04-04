@@ -21,7 +21,7 @@ export default function MainButton({
       onClick={onClick}
       className={`relative overflow-hidden flex items-center justify-center py-[10px] xl:py-[14px] px-[14.5px] text-10med xl:text-14med
          rounded-full border-[1.5px] before:content-[""] before:absolute before:z-10 before:top-0 before:left-0 before:rounded-full 
-         before:w-0 before:h-full before:duration-300 before:ease-in-out before:will-change-transform 
+         before:w-0 before:h-full before:duration-700 before:ease-in-out before:will-change-transform 
          xl:hover:before:w-full focus-visible:before:w-full transition duration-300 ease-in-out active:scale-95 ${
            variant === "red"
              ? "border-main bg-main before:bg-white text-white xl:hover:text-main focus-visible:text-main"
