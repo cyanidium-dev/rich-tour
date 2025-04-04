@@ -1,6 +1,7 @@
 import Container from "../container/Container";
 import LogoLink from "../logoLink/LogoLink";
 import Contacts from "./Contacts";
+import Map from "./Map";
 import Schedule from "./Schedule";
 import Socails from "./Socails";
 
@@ -12,6 +13,7 @@ export default function Footer() {
         <Contacts />
         <Socails />
         <Schedule />
+        <Map />
       </Container>
     </footer>
   );
