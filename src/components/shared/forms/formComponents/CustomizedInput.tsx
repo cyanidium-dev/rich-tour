@@ -23,7 +23,7 @@ interface CustomizedInputProps {
 
 const labelStyles = "relative flex flex-col w-full";
 const fieldStyles =
-  "relative w-full h-full px-4 py-[10px] text-12reg text-black placeholder-black border rounded-[6px] outline-none resize-none transition duration-300 ease-out";
+  "relative w-full px-4 py-3 text-12reg text-black placeholder-black border rounded-[6px] outline-none resize-none transition duration-300 ease-out";
 const errorStyles = "absolute bottom-[-16px] left-2 text-10reg text-main";
 
 export default function CustomizedInput({

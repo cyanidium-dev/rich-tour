@@ -10,7 +10,7 @@ import { footerPhoneRegex } from "@/regex/regex";
 
 export default function Contacts() {
   return (
-    <ul className="flex flex-col gap-y-8 text-white max-w-[240px] mx-auto">
+    <ul className="flex flex-col gap-y-8 text-white max-w-[240px] md:max-w-full mx-auto md:m-0">
       <li>
         <h3 className="mb-3 text-16med xl:text-20med">Адреса</h3>
         <a
