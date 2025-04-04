@@ -1,3 +1,4 @@
+import FormButton from "../buttons/FormButton";
 import Container from "../container/Container";
 import LogoLink from "../logoLink/LogoLink";
 import Contacts from "./Contacts";
@@ -13,6 +14,7 @@ export default function Footer() {
         <Contacts />
         <Socails />
         <Schedule />
+        <FormButton className="w-full max-w-[246px]">Відправити</FormButton>
         <Map />
       </Container>
     </footer>

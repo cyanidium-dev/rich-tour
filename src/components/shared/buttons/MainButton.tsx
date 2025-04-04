@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
-export interface ButtonProps {
+export interface MainButtonProps {
   children: string | ReactNode;
   className?: string;
   type?: "submit" | "button";
@@ -14,7 +14,7 @@ export default function MainButton({
   className = "",
   variant = "red",
   onClick,
-}: ButtonProps) {
+}: MainButtonProps) {
   return (
     <button
       type={type}
