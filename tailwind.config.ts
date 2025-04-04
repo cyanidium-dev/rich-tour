@@ -51,7 +51,11 @@ export default {
         "48med": ["48px", { fontWeight: "500", lineHeight: "1.2" }],
         "64semi": ["64px", { fontWeight: "600", lineHeight: "1.2" }],
       },
-      colors: { white: "#FFFFFF", black: "#18181B", main: "#E43A3A" },
+      colors: {
+        white: "var(--white)",
+        black: "var(--black)",
+        main: "var(--main)",
+      },
       backgroundImage: {},
       boxShadow: {},
       keyframes: {},

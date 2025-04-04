@@ -5,6 +5,7 @@
 :root {
   --white: #ffffff;
   --black: #18181b;
+  --main: #e43a3a;
 }
 
 :root:has(.no-doc-scroll) {
