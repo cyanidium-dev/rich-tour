@@ -17,7 +17,9 @@ export default function HeaderMob() {
         <LogoLink className="w-[44px] xl:w-[75px] h-auto" />
         <div className="flex gap-x-2">
           <CurrencyRate />
-          <MainButton>Вхід для агентів</MainButton>
+          <MainButton className="text-10med xl:text-14med">
+            Вхід для агентів
+          </MainButton>
           <BurgerMenuButton
             isHeaderMenuOpened={isHeaderMenuOpened}
             toggleHeaderMenuOpen={toggleHeaderMenuOpen}

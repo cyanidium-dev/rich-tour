@@ -10,7 +10,7 @@ export default function HeaderDesk() {
       <LogoLink className="w-[44px] xl:w-[75px] h-auto" />
       <div className="flex items-center gap-x-[15px]">
         <NavMenu />
-        <MainButton>Вхід для агентів</MainButton>
+        <MainButton className="text-14med">Вхід для агентів</MainButton>
         <CurrencyRate />
       </div>
     </Container>

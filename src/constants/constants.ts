@@ -16,3 +16,5 @@ export const ADDRESS_URL = "https://maps.app.goo.gl/rc6ZK2Fd4EYM27XX7";
 export const INSTAGRAM_URL = "https://www.instagram.com/richtourfamily/";
 
 export const FACEBOOK_URL = "https://www.facebook.com/richtourfamily";
+
+export const STEP_URL = "https://photo-step.com.ua/";

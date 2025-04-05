@@ -25,7 +25,7 @@ export default function CorporateService() {
             <Link href="/corporate">
               <MainButton
                 variant="white"
-                className="w-[203px] mx-auto mb-[118px] xl:mb-[171px]"
+                className="w-[203px] mx-auto mb-[118px] xl:mb-[171px] text-14med"
               >
                 Переглянути
               </MainButton>

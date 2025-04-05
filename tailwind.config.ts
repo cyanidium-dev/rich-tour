@@ -59,6 +59,7 @@ export default {
         white: "#ffffff",
         black: "#18181b",
         main: "#e43a3a",
+        red: "#FD0000"
       },
       backgroundImage: {},
       boxShadow: {},
