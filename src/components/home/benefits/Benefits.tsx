@@ -4,7 +4,14 @@ import BenefitsList from "./BenefitsList";
 
 export default function Benefits() {
   return (
-    <section className="mb-[148px] xl:mb-[180px]">
+    <section className="relative mb-[148px] xl:mb-[180px]">
+      <Image
+        src="/images/home/benefits/arrow.svg"
+        alt="arrow"
+        width="248"
+        height="163"
+        className="hidden md:block absolute -z-10 left-[calc(50%-185px)] top-[-82px] w-[230px] h-auto"
+      />
       <Container className="md:flex gap-x-5">
         <div className="mb-10 md:mb-0 md:w-[40.6%]">
           <Image
@@ -47,7 +54,6 @@ export default function Benefits() {
               </div>
             </div>
           </div>
-
           <Image
             src="/images/home/benefits/imageThird.webp"
             alt="airplane"
