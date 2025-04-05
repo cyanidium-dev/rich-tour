@@ -8,7 +8,7 @@ export default function BenefitsList() {
   ];
 
   return (
-    <ul className="flex flex-col gap-5">
+    <ul className="flex flex-col gap-5 mb-10">
       {benefitsList.map((benefit, idx) => (
         <BenefitItem key={idx} benefit={benefit} />
       ))}
