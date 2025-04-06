@@ -1,3 +1,3 @@
 export default function ToursListDesk() {
-  return <div>ToursListDesk</div>;
+  return <div className="hidden md:block">ToursListDesk</div>;
 }
