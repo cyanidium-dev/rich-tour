@@ -22,7 +22,7 @@ export default function ToursListMob() {
           height={356}
           className="absolute top-0 left-0 -z-10 w-full h-full object-cover"
         />
-        <p className="max-w-[56.2%] text-right">Під заказні групи</p>
+        <p className="max-w-[57.2%] text-right">Під заказні групи</p>
       </li>
       <li className="relative aspect-[325/178] px-[5.5%] py-[5.7%] rounded-[12px] overflow-hidden">
         <Image
