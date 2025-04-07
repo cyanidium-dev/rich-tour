@@ -15,20 +15,22 @@ export default function PromotionListDesk() {
 
   return (
     <Suspense fallback={<Loader />}>
-      <Pagination
-        items={toursList}
-        scrollTargetId={SECTION_ID}
-        useItemsPerPage={usePromotionItemsPerPage}
-        renderItems={(currentItems) => (
-          <ul id={SECTION_ID} className="hidden md:flex flex-wrap gap-5">
-            {currentItems.map((tour) => (
-              <li key={tour.id}>
-                <TourCard tour={tour} />
-              </li>
-            ))}
-          </ul>
-        )}
-      />
+      <div className="hidden md:block">
+        <Pagination
+          items={toursList}
+          scrollTargetId={SECTION_ID}
+          useItemsPerPage={usePromotionItemsPerPage}
+          renderItems={(currentItems) => (
+            <ul id={SECTION_ID} className="hidden md:flex flex-wrap gap-5">
+              {currentItems.map((tour) => (
+                <li key={tour.id}>
+                  <TourCard tour={tour} />
+                </li>
+              ))}
+            </ul>
+          )}
+        />
+      </div>
     </Suspense>
   );
 }

@@ -10,9 +10,9 @@ export default function Promotion() {
     <section id={SECTION_ID} className="mb-[148px] xl:mb-[204px]">
       <Container>
         <PromotionTitle />
-        <PromotionSwiperMob />
         <PromotionListDesk />
       </Container>
+      <PromotionSwiperMob />
     </section>
   );
 }

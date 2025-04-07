@@ -6,6 +6,12 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "swiper",
+    "swiper-slide",
+    "swiper-button-next",
+    "swiper-button-prev",
+  ],
   theme: {
     extend: {
       screens: { xs: "375px" },
