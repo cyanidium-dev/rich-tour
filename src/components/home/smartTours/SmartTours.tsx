@@ -17,10 +17,10 @@ export default function SmartTours() {
             alt="background"
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
-            className="absolute top-0 left-0 -z-20 object-cover"
+            className="absolute top-0 left-0 -z-20 object-cover object-left"
           />
 
-          <div className="absolute -z-10 top-[-164px] left-[calc(50%-163px)] w-[326px] h-[341px] rounded-full bg-main"></div>
+          <div className="absolute -z-10 top-[-164px] xl:top-[-214px] left-[calc(50%-163px)] xl:left-[calc(50%-227.5px)] w-[326px] h-[341px] xl:w-[455px] xl:h-[455px] rounded-full bg-main"></div>
           <h2 className="max-w-[143px] xl:max-w-[257px] mx-auto mb-[147px] md:mb-[73px] xl:mb-[119px] text-36med xl:text-48med text-center">
             SMART тури
           </h2>
