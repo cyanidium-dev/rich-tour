@@ -92,8 +92,14 @@ ul {
 
   /* Swiper */
   .swiper {
-    padding-left: 25px !important;
+    padding-left: 16px !important;
     padding-bottom: 74px !important;
+  }
+
+  @media (min-width: 375px) {
+    .swiper {
+      padding-left: 25px !important;
+    }
   }
 
   .swiper-slide {
