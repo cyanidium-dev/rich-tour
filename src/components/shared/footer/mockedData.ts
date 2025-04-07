@@ -8,9 +8,13 @@ export const address = {
   url: "https://maps.app.goo.gl/rc6ZK2Fd4EYM27XX7",
 };
 
-export const socials = [
-  {
-    instagram: "https://www.instagram.com/richtourfamily/",
-    facebook: "https://www.facebook.com/richtourfamily",
-  },
-];
+export const socials = {
+  instagram: "https://www.instagram.com/richtourfamily/",
+
+  facebook: "https://www.facebook.com/richtourfamily",
+};
+
+export const schedule = {
+  working: "Понеділок - п’ятниця: 10:00 - 18:00.",
+  weekend: "Субота - неділя: вихідний",
+};
