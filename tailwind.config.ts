@@ -64,7 +64,10 @@ export default {
         red: "#FD0000",
       },
       backgroundImage: {},
-      boxShadow: { benefits: "0px 0px 28px 1px rgba(27, 27, 27, 0.12)", faqCard: "0px 0px 19.3px 1px rgba(92, 92, 92, 0.08)" },
+      boxShadow: {
+        benefits: "0px 0px 28px 1px rgba(27, 27, 27, 0.12)",
+        card: "0px 0px 19.3px 1px rgba(92, 92, 92, 0.08)",
+      },
       keyframes: {
         rotate: {
           "0%": {

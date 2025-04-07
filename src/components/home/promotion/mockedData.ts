@@ -1,6 +1,7 @@
 import { Tour } from "@/types/tour";
 const tourTemplate = {
   id: "1",
+  slug: "tour-do-shwejcarii",
   title: "Тур до Швейцарії",
   description:
     "Вирушайте у подорож до Швейцарії – країни неймовірних пейзажів, бездоганного сервісу та справжнього затишку!",
