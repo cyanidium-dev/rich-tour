@@ -4,7 +4,7 @@ import ToursListMob from "./ToursListMob";
 
 export default function Tours() {
   return (
-    <section className="mb-[148px] xl:mb-[180px] pt-20">
+    <section className="mb-[148px] xl:mb-[180px]">
       <Container className="relative md:flex gap-x-5">
         <Image
           src="/images/home/tours/arrowMob.svg"

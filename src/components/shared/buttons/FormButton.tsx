@@ -19,7 +19,6 @@ export default function FormButton({
   isLoading = false,
   onClick,
 }: FormButtonProps) {
-  console.log(children);
   return (
     <button
       onClick={onClick}
