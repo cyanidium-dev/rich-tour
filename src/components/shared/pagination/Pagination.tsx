@@ -79,13 +79,13 @@ export default function Pagination<T>({
   return (
     <>
       <div className={`${className}`}>{renderItems(currentItems)}</div>
-      <div className="inline-flex justify-center items-center gap-[33px]">
+      <div className="flex justify-center items-center gap-[33px] mt-9 mx-auto">
         <button
           aria-label="left"
-          className={`flex justify-center items-center p-3 xl:p-[16.5px] size-[52px] xl:size-[66px] rounded-[16px] 
-          border-[1.5px] xl:border-2 border-black transition duration-300 ease-in-out
-          enabled:hover:bg-black/85 enabled:active:scale-95 enabled:focus-visible:bg-black/85
-          ${page === 1 ? "bg-white text-black" : "bg-black text-white"}`}
+          className={`flex justify-center items-center p-[10.5] size-[42px] rounded-[7.6px] 
+          shadow-pagination transition duration-300 ease-in-out
+          enabled:hover:bg-main/90 enabled:active:scale-95 enabled:focus-visible:bg-main/90
+          ${page === 1 ? "bg-white text-black" : "bg-main text-white"}`}
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={page === 1}
         >
@@ -97,8 +97,8 @@ export default function Pagination<T>({
             <button
               key={page}
               aria-label={page.toString()}
-              className={`px-[8px] py-2 text-16med leading-[123%] transition duration-300 ease-in-out
-            ${page === currentPage ? " text-green" : "  hover:text-green"}`}
+              className={`px-[8px] py-2 text-16med transition duration-300 ease-in-out
+            ${page === currentPage ? "text-main" : " xl:hover:text-main"}`}
               onClick={() => handlePageChange(page)}
             >
               {page}
@@ -108,12 +108,12 @@ export default function Pagination<T>({
 
         <button
           aria-label="right"
-          className={`flex justify-center items-center p-3 xl:p-[16.5px] size-[52px] xl:size-[66px] rounded-[16px] transition duration-300 ease-in-out
-           border-[1.5px] xl:border-2 border-black enabled:hover:bg-black/85 enabled:active:scale-95 enabled:focus-visible:bg-black/85
+          className={`flex justify-center items-center p-[10.5px] size-[42px] rounded-[7.6px] transition duration-300 ease-in-out
+           shadow-pagination enabled:hover:bg-main/90 enabled:active:scale-95 enabled:focus-visible:bg-main/90
           ${
             currentPage === totalPages
               ? "text-black bg-white"
-              : "bg-black text-white"
+              : "bg-main text-white"
           }`}
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={page === totalPages}

@@ -17,4 +17,4 @@ const createTours = (template: Tour, count: number): Tour[] => {
   }));
 };
 
-export const toursList = createTours(tourTemplate, 20);
+export const toursList = createTours(tourTemplate, 23);
