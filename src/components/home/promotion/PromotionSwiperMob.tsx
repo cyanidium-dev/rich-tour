@@ -1,3 +1,3 @@
 export default function PromotionSwiperMob() {
-  return <div>PromotionSwiperMob</div>;
+  return <div className="md:hidden">PromotionSwiperMob</div>;
 }
