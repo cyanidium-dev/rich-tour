@@ -19,6 +19,7 @@ export default {
         },
       },
       fontSize: {
+        "9reg": ["9px", { fontWeight: "400", lineHeight: "1.2" }],
         "10reg": ["10px", { fontWeight: "400", lineHeight: "1.2" }],
         "10med": ["10px", { fontWeight: "500", lineHeight: "1.2" }],
         "10bold": ["10px", { fontWeight: "700", lineHeight: "1.2" }],
@@ -49,19 +50,31 @@ export default {
         "32bold": ["32px", { fontWeight: "700", lineHeight: "1.2" }],
         "36med": ["36px", { fontWeight: "500", lineHeight: "1.2" }],
         "40med": ["40px", { fontWeight: "500", lineHeight: "1.2" }],
+        "40semi": ["40px", { fontWeight: "600", lineHeight: "1.2" }],
         "40bold": ["40px", { fontWeight: "700", lineHeight: "1.2" }],
         "48med": ["48px", { fontWeight: "500", lineHeight: "1.2" }],
         "64semi": ["64px", { fontWeight: "600", lineHeight: "1.2" }],
       },
       colors: {
-        white: "var(--white)",
-        black: "var(--black)",
-        main: "var(--main)",
+        white: "#ffffff",
+        black: "#18181b",
+        main: "#e43a3a",
       },
       backgroundImage: {},
       boxShadow: {},
-      keyframes: {},
-      animation: {},
+      keyframes: {
+        rotate: {
+          "0%": {
+            transform: "rotate(0deg)",
+          },
+          "100%": {
+            transform: "rotate(360deg)",
+          },
+        },
+      },
+      animation: {
+        rotation: "rotate 1600ms linear infinite",
+      },
     },
   },
   plugins: [],
