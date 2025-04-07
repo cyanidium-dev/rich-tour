@@ -84,7 +84,7 @@ export default function Pagination<T>({
           aria-label="left"
           className={`flex justify-center items-center p-[10.5] size-[42px] rounded-[7.6px] 
           shadow-pagination transition duration-300 ease-in-out
-          enabled:hover:bg-main/90 enabled:active:scale-95 enabled:focus-visible:bg-main/90
+          enabled:hover:brightness-125 enabled:active:scale-95 enabled:focus-visible:brightness-125
           ${page === 1 ? "bg-white text-black" : "bg-main text-white"}`}
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={page === 1}
@@ -109,7 +109,7 @@ export default function Pagination<T>({
         <button
           aria-label="right"
           className={`flex justify-center items-center p-[10.5px] size-[42px] rounded-[7.6px] transition duration-300 ease-in-out
-           shadow-pagination enabled:hover:bg-main/90 enabled:active:scale-95 enabled:focus-visible:bg-main/90
+           shadow-pagination enabled:hover:brightness-125 enabled:active:scale-95 enabled:focus-visible:brightness-125
           ${
             currentPage === totalPages
               ? "text-black bg-white"

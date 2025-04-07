@@ -96,20 +96,39 @@ ul {
     padding-bottom: 74px !important;
   }
 
-  @media (min-width: 375px) {
+  @media screen and (min-width: 375px) {
     .swiper {
       padding-left: 25px !important;
     }
   }
 
+  @media screen and (min-width: 768px) {
+    .swiper {
+      padding-left: 0px !important;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    .swiper {
+      padding-bottom: 78px !important;
+    }
+  }
+
   .swiper-slide {
-    @apply w-[210px] h-[332px] rounded-[12px] overflow-hidden !important;
+    @apply w-[210px] h-[332px] xl:w-[265px] xl:h-[408px] rounded-[12px] overflow-hidden shadow-card !important;
   }
 
   .swiper-button-next,
   .swiper-button-prev {
-    @apply w-[42px] h-[42px] rounded-[7.64px] bg-main transition hover:brightness-90 focus-visible:brightness-90 active:brightness-90 !important;
+    @apply w-[42px] h-[42px] rounded-[7.64px] bg-main transition hover:brightness-125 focus-visible:brightness-125 active:scale-95 duration-300 ease-in-out  !important;
     top: calc(100% - 32px) !important;
+  }
+
+  @media screen and (min-width: 1280px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+      top: calc(100% - 20px) !important;
+    }
   }
 
   .swiper-button-prev {
