@@ -41,7 +41,10 @@ export default function Reviews() {
             </MainButton>
           </Link>
         </div>
-        <ReviewsSwiperMob />
+      </Container>
+      <ReviewsSwiperMob />
+      <Container>
+        {" "}
         <div className="relative md:w-[40.6%] aspect-[325/217] mt-9 md:mt-0 rounded-[12px] overflow-hidden">
           <Image
             src="/images/home/reviews/balloons.webp"

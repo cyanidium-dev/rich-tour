@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { toursList } from "../promotion/mockedData";
-import TourCard from "@/components/shared/tourCard/TourCard";
+import TourCard from "@/components/shared/cards/tourCard/TourCard";
 import Loader from "@/components/shared/loader/Loader";
 
 export default function SmartToursSwiper() {

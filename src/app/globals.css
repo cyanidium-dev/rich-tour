@@ -92,6 +92,7 @@ ul {
 
   /* Swiper */
   .swiper {
+    padding-top: 16px !important;
     padding-left: 16px !important;
     padding-bottom: 74px !important;
   }
@@ -114,8 +115,16 @@ ul {
     }
   }
 
+  .reviews.swiper {
+    padding-left: 0px !important;
+  }
+
   .swiper-slide {
     @apply w-[210px] h-[332px] xl:w-[265px] xl:h-[408px] rounded-[12px] overflow-hidden shadow-card !important;
+  }
+
+  .reviews .swiper-slide {
+    @apply w-[325px] h-[185px] rounded-[12px] overflow-hidden shadow-card !important;
   }
 
   .swiper-button-next,

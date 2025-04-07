@@ -1,7 +1,7 @@
 import { Tour } from "@/types/tour";
 import Image from "next/image";
 import Link from "next/link";
-import SecondaryButton from "../buttons/SecondaryButton";
+import SecondaryButton from "../../buttons/SecondaryButton";
 
 interface TourCardProps {
   tour: Tour;

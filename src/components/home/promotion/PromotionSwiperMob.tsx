@@ -4,7 +4,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { toursList } from "./mockedData";
-import TourCard from "@/components/shared/tourCard/TourCard";
+import TourCard from "@/components/shared/cards/tourCard/TourCard";
 import { Suspense } from "react";
 import Loader from "@/components/shared/loader/Loader";
 
