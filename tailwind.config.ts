@@ -8,12 +8,13 @@ export default {
   ],
   theme: {
     extend: {
-      screens: {},
+      screens: { xs: "375px" },
       fontFamily: { montserrat: ["var(--font-montserrat)"] },
       container: {
         center: true,
         padding: {
-          DEFAULT: "25px",
+          DEFAULT: "16px",
+          xs: "25px",
           xl: "80px",
         },
       },
@@ -25,6 +26,7 @@ export default {
         "12reg": ["12px", { fontWeight: "400", lineHeight: "1.2" }],
         "12med": ["12px", { fontWeight: "500", lineHeight: "1.2" }],
         "12semi": ["12px", { fontWeight: "600", lineHeight: "1.2" }],
+        "12bold": ["12px", { fontWeight: "700", lineHeight: "1.2" }],
         "14light": ["14px", { fontWeight: "300", lineHeight: "1.2" }],
         "14reg": ["14px", { fontWeight: "400", lineHeight: "1.2" }],
         "14med": ["14px", { fontWeight: "500", lineHeight: "1.2" }],
