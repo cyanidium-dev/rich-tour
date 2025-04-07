@@ -2,7 +2,7 @@
 import { Suspense } from "react";
 import { usePromotionItemsPerPage } from "@/hooks/usePromotionItemsPerPage";
 import { toursList } from "./mockedData";
-import TourCard from "@/components/shared/tourCard/TourCard";
+import TourCard from "@/components/shared/cards/tourCard/TourCard";
 import Loader from "@/components/shared/loader/Loader";
 import Pagination from "@/components/shared/pagination/Pagination";
 

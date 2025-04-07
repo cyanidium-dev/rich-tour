@@ -1,36 +1,38 @@
 "use client";
 import "swiper/css";
 import "swiper/css/navigation";
+import { Suspense } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { toursList } from "./mockedData";
-import TourCard from "@/components/shared/cards/tourCard/TourCard";
-import { Suspense } from "react";
+import { reviewsList } from "./mockedData";
 import Loader from "@/components/shared/loader/Loader";
+import ReviewCard from "@/components/shared/cards/reviewCard/ReviewCard";
 
-export default function PromotionSwiperMob() {
-  if (!toursList || !toursList.length) {
+export default function ReviewsSwiperMob() {
+  if (!reviewsList || !reviewsList.length) {
     return null;
   }
 
   return (
-    <Suspense fallback={<Loader />}>
-      <div className="md:hidden">
+    <div className="lg:hidden mt-9">
+      <Suspense fallback={<Loader />}>
         <Swiper
           slidesPerView={"auto"}
+          centeredSlides={true}
           spaceBetween={20}
           navigation={true}
           loop={true}
           speed={1000}
           modules={[Navigation]}
+          className="reviews"
         >
-          {toursList.map((tour, idx) => (
+          {reviewsList.map((review, idx) => (
             <SwiperSlide key={idx}>
-              <TourCard tour={tour} />
+              <ReviewCard review={review} />
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
-    </Suspense>
+      </Suspense>
+    </div>
   );
 }
