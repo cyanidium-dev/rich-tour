@@ -3,6 +3,7 @@ import Image from "next/image";
 import MainButton from "@/components/shared/buttons/MainButton";
 import Container from "@/components/shared/container/Container";
 import ReviewsSwiperMob from "./ReviewsSwiperMob";
+import ReviewsListDesk from "./ReviewsListDesk";
 
 export default function Reviews() {
   return (
@@ -41,11 +42,7 @@ export default function Reviews() {
             </MainButton>
           </Link>
         </div>
-      </Container>
-      <ReviewsSwiperMob />
-      <Container>
-        {" "}
-        <div className="relative md:w-[40.6%] aspect-[325/217] mt-9 md:mt-0 rounded-[12px] overflow-hidden">
+        <div className="hidden md:block relative md:w-[40.6%] aspect-[325/217] mt-9 md:mt-0 rounded-[12px] overflow-hidden">
           <Image
             src="/images/home/reviews/balloons.webp"
             alt="balloons"
@@ -54,6 +51,19 @@ export default function Reviews() {
             className="object-cover"
           />
         </div>
+      </Container>
+      <ReviewsSwiperMob />
+      <Container>
+        <div className="md:hidden relative aspect-[325/217] mt-9 rounded-[12px] overflow-hidden">
+          <Image
+            src="/images/home/reviews/balloons.webp"
+            alt="balloons"
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover"
+          />
+        </div>
+        <ReviewsListDesk />
       </Container>
     </section>
   );

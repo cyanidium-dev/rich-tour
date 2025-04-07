@@ -14,7 +14,7 @@ export default function ReviewsSwiperMob() {
   }
 
   return (
-    <div className="md:hidden mt-[52px]">
+    <div className="lg:hidden mt-9">
       <Suspense fallback={<Loader />}>
         <Swiper
           slidesPerView={"auto"}
