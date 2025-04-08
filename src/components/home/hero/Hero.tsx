@@ -9,6 +9,7 @@ export default function Hero() {
         src="/images/home/hero/bgImage.webp"
         alt="background"
         fill
+        priority
         sizes="100vw"
         className="absolute top-0 left-0 -z-20 object-cover"
       />
