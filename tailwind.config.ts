@@ -1,10 +1,12 @@
 import type { Config } from "tailwindcss";
+import { heroui } from "@heroui/react";
 
 export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
     "swiper",
@@ -69,7 +71,10 @@ export default {
         main: "#e43a3a",
         red: "#FD0000",
       },
-      backgroundImage: {},
+      backgroundImage: {
+        hero: "linear-gradient(359deg, rgba(0, 0, 0, 0.80) -17.45%, rgba(0, 0, 0, 0.00) 16.94%, rgba(0, 0, 0, 0.80) 78.79%)",
+      },
+
       boxShadow: {
         benefits: "0px 0px 28px 1px rgba(27, 27, 27, 0.12)",
         card: "0px 0px 19.3px 1px rgba(92, 92, 92, 0.08)",
@@ -90,5 +95,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [heroui()],
 } satisfies Config;

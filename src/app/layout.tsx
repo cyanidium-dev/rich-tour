@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/footer/Footer";
 import "./globals.css";
+import Providers from "./providers";
 
 const montserrat = Montserrat({
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -24,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="uk" className="scroll-smooth">
       <body
-        className={`${montserrat.variable} flex min-h-screen flex-col antialiased text-14light lg:text-16light`}
+        className={`${montserrat.variable} relative z-[1] flex min-h-screen flex-col antialiased text-14light lg:text-16light`}
       >
-        <Header />
-        <main className="flex-1 pt-[68px] xl:pt-[123px]">{children}</main>
-        <Footer />
+        <Providers>
+          <Header />
+          <main className="flex-1 pt-[68px] xl:pt-[123px]">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
