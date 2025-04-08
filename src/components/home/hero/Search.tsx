@@ -34,8 +34,6 @@ export default function Search() {
 
   const [isInputOpen, setIsInputOpen] = useState(false);
 
-  console.log(isInputOpen);
-
   const { startsWith } = useFilter({ sensitivity: "base" });
 
   const handleInputChange = (
@@ -121,13 +119,15 @@ export default function Search() {
               countries
             )
           }
-          className="max-w-xs"
+          isClearable={false}
           label="Країна"
           radius="full"
           size="sm"
           selectorIcon={<SearchIcon />}
           disableSelectorIconRotation
-          classNames={{ selectorButton: "mt-1 mr-1" }}
+          classNames={{
+            selectorButton: "mt-1 mr-1",
+          }}
         >
           {(item) => (
             <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>
@@ -163,7 +163,7 @@ export default function Search() {
               months
             )
           }
-          className="max-w-xs"
+          isClearable={false}
           label="Місяць"
           radius="full"
           size="sm"
@@ -171,7 +171,9 @@ export default function Search() {
           classNames={{ selectorButton: "mt-1 mr-1" }}
         >
           {(item) => (
-            <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>
+            <AutocompleteItem key={item.key} className="text-[10px]">
+              {item.label}
+            </AutocompleteItem>
           )}
         </Autocomplete>
       </div>
