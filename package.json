@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroui/react": "^2.7.6",
+    "@react-aria/i18n": "^3.12.7",
     "axios": "^1.8.4",
     "formik": "^2.4.6",
     "framer-motion": "^12.6.3",
