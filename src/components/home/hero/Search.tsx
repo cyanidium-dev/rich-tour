@@ -16,92 +16,74 @@ import SelectIcon from "@/components/shared/icons/SelectIcon";
 interface FieldState {
   selectedKey: Key | null;
   inputValue: string;
-  items: typeof countries;
+  items: { key: Key; label: string }[];
 }
 
 export default function Search() {
   const [countryFieldState, setCountryFieldState] = useState<FieldState>({
-    selectedKey: "",
+    selectedKey: null,
     inputValue: "",
     items: countries,
   });
 
   const [monthFieldState, setMonthFieldState] = useState<FieldState>({
-    selectedKey: "",
+    selectedKey: null,
     inputValue: "",
     items: months,
   });
 
+  const [isInputOpen, setIsInputOpen] = useState(false);
+
+  console.log(isInputOpen);
+
   const { startsWith } = useFilter({ sensitivity: "base" });
 
-  const onCountrySelectionChange = (key: Key | null) => {
-    setCountryFieldState((prevState) => {
-      const selectedItem = prevState.items.find((option) => option.key === key);
-
-      return {
-        inputValue: selectedItem?.label || "",
-        selectedKey: key,
-        items: countries.filter((item) =>
-          startsWith(item.label, selectedItem?.label || "")
-        ),
-      };
+  const handleInputChange = (
+    value: string,
+    fieldState: FieldState,
+    setFieldState: React.Dispatch<React.SetStateAction<FieldState>>,
+    items: { key: Key; label: string }[]
+  ) => {
+    setFieldState({
+      inputValue: value,
+      selectedKey: value === "" ? null : fieldState.selectedKey,
+      items: items.filter((item) => startsWith(item.label, value)),
     });
   };
 
-  const onCountryInputChange = (value: string) => {
-    setCountryFieldState((prevState) => ({
-      inputValue: value,
-      selectedKey: value === "" ? null : prevState.selectedKey,
-      items: countries.filter((item) => startsWith(item.label, value)),
-    }));
-  };
-
-  const onCountryOpenChange = (
-    isOpen: boolean,
-    menuTrigger: MenuTriggerAction
+  const handleSelectionChange = (
+    key: Key | null,
+    fieldState: FieldState,
+    setFieldState: React.Dispatch<React.SetStateAction<FieldState>>,
+    items: { key: Key; label: string }[]
   ) => {
-    if (menuTrigger === "manual" && isOpen) {
-      setCountryFieldState((prevState) => ({
-        inputValue: prevState.inputValue,
-        selectedKey: prevState.selectedKey,
-        items: countries,
-      }));
-    }
-  };
-
-  const onMonthSelectionChange = (key: Key | null) => {
-    setMonthFieldState((prevState) => {
-      const selectedItem = prevState.items.find((option) => option.key === key);
-
-      return {
-        inputValue: selectedItem?.label || "",
-        selectedKey: key,
-        items: months.filter((item) =>
-          startsWith(item.label, selectedItem?.label || "")
-        ),
-      };
+    const selectedItem = items.find((option) => option.key === key);
+    setFieldState({
+      inputValue: selectedItem?.label || "",
+      selectedKey: key,
+      items: items.filter((item) =>
+        startsWith(item.label, selectedItem?.label || "")
+      ),
     });
   };
 
-  const onMonthInputChange = (value: string) => {
-    setMonthFieldState((prevState) => ({
-      inputValue: value,
-      selectedKey: value === "" ? null : prevState.selectedKey,
-      items: months.filter((item) => startsWith(item.label, value)),
-    }));
-  };
-
-  const onMonthOpenChange = (
+  const handleOpenChange = (
     isOpen: boolean,
-    menuTrigger: MenuTriggerAction
+    menuTrigger: MenuTriggerAction,
+    fieldState: FieldState,
+    setFieldState: React.Dispatch<React.SetStateAction<FieldState>>,
+    items: { key: Key; label: string }[]
   ) => {
     if (menuTrigger === "manual" && isOpen) {
-      setMonthFieldState((prevState) => ({
-        inputValue: prevState.inputValue,
-        selectedKey: prevState.selectedKey,
-        items: months,
-      }));
+      setFieldState({
+        inputValue: fieldState.inputValue,
+        selectedKey: fieldState.selectedKey,
+        items,
+      });
     }
+    setTimeout(() => {
+      setIsInputOpen(isOpen);
+    }, 100);
   };
 
   return (
@@ -114,9 +96,31 @@ export default function Search() {
           inputValue={countryFieldState.inputValue}
           items={countryFieldState.items}
           selectedKey={countryFieldState.selectedKey}
-          onOpenChange={onCountryOpenChange}
-          onInputChange={onCountryInputChange}
-          onSelectionChange={onCountrySelectionChange}
+          onOpenChange={(isOpen, menuTrigger) =>
+            handleOpenChange(
+              isOpen,
+              menuTrigger,
+              countryFieldState,
+              setCountryFieldState,
+              countries
+            )
+          }
+          onInputChange={(value) =>
+            handleInputChange(
+              value,
+              countryFieldState,
+              setCountryFieldState,
+              countries
+            )
+          }
+          onSelectionChange={(key) =>
+            handleSelectionChange(
+              key,
+              countryFieldState,
+              setCountryFieldState,
+              countries
+            )
+          }
           className="max-w-xs"
           label="Країна"
           radius="full"
@@ -129,13 +133,36 @@ export default function Search() {
             <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>
           )}
         </Autocomplete>
+
         <Autocomplete
           inputValue={monthFieldState.inputValue}
           items={monthFieldState.items}
           selectedKey={monthFieldState.selectedKey}
-          onOpenChange={onMonthOpenChange}
-          onInputChange={onMonthInputChange}
-          onSelectionChange={onMonthSelectionChange}
+          onOpenChange={(isOpen, menuTrigger) =>
+            handleOpenChange(
+              isOpen,
+              menuTrigger,
+              monthFieldState,
+              setMonthFieldState,
+              months
+            )
+          }
+          onInputChange={(value) =>
+            handleInputChange(
+              value,
+              monthFieldState,
+              setMonthFieldState,
+              months
+            )
+          }
+          onSelectionChange={(key) =>
+            handleSelectionChange(
+              key,
+              monthFieldState,
+              setMonthFieldState,
+              months
+            )
+          }
           className="max-w-xs"
           label="Місяць"
           radius="full"
@@ -148,7 +175,13 @@ export default function Search() {
           )}
         </Autocomplete>
       </div>
-      <Link href="/search" className="block w-full md:w-[calc(33.3%-6px)]">
+
+      <Link
+        href="/search"
+        className={`block w-full md:w-[calc(33.3%-6px)] ${
+          isInputOpen ? "pointer-events-none" : ""
+        }`}
+      >
         <MainButton variant="ghost white" className="w-full h-12 text-14med">
           Пошук
         </MainButton>
