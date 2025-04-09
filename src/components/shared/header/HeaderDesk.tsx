@@ -6,7 +6,7 @@ import CurrencyRate from "./currencyRate/CurrencyRate";
 
 export default function HeaderDesk() {
   return (
-    <Container className="hidden xl:flex items-center justify-between w-full py-8">
+    <Container className="hidden xl:flex items-center justify-between w-full py-5">
       <LogoLink className="w-[44px] xl:w-[75px] h-auto" />
       <div className="flex items-center gap-x-[15px]">
         <NavMenu />

@@ -92,7 +92,6 @@ ul {
 
   /* Swiper */
   .swiper {
-    padding-top: 16px !important;
     padding-left: 16px !important;
     padding-bottom: 74px !important;
   }
@@ -114,8 +113,12 @@ ul {
       padding-bottom: 78px !important;
     }
   }
-
   .reviews.swiper {
+    padding-top: 16px !important;
+  }
+
+  .reviews.swiper,
+  .team.swiper {
     padding-left: 0px !important;
   }
 
@@ -125,6 +128,9 @@ ul {
 
   .reviews .swiper-slide {
     @apply w-[325px] h-[185px] rounded-[12px] overflow-hidden shadow-card !important;
+  }
+  .team .swiper-slide {
+    @apply w-[325px] h-[450px] rounded-[12px] overflow-hidden shadow-card !important;
   }
 
   .swiper-button-next,
