@@ -30,10 +30,10 @@ export default function TeamCard({ teamMember }: TeamCardProps) {
         />
       </div>
       <div className="relative z-10 py-[19px] mt-[319px] md:mt-[166px] lg:mt-[236px] xl:mt-[275px] bg-white rounded-t-[12px]">
-        <h3 className="mb-[6px] text-20semi md:text-16semi lg:text-20semi text-center">
+        <h3 className="mb-[6px] text-20semi md:text-16semi lg:text-20semi text-center line-clamp-1">
           {name}
         </h3>
-        <p className="text-16semi md:text-12semi lg:text-16semi text-center text-main">
+        <p className="text-16semi md:text-12semi lg:text-16semi text-center text-main line-clamp-1">
           {role}
         </p>
       </div>
