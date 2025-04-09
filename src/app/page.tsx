@@ -3,7 +3,7 @@ import CorporateService from "@/components/home/corporateService/CorporateServic
 import Faq from "@/components/home/faq/Faq";
 import Hero from "@/components/home/hero/Hero";
 import Promotion from "@/components/home/promotion/Promotion";
-import Reviews from "@/components/home/reviews/Reviews";
+import Reviews from "@/components/shared/reviews/Reviews";
 import SmartTours from "@/components/home/smartTours/SmartTours";
 import Tours from "@/components/home/tours/Tours";
 import Step from "@/components/home/step/Step";
