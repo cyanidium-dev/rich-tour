@@ -115,7 +115,8 @@ ul {
     }
   }
 
-  .reviews.swiper {
+  .reviews.swiper,
+  .team.swiper {
     padding-left: 0px !important;
   }
 
@@ -125,6 +126,9 @@ ul {
 
   .reviews .swiper-slide {
     @apply w-[325px] h-[185px] rounded-[12px] overflow-hidden shadow-card !important;
+  }
+  .team .swiper-slide {
+    @apply w-[325px] h-[450px] rounded-[12px] overflow-hidden shadow-card !important;
   }
 
   .swiper-button-next,

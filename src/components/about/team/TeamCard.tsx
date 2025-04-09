@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import InstagramIcon from "@/components/shared/icons/InstagramIcon";
 import TelegramIcon from "@/components/shared/icons/TelegramIcon";

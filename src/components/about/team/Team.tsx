@@ -13,9 +13,9 @@ export default function Team() {
     <section className=" mb-[148px] xl:mb-[180px]">
       <TeamInfo />
       <Container>
-        <TeamSwiperMob teamMembers={teamMembers} />
         <TeamListDesk teamMembers={teamMembers} />
       </Container>
+      <TeamSwiperMob teamMembers={teamMembers} />
     </section>
   );
 }
