@@ -1,3 +1,3 @@
 export const allDocumentsUrl = "";
 
-export const documentsList = [];
+export const documentsList = [{ image: { url: "", alt: "" }, url: "" }];
