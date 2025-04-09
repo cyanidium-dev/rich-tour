@@ -1,6 +1,7 @@
 import Container from "@/components/shared/container/Container";
 import OffersListMob from "./OffersListMob";
 import OffersTitle from "./OffersTitle";
+import OffersListDesk from "./OffersListDesk";
 
 export default function Offers() {
   return (
@@ -8,6 +9,7 @@ export default function Offers() {
       <OffersTitle />
       <Container>
         <OffersListMob />
+        <OffersListDesk />
       </Container>
     </section>
   );
