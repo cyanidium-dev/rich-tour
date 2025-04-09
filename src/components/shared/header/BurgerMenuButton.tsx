@@ -15,7 +15,7 @@ export default function BurgerMenuButton({
       aria-label="open menu button"
       type="button"
       onClick={toggleHeaderMenuOpen}
-      className="lg:hidden group relative z-[60] w-9 h-9 px-[6.6px] py-[10px] outline-none "
+      className="xl:hidden group relative z-[60] w-9 h-9 px-[6.6px] py-[10px] outline-none "
     >
       <div className="w-full h-full relative">
         {/* Верхня лінія */}
