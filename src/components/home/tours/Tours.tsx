@@ -72,7 +72,7 @@ export default function Tours() {
                 height={798}
                 className="absolute top-0 left-0 -z-10 w-full h-full object-cover"
               />
-              <p className="max-w-[69.2%] text-20med lg:text-28med">
+              <p className="max-w-[69.2%] xl:max-w-[203px] text-20med lg:text-28med">
                 Львів для дітей
               </p>
             </div>
