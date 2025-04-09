@@ -1,6 +1,6 @@
 export interface TeamMember {
   name: string;
-  photo: string;
+  photo: { url: string; alt: string };
   role: string;
   socials: {
     instagram?: string;
