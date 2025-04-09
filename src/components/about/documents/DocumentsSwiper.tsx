@@ -11,11 +11,29 @@ import DocumentCard from "./DocumentCard";
 export default function DocumentsSwiper() {
   return (
     <Suspense fallback={<Loader />}>
-      <div className="md:hidden mt-[148px]">
+      <div className="">
         <Swiper
           slidesPerView={"auto"}
-          centeredSlides={true}
-          spaceBetween={25}
+          centeredSlides
+          breakpoints={{
+            0: {
+              spaceBetween: 55,
+              centeredSlides: true,
+            },
+            640: {
+              spaceBetween: 55,
+              centeredSlides: false,
+            },
+            768: {
+              spaceBetween: 20,
+              centeredSlides: false,
+            },
+            1024: { spaceBetween: 55 },
+            1280: {
+              spaceBetween: 20,
+              centeredSlides: false,
+            },
+          }}
           navigation={true}
           loop={true}
           speed={1000}

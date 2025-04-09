@@ -6,17 +6,21 @@ interface DocumentCardProps {
 }
 
 export default function DocumentCard({ document }: DocumentCardProps) {
-  const { image, url } = document;
+  const { image } = document;
 
   return (
-    <a href={url || ""} target="_blank" rel="noopener noreferrer nofollow">
+    <a
+      href={image?.url || ""}
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+    >
       <div className="relative w-[265px] h-[377px]">
         <Image
           src={image?.url}
           alt={image?.alt}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="w-full h-auto object-contain"
+          className="w-full h-auto object-contain object-top"
         />
       </div>
     </a>
