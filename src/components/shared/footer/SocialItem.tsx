@@ -13,7 +13,7 @@ export default function SocialItem({ social }: SocialItemProps) {
         href={link}
         target="_blank"
         rel="noopener noreferrer nofollow"
-        className="text-white transition duration-300 ease-in-out active:text-main focus-visible:text-main
+        className="text-inherit transition duration-300 ease-in-out active:text-main focus-visible:text-main
          xl:hover:text-main"
       >
         {icon}
