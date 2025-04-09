@@ -6,7 +6,10 @@ const SECTION_ID = "smart-tours";
 
 export default function SmartTours() {
   return (
-    <section id={SECTION_ID} className="relative mb-[148px] xl:mb-[180px]">
+    <section
+      id={SECTION_ID}
+      className="relative mb-[148px] xl:mb-[180px] scroll-mt-[68px] xl:scroll-mt-[99px]"
+    >
       <Container className="md:flex mb-10 md:mb-0">
         <div
           className="relative w-full md:w-[325px] xl:w-[455px] h-[408px] md:h-[332px] xl:h-[408px] py-9 md:mr-5 rounded-[12px] 
