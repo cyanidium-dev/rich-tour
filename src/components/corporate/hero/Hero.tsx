@@ -1,5 +1,5 @@
-import Container from "@/components/shared/container/Container";
 import Image from "next/image";
+import Container from "@/components/shared/container/Container";
 
 export default function Hero() {
   return (
