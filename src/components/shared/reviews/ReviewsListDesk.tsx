@@ -14,7 +14,7 @@ export default function ReviewsListDesk() {
     <Suspense fallback={<Loader />}>
       <ul className="hidden lg:flex gap-x-5 mt-10">
         {croppedReviewsList.map((review, idx) => (
-          <li key={idx}>
+          <li key={idx} className="max-w-[325px] xl:max-w-[360px]">
             <ReviewCard review={review} />
           </li>
         ))}

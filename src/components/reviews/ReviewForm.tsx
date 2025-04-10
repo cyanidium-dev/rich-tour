@@ -14,7 +14,7 @@ export default function ReviewForm({ className }: ReviewFormProps) {
   const [isNotificationShown, setIsNotificationShown] = useState(false);
 
   return (
-    <div>
+    <div className="md:min-w-[23.67%]">
       <h3 className="mb-7 text-24med xl:text-28med">Залиште відгук</h3>
       <CallBackForm
         setIsError={setIsError}
