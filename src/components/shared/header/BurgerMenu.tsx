@@ -34,7 +34,7 @@ export default function BurgerMenu({
           variants={burgerMenuVariants}
           className={`${
             isHeaderMenuOpened ? "no-doc-scroll" : ""
-          } xl:hidden absolute z-50 top-[68px] right-0 w-[100vw] h-[calc(100dvh-68px)] py-4 sm:py-10 bg-white
+          } lg:hidden absolute z-50 top-[68px] right-0 w-[100vw] h-[calc(100dvh-68px)] py-4 sm:py-10 bg-white
        overflow-y-auto`}
         >
           <Container>

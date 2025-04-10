@@ -16,7 +16,7 @@ const navMenuList = [
 
 export default function NavMenu({ setIsHeaderMenuOpened }: NavMenuProps) {
   return (
-    <ul className="flex flex-col xl:flex-row gap-x-4">
+    <ul className="flex flex-col lg:flex-row gap-x-4">
       {navMenuList.map((menuItem, idx) => (
         <NavMenuItem
           key={idx}

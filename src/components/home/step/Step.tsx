@@ -9,7 +9,7 @@ export default function Step() {
   return (
     <section
       id={SECTION_ID}
-      className="mb-[148px] xl:mb-[180px] scroll-mt-[68px] xl:scroll-mt-[99px]"
+      className="mb-[148px] xl:mb-[180px] scroll-mt-[68px] lg:scroll-mt-[77px] xl:scroll-mt-[99px]"
     >
       <Container className="relative flex flex-col md:flex-row gap-y-10 gap-x-5 ">
         <Image

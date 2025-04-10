@@ -23,7 +23,7 @@ export default function NavMenuItem({
     >
       <Link
         href={link}
-        className="block pt-[26px] pb-[18px] xl:py-0 border-b border-black xl:border-none text-16reg xl:hover:text-main focus-visible:text-main transition duration-300 ease-in-out"
+        className="block pt-[26px] pb-[18px] lg:py-0 border-b border-black lg:border-none text-16reg lg:text-14reg xl:text-16reg xl:hover:text-main focus-visible:text-main transition duration-300 ease-in-out"
       >
         {title}
       </Link>
