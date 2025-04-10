@@ -1,20 +1,26 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { listItemVariants } from "../../animation/animationVariants";
 
 interface NavMenuItemProps {
   menuItem: { title: string; link: string };
   setIsHeaderMenuOpened?: Dispatch<SetStateAction<boolean>>;
+  isAnimated?: boolean;
 }
 
 export default function NavMenuItem({
   menuItem,
   setIsHeaderMenuOpened,
+  isAnimated = false,
 }: NavMenuItemProps) {
   const { title, link } = menuItem;
 
   return (
-    <li
+    <motion.li
+      variants={isAnimated ? listItemVariants : {}}
+      viewport={{ once: true, amount: 0.2 }}
       onClick={() => {
         if (setIsHeaderMenuOpened) {
           setIsHeaderMenuOpened(false);
@@ -27,6 +33,6 @@ export default function NavMenuItem({
       >
         {title}
       </Link>
-    </li>
+    </motion.li>
   );
 }
