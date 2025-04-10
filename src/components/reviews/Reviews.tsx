@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Container from "../shared/container/Container";
+import ReviewForm from "./ReviewForm";
 
 export default function Reviews() {
   return (
@@ -15,6 +16,9 @@ export default function Reviews() {
           height="119"
           className="absolute top-[14px] xl:top-[-33px] right-[calc(50%-179px)] xl:right-[calc(50%-279px)] w-[154px] h-auto"
         />
+        <div>
+          <ReviewForm />
+        </div>
       </Container>
     </section>
   );

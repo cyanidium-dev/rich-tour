@@ -24,7 +24,7 @@ interface CustomizedInputProps {
 const labelStyles = "relative flex flex-col w-full";
 const fieldStyles =
   "relative w-full px-4 py-3 text-12reg text-black placeholder-black border rounded-[6px] outline-none resize-none transition duration-300 ease-out";
-const errorStyles = "absolute bottom-[-14px] left-2 text-9reg text-white";
+const errorStyles = "absolute bottom-[-14px] left-2 text-9reg text-red";
 
 export default function CustomizedInput({
   errors,
@@ -57,7 +57,7 @@ export default function CustomizedInput({
           } ${fieldClassName} ${
             errors[fieldName] && touched[fieldName]
               ? "border-red"
-              : "border-greyDark focus:border-green"
+              : "border-black focus:border-green"
           }`}
         ></Field>
       </div>
