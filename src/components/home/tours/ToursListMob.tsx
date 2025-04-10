@@ -7,7 +7,7 @@ export default function ToursListMob() {
   return (
     <AnimatedWrapper
       as="ul"
-      animation={listVariants({ staggerChildren: 0.5, delayChildren: 0.8 })}
+      animation={listVariants({ staggerChildren: 0.5, delayChildren: 0.4 })}
       className="flex md:hidden flex-col gap-5 text-white text-28med"
     >
       <AnimatedListItem className="flex items-end relative aspect-[325/178] px-[18px] py-5 rounded-[12px] overflow-hidden">
