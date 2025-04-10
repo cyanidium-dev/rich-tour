@@ -8,10 +8,12 @@ import {
   MenuTriggerAction,
 } from "@heroui/react";
 import Link from "next/link";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import { countries, months } from "./mockedData";
 import MainButton from "@/components/shared/buttons/MainButton";
 import SearchIcon from "@/components/shared/icons/SearchIcon";
 import SelectIcon from "@/components/shared/icons/SelectIcon";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 
 interface FieldState {
   selectedKey: Key | null;
@@ -85,7 +87,8 @@ export default function Search() {
   };
 
   return (
-    <div
+    <AnimatedWrapper
+      animation={fadeInAnimation({ y: 30, delay: 0.8 })}
       className="flex flex-col md:flex-row md:items-center gap-3 max-w-[325px] md:max-w-[550px] md:py-3 md:px-[14px] mx-auto
      md:bg-black rounded-full"
     >
@@ -188,6 +191,6 @@ export default function Search() {
           Пошук
         </MainButton>
       </Link>
-    </div>
+    </AnimatedWrapper>
   );
 }
