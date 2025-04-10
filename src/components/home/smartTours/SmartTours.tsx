@@ -8,7 +8,7 @@ export default function SmartTours() {
   return (
     <section
       id={SECTION_ID}
-      className="relative mb-[148px] xl:mb-[180px] scroll-mt-[68px] xl:scroll-mt-[99px]"
+      className="relative mb-[148px] xl:mb-[180px] scroll-mt-[68px] lg:scroll-mt-[77px] xl:scroll-mt-[99px]"
     >
       <Container className="md:flex mb-10 md:mb-0">
         <div

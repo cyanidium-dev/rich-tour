@@ -29,7 +29,9 @@ export default function RootLayout({
       >
         <Providers>
           <Header />
-          <main className="flex-1 pt-[68px] xl:pt-[99px]">{children}</main>
+          <main className="flex-1 pt-[68px] lg:pt-[77px] xl:pt-[99px]">
+            {children}
+          </main>
           <Footer />
         </Providers>
       </body>

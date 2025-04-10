@@ -13,7 +13,7 @@ export default function HeaderMob() {
 
   return (
     <>
-      <Container className="flex xl:hidden items-center justify-between py-4">
+      <Container className="flex lg:hidden items-center justify-between py-4">
         <LogoLink className="w-[44px] xl:w-[75px] h-auto" />
         <div className="flex gap-x-2">
           <CurrencyRate />
