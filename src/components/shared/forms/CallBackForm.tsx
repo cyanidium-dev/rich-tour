@@ -21,6 +21,7 @@ interface CallBackFormProps {
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
   setIsPopUpShown?: Dispatch<SetStateAction<boolean>>;
   className?: string;
+  variant?: "red" | "black";
 }
 
 export default function CallBackForm({
@@ -28,6 +29,7 @@ export default function CallBackForm({
   setIsNotificationShown,
   setIsPopUpShown,
   className = "",
+  variant = "red",
 }: CallBackFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -96,6 +98,7 @@ export default function CallBackForm({
             isValid={isValid}
             isLoading={isLoading}
             text="Відправити"
+            variant={variant}
           />
         </Form>
       )}

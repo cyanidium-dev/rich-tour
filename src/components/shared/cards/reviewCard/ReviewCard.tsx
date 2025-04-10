@@ -11,7 +11,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
   const formattedDate = formatDate(createdAt);
 
   return (
-    <div className="max-w-[325px] xl:max-w-[360px] min-h-full px-6 py-[30px] rounded-[12px] bg-white shadow-card">
+    <div className="min-h-full px-6 py-[30px] rounded-[12px] bg-white shadow-card">
       <div className="mb-5 flex justify-between items-center text-main">
         <p className="text-16semi">{name}</p>
         <p className="text-16reg">{formattedDate}</p>
