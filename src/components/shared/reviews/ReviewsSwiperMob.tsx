@@ -5,8 +5,10 @@ import { Suspense } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { reviewsList } from "./mockedData";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import Loader from "@/components/shared/loader/Loader";
 import ReviewCard from "@/components/shared/cards/reviewCard/ReviewCard";
+import AnimatedWrapper from "../animation/AnimatedWrapper";
 
 export default function ReviewsSwiperMob() {
   if (!reviewsList || !reviewsList.length) {
@@ -14,7 +16,10 @@ export default function ReviewsSwiperMob() {
   }
 
   return (
-    <div className="lg:hidden mt-9">
+    <AnimatedWrapper
+      animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+      className="lg:hidden mt-9"
+    >
       <Suspense fallback={<Loader />}>
         <Swiper
           slidesPerView={"auto"}
@@ -33,6 +38,6 @@ export default function ReviewsSwiperMob() {
           ))}
         </Swiper>
       </Suspense>
-    </div>
+    </AnimatedWrapper>
   );
 }
