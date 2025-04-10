@@ -10,7 +10,7 @@ export default function AnimatedSVG() {
       height="105"
       viewBox="0 0 118 105"
       fill="none"
-      className="absolute top-[138px] md:top-[100px] xl:top-10 right-[calc(50%-469px)] w-[118px] xl:w-[172px] h-auto"
+      className="absolute top-[118px] md:top-[100px] xl:top-10 right-[calc(50%-153px)] xl:right-[calc(50%-469px)] w-[118px] xl:w-[172px] h-auto"
     >
       {/* Основна лінія стріли */}
       <motion.path
@@ -20,7 +20,7 @@ export default function AnimatedSVG() {
         strokeLinecap="round"
         initial={{ pathLength: 0, strokeOpacity: 0 }}
         animate={{ pathLength: 1, strokeOpacity: 1 }}
-        transition={{ duration: 1.6, ease: "easeInOut", delay: 0.8 }}
+        transition={{ duration: 2, ease: "easeInOut", delay: 0.8 }}
       />
       {/* Наконечник — стартує після 2.8s */}
       <motion.path
@@ -31,9 +31,9 @@ export default function AnimatedSVG() {
         initial={{ pathLength: 0, strokeOpacity: 0 }}
         animate={{ pathLength: 1, strokeOpacity: 1 }}
         transition={{
-          duration: 0.4,
+          duration: 0.6,
           ease: "easeInOut",
-          delay: 2.4,
+          delay: 2.8,
         }}
       />
     </svg>

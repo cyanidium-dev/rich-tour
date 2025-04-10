@@ -17,12 +17,12 @@ export default function Hero() {
         className="absolute top-0 left-0 -z-20 object-cover"
       />
       <div className="absolute top-0 left-0 -z-10 w-full h-full bg-hero"></div>
-      <Container className="relative pt-[35px] pb-[30px] xl:pt-[44px] xl:pb-[34px]">
+      <Container className="relative pt-[35px] pb-[70px] xl:pt-[44px] xl:pb-[34px]">
         <AnimatedArrow />
         <AnimatedWrapper
           as="h1"
           animation={fadeInAnimation({ x: -30 })}
-          className="max-w-[283px] md:max-w-[548px] mb-[140px] xl:mb-[89px] mx-auto text-14reg xl:text-16reg text-center text-white"
+          className="max-w-[283px] md:max-w-[548px] mb-[110px] xl:mb-[89px] mx-auto text-14reg xl:text-16reg text-center text-white"
         >
           Ми підберемо для вас ідеальний тур: пляжний релакс, захоплюючі
           екскурсії, або яскраві пригоди. Плануйте подорож легко та комфортно
@@ -31,7 +31,7 @@ export default function Hero() {
         <AnimatedWrapper
           as="p"
           animation={fadeInAnimation({ x: 30 })}
-          className="max-w-[259px] md:max-w-[692px] mb-20 xl:mb-[88px] mx-auto text-32med xl:text-48med text-center uppercase text-white"
+          className="max-w-[259px] md:max-w-[692px] mb-[70px] xl:mb-[88px] mx-auto text-32med xl:text-48med text-center uppercase text-white"
         >
           Відпочинок вашої мрії ближче, ніж здається
         </AnimatedWrapper>
