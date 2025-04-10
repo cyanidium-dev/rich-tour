@@ -1,13 +1,18 @@
 import Link from "next/link";
+import Image from "next/image";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import MainButton from "@/components/shared/buttons/MainButton";
 import Container from "@/components/shared/container/Container";
-import Image from "next/image";
 
 export default function CorporateService() {
   return (
-    <section className="mb-[148px] xl:mb-[180px] overflow-hidden text-white">
+    <section className="mb-[148px] xl:mb-[180px] text-white">
       <Container>
-        <div className="relative rounded-[12px] overflow-hidden">
+        <AnimatedWrapper
+          animation={fadeInAnimation({ y: 30 })}
+          className="relative rounded-[12px] overflow-hidden"
+        >
           <Image
             src="/images/home/corporate/corporateBg.webp"
             alt="background"
@@ -36,7 +41,7 @@ export default function CorporateService() {
               бездоганну організацію для вашого бізнесу.
             </p>
           </div>
-        </div>
+        </AnimatedWrapper>
       </Container>
     </section>
   );
