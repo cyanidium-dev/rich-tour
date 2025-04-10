@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="w-full md:flex gap-x-5 xl:gap-x-[68px] justify-between">
           <div className="md:w-[calc(33.3%-13.3px)] xl:w-[calc(33.3%-35.3px)]">
             <Contacts />
-            <Socials />
+            <Socials className="text-white max-w-[246px] mx-auto my-8" />
           </div>
           <div className="md:w-[calc(33.3%-13.3px)] xl:w-[calc(33.3%-63.3px)]">
             <Schedule />

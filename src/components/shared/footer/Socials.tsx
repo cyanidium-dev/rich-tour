@@ -3,7 +3,11 @@ import InstagramIcon from "../icons/InstagramIcon";
 import FacebookIcon from "../icons/FacebookIcon";
 import SocialItem from "./SocialItem";
 
-export default function Socials() {
+interface SocialsProps {
+  className?: string;
+}
+
+export default function Socials({ className }: SocialsProps) {
   if (!socials) {
     return null;
   }
@@ -16,7 +20,7 @@ export default function Socials() {
   ];
 
   return (
-    <ul className="flex gap-x-[14px] items-center max-w-[246px] mx-auto my-8 text-white">
+    <ul className={`flex gap-x-[14px] items-center  ${className}`}>
       {socialList.map((social, idx) => (
         <SocialItem key={idx} social={social} />
       ))}
