@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import ArrowInCircleIcon from "@/components/shared/icons/ArrowInCircleIcon";
+import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
 
 interface FaqItemProps {
   faqItem: {
@@ -16,7 +17,7 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
   const { title, description } = faqItem;
 
   return (
-    <li
+    <AnimatedListItem
       onClick={toggleShowMore}
       className="cursor-pointer px-10 py-[18px] laptop:px-[50px] rounded-[8px] shadow-card"
     >
@@ -38,6 +39,6 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
       >
         <p className={`pt-[18px] xl:pt-6`}>{description}</p>
       </div>
-    </li>
+    </AnimatedListItem>
   );
 }

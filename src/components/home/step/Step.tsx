@@ -1,7 +1,6 @@
 import Container from "@/components/shared/container/Container";
 import Cta from "./Cta";
 import NewHorizons from "./NewHorizons";
-import Image from "next/image";
 import AnimatedArrowTop from "./AnimatedArrowTop";
 import AnimatedArrowBottom from "./AnimatedArrowBottom";
 
