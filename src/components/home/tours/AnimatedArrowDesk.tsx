@@ -20,6 +20,7 @@ export default function AnimatedArrowDesk() {
         strokeLinecap="round"
         initial={{ pathLength: 0, strokeOpacity: 0 }}
         whileInView={{ pathLength: 1, strokeOpacity: 1 }}
+        viewport={{ once: true, amount: 0.8 }}
         transition={{ duration: 2, ease: "easeInOut", delay: 0.6 }}
       />
       {/* Друга лінія */}
@@ -30,6 +31,7 @@ export default function AnimatedArrowDesk() {
         strokeLinecap="round"
         initial={{ pathLength: 0, strokeOpacity: 0 }}
         whileInView={{ pathLength: 1, strokeOpacity: 1 }}
+        viewport={{ once: true, amount: 0.8 }}
         transition={{ duration: 0.6, ease: "easeInOut", delay: 2.4 }}
       />
     </svg>
