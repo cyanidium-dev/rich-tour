@@ -56,6 +56,8 @@ export default function Pagination<T>({
   const pageNumbers = generatePageNumbers();
 
   const handlePageChange = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+
     setCurrentPage(page);
 
     const params = new URLSearchParams(searchParams.toString());
