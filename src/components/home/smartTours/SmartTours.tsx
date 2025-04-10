@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import Container from "@/components/shared/container/Container";
 import SmartToursSwiper from "./SmartToursSwiper";
+import AnimatedArrow from "./AnimatedArrow";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 
 const SECTION_ID = "smart-tours";
 
@@ -11,7 +14,8 @@ export default function SmartTours() {
       className="relative mb-[148px] xl:mb-[180px] scroll-mt-[68px] lg:scroll-mt-[77px] xl:scroll-mt-[99px]"
     >
       <Container className="md:flex mb-10 md:mb-0">
-        <div
+        <AnimatedWrapper
+          animation={fadeInAnimation({ y: 30 })}
           className="relative w-full md:w-[325px] xl:w-[455px] h-[408px] md:h-[332px] xl:h-[408px] py-9 md:mr-5 rounded-[12px] 
         text-white overflow-hidden"
         >
@@ -31,17 +35,11 @@ export default function SmartTours() {
             це концепція сучасного туризму, поєднує інноваційний підхід,
             індивідуальний сервіс та вигідні умови.
           </p>
-        </div>
+        </AnimatedWrapper>
         <div className="hidden md:block md:w-[calc(100%-345px)] xl:w-[calc(100%-475px)]">
           <SmartToursSwiper />
         </div>
-        <Image
-          src="/images/home/smart/arrow.svg"
-          alt="arrow"
-          width="299"
-          height="98"
-          className="hidden md:block absolute -z-30 bottom-[-38px] left-[calc(50%-266px)] lg:left-[calc(50%-316px)] xl:left-[calc(50%-352px)] object-cover"
-        />
+        <AnimatedArrow />
       </Container>
       <div className="md:hidden">
         <SmartToursSwiper />

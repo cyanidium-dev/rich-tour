@@ -15,7 +15,6 @@ export default function Benefits() {
             animation={fadeInAnimation({ y: 30 })}
             className="mb-7 md:mb-12 lg:mb-[44px] xl:mb-7"
           >
-            {" "}
             <Image
               src="/images/home/benefits/imageFirst.webp"
               alt="man with luggage"
