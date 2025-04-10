@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect, ReactNode } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { fadeInAnimation } from "../animation/animationVariants";
 import ArrowInCircleIcon from "../icons/ArrowInCircleIcon";
+import AnimatedWrapper from "../animation/AnimatedWrapper";
 
 interface PaginationProps<T> {
   items: T[];
@@ -81,7 +83,10 @@ export default function Pagination<T>({
   return (
     <>
       <div className={`${className}`}>{renderItems(currentItems)}</div>
-      <div className="flex justify-center items-center gap-[33px] mt-9 mx-auto">
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30 })}
+        className="flex justify-center items-center gap-[33px] mt-9 mx-auto"
+      >
         <button
           aria-label="left"
           className={`flex justify-center items-center p-[10.5] size-[42px] rounded-[7.6px] 
@@ -122,7 +127,7 @@ export default function Pagination<T>({
         >
           <ArrowInCircleIcon />
         </button>
-      </div>
+      </AnimatedWrapper>
     </>
   );
 }
