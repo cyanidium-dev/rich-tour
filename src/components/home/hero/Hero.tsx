@@ -16,7 +16,6 @@ export default function Hero() {
         sizes="100vw"
         className="absolute top-0 left-0 -z-20 object-cover"
       />
-      <div className="absolute top-0 left-0 -z-10 w-full h-full bg-hero"></div>
       <Container className="relative pt-[35px] pb-[70px] xl:pt-[44px] xl:pb-[34px]">
         <AnimatedArrow />
         <AnimatedWrapper
