@@ -24,7 +24,7 @@ export default function BenefitItem({ benefit }: BenefitItemProps) {
   const rounded = useTransform(count, (latest) => Math.round(latest));
 
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.6 }); // від 60% видимості
+  const inView = useInView(ref, { once: true, amount: 0.6 });
 
   useEffect(() => {
     if (inView) {
