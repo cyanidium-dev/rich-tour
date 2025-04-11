@@ -20,8 +20,8 @@ export default function AnimatedArrow() {
         strokeLinecap="round"
         initial={{ pathLength: 0, strokeOpacity: 0 }}
         whileInView={{ pathLength: 1, strokeOpacity: 1 }}
-        viewport={{ once: true, amount: 0.8 }}
-        transition={{ duration: 2, ease: "easeInOut" }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 2, ease: "easeInOut", delay: 3 }}
       />
       {/* Наконечник стрілки — розвернутий шлях */}
       <motion.path
@@ -32,7 +32,7 @@ export default function AnimatedArrow() {
         initial={{ pathLength: 0, strokeOpacity: 0 }}
         whileInView={{ pathLength: 1, strokeOpacity: 1 }}
         viewport={{ once: true, amount: 0.8 }}
-        transition={{ duration: 0.6, ease: "easeInOut", delay: 2 }}
+        transition={{ duration: 0.6, ease: "easeInOut", delay: 4.4 }}
       />
     </motion.svg>
   );
