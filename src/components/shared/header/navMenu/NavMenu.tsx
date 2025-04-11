@@ -26,7 +26,7 @@ export default function NavMenu({
       as="ul"
       animation={
         isAnimated
-          ? listVariants({ staggerChildren: 0.5, delayChildren: 0.3 })
+          ? listVariants({ staggerChildren: 0.2, delayChildren: 0.15 })
           : undefined
       }
       className="flex flex-col lg:flex-row gap-x-4"

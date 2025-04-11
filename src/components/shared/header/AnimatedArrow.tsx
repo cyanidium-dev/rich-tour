@@ -21,7 +21,7 @@ export default function AnimatedArrow() {
         initial={{ pathLength: 0, strokeOpacity: 0 }}
         whileInView={{ pathLength: 1, strokeOpacity: 1 }}
         viewport={{ once: true, amount: 0.8 }}
-        transition={{ duration: 2, ease: "easeInOut", delay: 1.8 }}
+        transition={{ duration: 1.8, ease: "easeInOut", delay: 0.6 }}
       />
 
       {/* Наконечник стріли — анімація починається з протилежного боку */}
@@ -41,7 +41,7 @@ export default function AnimatedArrow() {
           transform: "scale(1, 1) translate(0, 0)",
         }} // Завершення з нормальним напрямком
         viewport={{ once: true, amount: 0.8 }}
-        transition={{ duration: 0.6, ease: "easeInOut", delay: 3.8 }}
+        transition={{ duration: 0.6, ease: "easeInOut", delay: 2.2 }}
       />
     </motion.svg>
   );
