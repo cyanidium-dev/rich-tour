@@ -4,8 +4,8 @@ export const email = "richtourfamily@gmail.com";
 
 export const address = {
   title:
-    "79005, Україна, м. Львів вул. Окружна, 57а, ПП Агенція подорожей “Річ-тур”, Офіс - 511",
-  url: "https://maps.app.goo.gl/rc6ZK2Fd4EYM27XX7",
+    "Україна, м. Львів, вул. Антоновича 120, БЦ “Вертикаль“, 10 поверх, ПП Агенція подорожей “Річ-тур”",
+  url: "https://maps.app.goo.gl/nBmq4gmfWd3roCr88",
 };
 
 export const socials = {
