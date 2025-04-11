@@ -1,30 +1,37 @@
 import Image from "next/image";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";
 import Address from "./Address";
 import Phones from "./Phones";
 import Email from "./Email";
 import SocialList from "./SocialList";
+import AnimatedArrow from "./AnimatedArrow";
 
 export default function ContactsInfo() {
   return (
     <section className="mb-[148px] xl:mb-[180px]">
       <Container className="relative">
-        <Image
-          src="/images/contacts/contactsInfo/arrow.svg"
-          alt="arrow"
-          width="201"
-          height="115"
-          className="absolute top-[-124px] xl:top-[-130px] right-[calc(50%-205px)] xl:right-[calc(50%-529px)] w-[201px] xl:w-[294px] h-auto"
-        />
-        <h2 className="mb-[60px] xl:mb-10 text-36med xl:text-40med text-center">
+        <AnimatedArrow />
+        <AnimatedWrapper
+          as="h2"
+          animation={fadeInAnimation({ y: 30 })}
+          className="mb-[60px] xl:mb-10 text-36med xl:text-40med text-center"
+        >
           Наші контакти
-        </h2>
+        </AnimatedWrapper>
         <div className="flex flex-col lg:flex-row gap-5">
-          <div className="flex flex-col gap-y-5 lg:w-[calc(25%-15px)]">
+          <AnimatedWrapper
+            animation={fadeInAnimation({ x: -30, delay: 0.4 })}
+            className="flex flex-col gap-y-5 lg:w-[calc(25%-15px)]"
+          >
             <Address />
             <Phones />
-          </div>
-          <div className="relative w-full lg:w-[calc(25%-15px)] h-[229px] lg:h-auto lg:aspect-[265/398] rounded-[12px] overflow-hidden">
+          </AnimatedWrapper>
+          <AnimatedWrapper
+            animation={fadeInAnimation({ scale: 0.95, delay: 0.4 })}
+            className="relative w-full lg:w-[calc(25%-15px)] h-[229px] lg:h-auto lg:aspect-[265/398] rounded-[12px] overflow-hidden"
+          >
             <Image
               src="/images/contacts/contactsInfo/imageOne.webp"
               alt="mountain road"
@@ -32,8 +39,11 @@ export default function ContactsInfo() {
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
             />
-          </div>
-          <div className="flex flex-col gap-y-5 lg:w-[calc(33.5%-15px)]">
+          </AnimatedWrapper>
+          <AnimatedWrapper
+            animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+            className="flex flex-col gap-y-5 lg:w-[calc(33.5%-15px)]"
+          >
             <div className="hidden lg:block relative lg:aspect-[311/253] xl:aspect-[360/253] rounded-[12px] overflow-hidden">
               <Image
                 src="/images/contacts/contactsInfo/imageThree.webp"
@@ -44,8 +54,11 @@ export default function ContactsInfo() {
               />
             </div>
             <Email />
-          </div>
-          <div className="relative flex flex-col justify-end gap-y-5 lg:w-[calc(16.5%-15px)]">
+          </AnimatedWrapper>
+          <AnimatedWrapper
+            animation={fadeInAnimation({ x: 30, delay: 0.4 })}
+            className="relative flex flex-col justify-end gap-y-5 lg:w-[calc(16.5%-15px)]"
+          >
             <SocialList />
             <div className="relative w-full h-[229px] lg:h-[209px] rounded-[12px] overflow-hidden">
               <Image
@@ -56,7 +69,7 @@ export default function ContactsInfo() {
                 className="object-cover"
               />
             </div>
-          </div>
+          </AnimatedWrapper>
         </div>
       </Container>
     </section>

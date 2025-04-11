@@ -1,10 +1,13 @@
 "use client";
-import { reviewsList } from "../shared/reviews/mockedData";
-import Loader from "@/components/shared/loader/Loader";
-import ReviewCard from "@/components/shared/cards/reviewCard/ReviewCard";
 import { Suspense } from "react";
 import { useReviewsItemsPerPage } from "@/hooks/useReviewsItemsPerPage";
+import { reviewsList } from "../shared/reviews/mockedData";
+import { listVariants } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
+import Loader from "@/components/shared/loader/Loader";
+import ReviewCard from "@/components/shared/cards/reviewCard/ReviewCard";
 import Pagination from "../shared/pagination/Pagination";
+import AnimatedListItem from "../shared/animation/AnimatedListItem";
 
 const SECTION_ID = "review-page-reviews";
 
@@ -21,13 +24,20 @@ export default function ReviewsList() {
           scrollTargetId={SECTION_ID}
           useItemsPerPage={useReviewsItemsPerPage}
           renderItems={(currentItems) => (
-            <ul className="flex flex-col gap-y-5">
+            <AnimatedWrapper
+              as="ul"
+              animation={listVariants({
+                staggerChildren: 0.5,
+                delayChildren: 0.4,
+              })}
+              className="flex flex-col gap-y-5"
+            >
               {currentItems.map((review, idx) => (
-                <li key={idx}>
+                <AnimatedListItem key={idx}>
                   <ReviewCard review={review} />
-                </li>
+                </AnimatedListItem>
               ))}
-            </ul>
+            </AnimatedWrapper>
           )}
         />
       </div>
