@@ -13,7 +13,10 @@ export default function SmartTours() {
       id={SECTION_ID}
       className="relative mb-[148px] xl:mb-[180px] scroll-mt-[68px] lg:scroll-mt-[77px] xl:scroll-mt-[99px]"
     >
-      <Container className="md:flex mb-10 md:mb-0">
+      <div
+        className={`w-dvw md:flex mb-10 md:mb-0 px-4 xs:px-[25px] md:pr-0 xl:pl-[80px] sm:max-w-[640px] md:max-w-full 
+        sm:mx-[calc((100vw-640px)/2)] md:mr-0 md:ml-[calc((100vw-768px)/2)] lg:ml-[calc((100vw-1024px)/2)] xl:ml-[calc((100vw-1280px)/2)]`}
+      >
         <AnimatedWrapper
           animation={fadeInAnimation({ y: 30 })}
           className="relative w-full md:w-[325px] xl:w-[455px] h-[408px] md:h-[332px] xl:h-[408px] py-9 md:mr-5 rounded-[12px] 
@@ -40,7 +43,7 @@ export default function SmartTours() {
           <SmartToursSwiper />
         </div>
         <AnimatedArrow />
-      </Container>
+      </div>
       <div className="md:hidden">
         <SmartToursSwiper />
       </div>

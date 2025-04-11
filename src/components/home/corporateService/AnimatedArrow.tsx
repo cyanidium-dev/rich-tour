@@ -32,7 +32,7 @@ export default function AnimatedArrow() {
         strokeLinecap="round"
         initial={{ pathLength: 0, strokeOpacity: 0 }}
         whileInView={{ pathLength: 1, strokeOpacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeInOut", delay: 3 }}
+        transition={{ duration: 0.6, ease: "easeInOut", delay: 3.4 }}
         viewport={{ once: true, amount: 0.8 }}
       />
     </motion.svg>
