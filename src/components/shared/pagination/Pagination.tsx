@@ -96,7 +96,7 @@ export default function Pagination<T>({
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={page === 1}
         >
-          <ArrowInCircleIcon className="rotate-180" />
+          <ArrowInCircleIcon className="size-[21px] rotate-180" />
         </button>
 
         <div>
@@ -125,7 +125,7 @@ export default function Pagination<T>({
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={page === totalPages}
         >
-          <ArrowInCircleIcon />
+          <ArrowInCircleIcon className="size-[21px]" />
         </button>
       </AnimatedWrapper>
     </>
