@@ -1,6 +1,8 @@
 import Image from "next/image";
-import Container from "@/components/shared/container/Container";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import SmartToursSwiper from "./SmartToursSwiper";
+import AnimatedArrow from "./AnimatedArrow";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 
 const SECTION_ID = "smart-tours";
 
@@ -10,8 +12,12 @@ export default function SmartTours() {
       id={SECTION_ID}
       className="relative mb-[148px] xl:mb-[180px] scroll-mt-[68px] lg:scroll-mt-[77px] xl:scroll-mt-[99px]"
     >
-      <Container className="md:flex mb-10 md:mb-0">
-        <div
+      <div
+        className={`w-dvw md:flex mb-10 md:mb-0 px-4 xs:px-[25px] md:pr-0 xl:pl-[80px] sm:max-w-[640px] md:max-w-full 
+        sm:mx-[calc((100vw-640px)/2)] md:mr-0 md:ml-[calc((100vw-768px)/2)] lg:ml-[calc((100vw-1024px)/2)] xl:ml-[calc((100vw-1280px)/2)]`}
+      >
+        <AnimatedWrapper
+          animation={fadeInAnimation({ y: 30 })}
           className="relative w-full md:w-[325px] xl:w-[455px] h-[408px] md:h-[332px] xl:h-[408px] py-9 md:mr-5 rounded-[12px] 
         text-white overflow-hidden"
         >
@@ -31,18 +37,12 @@ export default function SmartTours() {
             це концепція сучасного туризму, поєднує інноваційний підхід,
             індивідуальний сервіс та вигідні умови.
           </p>
-        </div>
+        </AnimatedWrapper>
         <div className="hidden md:block md:w-[calc(100%-345px)] xl:w-[calc(100%-475px)]">
           <SmartToursSwiper />
         </div>
-        <Image
-          src="/images/home/smart/arrow.svg"
-          alt="arrow"
-          width="299"
-          height="98"
-          className="hidden md:block absolute -z-30 bottom-[-38px] left-[calc(50%-266px)] lg:left-[calc(50%-316px)] xl:left-[calc(50%-352px)] object-cover"
-        />
-      </Container>
+        <AnimatedArrow />
+      </div>
       <div className="md:hidden">
         <SmartToursSwiper />
       </div>

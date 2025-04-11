@@ -1,8 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
+import { listVariants } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import NavMenuItem from "./NavMenuItem";
 
 interface NavMenuProps {
   setIsHeaderMenuOpened?: Dispatch<SetStateAction<boolean>>;
+  isAnimated?: boolean;
 }
 
 const navMenuList = [
@@ -14,16 +17,28 @@ const navMenuList = [
   { title: "Контакти", link: "/contacts" },
 ];
 
-export default function NavMenu({ setIsHeaderMenuOpened }: NavMenuProps) {
+export default function NavMenu({
+  setIsHeaderMenuOpened,
+  isAnimated = false,
+}: NavMenuProps) {
   return (
-    <ul className="flex flex-col lg:flex-row gap-x-4">
+    <AnimatedWrapper
+      as="ul"
+      animation={
+        isAnimated
+          ? listVariants({ staggerChildren: 0.5, delayChildren: 0.3 })
+          : undefined
+      }
+      className="flex flex-col lg:flex-row gap-x-4"
+    >
       {navMenuList.map((menuItem, idx) => (
         <NavMenuItem
           key={idx}
           menuItem={menuItem}
+          isAnimated={isAnimated}
           setIsHeaderMenuOpened={setIsHeaderMenuOpened}
         />
       ))}
-    </ul>
+    </AnimatedWrapper>
   );
 }

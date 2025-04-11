@@ -1,8 +1,13 @@
 import Image from "next/image";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 
 export default function NewHorizons() {
   return (
-    <div className="relative md:w-[57.6%] rounded-[12px] overflow-hidden text-white">
+    <AnimatedWrapper
+      animation={fadeInAnimation({ y: 30 })}
+      className="relative md:w-[57.6%] rounded-[12px] overflow-hidden text-white"
+    >
       <Image
         src="/images/home/step/newHorizons.webp"
         alt="background"
@@ -19,6 +24,6 @@ export default function NewHorizons() {
           бездоганного сервісу та справжнього затишку!
         </p>
       </div>
-    </div>
+    </AnimatedWrapper>
   );
 }

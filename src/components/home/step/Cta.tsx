@@ -1,10 +1,15 @@
 import Image from "next/image";
 import { STEP_URL } from "@/constants/constants";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import MainButton from "@/components/shared/buttons/MainButton";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 
 export default function Cta() {
   return (
-    <div className="md:flex flex-col justify-between md:w-[40.6%] border-[1.5px] border-main rounded-[12px] overflow-hidden">
+    <AnimatedWrapper
+      animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+      className="md:flex flex-col justify-between md:w-[40.6%] border-[1.5px] border-main rounded-[12px] overflow-hidden"
+    >
       <div className="flex gap-x-[14px] items-center py-6 px-7 bg-red">
         <Image
           src="/images/home/step/step.webp"
@@ -33,6 +38,6 @@ export default function Cta() {
           </MainButton>
         </a>
       </div>
-    </div>
+    </AnimatedWrapper>
   );
 }
