@@ -10,7 +10,7 @@ export default function AnimatedArrow() {
       height="114"
       viewBox="0 0 103 114"
       fill="none"
-      className="absolute z-20 top-[218px] xl:top-[102px] right-[18px] xl:right-[48px] w-[103px] xl:w-[176px] h-auto"
+      className="absolute z-20 top-[218px] xl:top-[102px] right-[calc(50%-144px)] xl:right-[48px] w-[103px] xl:w-[176px] h-auto"
     >
       {/* Основна крива */}
       <motion.path

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
-import Container from "@/components/shared/container/Container";
 import SmartToursSwiper from "./SmartToursSwiper";
 import AnimatedArrow from "./AnimatedArrow";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";

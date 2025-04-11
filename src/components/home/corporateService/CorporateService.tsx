@@ -33,7 +33,7 @@ export default function CorporateService() {
             <AnimatedWrapper
               as="p"
               animation={fadeInAnimation({ x: -30, delay: 0.4 })}
-              className="mb-8 xl:mb-7 text-32med xl:text-48med text-center"
+              className="max-w-[514px] xl:max-w-[867px] mb-8 xl:mb-7 mx-auto text-32med xl:text-48med text-center"
             >
               Ваша поїздка — наша турбота!
             </AnimatedWrapper>
