@@ -1,5 +1,8 @@
 import { TeamMember } from "@/types/team";
+import { listVariants } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import TeamCard from "./TeamCard";
+import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
 
 interface TeamListDeskProps {
   teamMembers: TeamMember[];
@@ -7,12 +10,16 @@ interface TeamListDeskProps {
 
 export default function TeamListDesk({ teamMembers }: TeamListDeskProps) {
   return (
-    <ul className="hidden md:flex gap-x-5 mt-16">
+    <AnimatedWrapper
+      as="ul"
+      animation={listVariants({ staggerChildren: 0.5, delayChildren: 0.4 })}
+      className="hidden md:flex gap-x-5 mt-16"
+    >
       {teamMembers.slice(0, 4).map((teamMember, idx) => (
-        <li key={idx} className="md:w-[calc(25%-15px)]">
+        <AnimatedListItem key={idx} className="md:w-[calc(25%-15px)]">
           <TeamCard teamMember={teamMember} />
-        </li>
+        </AnimatedListItem>
       ))}
-    </ul>
+    </AnimatedWrapper>
   );
 }

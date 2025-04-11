@@ -1,4 +1,6 @@
 import { allDocumentsUrl, documentsList } from "./mockedData";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";
 import DocumentsTitle from "./DocumentsTitle";
 import MainButton from "@/components/shared/buttons/MainButton";
@@ -18,16 +20,18 @@ export default function Documents() {
         </Container>
       </div>
       <Container>
-        <a
-          href={allDocumentsUrl || ""}
-          target="_blank"
-          rel="noopener noreferrer nofollow"
-          className="block w-full max-w-[346px] mx-auto"
-        >
-          <MainButton variant="black" className="w-full h-[62px] text-16med">
-            Завантажити документи
-          </MainButton>
-        </a>
+        <AnimatedWrapper animation={fadeInAnimation({ y: 30 })}>
+          <a
+            href={allDocumentsUrl || ""}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="block w-full max-w-[346px] mx-auto"
+          >
+            <MainButton variant="black" className="w-full h-[62px] text-16med">
+              Завантажити документи
+            </MainButton>
+          </a>
+        </AnimatedWrapper>
       </Container>
     </section>
   );
