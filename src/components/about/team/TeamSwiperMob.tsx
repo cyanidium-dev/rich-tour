@@ -4,9 +4,11 @@ import "swiper/css/navigation";
 import { Suspense } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { TeamMember } from "@/types/team";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import TeamCard from "./TeamCard";
 import Loader from "@/components/shared/loader/Loader";
-import { TeamMember } from "@/types/team";
 
 interface TeamSwiperMobProps {
   teamMembers: TeamMember[];
@@ -14,7 +16,10 @@ interface TeamSwiperMobProps {
 
 export default function TeamSwiperMob({ teamMembers }: TeamSwiperMobProps) {
   return (
-    <div className="md:hidden">
+    <AnimatedWrapper
+      animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+      className="md:hidden"
+    >
       <Suspense fallback={<Loader />}>
         <div className="md:hidden mt-[148px]">
           <Swiper
@@ -35,6 +40,6 @@ export default function TeamSwiperMob({ teamMembers }: TeamSwiperMobProps) {
           </Swiper>
         </div>
       </Suspense>
-    </div>
+    </AnimatedWrapper>
   );
 }
