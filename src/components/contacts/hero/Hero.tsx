@@ -1,5 +1,7 @@
-import Container from "@/components/shared/container/Container";
 import Image from "next/image";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
+import Container from "@/components/shared/container/Container";
 
 export default function Hero() {
   return (
@@ -13,14 +15,22 @@ export default function Hero() {
         className="absolute top-0 left-0 -z-20 object-cover object-left"
       />
       <Container className="pt-[128px] xl:pt-[103px] pb-[46px] xl:pb-[95px] text-white">
-        <h1 className="mb-[272px] xl:mb-[243px] text-40med xl:text-48med uppercase text-center">
+        <AnimatedWrapper
+          as="h1"
+          animation={fadeInAnimation({ y: 30 })}
+          className="mb-[272px] xl:mb-[243px] text-40med xl:text-48med uppercase text-center"
+        >
           Контакти
-        </h1>
-        <p className="max-w-[283px] md:max-w-[428px] mx-auto text-14reg xl:text-16reg text-center">
+        </AnimatedWrapper>
+        <AnimatedWrapper
+          as="p"
+          animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+          className="max-w-[283px] md:max-w-[428px] mx-auto text-14reg xl:text-16reg text-center"
+        >
           Ми завжди раді вам допомогти! Зв’яжіться з нами будь-яким зручним для
           вас способом, щоб отримати консультацію, забронювати подорож або
           організувати захід вашої мрії.
-        </p>
+        </AnimatedWrapper>
       </Container>
     </section>
   );
