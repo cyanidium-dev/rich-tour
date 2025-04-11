@@ -5,13 +5,15 @@ import { Suspense } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { documentsList } from "./mockedData";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Loader from "@/components/shared/loader/Loader";
 import DocumentCard from "./DocumentCard";
 
 export default function DocumentsSwiper() {
   return (
     <Suspense fallback={<Loader />}>
-      <div className="">
+      <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.8 })}>
         <Swiper
           slidesPerView={"auto"}
           centeredSlides
@@ -46,7 +48,7 @@ export default function DocumentsSwiper() {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </AnimatedWrapper>
     </Suspense>
   );
 }
