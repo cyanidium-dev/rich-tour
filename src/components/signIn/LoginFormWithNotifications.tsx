@@ -4,7 +4,7 @@ import LoginForm from "../shared/forms/LoginForm";
 import NotificationPopUp from "../shared/pop-ups/NotificationPopUp";
 import Backdrop from "../shared/backdrop/Backdrop";
 
-export default function Login() {
+export default function LoginFormWithNotifications() {
   const [isError, setIsError] = useState(false);
   const [isNotificationShown, setIsNotificationShown] = useState(false);
 

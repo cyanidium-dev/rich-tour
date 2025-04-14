@@ -1,5 +1,5 @@
 import Container from "../shared/container/Container";
-import Login from "./Login";
+import LoginFormWithNotifications from "./LoginFormWithNotifications";
 
 export default function SignIn() {
   return (
@@ -7,7 +7,7 @@ export default function SignIn() {
       <Container>
         <div className="max-w-[740px] pt-[120px] pb-[178px] xl:py-[74px] sm:px-8 mx-auto sm:border border-black rounded-[16px]">
           <h1 className="mb-6 text-24semi text-center">Вхід для агентів</h1>
-          <Login />
+          <LoginFormWithNotifications />
         </div>
       </Container>
     </section>
