@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import MainButton from "../buttons/MainButton";
 import LogoLink from "../logoLink/LogoLink";
 import Container from "../container/Container";
@@ -7,7 +8,11 @@ import CurrencyRate from "./currencyRate/CurrencyRate";
 import BurgerMenuButton from "./BurgerMenuButton";
 import BurgerMenu from "./BurgerMenu";
 
-export default function HeaderMob() {
+interface HeaderMobProps {
+  isAuthenticated: boolean;
+}
+
+export default function HeaderMob({ isAuthenticated }: HeaderMobProps) {
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
   const toggleHeaderMenuOpen = () => setIsHeaderMenuOpened(!isHeaderMenuOpened);
 
@@ -17,9 +22,12 @@ export default function HeaderMob() {
         <LogoLink className="w-[44px] xl:w-[75px] h-auto" />
         <div className="flex gap-x-2">
           <CurrencyRate />
-          <MainButton className="text-10med xl:text-14med">
-            Вхід для агентів
-          </MainButton>
+          <Link href="/auth/sign-in">
+            <MainButton className="text-10med xl:text-14med">
+              {isAuthenticated ? "Мій кабінет" : "Вхід для агентів"}
+            </MainButton>
+          </Link>
+
           <BurgerMenuButton
             isHeaderMenuOpened={isHeaderMenuOpened}
             toggleHeaderMenuOpen={toggleHeaderMenuOpen}
