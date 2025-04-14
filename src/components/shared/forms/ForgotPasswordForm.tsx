@@ -2,16 +2,15 @@
 import Link from "next/link";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
-import { loginValidation } from "@/schemas/loginFormValidation";
+import { forgotPasswordValidation } from "@/schemas/forgotPasswordFormValidation";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 
-export interface ValuesLoginFormType {
+export interface ValuesForgotPasswordFormType {
   email: string;
-  password: string;
 }
 
-interface LoginFormProps {
+interface ForgotPasswordFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
   setIsPopUpShown?: Dispatch<SetStateAction<boolean>>;
@@ -19,25 +18,24 @@ interface LoginFormProps {
   variant?: "red" | "black";
 }
 
-export default function LoginForm({
+export default function ForgotPasswordForm({
   setIsError,
   setIsNotificationShown,
   setIsPopUpShown,
   className = "",
   variant = "red",
-}: LoginFormProps) {
+}: ForgotPasswordFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
     email: "",
-    password: "",
   };
 
-  const validationSchema = loginValidation();
+  const validationSchema = forgotPasswordValidation();
 
   const submitForm = async (
-    values: ValuesLoginFormType,
-    formikHelpers: FormikHelpers<ValuesLoginFormType>
+    values: ValuesForgotPasswordFormType,
+    formikHelpers: FormikHelpers<ValuesForgotPasswordFormType>
   ) => {
     const { resetForm } = formikHelpers;
     try {
@@ -48,10 +46,10 @@ export default function LoginForm({
       }
     } catch (error) {
       setIsError(true);
-      setIsNotificationShown(true);
       return error;
     } finally {
       setIsLoading(false);
+      setIsNotificationShown(true);
     }
   };
 
@@ -70,28 +68,12 @@ export default function LoginForm({
               errors={errors}
               touched={touched}
             />
-            <CustomizedInput
-              fieldName="password"
-              inputType="password"
-              placeholder="Ваш пароль"
-              errors={errors}
-              touched={touched}
-            />
           </div>
-          <p className="mb-4 text-12reg text-center">
-            Забули пароль?&nbsp;
-            <Link
-              href="/auth/forgot-password"
-              className="xl:hover:text-main focus-visible:text-main transition duration-300 ease-in-out"
-            >
-              Відновити
-            </Link>
-          </p>
           <SubmitButton
             dirty={dirty}
             isValid={isValid}
             isLoading={isLoading}
-            text="Авторизуватися"
+            text="Відновити пароль"
             variant={variant}
           />
           <div className="mt-4 pt-4 border-t border-black">
