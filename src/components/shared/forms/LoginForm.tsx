@@ -1,7 +1,8 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import { Form, Formik, FormikHelpers } from "formik";
-import { Dispatch, SetStateAction, useState } from "react";
 import { loginValidation } from "@/schemas/loginFormValidation";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
@@ -28,6 +29,8 @@ export default function LoginForm({
 }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
+
   const initialValues = {
     email: "",
     password: "",
@@ -46,6 +49,7 @@ export default function LoginForm({
       if (setIsPopUpShown) {
         setIsPopUpShown(false);
       }
+      router.push("/dashboard");
     } catch (error) {
       setIsError(true);
       setIsNotificationShown(true);
@@ -66,6 +70,7 @@ export default function LoginForm({
           <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
             <CustomizedInput
               fieldName="email"
+              inputType="email"
               placeholder="Вкажіть email"
               errors={errors}
               touched={touched}

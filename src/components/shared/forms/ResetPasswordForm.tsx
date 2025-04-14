@@ -2,15 +2,16 @@
 import Link from "next/link";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
-import { forgotPasswordValidation } from "@/schemas/forgotPasswordFormValidation";
+import { resetPasswordValidation } from "@/schemas/resetPasswordFormValidation";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 
-export interface ValuesForgotPasswordFormType {
-  email: string;
+export interface ValuesResetPasswordFormType {
+  password: string;
+  repeatPassword: string;
 }
 
-interface ForgotPasswordFormProps {
+interface ResetPasswordFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
   setIsPopUpShown?: Dispatch<SetStateAction<boolean>>;
@@ -18,24 +19,25 @@ interface ForgotPasswordFormProps {
   variant?: "red" | "black";
 }
 
-export default function ForgotPasswordForm({
+export default function ResetPasswordForm({
   setIsError,
   setIsNotificationShown,
   setIsPopUpShown,
   className = "",
   variant = "red",
-}: ForgotPasswordFormProps) {
+}: ResetPasswordFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
-    email: "",
+    password: "",
+    repeatPassword: "",
   };
 
-  const validationSchema = forgotPasswordValidation();
+  const validationSchema = resetPasswordValidation();
 
   const submitForm = async (
-    values: ValuesForgotPasswordFormType,
-    formikHelpers: FormikHelpers<ValuesForgotPasswordFormType>
+    values: ValuesResetPasswordFormType,
+    formikHelpers: FormikHelpers<ValuesResetPasswordFormType>
   ) => {
     const { resetForm } = formikHelpers;
     try {
@@ -63,9 +65,16 @@ export default function ForgotPasswordForm({
         <Form className={`${className}`}>
           <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
             <CustomizedInput
-              fieldName="email"
-              inputType="email"
-              placeholder="Вкажіть email"
+              fieldName="password"
+              inputType="password"
+              placeholder="Новий пароль"
+              errors={errors}
+              touched={touched}
+            />
+            <CustomizedInput
+              fieldName="repeatPassword"
+              inputType="password"
+              placeholder="Підтвердити новий пароль"
               errors={errors}
               touched={touched}
             />
@@ -74,7 +83,7 @@ export default function ForgotPasswordForm({
             dirty={dirty}
             isValid={isValid}
             isLoading={isLoading}
-            text="Відновити пароль"
+            text="Встановити пароль"
             variant={variant}
           />
           <div className="mt-4 pt-4 border-t border-black">
