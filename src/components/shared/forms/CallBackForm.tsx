@@ -45,18 +45,11 @@ export default function CallBackForm({
     values: ValuesCallBackFormType,
     formikHelpers: FormikHelpers<ValuesCallBackFormType>
   ) => {
-    const data =
-      `<b>Заявка з сайту Rich Tour</b>\n` +
-      `<b>Ім'я:</b> ${values.name.trim()}\n` +
-      `<b>Телефон:</b> ${values.phone.replace(/[^\d+]/g, "")}\n` +
-      `<b>Повідомлення:</b> ${values.message.trim()}\n`;
-
     await handleSubmitForm<ValuesCallBackFormType>(
       formikHelpers,
       setIsLoading,
       setIsError,
       setIsNotificationShown,
-      data,
       setIsPopUpShown
     );
   };

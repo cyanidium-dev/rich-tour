@@ -19,7 +19,7 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
   return (
     <AnimatedListItem
       onClick={toggleShowMore}
-      className="cursor-pointer px-10 py-[18px] laptop:px-[50px] rounded-[8px] shadow-card"
+      className="cursor-pointer px-[27px] lg:px-10 py-[18px] laptop:px-[50px] rounded-[8px] shadow-card"
     >
       <div className={`flex items-center`}>
         <h3 className="max-w-[calc(100%-38px-12px)] text-14semi xl:text-20semi">
