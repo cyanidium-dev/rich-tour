@@ -2,15 +2,15 @@
 import Link from "next/link";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
-import { resetPasswordValidation } from "@/schemas/resetPasswordFormValidation";
+import { forgotPasswordValidation } from "@/schemas/forgotPasswordFormValidation";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 
-export interface ValuesResetPasswordFormType {
+export interface ValuesForgotPasswordFormType {
   email: string;
 }
 
-interface ResetPasswordFormProps {
+interface ForgotPasswordFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
   setIsPopUpShown?: Dispatch<SetStateAction<boolean>>;
@@ -18,24 +18,24 @@ interface ResetPasswordFormProps {
   variant?: "red" | "black";
 }
 
-export default function ResetPasswordForm({
+export default function ForgotPasswordForm({
   setIsError,
   setIsNotificationShown,
   setIsPopUpShown,
   className = "",
   variant = "red",
-}: ResetPasswordFormProps) {
+}: ForgotPasswordFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
     email: "",
   };
 
-  const validationSchema = resetPasswordValidation();
+  const validationSchema = forgotPasswordValidation();
 
   const submitForm = async (
-    values: ValuesResetPasswordFormType,
-    formikHelpers: FormikHelpers<ValuesResetPasswordFormType>
+    values: ValuesForgotPasswordFormType,
+    formikHelpers: FormikHelpers<ValuesForgotPasswordFormType>
   ) => {
     const { resetForm } = formikHelpers;
     try {

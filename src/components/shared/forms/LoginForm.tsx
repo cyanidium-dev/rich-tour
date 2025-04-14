@@ -81,7 +81,7 @@ export default function LoginForm({
           <p className="mb-4 text-12reg text-center">
             Забули пароль?&nbsp;
             <Link
-              href="/auth/reset-password"
+              href="/auth/forgot-password"
               className="xl:hover:text-main focus-visible:text-main transition duration-300 ease-in-out"
             >
               Відновити

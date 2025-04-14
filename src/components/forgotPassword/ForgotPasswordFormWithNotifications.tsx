@@ -2,9 +2,9 @@
 import { useState } from "react";
 import NotificationPopUp from "../shared/pop-ups/NotificationPopUp";
 import Backdrop from "../shared/backdrop/Backdrop";
-import ResetPasswordForm from "../shared/forms/ResetPasswordForm";
+import ResetPasswordForm from "../shared/forms/ForgotPasswordForm";
 
-export default function ResetPasswordFormWithNotifications() {
+export default function ForgotPasswordFormWithNotifications() {
   const [isError, setIsError] = useState(false);
   const [isNotificationShown, setIsNotificationShown] = useState(false);
 

@@ -1,7 +1,7 @@
 import Container from "../shared/container/Container";
-import ResetPasswordFormWithNotifications from "./ResetPasswordFormWithNotifications";
+import ForgotPasswordFormWithNotifications from "./ForgotPasswordFormWithNotifications";
 
-export default function ResetPassword() {
+export default function ForgotPassword() {
   return (
     <section className="mt-[18px] mb-[148px] xl:mb-[180px]">
       <Container>
@@ -11,7 +11,7 @@ export default function ResetPassword() {
             Введіть електронну пошту вашого облікового запису, щоб отримати
             електронний лист з посиланням для зміни паролю.
           </p>
-          <ResetPasswordFormWithNotifications />
+          <ForgotPasswordFormWithNotifications />
         </div>
       </Container>
     </section>
