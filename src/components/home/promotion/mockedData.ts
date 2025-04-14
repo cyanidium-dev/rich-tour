@@ -18,3 +18,12 @@ const createTours = (template: Tour, count: number): Tour[] => {
 };
 
 export const toursList = createTours(tourTemplate, 23);
+
+export const categories = [
+  { title: "Акційні тури", value: "promotion" },
+  { title: "SMART тури", value: "smart" },
+  { title: "Регулярні тури Європою", value: "europe" },
+  { title: "Тури під заказні групи", value: "custom" },
+  { title: "Львів для дітей", value: "lviv" },
+  { title: "Різдвяні ярмарки Європою", value: "christmas" },
+];
