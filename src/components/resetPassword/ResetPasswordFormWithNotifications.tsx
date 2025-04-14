@@ -2,7 +2,7 @@
 import { useState } from "react";
 import NotificationPopUp from "../shared/pop-ups/NotificationPopUp";
 import Backdrop from "../shared/backdrop/Backdrop";
-import ForgotPasswordForm from "../shared/forms/ForgotPasswordForm";
+import ResetPasswordForm from "../shared/forms/ResetPasswordForm";
 
 export default function ForgotPasswordFormWithNotifications() {
   const [isError, setIsError] = useState(false);
@@ -10,16 +10,14 @@ export default function ForgotPasswordFormWithNotifications() {
 
   return (
     <div className="max-w-[385px] sm:max-w-[280px] mx-auto">
-      <ForgotPasswordForm
+      <ResetPasswordForm
         setIsError={setIsError}
         setIsNotificationShown={setIsNotificationShown}
       />
       <NotificationPopUp
         title={isError ? "На жаль, щось пішло не так" : "Успішно!"}
         description={
-          isError
-            ? "Даний email незареєстрований в системі"
-            : "На вашу електронну адресу відправлений лист."
+          isError ? "Спробуйте відправити ще раз" : "Ваш пароль змінено"
         }
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
