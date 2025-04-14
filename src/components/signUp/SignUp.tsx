@@ -1,14 +1,14 @@
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "../shared/container/Container";
-import LoginFormWithNotifications from "./LoginFormWithNotifications";
+import SignUpFormWithNotifications from "./SignUpFormWithNotifications";
 
-export default function SignIn() {
+export default function SignUp() {
   return (
     <section className="mt-[18px] mb-[148px] xl:mb-[180px]">
       <Container>
         <AnimatedWrapper
-          className="max-w-[740px] pt-[120px] pb-[178px] xl:py-[74px] sm:px-8 mx-auto sm:border border-black
+          className="max-w-[740px] pt-[116px] md:py-20 sm:px-8 mx-auto md:border border-black
          rounded-[16px]"
         >
           <AnimatedWrapper
@@ -16,9 +16,9 @@ export default function SignIn() {
             animation={fadeInAnimation({ y: 30 })}
             className="mb-6 text-24semi text-center"
           >
-            Вхід для агентів
+            Реєстрація агента
           </AnimatedWrapper>
-          <LoginFormWithNotifications />
+          <SignUpFormWithNotifications />
         </AnimatedWrapper>
       </Container>
     </section>

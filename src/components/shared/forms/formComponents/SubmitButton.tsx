@@ -6,6 +6,7 @@ interface SubmitButtonProps {
   isLoading: boolean;
   text: string;
   variant?: "red" | "black";
+  className?: string;
 }
 
 export default function SubmitButton({
@@ -14,13 +15,14 @@ export default function SubmitButton({
   isLoading,
   text,
   variant = "red",
+  className = "w-full",
 }: SubmitButtonProps) {
   return (
     <FormButton
       type="submit"
       disabled={!(dirty && isValid) || isLoading}
       isLoading={isLoading}
-      className="w-full"
+      className={className}
       variant={variant}
     >
       {isLoading ? "Надсилання..." : text}
