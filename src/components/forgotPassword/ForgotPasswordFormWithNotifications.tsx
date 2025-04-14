@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import NotificationPopUp from "../shared/pop-ups/NotificationPopUp";
 import Backdrop from "../shared/backdrop/Backdrop";
 import ForgotPasswordForm from "../shared/forms/ForgotPasswordForm";
@@ -9,7 +11,10 @@ export default function ForgotPasswordFormWithNotifications() {
   const [isNotificationShown, setIsNotificationShown] = useState(false);
 
   return (
-    <div className="max-w-[385px] sm:max-w-[280px] mx-auto">
+    <AnimatedWrapper
+      animation={fadeInAnimation({ y: 30, delay: 0.8 })}
+      className="max-w-[385px] sm:max-w-[280px] mx-auto"
+    >
       <ForgotPasswordForm
         setIsError={setIsError}
         setIsNotificationShown={setIsNotificationShown}
@@ -28,6 +33,6 @@ export default function ForgotPasswordFormWithNotifications() {
         isVisible={isNotificationShown}
         onClick={() => setIsNotificationShown(false)}
       />
-    </div>
+    </AnimatedWrapper>
   );
 }
