@@ -59,7 +59,6 @@ export default function SignUpForm({
     formikHelpers: FormikHelpers<ValuesLoginFormType>
   ) => {
     const { resetForm } = formikHelpers;
-    console.log(values);
     try {
       setIsLoading(true);
       resetForm();
