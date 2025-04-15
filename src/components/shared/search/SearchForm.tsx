@@ -9,11 +9,15 @@ import {
 } from "@heroui/react";
 import Link from "next/link";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
-import { countries, months } from "./mockedData";
+import { countries, months } from "../../home/hero/mockedData";
 import MainButton from "@/components/shared/buttons/MainButton";
 import SearchIcon from "@/components/shared/icons/SearchIcon";
 import SelectIcon from "@/components/shared/icons/SelectIcon";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
+
+interface SearchFormProps {
+  variant?: "red" | "black";
+}
 
 interface FieldState {
   selectedKey: Key | null;
@@ -21,7 +25,7 @@ interface FieldState {
   items: { key: Key; label: string }[];
 }
 
-export default function Search() {
+export default function SearchForm({ variant = "black" }: SearchFormProps) {
   const [countryFieldState, setCountryFieldState] = useState<FieldState>({
     selectedKey: null,
     inputValue: "",
@@ -88,11 +92,24 @@ export default function Search() {
 
   return (
     <AnimatedWrapper
-      animation={fadeInAnimation({ y: 30, delay: 0.8 })}
-      className="flex flex-col md:flex-row md:items-center gap-3 max-w-[325px] md:max-w-[550px] md:py-3 md:px-[14px] mx-auto
-     md:bg-black rounded-full"
+      animation={fadeInAnimation({
+        y: 30,
+        delay: variant === "black" ? 0.8 : 0,
+      })}
+      className={`flex flex-col md:flex-row md:items-center gap-3 max-w-[325px] md:max-w-[550px] py-[18px] md:py-3 px-[14px] mx-auto
+     ${
+       variant === "black"
+         ? "md:bg-black rounded-full"
+         : "bg-main rounded-[40px]"
+     }`}
     >
-      <div className="flex gap-x-3 w-full py-3 px-[13.5px] md:p-0 bg-black md:bg-transparent rounded-full text-14reg md:w-[calc(66.7%-6px)]">
+      <div
+        className={`${
+          variant === "black"
+            ? "flex gap-x-3 py-3 px-[13.5px] md:p-0 bg-black md:bg-transparent"
+            : "flex flex-col md:flex-row gap-3 bg-main"
+        } w-full  rounded-full text-14reg md:w-[calc(66.7%-6px)]`}
+      >
         <Autocomplete
           inputValue={countryFieldState.inputValue}
           items={countryFieldState.items}
