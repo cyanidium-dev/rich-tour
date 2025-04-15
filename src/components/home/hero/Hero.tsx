@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import Container from "@/components/shared/container/Container";
-import Search from "./Search";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import AnimatedArrow from "./AnimatedArrow";
+import SearchForm from "../../shared/search/SearchForm";
 
 export default function Hero() {
   return (
@@ -35,7 +35,7 @@ export default function Hero() {
           Відпочинок вашої мрії ближче, ніж здається
         </AnimatedWrapper>
 
-        <Search />
+        <SearchForm />
       </Container>
     </section>
   );
