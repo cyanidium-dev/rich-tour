@@ -1,27 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { categories } from "../home/promotion/mockedData";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import TabMenuItem from "./TabMenuItem";
-import { Category } from "@/types/categories";
+import { Category } from "@/types/category";
 
-export default function TabMenu() {
+interface TabMenuProps {
+  activeTab: string;
+  setActiveTab: Dispatch<SetStateAction<string>>;
+}
+
+export default function TabMenu({ activeTab, setActiveTab }: TabMenuProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const pathName = usePathname();
-  const category = searchParams.get("category") || "all";
-  const [activeTab, setActiveTab] = useState(category);
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (!params.get("category")) {
-      params.set("category", "all");
-    }
-    if (!params.get("page")) {
-      params.set("page", "1");
-    }
-    router.replace(`?${params.toString()}`, { scroll: false });
-  }, [router, searchParams]);
 
   if (!categories || !categories?.length) return null;
 
@@ -38,7 +31,11 @@ export default function TabMenu() {
   };
 
   return (
-    <ul className="flex flex-col md:flex-row md:flex-wrap gap-y-[15px] gap-x-[14px] max-w-[410px] md:max-w-full mx-auto md:mx-0">
+    <AnimatedWrapper
+      as="ul"
+      animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+      className="flex flex-col md:flex-row md:flex-wrap gap-y-[15px] gap-x-[14px] max-w-[325px] sm:max-w-[440px] md:max-w-full mx-auto md:mx-0"
+    >
       {categoriesList.map((category, idx) => (
         <TabMenuItem
           key={idx}
@@ -47,6 +44,6 @@ export default function TabMenu() {
           onClick={() => handleTabClick(category)}
         />
       ))}
-    </ul>
+    </AnimatedWrapper>
   );
 }

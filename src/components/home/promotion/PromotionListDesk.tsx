@@ -26,8 +26,10 @@ export default function PromotionListDesk() {
             <ul id={SECTION_ID} className="hidden md:flex flex-wrap gap-5">
               {currentItems.map((tour) => (
                 <AnimatedWrapper
+                  as="li"
                   animation={fadeInAnimation({ y: 30 })}
                   key={tour.id}
+                  className="max-w-[210px] md:max-w-[226px] lg:max-w-[228px] xl:max-w-[265px]"
                 >
                   <TourCard tour={tour} />
                 </AnimatedWrapper>

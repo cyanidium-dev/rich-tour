@@ -1,25 +1,11 @@
 import { Tour } from "@/types/tour";
-const tourTemplate = {
-  id: "1",
-  slug: "tour-do-shwejcarii",
-  title: "Тур до Швейцарії",
-  description:
-    "Вирушайте у подорож до Швейцарії – країни неймовірних пейзажів, бездоганного сервісу та справжнього затишку!",
-  duration: 10,
-  mainImage: { url: "/images/mockedPhoto/nightCity.webp", alt: "night city" },
+
+type Category = {
+  title: string;
+  value: string;
 };
 
-const createTours = (template: Tour, count: number): Tour[] => {
-  return Array.from({ length: count }, (_, i) => ({
-    ...template,
-    id: `${i + 1}`,
-    title: `${template.title} #${i + 1}`,
-  }));
-};
-
-export const toursList = createTours(tourTemplate, 23);
-
-export const categories = [
+const categories: Category[] = [
   { title: "Акційні тури", value: "promotion" },
   { title: "SMART тури", value: "smart" },
   { title: "Регулярні тури Європою", value: "europe" },
@@ -27,3 +13,37 @@ export const categories = [
   { title: "Львів для дітей", value: "lviv" },
   { title: "Різдвяні ярмарки Європою", value: "christmas" },
 ];
+
+const getCategoryByIndex = (index: number): Category => {
+  return categories[index % categories.length];
+};
+
+const getEarlyBookingByIndex = (index: number): boolean => {
+  return index % 3 === 0;
+};
+
+const tourTemplate: Tour = {
+  id: "1",
+  slug: "tour-do-shwejcarii",
+  title: "Тур до Швейцарії",
+  description:
+    "Вирушайте у подорож до Швейцарії – країни неймовірних пейзажів, бездоганного сервісу та справжнього затишку!",
+  duration: 10,
+  mainImage: { url: "/images/mockedPhoto/nightCity.webp", alt: "night city" },
+  category: categories[0],
+  earlyBooking: false,
+};
+
+const createTours = (template: Tour, count: number): Tour[] => {
+  return Array.from({ length: count }, (_, i) => ({
+    ...template,
+    id: `${i + 1}`,
+    title: `${template.title} #${i + 1}`,
+    slug: `${template.slug}-${i + 1}`,
+    category: getCategoryByIndex(i),
+    earlyBooking: getEarlyBookingByIndex(i),
+  }));
+};
+
+export const toursList = createTours(tourTemplate, 100);
+export { categories };
