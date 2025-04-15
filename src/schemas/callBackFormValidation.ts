@@ -18,7 +18,7 @@ export const callBackValidation = () => {
         (value) => !!value && value.length >= 6 && value[5] === "0"
       )
       .required("Дане поле обов'язкове до заповнення"),
-    message: yup.string(),
+    message: yup.string().max(200, "Повинно містити не більше 200 символів"),
   });
 
   return callBackFormValidationSchema;
