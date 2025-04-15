@@ -2,6 +2,8 @@ import { fadeInAnimation } from "@/components/shared/animation/animationVariants
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import ArrowHeadIcon from "@/components/shared/icons/ArrowHeadIcon";
 import SearchForm from "../shared/search/SearchForm";
+import Container from "../shared/container/Container";
+import SearchList from "./SearchList";
 
 export default function Search() {
   return (
@@ -21,6 +23,9 @@ export default function Search() {
           <ArrowHeadIcon className="absolute top-[-10px] left-[-4px] text-main" />
         </AnimatedWrapper>
       </div>
+      <Container>
+        <SearchList />
+      </Container>
     </section>
   );
 }
