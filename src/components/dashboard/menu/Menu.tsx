@@ -1,8 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import TabMenu from "./TabMenu";
 import MenuContent from "./MenuContent";
+import Loader from "@/components/shared/loader/Loader";
 
 export default function Menu() {
   const router = useRouter();
@@ -21,7 +22,9 @@ export default function Menu() {
   return (
     <section className="mb-[148px] xl:mb-[180px]">
       <TabMenu activeTab={activeTab} setActiveTab={setActiveTab} />
-      <MenuContent />
+      <Suspense fallback={<Loader />}>
+        <MenuContent />
+      </Suspense>
     </section>
   );
 }
