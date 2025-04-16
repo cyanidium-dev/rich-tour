@@ -174,4 +174,12 @@ ul {
   .menu-scroll::-webkit-scrollbar-track {
     margin-left: 30px;
   }
+
+  .scroll-x {
+    scroll-snap-type: x mandatory;
+  }
+
+  .scroll-snap-item {
+    scroll-snap-align: start;
+  }
 }

@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Container from "@/components/shared/container/Container";
 import TabMenu from "./TabMenu";
 import MenuContent from "./MenuContent";
 
@@ -20,11 +19,9 @@ export default function Menu() {
   }, [router, searchParams]);
 
   return (
-    <section>
+    <section className="mb-[148px] xl:mb-[180px]">
       <TabMenu activeTab={activeTab} setActiveTab={setActiveTab} />
-      <Container>
-        <MenuContent />
-      </Container>
+      <MenuContent />
     </section>
   );
 }
