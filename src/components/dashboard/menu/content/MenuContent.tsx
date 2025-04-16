@@ -1,5 +1,5 @@
 "use client";
-import OrdersContent from "./ordersContent/OrdersContent";
+import OrdersContent from "./OrdersContent";
 import ToursContent from "./ToursContent";
 import SettingsContent from "./SettingsContent";
 import ChangePasswordContent from "./ChangePasswordContent";
@@ -19,6 +19,6 @@ export default function MenuContent() {
     case "change-password":
       return <ChangePasswordContent />;
     case "sign-out":
-      return <div>redirect</div>;
+      return null;
   }
 }

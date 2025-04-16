@@ -11,14 +11,16 @@ export default function ForgotPasswordFormWithNotifications() {
   const [isNotificationShown, setIsNotificationShown] = useState(false);
 
   return (
-    <AnimatedWrapper
-      animation={fadeInAnimation({ y: 30, delay: 0.8 })}
-      className="max-w-[385px] sm:max-w-[280px] mx-auto"
-    >
-      <ResetPasswordForm
-        setIsError={setIsError}
-        setIsNotificationShown={setIsNotificationShown}
-      />
+    <>
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30, delay: 0.8 })}
+        className="max-w-[385px] sm:max-w-[280px] mx-auto"
+      >
+        <ResetPasswordForm
+          setIsError={setIsError}
+          setIsNotificationShown={setIsNotificationShown}
+        />
+      </AnimatedWrapper>
       <NotificationPopUp
         title={isError ? "На жаль, щось пішло не так" : "Успішно!"}
         description={
@@ -31,6 +33,6 @@ export default function ForgotPasswordFormWithNotifications() {
         isVisible={isNotificationShown}
         onClick={() => setIsNotificationShown(false)}
       />
-    </AnimatedWrapper>
+    </>
   );
 }

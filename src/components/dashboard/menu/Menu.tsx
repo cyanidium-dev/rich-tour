@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import TabMenu from "./TabMenu";
-import MenuContent from "./MenuContent";
+import MenuContent from "./content/MenuContent";
 
 export default function Menu() {
   const router = useRouter();

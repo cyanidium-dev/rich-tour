@@ -3,13 +3,15 @@ import { useEffect, useRef } from "react";
 interface TabMenuItemProps {
   menuItem: { title: string; value: string };
   activeTab: string;
-  onClick: () => void;
+  handleTabClick: () => void;
+  signOutClick: () => void;
 }
 
 export default function TabMenuItem({
   menuItem,
   activeTab,
-  onClick,
+  handleTabClick,
+  signOutClick,
 }: TabMenuItemProps) {
   const { title, value } = menuItem;
 
@@ -41,11 +43,15 @@ export default function TabMenuItem({
   return (
     <li ref={itemRef}>
       <button
-        onClick={onClick}
+        onClick={value === "sign-out" ? signOutClick : handleTabClick}
         className={`flex items-center justify-center h-12 px-12 text-14med rounded-full border text-nowrap ${
           activeTab === value
             ? "border-main bg-main text-white"
-            : "border-black bg-white text-black"
+            : ` bg-white  ${
+                value === "sign-out"
+                  ? "border-main text-main"
+                  : "border-black text-black"
+              } `
         } xl:hover:text-white xl:hover:bg-main xl:hover:brightness-[135%] xl:hover:border-main focus-visible:text-white 
         focus-visible:bg-main focus-visible:brightness-[135%] focus-visible:border-main transition duration-300 ease-in-out`}
       >

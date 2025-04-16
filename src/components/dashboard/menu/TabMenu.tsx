@@ -30,6 +30,10 @@ export default function TabMenu({ activeTab, setActiveTab }: TabMenuProps) {
     }
   };
 
+  const signOutClick = () => {
+    router.push("/");
+  };
+
   return (
     <AnimatedWrapper
       as="ul"
@@ -44,7 +48,8 @@ export default function TabMenu({ activeTab, setActiveTab }: TabMenuProps) {
           key={idx}
           menuItem={menuItem}
           activeTab={activeTab}
-          onClick={() => handleTabClick(menuItem)}
+          handleTabClick={() => handleTabClick(menuItem)}
+          signOutClick={signOutClick}
         />
       ))}
     </AnimatedWrapper>
