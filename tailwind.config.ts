@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import { heroui } from "@heroui/react";
+import tailwindScrollbar from "tailwind-scrollbar";
 
 export default {
   content: [
@@ -95,5 +96,11 @@ export default {
       },
     },
   },
-  plugins: [heroui()],
+  plugins: [
+    heroui(),
+    tailwindScrollbar({
+      nocompatible: true,
+      preferredStrategy: "pseudoelements",
+    }),
+  ],
 } satisfies Config;

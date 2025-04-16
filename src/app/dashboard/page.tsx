@@ -1,5 +1,6 @@
 import AgentContract from "@/components/dashboard/agentContract/AgentContract";
 import Hero from "@/components/dashboard/hero/Hero";
+import Menu from "@/components/dashboard/menu/Menu";
 import Telegram from "@/components/dashboard/telegram/Telegram";
 
 export default function DashboardPage() {
@@ -8,6 +9,7 @@ export default function DashboardPage() {
       <Hero />
       <AgentContract />
       <Telegram />
+      <Menu />
     </>
   );
 }
