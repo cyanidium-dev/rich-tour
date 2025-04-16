@@ -169,4 +169,17 @@ ul {
     @apply flex w-full h-full;
     background: url("/images/icons/arrowInCircleRight.svg") center no-repeat;
   }
+
+  /* Menu scroll */
+  .menu-scroll::-webkit-scrollbar-track {
+    margin-left: 30px;
+  }
+
+  .scroll-x {
+    scroll-snap-type: x mandatory;
+  }
+
+  .scroll-snap-item {
+    scroll-snap-align: start;
+  }
 }
