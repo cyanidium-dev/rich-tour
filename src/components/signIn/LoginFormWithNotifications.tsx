@@ -11,14 +11,16 @@ export default function LoginFormWithNotifications() {
   const [isNotificationShown, setIsNotificationShown] = useState(false);
 
   return (
-    <AnimatedWrapper
-      animation={fadeInAnimation({ y: 30, delay: 0.4 })}
-      className="max-w-[385px] sm:max-w-[280px] mx-auto"
-    >
-      <LoginForm
-        setIsError={setIsError}
-        setIsNotificationShown={setIsNotificationShown}
-      />
+    <>
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+        className="max-w-[385px] sm:max-w-[280px] mx-auto"
+      >
+        <LoginForm
+          setIsError={setIsError}
+          setIsNotificationShown={setIsNotificationShown}
+        />
+      </AnimatedWrapper>
       <NotificationPopUp
         title={isError ? "На жаль, щось пішло не так" : ""}
         description={isError ? "Невірний email або пароль." : ""}
@@ -29,6 +31,6 @@ export default function LoginFormWithNotifications() {
         isVisible={isNotificationShown}
         onClick={() => setIsNotificationShown(false)}
       />
-    </AnimatedWrapper>
+    </>
   );
 }

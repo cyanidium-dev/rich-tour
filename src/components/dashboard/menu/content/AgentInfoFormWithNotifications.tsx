@@ -18,10 +18,11 @@ export default function AgentInfoFormWithNotifications({
   const [isNotificationShown, setIsNotificationShown] = useState(false);
 
   return (
-    <AnimatedWrapper
-      animation={fadeInAnimation({ y: 30 })}
-      className="w-full  xl:w-[49.1%]"
-    >
+    <>
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30 })}
+        className="w-full  xl:w-[49.1%]"
+      ></AnimatedWrapper>
       <AgentInfoForm
         setIsError={setIsError}
         setIsNotificationShown={setIsNotificationShown}
@@ -32,7 +33,7 @@ export default function AgentInfoFormWithNotifications({
         description={
           isError
             ? "Спробуйте відправити форму ще раз або зателефонуйте нам."
-            : "Інформація оновлена успішно."
+            : "Інформація успішно змінена."
         }
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
@@ -41,6 +42,6 @@ export default function AgentInfoFormWithNotifications({
         isVisible={isNotificationShown}
         onClick={() => setIsNotificationShown(false)}
       />
-    </AnimatedWrapper>
+    </>
   );
 }

@@ -1,3 +1,10 @@
+import Container from "@/components/shared/container/Container";
+import ChangePasswordFormWithNotifications from "./ChangePasswordFormWithNotifications";
+
 export default function ChangePasswordContent() {
-  return <div>ChangePasswordContent</div>;
+  return (
+    <Container>
+      <ChangePasswordFormWithNotifications />
+    </Container>
+  );
 }
