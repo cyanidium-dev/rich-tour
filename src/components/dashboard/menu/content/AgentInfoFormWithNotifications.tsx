@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import NotificationPopUp from "@/components/shared/pop-ups/NotificationPopUp";
 import Backdrop from "@/components/shared/backdrop/Backdrop";
 import AgentInfoForm from "@/components/shared/forms/AgentInfoForm";
@@ -16,7 +18,10 @@ export default function AgentInfoFormWithNotifications({
   const [isNotificationShown, setIsNotificationShown] = useState(false);
 
   return (
-    <>
+    <AnimatedWrapper
+      animation={fadeInAnimation({ y: 30 })}
+      className="w-full  xl:w-[49.1%]"
+    >
       <AgentInfoForm
         setIsError={setIsError}
         setIsNotificationShown={setIsNotificationShown}
@@ -36,6 +41,6 @@ export default function AgentInfoFormWithNotifications({
         isVisible={isNotificationShown}
         onClick={() => setIsNotificationShown(false)}
       />
-    </>
+    </AnimatedWrapper>
   );
 }

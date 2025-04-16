@@ -78,7 +78,7 @@ export default function AgentInfoForm({
     >
       {({ errors, touched, dirty, isValid }) => (
         <Form
-          className={`${className} flex flex-col md:flex-row xl:flex-col gap-y-[18px] gap-x-5 xl:w-[49.1%]`}
+          className={`${className} flex flex-col md:flex-row xl:flex-col gap-y-[18px] gap-x-5`}
         >
           <div className="flex flex-col gap-[18px] md:w-[calc(50%-10px)] xl:w-full">
             <CustomizedInput
