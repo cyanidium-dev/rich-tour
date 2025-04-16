@@ -7,7 +7,7 @@ export default function ForgotPassword() {
   return (
     <section className="mt-[18px] mb-[148px] xl:mb-[180px]">
       <Container>
-        <AnimatedWrapper className="max-w-[740px] pt-[120px] pb-[178px] xl:py-[74px] sm:px-8 mx-auto sm:border border-black rounded-[16px]">
+        <div className="max-w-[740px] pt-[120px] pb-[178px] xl:py-[74px] sm:px-8 mx-auto sm:border border-black rounded-[16px]">
           <AnimatedWrapper
             as="h1"
             animation={fadeInAnimation({ y: 30 })}
@@ -24,7 +24,7 @@ export default function ForgotPassword() {
             електронний лист з посиланням для зміни паролю.
           </AnimatedWrapper>
           <ForgotPasswordFormWithNotifications />
-        </AnimatedWrapper>
+        </div>
       </Container>
     </section>
   );

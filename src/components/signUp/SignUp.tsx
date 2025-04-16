@@ -7,7 +7,7 @@ export default function SignUp() {
   return (
     <section className="mt-[18px] mb-[148px] xl:mb-[180px]">
       <Container>
-        <AnimatedWrapper
+        <div
           className="max-w-[740px] pt-[116px] md:py-20 sm:px-8 mx-auto md:border border-black
          rounded-[16px]"
         >
@@ -19,7 +19,7 @@ export default function SignUp() {
             Реєстрація агента
           </AnimatedWrapper>
           <SignUpFormWithNotifications />
-        </AnimatedWrapper>
+        </div>
       </Container>
     </section>
   );

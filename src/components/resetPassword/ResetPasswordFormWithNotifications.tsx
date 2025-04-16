@@ -15,11 +15,12 @@ export default function ForgotPasswordFormWithNotifications() {
       <AnimatedWrapper
         animation={fadeInAnimation({ y: 30, delay: 0.8 })}
         className="max-w-[385px] sm:max-w-[280px] mx-auto"
-      ></AnimatedWrapper>
-      <ResetPasswordForm
-        setIsError={setIsError}
-        setIsNotificationShown={setIsNotificationShown}
-      />
+      >
+        <ResetPasswordForm
+          setIsError={setIsError}
+          setIsNotificationShown={setIsNotificationShown}
+        />
+      </AnimatedWrapper>
       <NotificationPopUp
         title={isError ? "На жаль, щось пішло не так" : "Успішно!"}
         description={
