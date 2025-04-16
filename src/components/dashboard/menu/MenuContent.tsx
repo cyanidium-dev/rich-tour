@@ -1,6 +1,6 @@
 "use client";
 import OrdersContent from "./ordersContent/OrdersContent";
-import ToursContent from "./ToursContent";
+import ToursContent from "./ordersContent/ToursContent";
 import SettingsContent from "./SettingsContent";
 import ChangePasswordContent from "./ChangePasswordContent";
 import { useSearchParams } from "next/navigation";

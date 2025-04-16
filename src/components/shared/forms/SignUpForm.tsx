@@ -9,7 +9,7 @@ import { phoneMask } from "@/regex/regex";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 
-export interface ValuesLoginFormType {
+export interface ValuesSignUpFormType {
   email: string;
   companyName: string;
   phone: string;
@@ -21,7 +21,7 @@ export interface ValuesLoginFormType {
   country: string;
 }
 
-interface LoginFormProps {
+interface SignUpFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
   setIsPopUpShown?: Dispatch<SetStateAction<boolean>>;
@@ -35,7 +35,7 @@ export default function SignUpForm({
   setIsPopUpShown,
   className = "",
   variant = "red",
-}: LoginFormProps) {
+}: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -55,8 +55,8 @@ export default function SignUpForm({
   const validationSchema = signUpValidation();
 
   const submitForm = async (
-    values: ValuesLoginFormType,
-    formikHelpers: FormikHelpers<ValuesLoginFormType>
+    values: ValuesSignUpFormType,
+    formikHelpers: FormikHelpers<ValuesSignUpFormType>
   ) => {
     const { resetForm } = formikHelpers;
     try {
