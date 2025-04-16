@@ -61,9 +61,9 @@ export default function AgentInfoForm({
       if (setIsPopUpShown) {
         setIsPopUpShown(false);
       }
+      setIsNotificationShown(true);
     } catch (error) {
       setIsError(true);
-      setIsNotificationShown(true);
       return error;
     } finally {
       setIsLoading(false);

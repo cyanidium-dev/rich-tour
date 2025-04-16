@@ -22,12 +22,13 @@ export default function AgentInfoFormWithNotifications({
       <AnimatedWrapper
         animation={fadeInAnimation({ y: 30 })}
         className="w-full  xl:w-[49.1%]"
-      ></AnimatedWrapper>
-      <AgentInfoForm
-        setIsError={setIsError}
-        setIsNotificationShown={setIsNotificationShown}
-        className={className}
-      />
+      >
+        <AgentInfoForm
+          setIsError={setIsError}
+          setIsNotificationShown={setIsNotificationShown}
+          className={className}
+        />
+      </AnimatedWrapper>
       <NotificationPopUp
         title={isError ? "На жаль, щось пішло не так" : "Дякуємо за оновлення!"}
         description={

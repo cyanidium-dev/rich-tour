@@ -31,13 +31,13 @@ export default function NotificationPopUp({
         height="143"
         className="absolute top-[18px] md:top-[62px] left-[17px] md:left-auto md:right-[38px] w-[92px] md:w-[141px] h-auto scale-x-[-1] md:scale-x-[1]"
       />
-      <div className="relative w-full h-[184px] overflow-hidden rounded-[16px]">
+      <div className="relative w-full h-[182px] overflow-hidden rounded-[16px]">
         <Image
           src="/images/notifications/sea.webp"
           alt="sea"
           sizes="90vw"
           fill
-          className="object-cover object-left"
+          className="w-full h-full object-cover object-left"
         />
       </div>
     </NotificationModal>
