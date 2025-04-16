@@ -90,7 +90,7 @@ export default function AgentInfoForm({
             />
             <CustomizedInput
               fieldName="companyName"
-              placeholder="Повне ім’я назви фірми*"
+              placeholder="Повне ім’я назви фірми"
               errors={errors}
               touched={touched}
             />
