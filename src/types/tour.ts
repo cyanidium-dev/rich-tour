@@ -27,7 +27,7 @@ export interface Tour {
     list: TourBenefitListItem[];
   };
   program: { url: string; list: TourProgramListItem[] };
-  points: [];
+  points: string[];
   includedInCost: [];
   notIncludedInCost: [];
   inspiration: [];

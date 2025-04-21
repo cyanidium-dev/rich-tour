@@ -92,7 +92,7 @@ const tourTemplate: Tour = {
       },
     ],
   },
-  points: [],
+  points: ["Львів", "Румунія", "Трансильванія", "Львів"],
   includedInCost: [],
   notIncludedInCost: [],
   inspiration: [],

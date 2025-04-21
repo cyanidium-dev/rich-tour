@@ -2,6 +2,7 @@ import { toursList } from "@/components/home/promotion/mockedData";
 import Loader from "@/components/shared/loader/Loader";
 import Benefits from "@/components/tour/benefits/Benefits";
 import Hero from "@/components/tour/hero/Hero";
+import Points from "@/components/tour/points/Points";
 import Program from "@/components/tour/program/Program";
 import { Suspense } from "react";
 
@@ -22,6 +23,7 @@ export default async function TourPage({ params }: TourPageProps) {
         <Hero tour={tour} />
         <Benefits tour={tour} />
         <Program tour={tour} />
+        <Points tour={tour} />
       </Suspense>
     </>
   );
