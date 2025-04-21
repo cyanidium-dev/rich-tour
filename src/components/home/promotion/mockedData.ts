@@ -25,7 +25,7 @@ const getEarlyBookingByIndex = (index: number): boolean => {
 const tourTemplate: Tour = {
   id: "1",
   slug: "tour-do-shwejcarii",
-  title: "Тур до Швейцарії",
+  title: "Тур до Швейцарії. Вирушайте у подорож до Швейцарії",
   description:
     "Вирушайте у подорож до Швейцарії – країни неймовірних пейзажів, бездоганного сервісу та справжнього затишку!",
   duration: 10,
@@ -40,7 +40,7 @@ const tourTemplate: Tour = {
     image: { url: "/images/mockedPhoto/benefitImage.webp", alt: "night city" },
     list: [],
   },
-  program: [],
+  program: { url: "", list: [] },
   points: [],
   includedInCost: [],
   notIncludedInCost: [],

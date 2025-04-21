@@ -13,7 +13,7 @@ export interface Tour {
     alt: string;
   }[];
   benefits: { image: { url: string; alt: string }; list: [] };
-  program: [];
+  program: { url: string; list: [] };
   points: [];
   includedInCost: [];
   notIncludedInCost: [];

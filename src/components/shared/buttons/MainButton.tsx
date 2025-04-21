@@ -4,7 +4,13 @@ interface MainButtonProps {
   children: string | ReactNode;
   className?: string;
   type?: "submit" | "button";
-  variant?: "ghost white" | "ghost red" | "red" | "white" | "black";
+  variant?:
+    | "ghost white"
+    | "ghost red"
+    | "ghost black"
+    | "red"
+    | "white"
+    | "black";
   onClick?: () => void | Dispatch<SetStateAction<boolean>>;
 }
 
@@ -29,6 +35,8 @@ export default function MainButton({
              ? "border-main bg-white before:bg-main text-main xl:hover:text-white focus-visible:text-white"
              : variant === "ghost white"
              ? "border-white bg-transparent before:bg-white text-white xl:hover:text-black focus-visible:text-black"
+             : variant === "ghost black"
+             ? "border-black text-black before:bg-black xl:hover:text-white focus-visible:text-white"
              : variant === "white"
              ? "border-white bg-white text-main before:bg-main xl:hover:text-white focus-visible:text-white"
              : "border-black bg-black text-white before:bg-white xl:hover:text-black focus-visible:text-black"

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getDayWord } from "@/utils/getDayWord";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import { Tour } from "@/types/tour";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
@@ -54,7 +55,7 @@ export default function TourCard({ tour }: TourCardProps) {
           {description}
         </p>
         <p className="mb-[14px] xl:mb-[22px] text-12semi xl:text-14semi">
-          {duration}&nbsp;днів
+          {duration}&nbsp;{getDayWord(duration)}
         </p>
         <SecondaryButton>Детальніше</SecondaryButton>
       </div>
