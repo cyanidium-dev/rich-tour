@@ -10,15 +10,8 @@ interface TourCardProps {
 }
 
 export default function TourCard({ tour }: TourCardProps) {
-  const {
-    title,
-    description,
-    mainImage,
-    duration,
-    slug,
-    category,
-    earlyBooking,
-  } = tour;
+  const { title, description, images, duration, slug, category, earlyBooking } =
+    tour;
 
   const isOnPromo = category?.value === "promotion";
 
@@ -47,8 +40,8 @@ export default function TourCard({ tour }: TourCardProps) {
           Раннє бронювання
         </AnimatedWrapper>
         <Image
-          src={mainImage?.url}
-          alt={mainImage?.alt}
+          src={images[0]?.url}
+          alt={images[0]?.alt}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
         />

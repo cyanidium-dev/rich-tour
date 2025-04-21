@@ -29,9 +29,22 @@ const tourTemplate: Tour = {
   description:
     "Вирушайте у подорож до Швейцарії – країни неймовірних пейзажів, бездоганного сервісу та справжнього затишку!",
   duration: 10,
-  mainImage: { url: "/images/mockedPhoto/nightCity.webp", alt: "night city" },
+  images: [
+    { url: "/images/mockedPhoto/nightCity.webp", alt: "night city" },
+    { url: "/images/mockedPhoto/tourTwo.webp", alt: "night city" },
+    { url: "/images/mockedPhoto/tourThree.webp", alt: "night city" },
+  ],
   category: categories[0],
   earlyBooking: false,
+  benefits: {
+    image: { url: "/images/mockedPhoto/benefitImage.webp", alt: "night city" },
+    list: [],
+  },
+  program: [],
+  points: [],
+  includedInCost: [],
+  notIncludedInCost: [],
+  inspiration: [],
 };
 
 const createTours = (template: Tour, count: number): Tour[] => {
