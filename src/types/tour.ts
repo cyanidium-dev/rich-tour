@@ -5,6 +5,11 @@ export interface TourBenefitListItem {
   sublist?: string[];
 }
 
+export interface TourProgramListItem {
+  description?: string;
+  sublist: { title: string; description?: string }[];
+}
+
 export interface Tour {
   id: string;
   slug: string;
@@ -21,7 +26,7 @@ export interface Tour {
     image: { url: string; alt: string };
     list: TourBenefitListItem[];
   };
-  program: { url: string; list: [] };
+  program: { url: string; list: TourProgramListItem[] };
   points: [];
   includedInCost: [];
   notIncludedInCost: [];

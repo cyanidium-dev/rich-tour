@@ -38,7 +38,7 @@ export default function Hero({ tour }: HeroProps) {
               animation={fadeInAnimation({ y: 30, delay: 0.4 })}
               className="flex flex-col lg:flex-row gap-2 md:mb-6"
             >
-              <MainButton className="w-full lg:w-[198px] text-14med">
+              <MainButton className="w-full lg:w-[198px] h-12 text-14med">
                 Забронювати
               </MainButton>
               <a
@@ -48,7 +48,7 @@ export default function Hero({ tour }: HeroProps) {
               >
                 <MainButton
                   variant="ghost black"
-                  className="w-full lg:w-[249px] text-14med"
+                  className="w-full lg:w-[249px] h-12 text-14med"
                 >
                   Завантажити програму туру
                 </MainButton>
