@@ -1,8 +1,8 @@
+import Image from "next/image";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import { TourBenefitListItem } from "@/types/tour";
-import Image from "next/image";
 
 interface BenefitsListItemProps {
   listItem: TourBenefitListItem;
