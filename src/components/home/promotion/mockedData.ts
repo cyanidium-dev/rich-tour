@@ -107,7 +107,36 @@ const tourTemplate: Tour = {
     "Вхідні квитки",
     "Додатково (при бажанні). Передні місця в автобусі (1-20) - 10 €. Страховий поліс ( орієнтовно 3 €)",
   ],
-  inspiration: [],
+  inspiration: [
+    {
+      text: "Проїзд комфортабельним автобусом євро класу",
+      image: { url: "/images/mockedPhoto/inspirationOne.webp", alt: "" },
+    },
+    {
+      text: "Проживання в готелі 3*",
+      image: { url: "", alt: "" },
+    },
+    {
+      text: "Екскурсія замками Трансильванії",
+      image: { url: "/images/mockedPhoto/inspirationTwo.webp", alt: "" },
+    },
+    {
+      text: "Супровід професійного керівника групи",
+      image: { url: "", alt: "" },
+    },
+    {
+      text: "Сніданок в готелі на базі швецького столу",
+      image: { url: "/images/mockedPhoto/inspirationThree.webp", alt: "" },
+    },
+    {
+      text: "Робота місцевого гіда",
+      image: { url: "", alt: "" },
+    },
+    {
+      text: "Оглядова екскурсія по Брашову",
+      image: { url: "/images/mockedPhoto/inspirationFour.webp", alt: "" },
+    },
+  ],
 };
 
 const createTours = (template: Tour, count: number): Tour[] => {

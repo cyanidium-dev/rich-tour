@@ -6,6 +6,7 @@ import Hero from "@/components/tour/hero/Hero";
 import Points from "@/components/tour/points/Points";
 import Program from "@/components/tour/program/Program";
 import TourCostDetails from "@/components/tour/tourCostDetails/TourCostDetails";
+import Inspiration from "@/components/tour/inspiration/Inspiration";
 
 interface TourPageProps {
   params: Promise<{ slug: string }>;
@@ -26,6 +27,7 @@ export default async function TourPage({ params }: TourPageProps) {
         <Program tour={tour} />
         <Points tour={tour} />
         <TourCostDetails tour={tour} />
+        <Inspiration tour={tour} />
       </Suspense>
     </>
   );

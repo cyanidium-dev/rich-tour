@@ -10,6 +10,11 @@ export interface TourProgramListItem {
   sublist: { title: string; description?: string }[];
 }
 
+export interface InspirationItem {
+  text: string;
+  image?: { url: string; alt: string };
+}
+
 export interface Tour {
   id: string;
   slug: string;
@@ -30,5 +35,5 @@ export interface Tour {
   points: string[];
   includedInCost: string[];
   notIncludedInCost: string[];
-  inspiration: [];
+  inspiration: InspirationItem[];
 }
