@@ -1,7 +1,10 @@
 import { TourProgramListItem } from "@/types/tour";
-import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
-import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
+import {
+  fadeInAnimation,
+  listVariants,
+} from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
+import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
 
 interface ProgramListItemProps {
   programItem: TourProgramListItem;
@@ -15,7 +18,7 @@ export default function ProgramListItem({
   const { description, sublist } = programItem;
 
   return (
-    <li>
+    <AnimatedWrapper as="li" animation={fadeInAnimation({ y: 30 })}>
       <div className="h-[61px] py-2 px-4 md:px-[10px] mb-7 rounded-full bg-main">
         <p className="flex justify-center items-center w-full md:w-fit h-full px-9 rounded-full bg-white text-20semi">
           {idx + 1}&nbsp;день
@@ -25,9 +28,13 @@ export default function ProgramListItem({
         <p className="mb-7 xl:mb-10 text-14reg xl:text-20reg">{description}</p>
       ) : null}
       {!sublist || !sublist.length ? null : (
-        <ul className="flex flex-col gap-y-5 xl:gap-y-7">
+        <AnimatedWrapper
+          as="ul"
+          animation={listVariants({ staggerChildren: 0.5, delayChildren: 0.4 })}
+          className="flex flex-col gap-y-5 xl:gap-y-7"
+        >
           {sublist.map((sublistItem, idx) => (
-            <li key={idx}>
+            <AnimatedListItem key={idx}>
               <div className="flex items-center gap-x-5">
                 <AnimatedWrapper
                   animation={fadeInAnimation({ scale: 0.9, delay: 0.8 })}
@@ -42,10 +49,10 @@ export default function ProgramListItem({
                   {sublistItem?.description}
                 </p>
               ) : null}
-            </li>
+            </AnimatedListItem>
           ))}
-        </ul>
+        </AnimatedWrapper>
       )}
-    </li>
+    </AnimatedWrapper>
   );
 }
