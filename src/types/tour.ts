@@ -28,7 +28,7 @@ export interface Tour {
   };
   program: { url: string; list: TourProgramListItem[] };
   points: string[];
-  includedInCost: [];
-  notIncludedInCost: [];
+  includedInCost: string[];
+  notIncludedInCost: string[];
   inspiration: [];
 }
