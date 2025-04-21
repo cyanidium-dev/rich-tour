@@ -1,5 +1,10 @@
 import { Category } from "./category";
 
+export interface TourBenefitListItem {
+  text: string;
+  sublist?: string[];
+}
+
 export interface Tour {
   id: string;
   slug: string;
@@ -12,7 +17,10 @@ export interface Tour {
     url: string;
     alt: string;
   }[];
-  benefits: { image: { url: string; alt: string }; list: [] };
+  benefits: {
+    image: { url: string; alt: string };
+    list: TourBenefitListItem[];
+  };
   program: { url: string; list: [] };
   points: [];
   includedInCost: [];

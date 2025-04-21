@@ -38,7 +38,14 @@ const tourTemplate: Tour = {
   earlyBooking: false,
   benefits: {
     image: { url: "/images/mockedPhoto/benefitImage.webp", alt: "night city" },
-    list: [],
+    list: [
+      {
+        text: "Екскурсії в два неймовірні замки",
+        sublist: ["Замок Дракули Бран", "Замок з серіалу Венздей"],
+      },
+      { text: "Знамените місто - Брашов" },
+      { text: "Тематична фотосесія" },
+    ],
   },
   program: { url: "", list: [] },
   points: [],

@@ -56,7 +56,7 @@ export default function Hero({ tour }: HeroProps) {
             </AnimatedWrapper>
           </div>
           <AnimatedWrapper
-            animation={fadeInAnimation({ x: 30, delay: 0.8 })}
+            animation={fadeInAnimation({ x: 30, delay: 0.4 })}
             className="relative w-full md:w-[57.6%] h-[184px] md:h-auto md:flex-1 rounded-[12px] overflow-hidden"
           >
             <Image

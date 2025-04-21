@@ -1,4 +1,5 @@
 import { toursList } from "@/components/home/promotion/mockedData";
+import Benefits from "@/components/tour/benefits/Benefits";
 import Hero from "@/components/tour/hero/Hero";
 
 interface TourPageProps {
@@ -15,6 +16,7 @@ export default async function TourPage({ params }: TourPageProps) {
   return (
     <>
       <Hero tour={tour} />
+      <Benefits tour={tour} />
     </>
   );
 }
