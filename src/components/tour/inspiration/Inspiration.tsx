@@ -7,6 +7,7 @@ import Container from "@/components/shared/container/Container";
 
 import InspirationListMob from "./inspirationMob/InspirationListMob";
 import InspirationListDesk from "./inspirationDesk/InspirationListDesk";
+import AnimatedArrow from "./AnimatedArrow";
 
 interface InspirationProps {
   tour: Tour;
@@ -29,7 +30,11 @@ export default function Inspiration({ tour }: InspirationProps) {
       <InspirationListMob inspiration={inspiration} />
       <InspirationListDesk inspiration={inspiration} />
       <Container>
-        <AnimatedWrapper animation={fadeInAnimation({ y: 30 })}>
+        <AnimatedWrapper
+          animation={fadeInAnimation({ y: 30 })}
+          className="relative w-full max-w-[346px] mx-auto"
+        >
+          <AnimatedArrow />
           <Link href={program?.url || ""}>
             <MainButton
               variant="black"
