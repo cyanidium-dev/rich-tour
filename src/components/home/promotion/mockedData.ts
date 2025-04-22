@@ -33,6 +33,8 @@ const tourTemplate: Tour = {
     { url: "/images/mockedPhoto/nightCity.webp", alt: "night city" },
     { url: "/images/mockedPhoto/tourTwo.webp", alt: "night city" },
     { url: "/images/mockedPhoto/tourThree.webp", alt: "night city" },
+    { url: "/images/mockedPhoto/tourFour.webp", alt: "night city" },
+    { url: "/images/mockedPhoto/tourFive.webp", alt: "night city" },
   ],
   category: categories[0],
   earlyBooking: false,
