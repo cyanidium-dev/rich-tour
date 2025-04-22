@@ -20,7 +20,7 @@ export default function TourCost({ tour }: TourCostProps) {
             формат для себе
           </p>
           {images[3] ? (
-            <div className="relative h-[498px] rounded-[12px] overflow-hidden">
+            <div className="relative h-[544px] rounded-[12px] overflow-hidden">
               <Image
                 src={images[3].url}
                 alt={images[3].alt}
@@ -33,7 +33,7 @@ export default function TourCost({ tour }: TourCostProps) {
         </div>
         <Calendar />
         {images[4] ? (
-          <div className="hidden md:block relative md:w-[calc(33.3%-26.67px)] h-[646px] rounded-[12px] overflow-hidden">
+          <div className="hidden md:block relative md:w-[calc(33.3%-26.67px)] h-[702px] rounded-[12px] overflow-hidden">
             <Image
               src={images[4].url}
               alt={images[4].alt}
