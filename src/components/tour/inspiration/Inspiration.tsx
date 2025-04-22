@@ -2,7 +2,7 @@ import MainButton from "@/components/shared/buttons/MainButton";
 import Container from "@/components/shared/container/Container";
 import { Tour } from "@/types/tour";
 import Link from "next/link";
-import InspirationList from "./InspirationList";
+import InspirationListMob from "./InspirationListMob";
 
 interface InspirationProps {
   tour: Tour;
@@ -18,7 +18,7 @@ export default function Inspiration({ tour }: InspirationProps) {
           Натхнення
         </h2>
       </Container>
-      <InspirationList inspiration={inspiration} />
+      <InspirationListMob inspiration={inspiration} />
       <Container>
         <Link href={program?.url || ""}>
           <MainButton

@@ -110,31 +110,31 @@ const tourTemplate: Tour = {
   inspiration: [
     {
       text: "Проїзд комфортабельним автобусом євро класу",
-      image: { url: "/images/mockedPhoto/inspirationOne.webp", alt: "" },
+      images: [{ url: "/images/mockedPhoto/inspirationOne.webp", alt: "" }],
     },
     {
       text: "Проживання в готелі 3*",
-      image: { url: "", alt: "" },
     },
     {
       text: "Екскурсія замками Трансильванії",
-      image: { url: "/images/mockedPhoto/inspirationTwo.webp", alt: "" },
+      images: [
+        { url: "/images/mockedPhoto/inspirationTwo.webp", alt: "" },
+        { url: "/images/mockedPhoto/inspirationThree.webp", alt: "" },
+      ],
     },
     {
       text: "Супровід професійного керівника групи",
-      image: { url: "", alt: "" },
     },
     {
       text: "Сніданок в готелі на базі швецького столу",
-      image: { url: "/images/mockedPhoto/inspirationThree.webp", alt: "" },
+      images: [{ url: "/images/mockedPhoto/inspirationFour.webp", alt: "" }],
     },
     {
       text: "Робота місцевого гіда",
-      image: { url: "", alt: "" },
     },
     {
       text: "Оглядова екскурсія по Брашову",
-      image: { url: "/images/mockedPhoto/inspirationFour.webp", alt: "" },
+      images: [{ url: "/images/mockedPhoto/inspirationFive.webp", alt: "" }],
     },
   ],
 };

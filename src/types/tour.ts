@@ -12,7 +12,7 @@ export interface TourProgramListItem {
 
 export interface InspirationItem {
   text: string;
-  image?: { url: string; alt: string };
+  images?: { url: string; alt: string }[];
 }
 
 export interface Tour {
