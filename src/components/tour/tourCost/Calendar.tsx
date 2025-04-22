@@ -75,34 +75,43 @@ export default function Calendar() {
       discount: "/images/icons/calendar/discount.svg",
     };
 
+    const hasPrice = !!dayData?.price;
+
     return (
       <button
         {...buttonProps}
-        className={`w-[44px] h-[49px] rounded-[6px] relative border-2`}
+        className={`w-[44px] h-[49px] rounded-[6px] border-2 relative px-[2px] ${
+          hasPrice
+            ? "flex flex-col items-center justify-start pt-[2px]"
+            : "flex items-center justify-center"
+        }`}
         style={{
           borderColor: borderColor,
           color: textColor,
         }}
       >
-        <span>{date.getDate()}</span>
+        <span className={`${hasPrice ? "text-12med" : "text-16reg"}`}>
+          {date.getDate()}
+        </span>
 
-        {showIcons.map((s, idx) => {
-          const icon = statusIcons[s];
-          if (!icon) return null;
+        {hasPrice && (
+          <span className="text-10semi text-black mt-[1px]">
+            {dayData.price}$
+          </span>
+        )}
 
-          return (
-            <Image
-              key={s}
-              src={icon}
-              alt={s}
-              width={13}
-              height={13}
-              className={`absolute ${
-                idx === 0 ? "bottom-0 left-1" : "bottom-0 left-5"
-              }`}
-            />
-          );
-        })}
+        {showIcons.length > 0 && (
+          <div className="absolute bottom-[2px] left-1 flex gap-[6px]">
+            {showIcons.map((s) => {
+              const icon = statusIcons[s];
+              if (!icon) return null;
+
+              return (
+                <Image key={s} src={icon} alt={s} width={13} height={13} />
+              );
+            })}
+          </div>
+        )}
       </button>
     );
   }

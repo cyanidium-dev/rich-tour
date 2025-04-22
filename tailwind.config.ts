@@ -31,6 +31,7 @@ export default {
         "9reg": ["9px", { fontWeight: "400", lineHeight: "1.23" }],
         "10reg": ["10px", { fontWeight: "400", lineHeight: "1.23" }],
         "10med": ["10px", { fontWeight: "500", lineHeight: "1.23" }],
+        "10semi": ["10px", { fontWeight: "600", lineHeight: "1.23" }],
         "10bold": ["10px", { fontWeight: "700", lineHeight: "1.23" }],
         "12light": ["12px", { fontWeight: "300", lineHeight: "1.23" }],
         "12reg": ["12px", { fontWeight: "400", lineHeight: "1.23" }],
