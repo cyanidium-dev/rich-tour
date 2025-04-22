@@ -5,7 +5,8 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import MainButton from "@/components/shared/buttons/MainButton";
 import Container from "@/components/shared/container/Container";
 
-import InspirationListMob from "./InspirationListMob";
+import InspirationListMob from "./inspirationMob/InspirationListMob";
+import InspirationListDesk from "./inspirationDesk/InspirationListDesk";
 
 interface InspirationProps {
   tour: Tour;
@@ -26,6 +27,7 @@ export default function Inspiration({ tour }: InspirationProps) {
         </AnimatedWrapper>
       </Container>
       <InspirationListMob inspiration={inspiration} />
+      <InspirationListDesk inspiration={inspiration} />
       <Container>
         <AnimatedWrapper animation={fadeInAnimation({ y: 30 })}>
           <Link href={program?.url || ""}>

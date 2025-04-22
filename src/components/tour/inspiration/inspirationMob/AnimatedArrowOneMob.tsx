@@ -10,7 +10,7 @@ export default function AnimatedArrowOneMob() {
       height="222"
       viewBox="0 0 158 222"
       fill="none"
-      className="absolute z-10 bottom-[93px] left-[18px] w-[158px] h-[222px]"
+      className="absolute z-20 bottom-[93px] left-[18px] w-[158px] h-[222px]"
     >
       {/* Основний шлях */}
       <motion.path

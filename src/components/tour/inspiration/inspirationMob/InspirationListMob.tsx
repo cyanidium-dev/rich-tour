@@ -3,8 +3,8 @@ import { InspirationItem } from "@/types/tour";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import AnimatedArrowOneMob from "./AnimatedArrowOneMob";
-import AnimatedArrowTwoMob from "./AnimatedArrowTwoMob";
 import AnimatedArrowThreeMob from "./AnimatedArrowThreeMob";
+import AnimatedArrowTwoMob from "./AnimatedArrowTwoMob";
 
 interface InspirationListMobProps {
   inspiration: InspirationItem[];
@@ -16,7 +16,7 @@ export default function InspirationListMob({
   if (!inspiration || !inspiration.length) return null;
 
   return (
-    <div className="mb-[42px] xl:mb-16 text-white text-14semi">
+    <div className="lg:hidden mb-[42px] xl:mb-16 text-white text-14semi md:text-20semi">
       {/* Перший рядок */}
       <AnimatedWrapper
         animation={fadeInAnimation({ y: 30 })}
@@ -100,7 +100,7 @@ export default function InspirationListMob({
         animation={fadeInAnimation({ y: 30 })}
         className="flex items-end h-[133px] p-[26px] bg-black"
       >
-        <p className="max-w-[129px]">{inspiration[4]?.text}</p>
+        <p className="max-w-[40%]">{inspiration[4]?.text}</p>
       </AnimatedWrapper>
       {/* П'ятий рядок */}
       <AnimatedWrapper
@@ -128,7 +128,7 @@ export default function InspirationListMob({
         animation={fadeInAnimation({ y: 30 })}
         className="flex items-end justify-end h-[133px] p-[26px] bg-black text-right"
       >
-        <p className="max-w-[193px]">{inspiration[6]?.text}</p>
+        <p className="max-w-[40%]">{inspiration[6]?.text}</p>
       </AnimatedWrapper>
     </div>
   );

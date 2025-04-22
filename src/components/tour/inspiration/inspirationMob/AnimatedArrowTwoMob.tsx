@@ -10,7 +10,7 @@ export default function AnimatedArrowTwoMob() {
       height="227"
       viewBox="0 0 162 227"
       fill="none"
-      className="absolute z-10 bottom-[98px] right-[-50px] w-[162px] h-[227px]"
+      className="absolute z-20 bottom-[98px] right-[-50px] w-[162px] h-[227px]"
     >
       {/* Основна крива */}
       <motion.path

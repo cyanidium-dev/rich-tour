@@ -10,7 +10,7 @@ export default function AnimatedArrowThreeMob() {
       height="231"
       viewBox="0 0 212 231"
       fill="none"
-      className="absolute z-10 top-[-77px] left-[-70px] w-[212px] h-[231px]"
+      className="absolute z-20 top-[-77px] left-[-70px] w-[212px] h-[231px]"
     >
       {/* Основна крива */}
       <motion.path
