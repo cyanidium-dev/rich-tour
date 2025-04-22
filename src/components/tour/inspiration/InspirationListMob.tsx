@@ -1,5 +1,10 @@
-import { InspirationItem } from "@/types/tour";
 import Image from "next/image";
+import { InspirationItem } from "@/types/tour";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
+import AnimatedArrowOneMob from "./AnimatedArrowOneMob";
+import AnimatedArrowTwoMob from "./AnimatedArrowTwoMob";
+import AnimatedArrowThreeMob from "./AnimatedArrowThreeMob";
 
 interface InspirationListMobProps {
   inspiration: InspirationItem[];
@@ -13,7 +18,10 @@ export default function InspirationListMob({
   return (
     <div className="mb-[42px] xl:mb-16 text-white text-14semi">
       {/* Перший рядок */}
-      <div className="flex items-center justify-center">
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30 })}
+        className="flex items-center justify-center"
+      >
         <div className="relative w-1/2 h-[422px]">
           <div className="absolute inset-0 z-10 bg-inspiration"></div>
           {inspiration[0]?.images?.[0] && (
@@ -25,17 +33,22 @@ export default function InspirationListMob({
             />
           )}
         </div>
-        <div className="w-1/2 h-[422px]">
+        <div className="relative w-1/2 h-[422px]">
+          <AnimatedArrowOneMob />
           <p className="h-[296px] p-[26px] bg-main">{inspiration[1]?.text}</p>
           <p className="flex items-end h-[126px] p-[26px] bg-black">
             {inspiration[0]?.text}
           </p>
         </div>
-      </div>
+      </AnimatedWrapper>
       {/* Другий рядок */}
-      <div className="flex items-center justify-center">
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30 })}
+        className="flex items-center justify-center"
+      >
         <div className="relative flex items-end w-1/2 h-[366px] p-[26px] bg-black">
           {inspiration[2]?.text}
+          <AnimatedArrowTwoMob />
         </div>
         <div className="w-1/2 h-[366px]">
           <div className="relative h-[187px]">
@@ -61,9 +74,12 @@ export default function InspirationListMob({
             )}
           </div>
         </div>
-      </div>
+      </AnimatedWrapper>
       {/* Третій рядок */}
-      <div className="flex items-center justify-center">
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30 })}
+        className="flex items-center justify-center"
+      >
         <div className="relative w-1/2 h-[268px]">
           <div className="absolute inset-0 z-10 bg-inspiration"></div>
           {inspiration[4]?.images?.[0] && (
@@ -78,17 +94,24 @@ export default function InspirationListMob({
         <div className="flex items-end w-1/2 h-[268px] bg-main p-[26px]">
           {inspiration[3]?.text}
         </div>
-      </div>
+      </AnimatedWrapper>
       {/* Четвертий рядок */}
-      <div className="flex items-end h-[133px] p-[26px] bg-black">
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30 })}
+        className="flex items-end h-[133px] p-[26px] bg-black"
+      >
         <p className="max-w-[129px]">{inspiration[4]?.text}</p>
-      </div>
+      </AnimatedWrapper>
       {/* П'ятий рядок */}
-      <div className="flex items-center justify-center">
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30 })}
+        className="flex items-center justify-center"
+      >
         <div className="flex items-end w-1/2 h-[244px] p-[26px] bg-main">
           {inspiration[5]?.text}
         </div>
         <div className="relative w-1/2 h-[244px]">
+          <AnimatedArrowThreeMob />
           <div className="absolute inset-0 z-10 bg-inspiration"></div>
           {inspiration[6]?.images?.[0] && (
             <Image
@@ -99,11 +122,14 @@ export default function InspirationListMob({
             />
           )}
         </div>
-      </div>
+      </AnimatedWrapper>
       {/* Шостий рядок */}
-      <div className="flex items-end justify-end h-[133px] p-[26px] bg-black text-right">
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30 })}
+        className="flex items-end justify-end h-[133px] p-[26px] bg-black text-right"
+      >
         <p className="max-w-[193px]">{inspiration[6]?.text}</p>
-      </div>
+      </AnimatedWrapper>
     </div>
   );
 }
