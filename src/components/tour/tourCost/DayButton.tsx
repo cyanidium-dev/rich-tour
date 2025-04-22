@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { DayButtonProps } from "react-day-picker";
 import { tourDepartures } from "./mockedData";
@@ -49,7 +47,9 @@ export default function DayButton(props: DayButtonProps) {
   const hasPrice = !!dayData?.price;
   const isSelected = modifiers.selected;
   const isDisabled =
-    status.includes("noSeats") || status.includes("noDeparture");
+    status.includes("noSeats") || status.includes("noDeparture") || !dayData;
+
+  const textOpacity = isDisabled ? 0.5 : 1;
 
   return (
     <button
@@ -58,7 +58,7 @@ export default function DayButton(props: DayButtonProps) {
         hasPrice
           ? "flex flex-col items-center justify-start pt-[2px]"
           : "flex items-center justify-center"
-      } ${isDisabled ? "opacity-50" : ""}`}
+      }`}
       style={{
         borderColor,
         color: textColor,
@@ -66,6 +66,9 @@ export default function DayButton(props: DayButtonProps) {
       disabled={isDisabled}
     >
       <span
+        style={{
+          opacity: textOpacity,
+        }}
         className={`${hasPrice ? "text-12med" : "text-16reg"} ${
           isSelected ? "font-bold" : ""
         }`}
