@@ -1,5 +1,5 @@
 export const tourDepartures = {
-  "2025-08": [
+  "2025-04": [
     { day: 1, price: 318, status: ["guaranteed", "fewSeats"] },
     { day: 5, price: 299, status: ["discount"] },
     { day: 9, price: 310, status: ["available"] },
