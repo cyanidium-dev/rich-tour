@@ -5,5 +5,5 @@ interface InspirationListProps {
 }
 
 export default function InspirationList({ inspiration }: InspirationListProps) {
-  return <ul>InspirationList</ul>;
+  return <ul className="mb-[42px] xl:mb-16">InspirationList</ul>;
 }
