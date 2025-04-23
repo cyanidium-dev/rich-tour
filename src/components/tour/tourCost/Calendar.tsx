@@ -8,9 +8,16 @@ import Legend from "./Legend";
 import DayButton from "./DayButton";
 import BookingWithButton from "../../shared/booking/BookingWithButton";
 import "react-day-picker/style.css";
+import { Tour } from "@/types/tour";
 
-export default function Calendar() {
+interface CalendarProps {
+  tour: Tour;
+}
+
+export default function Calendar({ tour }: CalendarProps) {
   const [selected, setSelected] = useState<Date>();
+
+  const { title } = tour;
 
   const defaultClassNames = getDefaultClassNames();
 
@@ -73,7 +80,10 @@ export default function Calendar() {
         />
         <Legend />
       </AnimatedWrapper>
-      <BookingWithButton buttonStyles="w-full h-12 text-14med" />
+      <BookingWithButton
+        buttonStyles="w-full h-12 text-14med"
+        tourName={title}
+      />
     </div>
   );
 }

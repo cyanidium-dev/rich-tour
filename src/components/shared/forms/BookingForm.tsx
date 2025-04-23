@@ -1,7 +1,8 @@
 "use client";
-import { Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik, FormikHelpers, FieldArray } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
 import MaskedInput from "react-text-mask";
+import dynamic from "next/dynamic";
 
 import { phoneMask } from "@/regex/regex";
 import { callBackValidation } from "@/schemas/callBackFormValidation";
@@ -9,11 +10,27 @@ import { handleSubmitForm } from "@/utils/handleSubmitForm";
 
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
+import IconButton from "../buttons/IconButton";
+import TrashIcon from "../icons/TrashIcon";
+
+const ClientNumberInput = dynamic(
+  () => import("@heroui/react").then((mod) => mod.NumberInput),
+  {
+    ssr: false,
+  }
+);
+
+export interface TravelerInfo {
+  name: string;
+  surname: string;
+}
 
 export interface ValuesBookingFormType {
+  travelersQty: number;
   email: string;
   phone: string;
   message: string;
+  travelers: TravelerInfo[];
 }
 
 interface BookingFormProps {
@@ -34,9 +51,11 @@ export default function BookingForm({
   const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
+    travelersQty: 1,
     email: "",
     phone: "",
     message: "",
+    travelers: [{ name: "", surname: "" }] as TravelerInfo[], // Початкове значення для одного мандрівника
   };
 
   const validationSchema = callBackValidation();
@@ -60,46 +79,130 @@ export default function BookingForm({
       onSubmit={submitForm}
       validationSchema={validationSchema}
     >
-      {({ errors, touched, dirty, isValid }) => (
-        <Form className={`${className}`}>
-          <p className="mb-4 text-10reg xl:text-12reg text-main">
-            <span className="text-10semi xl:text-12semi">Передні місця</span> у
-            автобусі (місця з 5 по 20) сплачується додатково 10€
-          </p>
-          <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
-            <CustomizedInput
-              fieldName="email"
-              inputType="email"
-              placeholder="Email, на який буде приходити інформація"
-              errors={errors}
-              touched={touched}
+      {({ errors, touched, dirty, isValid, setFieldValue, values }) => {
+        const handleTravelersQtyChange = (newValue: number) => {
+          setFieldValue("travelersQty", newValue);
+
+          // Якщо кількість мандрівників збільшується
+          if (newValue > values.travelers.length) {
+            const newTravelers = [...values.travelers];
+            // Додаємо нові мандрівники
+            for (let i = values.travelers.length; i < newValue; i++) {
+              newTravelers.push({ name: "", surname: "" });
+            }
+            setFieldValue("travelers", newTravelers);
+          }
+          // Якщо кількість мандрівників зменшується
+          else if (newValue < values.travelers.length) {
+            const newTravelers = values.travelers.slice(0, newValue);
+            setFieldValue("travelers", newTravelers);
+          }
+        };
+
+        return (
+          <Form className={`${className}`}>
+            <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
+              <ClientNumberInput
+                aria-label="travelers"
+                minValue={1}
+                value={values.travelersQty}
+                onChange={handleTravelersQtyChange}
+                placeholder="Кількість туристів"
+                classNames={{
+                  inputWrapper:
+                    "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4",
+                  innerWrapper: "p-0",
+                  input: "!text-12reg placeholder:text-black",
+                }}
+              />
+              <FieldArray name="travelers">
+                {({ insert, remove, push }) => (
+                  <div className="flex flex-col gap-y-4">
+                    {/* Створення поля для кожного мандрівника */}
+                    {values.travelers.map((_, index) => (
+                      <div key={index} className="flex gap-x-[6px]">
+                        <div className="flex flex-col gap-y-[18px] w-[calc(100%-6px-24px)]">
+                          <div className="flex gap-x-3">
+                            <p className="flex items-center justify-center size-10 border border-black rounded-[6px]">
+                              {index + 1}
+                            </p>
+                            <CustomizedInput
+                              fieldName={`travelers[${index}].name`}
+                              placeholder="Прізвище латиницею"
+                              errors={errors}
+                              touched={touched}
+                              labelClassName="w-[calc(100%-40px-12px-0.5px)]"
+                            />
+                          </div>
+                          <CustomizedInput
+                            fieldName={`travelers[${index}].surname`}
+                            placeholder="Ім’я латиницею"
+                            errors={errors}
+                            touched={touched}
+                          />
+                        </div>
+                        {/* Кнопка видалення мандрівника */}
+                        <IconButton
+                          handleClick={() => {
+                            if (values.travelers.length > 1) {
+                              remove(index);
+                              setFieldValue(
+                                "travelersQty",
+                                values.travelersQty - 1
+                              );
+                            }
+                          }}
+                          className="h-[38px]"
+                        >
+                          <TrashIcon className="size-6" />
+                        </IconButton>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </FieldArray>
+
+              <p className="text-10reg xl:text-12reg text-main">
+                <span className="text-10semi xl:text-12semi">
+                  Передні місця
+                </span>{" "}
+                у автобусі (місця з 5 по 20) сплачується додатково 10€
+              </p>
+
+              <CustomizedInput
+                fieldName="email"
+                inputType="email"
+                placeholder="Email, на який буде приходити інформація"
+                errors={errors}
+                touched={touched}
+              />
+              <CustomizedInput
+                fieldName="phone"
+                inputType="tel"
+                placeholder="Номер телефону"
+                errors={errors}
+                touched={touched}
+                as={MaskedInput}
+                mask={phoneMask}
+              />
+              <CustomizedInput
+                fieldName="message"
+                as="textarea"
+                placeholder="Додаткове повідомлення"
+                errors={errors}
+                touched={touched}
+              />
+            </div>
+            <SubmitButton
+              dirty={dirty}
+              isValid={isValid}
+              isLoading={isLoading}
+              text="Забронювати"
+              variant={variant}
             />
-            <CustomizedInput
-              fieldName="phone"
-              inputType="tel"
-              placeholder="Номер телефону"
-              errors={errors}
-              touched={touched}
-              as={MaskedInput}
-              mask={phoneMask}
-            />
-            <CustomizedInput
-              fieldName="message"
-              as="textarea"
-              placeholder="Додаткове повідомлення"
-              errors={errors}
-              touched={touched}
-            />
-          </div>
-          <SubmitButton
-            dirty={dirty}
-            isValid={isValid}
-            isLoading={isLoading}
-            text="Забронювати"
-            variant={variant}
-          />
-        </Form>
-      )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 }

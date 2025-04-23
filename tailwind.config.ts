@@ -74,6 +74,7 @@ export default {
         red: "#FD0000",
         grey: "#EDEDED",
         lightGrey: "#D4D4D8",
+        semiGray: "#A1A1AA",
       },
       backgroundImage: {
         hero: "linear-gradient(359deg, rgba(0, 0, 0, 0.80) -17.45%, rgba(0, 0, 0, 0.00) 16.94%, rgba(0, 0, 0, 0.80) 78.79%)",

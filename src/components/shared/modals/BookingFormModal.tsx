@@ -36,8 +36,8 @@ export default function BookingFormModal({
         </IconButton>
       </div>
       <div
-        className="px-6 xl:px-9 pt-[33px] xl:pt-7 pb-5 xl:pb-8 overflow-y-auto scrollbar scrollbar-w-[3px] scrollbar-thumb-rounded-full 
-         scrollbar-track-rounded-full scrollbar-thumb-transparent scrollbar-track-main popup-scroll"
+        className="max-h-[calc(100dvh-90px-62px)] px-6 xl:px-9 pt-[33px] xl:pt-7 pb-5 xl:pb-8 overflow-y-auto scrollbar scrollbar-w-[3px] scrollbar-thumb-rounded-full 
+         scrollbar-track-rounded-full scrollbar-thumb-main scrollbar-track-transparent popup-scroll"
       >
         {children}
       </div>

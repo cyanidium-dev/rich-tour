@@ -47,10 +47,9 @@ export default function TourCost({ tour }: TourCostProps) {
             </AnimatedWrapper>
           ) : null}
         </div>
-        <Calendar />
+        <Calendar tour={tour} />
         {images[4] ? (
           <div className="hidden lg:block relative xl:w-[calc(33.3%-26.67px)] h-[702px]">
-            {" "}
             <AnimatedArrowDesk />
             <AnimatedWrapper
               animation={fadeInAnimation({ y: 30, delay: 0.4 })}
