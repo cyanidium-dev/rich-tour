@@ -1,6 +1,7 @@
 import { ErrorMessage, Field, FormikErrors, FormikTouched } from "formik";
 import MaskedInput from "react-text-mask";
 import { useFormikContext } from "formik";
+import { ValuesBookingFormType } from "../BookingForm";
 
 interface Values {
   [fieldName: string]: string;
@@ -9,8 +10,8 @@ interface Values {
 interface CustomizedInputProps {
   fieldName: string;
   placeholder: string;
-  errors: FormikErrors<Values>;
-  touched: FormikTouched<Values>;
+  errors: FormikErrors<Values> | FormikErrors<ValuesBookingFormType>;
+  touched: FormikTouched<Values> | FormikTouched<ValuesBookingFormType>;
   as?: string | typeof MaskedInput;
   labelClassName?: string;
   wrapperClassName?: string;
@@ -41,6 +42,9 @@ export default function CustomizedInput({
 }: CustomizedInputProps) {
   const { handleChange } = useFormikContext();
 
+  const isError = (errors as Record<string, unknown>)[fieldName];
+  const isTouched = (touched as Record<string, unknown>)[fieldName];
+
   return (
     <label className={`${labelStyles} ${labelClassName}`}>
       <div className={`${wrapperClassName}`}>
@@ -55,7 +59,7 @@ export default function CustomizedInput({
           className={`${fieldStyles} ${
             as === "textarea" ? "h-[105px]" : ""
           } ${fieldClassName} ${
-            errors[fieldName] && touched[fieldName]
+            isError && isTouched
               ? "border-red"
               : "border-black focus:border-green"
           }`}

@@ -50,12 +50,12 @@ export default function BookingForm({
 }: BookingFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const initialValues = {
+  const initialValues: ValuesBookingFormType = {
     travelersQty: 1,
     email: "",
     phone: "",
     message: "",
-    travelers: [{ name: "", surname: "" }] as TravelerInfo[], // Початкове значення для одного мандрівника
+    travelers: [{ name: "", surname: "" }], // Початкове значення для одного мандрівника
   };
 
   const validationSchema = callBackValidation();
@@ -64,6 +64,7 @@ export default function BookingForm({
     values: ValuesBookingFormType,
     formikHelpers: FormikHelpers<ValuesBookingFormType>
   ) => {
+    console.log(values);
     await handleSubmitForm<ValuesBookingFormType>(
       formikHelpers,
       setIsLoading,
@@ -128,7 +129,7 @@ export default function BookingForm({
                               {index + 1}
                             </p>
                             <CustomizedInput
-                              fieldName={`travelers[${index}].name`}
+                              fieldName={`travelers[${index}].surname`}
                               placeholder="Прізвище латиницею"
                               errors={errors}
                               touched={touched}
@@ -136,7 +137,7 @@ export default function BookingForm({
                             />
                           </div>
                           <CustomizedInput
-                            fieldName={`travelers[${index}].surname`}
+                            fieldName={`travelers[${index}].name`}
                             placeholder="Ім’я латиницею"
                             errors={errors}
                             touched={touched}
@@ -145,6 +146,7 @@ export default function BookingForm({
                         {/* Кнопка видалення мандрівника */}
                         <IconButton
                           handleClick={() => {
+                            console.log(errors);
                             if (values.travelers.length > 1) {
                               remove(index);
                               setFieldValue(
