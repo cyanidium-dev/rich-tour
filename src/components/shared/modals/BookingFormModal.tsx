@@ -37,7 +37,6 @@ export default function BookingFormModal({
         </IconButton>
       </div>
       <div className="px-6 xl:px-9 pt-[33px] xl:pt-7 pb-5 xl:pb-8">
-        {" "}
         {children}
       </div>
     </div>
