@@ -3,8 +3,9 @@ import { Form, Formik, FormikHelpers, FieldArray } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
 import MaskedInput from "react-text-mask";
 import dynamic from "next/dynamic";
+import { DateInput } from "@heroui/react";
 
-import { phoneMask } from "@/regex/regex";
+import { dateMask, phoneMask } from "@/regex/regex";
 import { callBackValidation } from "@/schemas/callBackFormValidation";
 import { handleSubmitForm } from "@/utils/handleSubmitForm";
 
@@ -23,6 +24,11 @@ const ClientNumberInput = dynamic(
 export interface TravelerInfo {
   name: string;
   surname: string;
+  phone?: string;
+  passport: string;
+  birthDate: string;
+  passportExpiration: string;
+  boardingCity: string;
 }
 
 export interface ValuesBookingFormType {
@@ -49,13 +55,28 @@ export default function BookingForm({
   variant = "red",
 }: BookingFormProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [focusedTravelerIndex, setFocusedTravelerIndex] = useState<
+    number | null
+  >(null);
+
+  console.log(focusedTravelerIndex);
 
   const initialValues: ValuesBookingFormType = {
     travelersQty: 1,
     email: "",
     phone: "",
     message: "",
-    travelers: [{ name: "", surname: "" }], // Початкове значення для одного мандрівника
+    travelers: [
+      {
+        name: "",
+        surname: "",
+        phone: "",
+        passport: "",
+        birthDate: "",
+        passportExpiration: "",
+        boardingCity: "",
+      },
+    ],
   };
 
   const validationSchema = callBackValidation();
@@ -78,7 +99,7 @@ export default function BookingForm({
     <Formik
       initialValues={initialValues}
       onSubmit={submitForm}
-      validationSchema={validationSchema}
+      //   validationSchema={validationSchema}
     >
       {({ errors, touched, dirty, isValid, setFieldValue, values }) => {
         return (
@@ -92,13 +113,20 @@ export default function BookingForm({
                   setFieldValue("travelersQty", value);
                   if (Number(value) > values.travelers.length) {
                     const newTravelers = [...values.travelers];
-                    // Додаємо нових мандрівників
                     for (
                       let i = values.travelers.length;
                       i < Number(value);
                       i++
                     ) {
-                      newTravelers.push({ name: "", surname: "" });
+                      newTravelers.push({
+                        name: "",
+                        surname: "",
+                        phone: "",
+                        passport: "",
+                        birthDate: "",
+                        passportExpiration: "",
+                        boardingCity: "",
+                      });
                     }
                     setFieldValue("travelers", newTravelers);
                   } else if (Number(value) < values.travelers.length) {
@@ -120,7 +148,6 @@ export default function BookingForm({
               <FieldArray name="travelers">
                 {({ remove }) => (
                   <div className="flex flex-col gap-y-4">
-                    {/* Створення поля для кожного мандрівника */}
                     {values.travelers.map((_, index) => (
                       <div key={index} className="flex gap-x-[6px]">
                         <div className="flex flex-col gap-y-[18px] w-[calc(100%-6px-24px)]">
@@ -134,6 +161,7 @@ export default function BookingForm({
                               errors={errors}
                               touched={touched}
                               labelClassName="w-[calc(100%-40px-12px-0.5px)]"
+                              onFocus={() => setFocusedTravelerIndex(index)}
                             />
                           </div>
                           <CustomizedInput
@@ -141,12 +169,57 @@ export default function BookingForm({
                             placeholder="Ім’я латиницею"
                             errors={errors}
                             touched={touched}
+                            onFocus={() => setFocusedTravelerIndex(index)}
                           />
+                          {focusedTravelerIndex === index && (
+                            <>
+                              <CustomizedInput
+                                fieldName={`travelers[${index}].phone`}
+                                placeholder="Номер телефону"
+                                errors={errors}
+                                touched={touched}
+                                as={MaskedInput}
+                                mask={phoneMask}
+                                inputType="tel"
+                                onFocus={() => setFocusedTravelerIndex(index)}
+                              />
+                              <CustomizedInput
+                                fieldName={`travelers[${index}].passport`}
+                                placeholder="Номер закордонного паспорта"
+                                errors={errors}
+                                touched={touched}
+                                onFocus={() => setFocusedTravelerIndex(index)}
+                              />
+                              <CustomizedInput
+                                fieldName={`travelers[${index}].birthDate`}
+                                placeholder="Дата народження"
+                                as={MaskedInput}
+                                mask={dateMask}
+                                errors={errors}
+                                touched={touched}
+                                onFocus={() => setFocusedTravelerIndex(index)}
+                              />
+                              <CustomizedInput
+                                fieldName={`travelers[${index}].passportExpiration`}
+                                placeholder="Закінчення дії паспорта"
+                                as={MaskedInput}
+                                mask={dateMask}
+                                errors={errors}
+                                touched={touched}
+                                onFocus={() => setFocusedTravelerIndex(index)}
+                              />
+                              <CustomizedInput
+                                fieldName={`travelers[${index}].boardingCity`}
+                                placeholder="Місто посадки"
+                                errors={errors}
+                                touched={touched}
+                                onFocus={() => setFocusedTravelerIndex(index)}
+                              />
+                            </>
+                          )}
                         </div>
-                        {/* Кнопка видалення мандрівника */}
                         <IconButton
                           handleClick={() => {
-                            console.log(errors);
                             if (values.travelers.length > 1) {
                               remove(index);
                               setFieldValue(

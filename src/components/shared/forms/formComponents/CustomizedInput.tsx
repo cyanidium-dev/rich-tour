@@ -18,6 +18,8 @@ interface CustomizedInputProps {
   fieldClassName?: string;
   mask?: string | RegExp | (string | RegExp)[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   isLoading?: boolean;
   inputType?: string;
 }
@@ -38,6 +40,8 @@ export default function CustomizedInput({
   fieldClassName = "",
   mask = "",
   onChange,
+  onFocus,
+  onBlur,
   inputType = "text",
 }: CustomizedInputProps) {
   const { handleChange } = useFormikContext();
@@ -56,6 +60,8 @@ export default function CustomizedInput({
           autoComplete="on"
           placeholder={placeholder}
           onChange={onChange || handleChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
           className={`${fieldStyles} ${
             as === "textarea" ? "h-[105px]" : ""
           } ${fieldClassName} ${
@@ -63,13 +69,9 @@ export default function CustomizedInput({
               ? "border-red"
               : "border-black focus:border-green"
           }`}
-        ></Field>
+        />
       </div>
-      <ErrorMessage
-        name={fieldName}
-        component="p"
-        className={errorStyles}
-      ></ErrorMessage>
+      <ErrorMessage name={fieldName} component="p" className={errorStyles} />
     </label>
   );
 }
