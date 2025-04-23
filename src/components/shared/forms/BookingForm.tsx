@@ -145,7 +145,7 @@ export default function BookingForm({
                 placeholder="Кількість туристів"
                 classNames={{
                   inputWrapper:
-                    "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4",
+                    "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4 hover:bg-white",
                   innerWrapper: "p-0",
                   input: "!text-12reg placeholder:text-black",
                 }}
