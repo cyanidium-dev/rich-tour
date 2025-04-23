@@ -2,10 +2,12 @@
 import { useState } from "react";
 import { DayPicker, Locale, getDefaultClassNames } from "react-day-picker";
 import { uk } from "react-day-picker/locale";
-import "react-day-picker/style.css";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Legend from "./Legend";
 import MainButton from "@/components/shared/buttons/MainButton";
 import DayButton from "./DayButton";
+import "react-day-picker/style.css";
 
 export default function Calendar() {
   const [selected, setSelected] = useState<Date>();
@@ -34,8 +36,11 @@ export default function Calendar() {
   const maxDate = new Date(nextYear, 11, 31);
 
   return (
-    <div className="md:w-[calc(33.3%-26.67px)] flex flex-col gap-y-7">
-      <div className="rounded-[28px] border border-black">
+    <div className="max-w-[325px] xl:w-[calc(33.3%-26.67px)] mx-auto flex flex-col gap-y-7">
+      <AnimatedWrapper
+        animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+        className="rounded-[28px] border border-black"
+      >
         <p className="pl-4 pr-3 pt-4 pb-3 text-16semi text-center border-b border-lightGrey">
           Дати виїздів та ціни
         </p>
@@ -67,8 +72,10 @@ export default function Calendar() {
           className="pl-3 pr-3"
         />
         <Legend />
-      </div>
-      <MainButton className="w-full h-12 text-14med">Забронювати</MainButton>
+      </AnimatedWrapper>
+      <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.8 })}>
+        <MainButton className="w-full h-12 text-14med">Забронювати</MainButton>
+      </AnimatedWrapper>
     </div>
   );
 }

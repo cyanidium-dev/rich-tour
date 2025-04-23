@@ -1,5 +1,7 @@
-import { Tour } from "@/types/tour";
 import Image from "next/image";
+import { Tour } from "@/types/tour";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Calendar from "./Calendar";
 import Container from "@/components/shared/container/Container";
 
@@ -12,15 +14,28 @@ export default function TourCost({ tour }: TourCostProps) {
 
   return (
     <section className="mb-[148px] xl:mb-[180px]">
-      <Container className="md:flex items-end gap-x-10">
-        <div className="hidden md:block md:w-[calc(33.3%-26.67px)]">
-          <h2 className="mb-5 text-40med">Вартість туру</h2>
-          <p className="mb-[30px] text-16reg">
+      <Container className="md:flex items-stretch gap-x-5 xl:gap-x-10">
+        <div className="hidden md:flex flex-col flex-1 justify-between xl:w-[calc(33.3%-26.67px)]">
+          <AnimatedWrapper
+            as="h2"
+            animation={fadeInAnimation({ y: 30 })}
+            className="mb-5 text-40med"
+          >
+            Вартість туру
+          </AnimatedWrapper>
+          <AnimatedWrapper
+            as="p"
+            animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+            className="mb-[30px] text-16reg"
+          >
             Можете переглянути вільні дати для цього тура та обрати підходящий
             формат для себе
-          </p>
+          </AnimatedWrapper>
           {images[3] ? (
-            <div className="relative h-[544px] rounded-[12px] overflow-hidden">
+            <AnimatedWrapper
+              animation={fadeInAnimation({ y: 30, delay: 0.8 })}
+              className="relative h-[544px] rounded-[12px] overflow-hidden"
+            >
               <Image
                 src={images[3].url}
                 alt={images[3].alt}
@@ -28,12 +43,16 @@ export default function TourCost({ tour }: TourCostProps) {
                 sizes="30vw"
                 className="object-cover"
               />
-            </div>
+            </AnimatedWrapper>
           ) : null}
         </div>
         <Calendar />
         {images[4] ? (
-          <div className="hidden md:block relative md:w-[calc(33.3%-26.67px)] h-[702px] rounded-[12px] overflow-hidden">
+          <AnimatedWrapper
+            animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+            viewport={{ once: true, amount: 0.4 }}
+            className="hidden lg:block relative xl:w-[calc(33.3%-26.67px)] h-[702px] rounded-[12px] overflow-hidden"
+          >
             <Image
               src={images[4].url}
               alt={images[4].alt}
@@ -41,7 +60,7 @@ export default function TourCost({ tour }: TourCostProps) {
               sizes="30vw"
               className="object-cover"
             />
-          </div>
+          </AnimatedWrapper>
         ) : null}
       </Container>
     </section>
