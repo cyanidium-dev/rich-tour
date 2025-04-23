@@ -7,10 +7,12 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Legend from "./Legend";
 import MainButton from "@/components/shared/buttons/MainButton";
 import DayButton from "./DayButton";
+import BookingFormModal from "@/components/shared/modals/BookingFormModal";
 import "react-day-picker/style.css";
 
 export default function Calendar() {
   const [selected, setSelected] = useState<Date>();
+  const [isPopUpShown, setIsPopUpShown] = useState(true);
 
   const defaultClassNames = getDefaultClassNames();
 
@@ -76,6 +78,12 @@ export default function Calendar() {
       <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.8 })}>
         <MainButton className="w-full h-12 text-14med">Забронювати</MainButton>
       </AnimatedWrapper>
+      <BookingFormModal
+        isPopUpShown={isPopUpShown}
+        setIsPopUpShown={setIsPopUpShown}
+      >
+        test
+      </BookingFormModal>
     </div>
   );
 }
