@@ -25,18 +25,25 @@ export default function DayButton(props: DayButtonProps) {
     fewSeats: "#FFB429",
     onRequest: "#4C6FFF",
     noSeats: "#E43A3A",
-    noDeparture: "#18181B",
+    noDeparture: "transparent",
   };
 
   const showIcons = status.filter((s) => iconStatuses.includes(s));
   const borderStatus = status.find((s) => !iconStatuses.includes(s));
 
-  const borderColor = borderStatus
-    ? borderStatuses[borderStatus as keyof typeof borderStatuses]
-    : "transparent";
-  const textColor = borderStatus
-    ? borderStatuses[borderStatus as keyof typeof borderStatuses]
-    : "black";
+  const borderColor =
+    borderStatus === "noDeparture"
+      ? "transparent"
+      : borderStatus
+      ? borderStatuses[borderStatus as keyof typeof borderStatuses]
+      : "transparent";
+
+  const textColor =
+    borderStatus === "noDeparture"
+      ? "black"
+      : borderStatus
+      ? borderStatuses[borderStatus as keyof typeof borderStatuses]
+      : "black";
 
   const statusIcons: Record<string, string> = {
     guaranteed: "/images/icons/calendar/guaranteed.svg",
@@ -48,8 +55,6 @@ export default function DayButton(props: DayButtonProps) {
   const isSelected = modifiers.selected;
   const isDisabled =
     status.includes("noSeats") || status.includes("noDeparture") || !dayData;
-
-  const textOpacity = isDisabled ? 0.5 : 1;
 
   return (
     <button
@@ -66,9 +71,6 @@ export default function DayButton(props: DayButtonProps) {
       disabled={isDisabled}
     >
       <span
-        style={{
-          opacity: textOpacity,
-        }}
         className={`${hasPrice ? "text-12med" : "text-16reg"} ${
           isSelected ? "font-bold" : ""
         }`}
