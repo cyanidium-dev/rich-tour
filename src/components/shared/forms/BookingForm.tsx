@@ -80,25 +80,6 @@ export default function BookingForm({
       validationSchema={validationSchema}
     >
       {({ errors, touched, dirty, isValid, setFieldValue, values }) => {
-        const handleTravelersQtyChange = (newValue: number) => {
-          setFieldValue("travelersQty", newValue);
-
-          // Якщо кількість мандрівників збільшується
-          if (newValue > values.travelers.length) {
-            const newTravelers = [...values.travelers];
-            // Додаємо нові мандрівники
-            for (let i = values.travelers.length; i < newValue; i++) {
-              newTravelers.push({ name: "", surname: "" });
-            }
-            setFieldValue("travelers", newTravelers);
-          }
-          // Якщо кількість мандрівників зменшується
-          else if (newValue < values.travelers.length) {
-            const newTravelers = values.travelers.slice(0, newValue);
-            setFieldValue("travelers", newTravelers);
-          }
-        };
-
         return (
           <Form className={`${className}`}>
             <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
@@ -106,7 +87,27 @@ export default function BookingForm({
                 aria-label="travelers"
                 minValue={1}
                 value={values.travelersQty}
-                onChange={handleTravelersQtyChange}
+                onChange={(value) => {
+                  setFieldValue("travelersQty", value);
+                  if (Number(value) > values.travelers.length) {
+                    const newTravelers = [...values.travelers];
+                    // Додаємо нових мандрівників
+                    for (
+                      let i = values.travelers.length;
+                      i < Number(value);
+                      i++
+                    ) {
+                      newTravelers.push({ name: "", surname: "" });
+                    }
+                    setFieldValue("travelers", newTravelers);
+                  } else if (Number(value) < values.travelers.length) {
+                    const newTravelers = values.travelers.slice(
+                      0,
+                      Number(value)
+                    );
+                    setFieldValue("travelers", newTravelers);
+                  }
+                }}
                 placeholder="Кількість туристів"
                 classNames={{
                   inputWrapper:
@@ -116,7 +117,7 @@ export default function BookingForm({
                 }}
               />
               <FieldArray name="travelers">
-                {({ insert, remove, push }) => (
+                {({ remove }) => (
                   <div className="flex flex-col gap-y-4">
                     {/* Створення поля для кожного мандрівника */}
                     {values.travelers.map((_, index) => (
