@@ -5,6 +5,7 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import MainButton from "@/components/shared/buttons/MainButton";
 import Container from "@/components/shared/container/Container";
 import { Tour } from "@/types/tour";
+import BookingWithButton from "../tourCost/BookingWithButton";
 
 interface HeroProps {
   tour: Tour;
@@ -34,26 +35,25 @@ export default function Hero({ tour }: HeroProps) {
                 {duration}&nbsp;{getDayWord(duration)}
               </AnimatedWrapper>
             </div>
-            <AnimatedWrapper
-              animation={fadeInAnimation({ y: 30, delay: 0.4 })}
-              className="flex flex-col lg:flex-row gap-2 md:mb-6"
-            >
-              <MainButton className="w-full lg:w-[198px] h-12 text-14med">
-                Забронювати
-              </MainButton>
-              <a
-                href={program?.url || ""}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
+            <div className="flex flex-col lg:flex-row gap-2 md:mb-6">
+              <BookingWithButton buttonStyles="w-full lg:w-[198px] h-12 text-14med" />
+              <AnimatedWrapper
+                animation={fadeInAnimation({ y: 30, delay: 0.4 })}
               >
-                <MainButton
-                  variant="ghost black"
-                  className="w-full lg:w-[249px] h-12 text-14med"
+                <a
+                  href={program?.url || ""}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
                 >
-                  Завантажити програму туру
-                </MainButton>
-              </a>
-            </AnimatedWrapper>
+                  <MainButton
+                    variant="ghost black"
+                    className="w-full lg:w-[249px] h-12 text-14med"
+                  >
+                    Завантажити програму туру
+                  </MainButton>
+                </a>
+              </AnimatedWrapper>
+            </div>
           </div>
           <AnimatedWrapper
             animation={fadeInAnimation({ x: 30, delay: 0.4 })}

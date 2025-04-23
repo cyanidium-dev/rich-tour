@@ -5,14 +5,12 @@ import { uk } from "react-day-picker/locale";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Legend from "./Legend";
-import MainButton from "@/components/shared/buttons/MainButton";
 import DayButton from "./DayButton";
 import "react-day-picker/style.css";
-import Booking from "./Booking";
+import BookingWithButton from "./BookingWithButton";
 
 export default function Calendar() {
   const [selected, setSelected] = useState<Date>();
-  const [isPopUpShown, setIsPopUpShown] = useState(true);
 
   const defaultClassNames = getDefaultClassNames();
 
@@ -75,10 +73,7 @@ export default function Calendar() {
         />
         <Legend />
       </AnimatedWrapper>
-      <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.8 })}>
-        <MainButton className="w-full h-12 text-14med">Забронювати</MainButton>
-      </AnimatedWrapper>
-      <Booking isPopUpShown={isPopUpShown} setIsPopUpShown={setIsPopUpShown} />
+      <BookingWithButton buttonStyles="w-full h-12 text-14med" />
     </div>
   );
 }
