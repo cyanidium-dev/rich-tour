@@ -41,7 +41,6 @@ export default function CustomizedInput({
   mask = "",
   onChange,
   onFocus,
-  onBlur,
   inputType = "text",
 }: CustomizedInputProps) {
   const { handleChange } = useFormikContext();
@@ -61,13 +60,10 @@ export default function CustomizedInput({
           placeholder={placeholder}
           onChange={onChange || handleChange}
           onFocus={onFocus}
-          onBlur={onBlur}
           className={`${fieldStyles} ${
             as === "textarea" ? "h-[105px]" : ""
           } ${fieldClassName} ${
-            isError && isTouched
-              ? "border-red"
-              : "border-black focus:border-green"
+            isError && isTouched ? "border-red" : "border-black"
           }`}
         />
       </div>

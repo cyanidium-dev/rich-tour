@@ -34,6 +34,7 @@ export default function Booking({
         <BookingForm
           setIsError={setIsError}
           setIsNotificationShown={setIsNotificationShown}
+          setIsPopUpShown={setIsPopUpShown}
         />
       </BookingFormModal>
       <NotificationPopUp

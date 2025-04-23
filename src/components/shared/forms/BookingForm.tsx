@@ -3,12 +3,9 @@ import { Form, Formik, FormikHelpers, FieldArray } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
 import MaskedInput from "react-text-mask";
 import dynamic from "next/dynamic";
-import { DateInput } from "@heroui/react";
-
+import { bookingValidation } from "@/schemas/bookingFormValidation";
 import { dateMask, phoneMask } from "@/regex/regex";
-import { callBackValidation } from "@/schemas/callBackFormValidation";
 import { handleSubmitForm } from "@/utils/handleSubmitForm";
-
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 import IconButton from "../buttons/IconButton";
@@ -42,7 +39,7 @@ export interface ValuesBookingFormType {
 interface BookingFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
-  setIsPopUpShown?: Dispatch<SetStateAction<boolean>>;
+  setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
   className?: string;
   variant?: "red" | "black";
 }
@@ -58,8 +55,6 @@ export default function BookingForm({
   const [focusedTravelerIndex, setFocusedTravelerIndex] = useState<
     number | null
   >(null);
-
-  console.log(focusedTravelerIndex);
 
   const initialValues: ValuesBookingFormType = {
     travelersQty: 1,
@@ -79,13 +74,12 @@ export default function BookingForm({
     ],
   };
 
-  const validationSchema = callBackValidation();
+  const validationSchema = bookingValidation();
 
   const submitForm = async (
     values: ValuesBookingFormType,
     formikHelpers: FormikHelpers<ValuesBookingFormType>
   ) => {
-    console.log(values);
     await handleSubmitForm<ValuesBookingFormType>(
       formikHelpers,
       setIsLoading,
@@ -99,7 +93,7 @@ export default function BookingForm({
     <Formik
       initialValues={initialValues}
       onSubmit={submitForm}
-      //   validationSchema={validationSchema}
+      validationSchema={validationSchema}
     >
       {({ errors, touched, dirty, isValid, setFieldValue, values }) => {
         return (
