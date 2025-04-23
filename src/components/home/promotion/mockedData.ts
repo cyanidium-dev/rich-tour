@@ -33,6 +33,8 @@ const tourTemplate: Tour = {
     { url: "/images/mockedPhoto/nightCity.webp", alt: "night city" },
     { url: "/images/mockedPhoto/tourTwo.webp", alt: "night city" },
     { url: "/images/mockedPhoto/tourThree.webp", alt: "night city" },
+    { url: "/images/mockedPhoto/tourFour.webp", alt: "night city" },
+    { url: "/images/mockedPhoto/tourFive.webp", alt: "night city" },
   ],
   category: categories[0],
   earlyBooking: false,
@@ -93,9 +95,50 @@ const tourTemplate: Tour = {
     ],
   },
   points: ["Львів", "Румунія", "Трансильванія", "Львів"],
-  includedInCost: [],
-  notIncludedInCost: [],
-  inspiration: [],
+  includedInCost: [
+    "Проїзд комфортабельним автобусом євро класу",
+    "Супровід професійного керівника групи",
+    "Робота місцевого гіда",
+    "Проживання в готелі 3*",
+    "Сніданок в готелі на базі шведського столу",
+    "Екскурсія Замками Трансильванії",
+    "Оглядова екскурсія по Брашову",
+  ],
+  notIncludedInCost: [
+    "Туристично-сервісний збір – 3.85 € / день/ос.;",
+    "Вхідні квитки",
+    "Додатково (при бажанні). Передні місця в автобусі (1-20) - 10 €. Страховий поліс ( орієнтовно 3 €)",
+  ],
+  inspiration: [
+    {
+      text: "Проїзд комфортабельним автобусом євро класу",
+      images: [{ url: "/images/mockedPhoto/inspirationOne.webp", alt: "" }],
+    },
+    {
+      text: "Проживання в готелі 3*",
+    },
+    {
+      text: "Екскурсія замками Трансильванії",
+      images: [
+        { url: "/images/mockedPhoto/inspirationTwo.webp", alt: "" },
+        { url: "/images/mockedPhoto/inspirationThree.webp", alt: "" },
+      ],
+    },
+    {
+      text: "Супровід професійного керівника групи",
+    },
+    {
+      text: "Сніданок в готелі на базі швецького столу",
+      images: [{ url: "/images/mockedPhoto/inspirationFour.webp", alt: "" }],
+    },
+    {
+      text: "Робота місцевого гіда",
+    },
+    {
+      text: "Оглядова екскурсія по Брашову",
+      images: [{ url: "/images/mockedPhoto/inspirationFive.webp", alt: "" }],
+    },
+  ],
 };
 
 const createTours = (template: Tour, count: number): Tour[] => {

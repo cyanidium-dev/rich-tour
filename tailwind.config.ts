@@ -31,6 +31,7 @@ export default {
         "9reg": ["9px", { fontWeight: "400", lineHeight: "1.23" }],
         "10reg": ["10px", { fontWeight: "400", lineHeight: "1.23" }],
         "10med": ["10px", { fontWeight: "500", lineHeight: "1.23" }],
+        "10semi": ["10px", { fontWeight: "600", lineHeight: "1.23" }],
         "10bold": ["10px", { fontWeight: "700", lineHeight: "1.23" }],
         "12light": ["12px", { fontWeight: "300", lineHeight: "1.23" }],
         "12reg": ["12px", { fontWeight: "400", lineHeight: "1.23" }],
@@ -72,9 +73,12 @@ export default {
         main: "#e43a3a",
         red: "#FD0000",
         grey: "#EDEDED",
+        lightGrey: "#D4D4D8",
       },
       backgroundImage: {
         hero: "linear-gradient(359deg, rgba(0, 0, 0, 0.80) -17.45%, rgba(0, 0, 0, 0.00) 16.94%, rgba(0, 0, 0, 0.80) 78.79%)",
+        inspiration:
+          "linear-gradient(167deg, rgba(0, 0, 0, 0.00) -0.81%, rgba(24, 24, 27, 0.82) 166.11%)",
       },
 
       boxShadow: {
