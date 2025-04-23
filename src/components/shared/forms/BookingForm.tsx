@@ -232,7 +232,7 @@ export default function BookingForm({
                                   errors={errors}
                                   touched={touched}
                                   onFocus={() => setFocusedTravelerIndex(index)}
-                                  labelClassName="lg:w-[144px]"
+                                  labelClassName="lg:w-[145px]"
                                   fieldFontSize="text-10reg lg:text-12reg"
                                 />
                                 <CustomizedInput
@@ -243,7 +243,7 @@ export default function BookingForm({
                                   errors={errors}
                                   touched={touched}
                                   onFocus={() => setFocusedTravelerIndex(index)}
-                                  labelClassName="lg:w-[209px]"
+                                  labelClassName="lg:w-[208px]"
                                   fieldFontSize="text-10reg lg:text-12reg"
                                 />
                                 <CustomizedInput
