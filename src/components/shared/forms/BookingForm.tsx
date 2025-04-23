@@ -3,6 +3,7 @@ import { Form, Formik, FormikHelpers, FieldArray } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
 import MaskedInput from "react-text-mask";
 import dynamic from "next/dynamic";
+import { Checkbox } from "@heroui/react";
 import { bookingValidation } from "@/schemas/bookingFormValidation";
 import { dateMask, phoneMask } from "@/regex/regex";
 import { handleSubmitForm } from "@/utils/handleSubmitForm";
@@ -26,6 +27,9 @@ export interface TravelerInfo {
   birthDate: string;
   passportExpiration: string;
   boardingCity: string;
+  insurance: boolean;
+  frontSeats: boolean;
+  passportInProgress: boolean;
 }
 
 export interface ValuesBookingFormType {
@@ -70,6 +74,9 @@ export default function BookingForm({
         birthDate: "",
         passportExpiration: "",
         boardingCity: "",
+        insurance: false,
+        frontSeats: false,
+        passportInProgress: false,
       },
     ],
   };
@@ -120,6 +127,9 @@ export default function BookingForm({
                         birthDate: "",
                         passportExpiration: "",
                         boardingCity: "",
+                        insurance: false,
+                        frontSeats: false,
+                        passportInProgress: false,
                       });
                     }
                     setFieldValue("travelers", newTravelers);
@@ -209,6 +219,67 @@ export default function BookingForm({
                                 touched={touched}
                                 onFocus={() => setFocusedTravelerIndex(index)}
                               />
+                              <Checkbox
+                                radius="sm"
+                                size="sm"
+                                classNames={{
+                                  label:
+                                    "text-[12px] leading-[120%] font-normal text-black",
+                                  wrapper:
+                                    "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
+                                }}
+                                isSelected={values.travelers[index].insurance}
+                                onValueChange={(value) => {
+                                  setFieldValue(
+                                    `travelers[${index}].insurance`,
+                                    value
+                                  );
+                                }}
+                              >
+                                Страхівка
+                              </Checkbox>
+
+                              <Checkbox
+                                radius="sm"
+                                size="sm"
+                                classNames={{
+                                  label:
+                                    "text-[12px] leading-[120%] font-normal text-black",
+                                  wrapper:
+                                    "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
+                                }}
+                                isSelected={values.travelers[index].frontSeats}
+                                onValueChange={(value) => {
+                                  setFieldValue(
+                                    `travelers[${index}].frontSeats`,
+                                    value
+                                  );
+                                }}
+                              >
+                                Передні місця
+                              </Checkbox>
+
+                              <Checkbox
+                                radius="sm"
+                                size="sm"
+                                classNames={{
+                                  label:
+                                    "text-[12px] leading-[120%] font-semibold text-black",
+                                  wrapper:
+                                    "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
+                                }}
+                                isSelected={
+                                  values.travelers[index].passportInProgress
+                                }
+                                onValueChange={(value) => {
+                                  setFieldValue(
+                                    `travelers[${index}].passportInProgress`,
+                                    value
+                                  );
+                                }}
+                              >
+                                Паспорт виготовляється
+                              </Checkbox>
                             </>
                           )}
                         </div>
