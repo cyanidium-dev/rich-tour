@@ -22,11 +22,12 @@ interface CustomizedInputProps {
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   isLoading?: boolean;
   inputType?: string;
+  fieldFontSize?: string;
 }
 
 const labelStyles = "relative flex flex-col w-full";
 const fieldStyles =
-  "relative w-full px-4 py-3 text-12reg text-black placeholder-black border rounded-[6px] outline-none resize-none transition duration-300 ease-out";
+  "relative w-full px-4 py-3 text-black placeholder-black border rounded-[6px] outline-none resize-none transition duration-300 ease-out";
 const errorStyles = "absolute bottom-[-14px] left-2 text-9reg text-red";
 
 export default function CustomizedInput({
@@ -38,6 +39,7 @@ export default function CustomizedInput({
   labelClassName = "",
   wrapperClassName = "",
   fieldClassName = "",
+  fieldFontSize = "text-12reg",
   mask = "",
   onChange,
   onFocus,
@@ -62,7 +64,7 @@ export default function CustomizedInput({
           onFocus={onFocus}
           className={`${fieldStyles} ${
             as === "textarea" ? "h-[105px]" : ""
-          } ${fieldClassName} ${
+          } ${fieldClassName} ${fieldFontSize} ${
             isError && isTouched ? "border-red" : "border-black"
           }`}
         />

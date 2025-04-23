@@ -27,7 +27,7 @@ export default function Booking({
       >
         <div className="flex gap-x-[18px] items-center mb-5">
           <p className="text-14reg xl:text-16reg">Назва туру:</p>
-          <h4 className="w-[calc(100%-82px-18px)] text-14semi xl:text-16semi">
+          <h4 className="w-[calc(100%-82px-18px)] xl:w-[calc(100%-94px-18px)] text-14semi xl:text-16semi">
             {tourName}
           </h4>
         </div>

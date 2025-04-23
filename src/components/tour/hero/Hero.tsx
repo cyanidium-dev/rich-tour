@@ -35,10 +35,10 @@ export default function Hero({ tour }: HeroProps) {
                 {duration}&nbsp;{getDayWord(duration)}
               </AnimatedWrapper>
             </div>
-            <div className="flex flex-col lg:flex-row gap-2 md:mb-6">
+            <div className="flex flex-col xl:flex-row gap-2 md:mb-6">
               <BookingWithButton
                 tourName={title}
-                buttonStyles="w-full lg:w-[198px] h-12 text-14med"
+                buttonStyles="w-full xl:w-[198px] h-12 text-14med"
               />
               <AnimatedWrapper
                 animation={fadeInAnimation({ y: 30, delay: 0.4 })}
@@ -50,7 +50,7 @@ export default function Hero({ tour }: HeroProps) {
                 >
                   <MainButton
                     variant="ghost black"
-                    className="w-full lg:w-[249px] h-12 text-14med"
+                    className="w-full xl:w-[249px] h-12 text-14med"
                   >
                     Завантажити програму туру
                   </MainButton>

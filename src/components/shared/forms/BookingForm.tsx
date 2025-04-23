@@ -33,7 +33,7 @@ export interface TravelerInfo {
 }
 
 export interface ValuesBookingFormType {
-  travelersQty: number;
+  travelersQty: number | undefined;
   email: string;
   phone: string;
   message: string;
@@ -61,7 +61,7 @@ export default function BookingForm({
   >(null);
 
   const initialValues: ValuesBookingFormType = {
-    travelersQty: 1,
+    travelersQty: undefined,
     email: "",
     phone: "",
     message: "",
@@ -87,6 +87,7 @@ export default function BookingForm({
     values: ValuesBookingFormType,
     formikHelpers: FormikHelpers<ValuesBookingFormType>
   ) => {
+    console.log(values);
     await handleSubmitForm<ValuesBookingFormType>(
       formikHelpers,
       setIsLoading,
@@ -153,139 +154,180 @@ export default function BookingForm({
                 {({ remove }) => (
                   <div className="flex flex-col gap-y-4">
                     {values.travelers.map((_, index) => (
-                      <div key={index} className="flex gap-x-[6px]">
-                        <div className="flex flex-col gap-y-[18px] w-[calc(100%-6px-24px)]">
-                          <div className="flex gap-x-3">
-                            <p className="flex items-center justify-center size-10 border border-black rounded-[6px]">
-                              {index + 1}
-                            </p>
+                      <div
+                        key={index}
+                        className={`flex gap-x-[6px] lg:gap-x-3 ${
+                          index === focusedTravelerIndex
+                            ? "lg:p-5 lg:border lg:border-black lg:rounded-[6px]"
+                            : ""
+                        }`}
+                      >
+                        <div className="flex flex-col gap-y-[18px] w-[calc(100%-6px-24px)] lg:w-full">
+                          <div className="flex flex-col lg:flex-row gap-y-[18px] lg:gap-x-3">
+                            <div className="flex gap-x-3 ">
+                              <p
+                                className={`flex items-center justify-center w-10 lg:w-[43px] h-10 text-16med border border-black rounded-[6px] ${
+                                  index === focusedTravelerIndex
+                                    ? "lg:hidden"
+                                    : ""
+                                }`}
+                              >
+                                {index + 1}
+                              </p>
+                              <CustomizedInput
+                                fieldName={`travelers[${index}].surname`}
+                                placeholder="Прізвище латиницею"
+                                errors={errors}
+                                touched={touched}
+                                labelClassName="w-[calc(100%-40px-12px-1px)] lg:w-[296px]"
+                                onFocus={() => setFocusedTravelerIndex(index)}
+                                fieldFontSize="text-10reg lg:text-12reg"
+                              />
+                            </div>
                             <CustomizedInput
-                              fieldName={`travelers[${index}].surname`}
-                              placeholder="Прізвище латиницею"
+                              fieldName={`travelers[${index}].name`}
+                              placeholder="Ім’я латиницею"
                               errors={errors}
                               touched={touched}
-                              labelClassName="w-[calc(100%-40px-12px-0.5px)]"
                               onFocus={() => setFocusedTravelerIndex(index)}
+                              labelClassName={` ${
+                                index === focusedTravelerIndex
+                                  ? "lg:w-[276px]"
+                                  : "lg:w-[269px]"
+                              }`}
+                              fieldFontSize="text-10reg lg:text-12reg"
                             />
                           </div>
-                          <CustomizedInput
-                            fieldName={`travelers[${index}].name`}
-                            placeholder="Ім’я латиницею"
-                            errors={errors}
-                            touched={touched}
-                            onFocus={() => setFocusedTravelerIndex(index)}
-                          />
                           {focusedTravelerIndex === index && (
                             <>
-                              <CustomizedInput
-                                fieldName={`travelers[${index}].phone`}
-                                placeholder="Номер телефону"
-                                errors={errors}
-                                touched={touched}
-                                as={MaskedInput}
-                                mask={phoneMask}
-                                inputType="tel"
-                                onFocus={() => setFocusedTravelerIndex(index)}
-                              />
-                              <CustomizedInput
-                                fieldName={`travelers[${index}].passport`}
-                                placeholder="Номер закордонного паспорта"
-                                errors={errors}
-                                touched={touched}
-                                onFocus={() => setFocusedTravelerIndex(index)}
-                              />
-                              <CustomizedInput
-                                fieldName={`travelers[${index}].birthDate`}
-                                placeholder="Дата народження"
-                                as={MaskedInput}
-                                mask={dateMask}
-                                errors={errors}
-                                touched={touched}
-                                onFocus={() => setFocusedTravelerIndex(index)}
-                              />
-                              <CustomizedInput
-                                fieldName={`travelers[${index}].passportExpiration`}
-                                placeholder="Закінчення дії паспорта"
-                                as={MaskedInput}
-                                mask={dateMask}
-                                errors={errors}
-                                touched={touched}
-                                onFocus={() => setFocusedTravelerIndex(index)}
-                              />
-                              <CustomizedInput
-                                fieldName={`travelers[${index}].boardingCity`}
-                                placeholder="Місто посадки"
-                                errors={errors}
-                                touched={touched}
-                                onFocus={() => setFocusedTravelerIndex(index)}
-                              />
-                              <Checkbox
-                                radius="sm"
-                                size="sm"
-                                classNames={{
-                                  label:
-                                    "text-[12px] leading-[120%] font-normal text-black",
-                                  wrapper:
-                                    "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
-                                }}
-                                isSelected={values.travelers[index].insurance}
-                                onValueChange={(value) => {
-                                  setFieldValue(
-                                    `travelers[${index}].insurance`,
-                                    value
-                                  );
-                                }}
-                              >
-                                Страхівка
-                              </Checkbox>
-
-                              <Checkbox
-                                radius="sm"
-                                size="sm"
-                                classNames={{
-                                  label:
-                                    "text-[12px] leading-[120%] font-normal text-black",
-                                  wrapper:
-                                    "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
-                                }}
-                                isSelected={values.travelers[index].frontSeats}
-                                onValueChange={(value) => {
-                                  setFieldValue(
-                                    `travelers[${index}].frontSeats`,
-                                    value
-                                  );
-                                }}
-                              >
-                                Передні місця
-                              </Checkbox>
-
-                              <Checkbox
-                                radius="sm"
-                                size="sm"
-                                classNames={{
-                                  label:
-                                    "text-[12px] leading-[120%] font-semibold text-black",
-                                  wrapper:
-                                    "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
-                                }}
-                                isSelected={
-                                  values.travelers[index].passportInProgress
-                                }
-                                onValueChange={(value) => {
-                                  setFieldValue(
-                                    `travelers[${index}].passportInProgress`,
-                                    value
-                                  );
-                                }}
-                              >
-                                Паспорт виготовляється
-                              </Checkbox>
+                              <div className="flex flex-col lg:flex-row gap-y-[18px] gap-x-3">
+                                <CustomizedInput
+                                  fieldName={`travelers[${index}].phone`}
+                                  placeholder="Номер телефону"
+                                  errors={errors}
+                                  touched={touched}
+                                  as={MaskedInput}
+                                  mask={phoneMask}
+                                  inputType="tel"
+                                  onFocus={() => setFocusedTravelerIndex(index)}
+                                  labelClassName="lg:w-[296px]"
+                                  fieldFontSize="text-10reg lg:text-12reg"
+                                />
+                                <CustomizedInput
+                                  fieldName={`travelers[${index}].passport`}
+                                  placeholder="Номер закордонного паспорта"
+                                  errors={errors}
+                                  touched={touched}
+                                  onFocus={() => setFocusedTravelerIndex(index)}
+                                  labelClassName="lg:w-[276px]"
+                                  fieldFontSize="text-10reg lg:text-12reg"
+                                />
+                              </div>
+                              <div className="flex flex-col lg:flex-row gap-y-[18px] gap-x-3">
+                                <CustomizedInput
+                                  fieldName={`travelers[${index}].birthDate`}
+                                  placeholder="Дата народження"
+                                  as={MaskedInput}
+                                  mask={dateMask}
+                                  errors={errors}
+                                  touched={touched}
+                                  onFocus={() => setFocusedTravelerIndex(index)}
+                                  labelClassName="lg:w-[144px]"
+                                  fieldFontSize="text-10reg lg:text-12reg"
+                                />
+                                <CustomizedInput
+                                  fieldName={`travelers[${index}].passportExpiration`}
+                                  placeholder="Закінчення дії паспорта"
+                                  as={MaskedInput}
+                                  mask={dateMask}
+                                  errors={errors}
+                                  touched={touched}
+                                  onFocus={() => setFocusedTravelerIndex(index)}
+                                  labelClassName="lg:w-[209px]"
+                                  fieldFontSize="text-10reg lg:text-12reg"
+                                />
+                                <CustomizedInput
+                                  fieldName={`travelers[${index}].boardingCity`}
+                                  placeholder="Місто посадки"
+                                  errors={errors}
+                                  touched={touched}
+                                  onFocus={() => setFocusedTravelerIndex(index)}
+                                  labelClassName="lg:w-[207px]"
+                                  fieldFontSize="text-10reg lg:text-12reg"
+                                />
+                              </div>
+                              <div className="flex flex-col lg:flex-row gap-y-[18px] gap-x-6">
+                                <Checkbox
+                                  radius="sm"
+                                  size="sm"
+                                  classNames={{
+                                    label:
+                                      "text-[12px] leading-[120%] font-normal text-black",
+                                    wrapper:
+                                      "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
+                                  }}
+                                  isSelected={values.travelers[index].insurance}
+                                  onValueChange={(value) => {
+                                    setFieldValue(
+                                      `travelers[${index}].insurance`,
+                                      value
+                                    );
+                                  }}
+                                >
+                                  Страховка
+                                </Checkbox>
+                                <Checkbox
+                                  radius="sm"
+                                  size="sm"
+                                  classNames={{
+                                    label:
+                                      "text-[12px] leading-[120%] font-normal text-black",
+                                    wrapper:
+                                      "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
+                                  }}
+                                  isSelected={
+                                    values.travelers[index].frontSeats
+                                  }
+                                  onValueChange={(value) => {
+                                    setFieldValue(
+                                      `travelers[${index}].frontSeats`,
+                                      value
+                                    );
+                                  }}
+                                >
+                                  Передні місця
+                                </Checkbox>
+                                <Checkbox
+                                  radius="sm"
+                                  size="sm"
+                                  classNames={{
+                                    label:
+                                      "text-[12px] leading-[120%] font-semibold text-black",
+                                    wrapper:
+                                      "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
+                                  }}
+                                  isSelected={
+                                    values.travelers[index].passportInProgress
+                                  }
+                                  onValueChange={(value) => {
+                                    setFieldValue(
+                                      `travelers[${index}].passportInProgress`,
+                                      value
+                                    );
+                                  }}
+                                >
+                                  Паспорт виготовляється
+                                </Checkbox>
+                              </div>
                             </>
                           )}
                         </div>
                         <IconButton
                           handleClick={() => {
-                            if (values.travelers.length > 1) {
+                            if (
+                              values.travelers.length > 1 &&
+                              typeof values.travelersQty === "number"
+                            ) {
                               remove(index);
                               setFieldValue(
                                 "travelersQty",
@@ -316,6 +358,7 @@ export default function BookingForm({
                 placeholder="Email, на який буде приходити інформація"
                 errors={errors}
                 touched={touched}
+                fieldFontSize="text-10reg lg:text-12reg"
               />
               <CustomizedInput
                 fieldName="phone"
@@ -325,6 +368,7 @@ export default function BookingForm({
                 touched={touched}
                 as={MaskedInput}
                 mask={phoneMask}
+                fieldFontSize="text-10reg lg:text-12reg"
               />
               <CustomizedInput
                 fieldName="message"
@@ -332,6 +376,7 @@ export default function BookingForm({
                 placeholder="Додаткове повідомлення"
                 errors={errors}
                 touched={touched}
+                fieldFontSize="text-10reg lg:text-12reg"
               />
             </div>
             <SubmitButton
