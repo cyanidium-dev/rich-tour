@@ -62,6 +62,10 @@ export default function BookingForm({
     >
       {({ errors, touched, dirty, isValid }) => (
         <Form className={`${className}`}>
+          <p className="mb-4 text-10reg xl:text-12reg text-main">
+            <span className="text-10semi xl:text-12semi">Передні місця</span> у
+            автобусі (місця з 5 по 20) сплачується додатково 10€
+          </p>
           <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
             <CustomizedInput
               fieldName="email"

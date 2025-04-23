@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { getDayWord } from "@/utils/getDayWord";
+import { Tour } from "@/types/tour";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import MainButton from "@/components/shared/buttons/MainButton";
 import Container from "@/components/shared/container/Container";
-import { Tour } from "@/types/tour";
-import BookingWithButton from "../tourCost/BookingWithButton";
+import BookingWithButton from "../../shared/booking/BookingWithButton";
 
 interface HeroProps {
   tour: Tour;
@@ -36,7 +36,10 @@ export default function Hero({ tour }: HeroProps) {
               </AnimatedWrapper>
             </div>
             <div className="flex flex-col lg:flex-row gap-2 md:mb-6">
-              <BookingWithButton buttonStyles="w-full lg:w-[198px] h-12 text-14med" />
+              <BookingWithButton
+                tourName={title}
+                buttonStyles="w-full lg:w-[198px] h-12 text-14med"
+              />
               <AnimatedWrapper
                 animation={fadeInAnimation({ y: 30, delay: 0.4 })}
               >

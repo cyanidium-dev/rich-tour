@@ -7,9 +7,11 @@ import Booking from "./Booking";
 
 interface BookingWithButtonProps {
   buttonStyles?: string;
+  tourName: string;
 }
 
 export default function BookingWithButton({
+  tourName,
   buttonStyles = "",
 }: BookingWithButtonProps) {
   const [isPopUpShown, setIsPopUpShown] = useState(false);
@@ -24,7 +26,11 @@ export default function BookingWithButton({
           Забронювати
         </MainButton>
       </AnimatedWrapper>
-      <Booking isPopUpShown={isPopUpShown} setIsPopUpShown={setIsPopUpShown} />
+      <Booking
+        isPopUpShown={isPopUpShown}
+        setIsPopUpShown={setIsPopUpShown}
+        tourName={tourName}
+      />
     </>
   );
 }

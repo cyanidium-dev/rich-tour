@@ -6,11 +6,13 @@ import BookingFormModal from "@/components/shared/modals/BookingFormModal";
 import NotificationPopUp from "@/components/shared/pop-ups/NotificationPopUp";
 
 interface BookingProps {
+  tourName: string;
   isPopUpShown: boolean;
   setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function Booking({
+  tourName,
   isPopUpShown,
   setIsPopUpShown,
 }: BookingProps) {
@@ -23,6 +25,12 @@ export default function Booking({
         isPopUpShown={isPopUpShown}
         setIsPopUpShown={setIsPopUpShown}
       >
+        <div className="flex gap-x-[18px] items-center mb-5">
+          <p className="text-14reg xl:text-16reg">Назва туру:</p>
+          <h4 className="w-[calc(100%-82px-18px)] text-14semi xl:text-16semi">
+            {tourName}
+          </h4>
+        </div>
         <BookingForm
           setIsError={setIsError}
           setIsNotificationShown={setIsNotificationShown}

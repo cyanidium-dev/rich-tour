@@ -6,8 +6,8 @@ import { fadeInAnimation } from "@/components/shared/animation/animationVariants
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Legend from "./Legend";
 import DayButton from "./DayButton";
+import BookingWithButton from "../../shared/booking/BookingWithButton";
 import "react-day-picker/style.css";
-import BookingWithButton from "./BookingWithButton";
 
 export default function Calendar() {
   const [selected, setSelected] = useState<Date>();
