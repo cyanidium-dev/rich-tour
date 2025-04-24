@@ -4,6 +4,7 @@ import { fadeInAnimation } from "@/components/shared/animation/animationVariants
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Calendar from "./Calendar";
 import Container from "@/components/shared/container/Container";
+import AnimatedArrowDesk from "./AnimatedArrowDesk";
 
 interface TourCostProps {
   tour: Tour;
@@ -46,21 +47,24 @@ export default function TourCost({ tour }: TourCostProps) {
             </AnimatedWrapper>
           ) : null}
         </div>
-        <Calendar />
+        <Calendar tour={tour} />
         {images[4] ? (
-          <AnimatedWrapper
-            animation={fadeInAnimation({ y: 30, delay: 0.4 })}
-            viewport={{ once: true, amount: 0.4 }}
-            className="hidden lg:block relative xl:w-[calc(33.3%-26.67px)] h-[702px] rounded-[12px] overflow-hidden"
-          >
-            <Image
-              src={images[4].url}
-              alt={images[4].alt}
-              fill
-              sizes="30vw"
-              className="object-cover"
-            />
-          </AnimatedWrapper>
+          <div className="hidden lg:block relative xl:w-[calc(33.3%-26.67px)] h-[702px]">
+            <AnimatedArrowDesk />
+            <AnimatedWrapper
+              animation={fadeInAnimation({ y: 30, delay: 0.4 })}
+              viewport={{ once: true, amount: 0.4 }}
+              className="relative h-[702px] rounded-[12px] overflow-hidden"
+            >
+              <Image
+                src={images[4].url}
+                alt={images[4].alt}
+                fill
+                sizes="30vw"
+                className="object-cover"
+              />
+            </AnimatedWrapper>
+          </div>
         ) : null}
       </Container>
     </section>

@@ -20,9 +20,13 @@ export default function NotificationPopUp({
       isPopUpShown={isPopUpShown}
       setIsPopUpShown={setIsPopUpShown}
     >
-      <div className="max-w-[386px] pt-[78px] xl:pt-[55px] px-[38px] mb-[60px] xl:mb-[55px] mx-auto">
-        <h3 className="mb-6 text-24semi xl:text-40semi text-center">{title}</h3>
-        <p className="text-16reg xl:text-20reg text-center">{description}</p>
+      <div className="pt-[78px] xl:pt-[55px] px-[38px] mb-[60px] xl:mb-[55px] mx-auto">
+        <h3 className="max-w-[386px] mx-auto mb-6 text-24semi xl:text-40semi text-center">
+          {title}
+        </h3>
+        <p className="max-w-[386px] mx-auto text-16reg xl:text-20reg text-center">
+          {description}
+        </p>
       </div>
       <Image
         src="/images/notifications/arrow.svg"

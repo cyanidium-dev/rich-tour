@@ -13,6 +13,7 @@ export default function IconButton({
 }: IconButtonProps) {
   return (
     <button
+      type="button"
       aria-label="icon button"
       onClick={handleClick}
       className={`outline-none before:content-[''] before:absolute before:-z-10 before:top-0 before:left-0 before:rounded-full before:size-full 
