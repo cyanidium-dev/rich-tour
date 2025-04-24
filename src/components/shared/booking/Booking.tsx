@@ -4,6 +4,7 @@ import Backdrop from "@/components/shared/backdrop/Backdrop";
 import BookingForm from "@/components/shared/forms/BookingForm";
 import BookingFormModal from "@/components/shared/modals/BookingFormModal";
 import NotificationPopUp from "@/components/shared/pop-ups/NotificationPopUp";
+import BookingAgentForm from "../forms/BookingAgentForm";
 
 interface BookingProps {
   tourName: string;
@@ -18,6 +19,7 @@ export default function Booking({
 }: BookingProps) {
   const [isError, setIsError] = useState(false);
   const [isNotificationShown, setIsNotificationShown] = useState(false);
+  const isAuthenticated = true;
 
   return (
     <>
@@ -31,11 +33,19 @@ export default function Booking({
             {tourName}
           </h4>
         </div>
-        <BookingForm
-          setIsError={setIsError}
-          setIsNotificationShown={setIsNotificationShown}
-          setIsPopUpShown={setIsPopUpShown}
-        />
+        {isAuthenticated ? (
+          <BookingAgentForm
+            setIsError={setIsError}
+            setIsNotificationShown={setIsNotificationShown}
+            setIsPopUpShown={setIsPopUpShown}
+          />
+        ) : (
+          <BookingForm
+            setIsError={setIsError}
+            setIsNotificationShown={setIsNotificationShown}
+            setIsPopUpShown={setIsPopUpShown}
+          />
+        )}
       </BookingFormModal>
       <NotificationPopUp
         title={

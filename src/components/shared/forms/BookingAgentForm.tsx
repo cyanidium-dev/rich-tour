@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import MaskedInput from "react-text-mask";
 import dynamic from "next/dynamic";
 import { Checkbox } from "@heroui/react";
-import { bookingValidation } from "@/schemas/bookingFormValidation";
+import { bookingAgentValidation } from "@/schemas/bookingAgentFormValidation";
 import { dateMask, phoneMask } from "@/regex/regex";
 import { handleSubmitForm } from "@/utils/handleSubmitForm";
 import CustomizedInput from "./formComponents/CustomizedInput";
@@ -32,15 +32,17 @@ export interface TravelerInfo {
   passportInProgress: boolean;
 }
 
-export interface ValuesBookingFormType {
+export interface ValuesBookingAgentFormType {
   travelersQty: number | undefined;
+  agency: string;
+  manager: string;
   email: string;
   phone: string;
   message: string;
   travelers: TravelerInfo[];
 }
 
-interface BookingFormProps {
+interface BookingAgentFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
   setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
@@ -48,20 +50,22 @@ interface BookingFormProps {
   variant?: "red" | "black";
 }
 
-export default function BookingForm({
+export default function BookingAgentForm({
   setIsError,
   setIsNotificationShown,
   setIsPopUpShown,
   className = "",
   variant = "red",
-}: BookingFormProps) {
+}: BookingAgentFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [focusedTravelerIndex, setFocusedTravelerIndex] = useState<
     number | null
   >(null);
 
-  const initialValues: ValuesBookingFormType = {
+  const initialValues: ValuesBookingAgentFormType = {
     travelersQty: undefined,
+    agency: "",
+    manager: "",
     email: "",
     phone: "",
     message: "",
@@ -81,13 +85,13 @@ export default function BookingForm({
     ],
   };
 
-  const validationSchema = bookingValidation();
+  const validationSchema = bookingAgentValidation();
 
   const submitForm = async (
-    values: ValuesBookingFormType,
-    formikHelpers: FormikHelpers<ValuesBookingFormType>
+    values: ValuesBookingAgentFormType,
+    formikHelpers: FormikHelpers<ValuesBookingAgentFormType>
   ) => {
-    await handleSubmitForm<ValuesBookingFormType>(
+    await handleSubmitForm<ValuesBookingAgentFormType>(
       formikHelpers,
       setIsLoading,
       setIsError,
@@ -105,7 +109,7 @@ export default function BookingForm({
       {({ errors, touched, dirty, isValid, setFieldValue, values }) => {
         return (
           <Form className={`${className}`}>
-            <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
+            <div className="flex flex-col w-full h-full gap-y-4 mb-[18px]">
               <ClientNumberInput
                 aria-label="travelers"
                 minValue={1}
@@ -347,10 +351,23 @@ export default function BookingForm({
               <p className="text-10reg xl:text-12reg text-main">
                 <span className="text-10semi xl:text-12semi">
                   Передні місця
-                </span>{" "}
+                </span>
                 у автобусі (місця з 5 по 20) сплачується додатково 10€
               </p>
-
+              <CustomizedInput
+                fieldName="agency"
+                placeholder="Назва агенції"
+                errors={errors}
+                touched={touched}
+                fieldFontSize="text-10reg lg:text-12reg"
+              />
+              <CustomizedInput
+                fieldName="manager"
+                placeholder="Відповідальний менеджер"
+                errors={errors}
+                touched={touched}
+                fieldFontSize="text-10reg lg:text-12reg"
+              />
               <CustomizedInput
                 fieldName="email"
                 inputType="email"
