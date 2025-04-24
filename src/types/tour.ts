@@ -15,6 +15,10 @@ export interface InspirationItem {
   images?: { url: string; alt: string }[];
 }
 
+export interface TourDepartures {
+  [key: string]: { day: number; price?: number; status: string[] }[];
+}
+
 export interface Tour {
   id: string;
   slug: string;
@@ -35,5 +39,6 @@ export interface Tour {
   points: string[];
   includedInCost: string[];
   notIncludedInCost: string[];
+  tourDepartures: TourDepartures;
   inspiration: InspirationItem[];
 }
