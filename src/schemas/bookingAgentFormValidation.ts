@@ -1,9 +1,8 @@
 import * as yup from "yup";
 import { latinNameRegex, phoneRegex, emailRegex } from "@/regex/regex";
 
-export const bookingValidation = () => {
+export const bookingAgentValidation = () => {
   const travelerSchema = yup.object().shape({
-    date: yup.string(),
     name: yup
       .string()
       .matches(latinNameRegex, "Ім’я повинне бути латиницею")
@@ -25,13 +24,16 @@ export const bookingValidation = () => {
     boardingCity: yup.string().required("Вкажіть місто посадки"),
   });
 
-  const bookingFormValidationSchema = yup.object().shape({
+  const bookingAgentFormValidationSchema = yup.object().shape({
+    date: yup.string(),
     travelersQty: yup
       .number()
       .typeError("Кількість туристів повинна бути числом")
       .integer("Кількість туристів повинна бути цілим числом")
       .positive("Кількість туристів повинна бути додатньою")
       .required("Вкажіть кількість туристів"),
+    agency: yup.string().required("Дане поле обов'язкове до заповнення"),
+    manager: yup.string().required("Дане поле обов'язкове до заповнення"),
     email: yup
       .string()
       .matches(emailRegex, "Введіть валідний email")
@@ -53,5 +55,5 @@ export const bookingValidation = () => {
       .required("Має бути хоча б один турист"),
   });
 
-  return bookingFormValidationSchema;
+  return bookingAgentFormValidationSchema;
 };
