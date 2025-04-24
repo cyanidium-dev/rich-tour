@@ -17,8 +17,6 @@ interface CalendarProps {
 export default function Calendar({ tour }: CalendarProps) {
   const [selected, setSelected] = useState<Date>();
 
-  const { title } = tour;
-
   const defaultClassNames = getDefaultClassNames();
 
   const customUk: Locale = {
@@ -80,10 +78,7 @@ export default function Calendar({ tour }: CalendarProps) {
         />
         <Legend />
       </AnimatedWrapper>
-      <BookingWithButton
-        buttonStyles="w-full h-12 text-14med"
-        tourName={title}
-      />
+      <BookingWithButton buttonStyles="w-full h-12 text-14med" tour={tour} />
     </div>
   );
 }

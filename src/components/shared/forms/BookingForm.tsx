@@ -11,6 +11,7 @@ import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 import IconButton from "../buttons/IconButton";
 import TrashIcon from "../icons/TrashIcon";
+import { TourDepartures } from "@/types/tour";
 
 const ClientNumberInput = dynamic(
   () => import("@heroui/react").then((mod) => mod.NumberInput),
@@ -44,6 +45,7 @@ interface BookingFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
   setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
+  tourDepartures: TourDepartures;
   className?: string;
   variant?: "red" | "black";
 }
@@ -52,6 +54,7 @@ export default function BookingForm({
   setIsError,
   setIsNotificationShown,
   setIsPopUpShown,
+  tourDepartures,
   className = "",
   variant = "red",
 }: BookingFormProps) {

@@ -37,7 +37,7 @@ export default function Hero({ tour }: HeroProps) {
             </div>
             <div className="flex flex-col xl:flex-row gap-2 md:mb-6">
               <BookingWithButton
-                tourName={title}
+                tour={tour}
                 buttonStyles="w-full xl:w-[198px] h-12 text-14med"
               />
               <AnimatedWrapper

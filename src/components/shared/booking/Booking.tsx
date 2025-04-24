@@ -5,21 +5,24 @@ import BookingForm from "@/components/shared/forms/BookingForm";
 import BookingFormModal from "@/components/shared/modals/BookingFormModal";
 import NotificationPopUp from "@/components/shared/pop-ups/NotificationPopUp";
 import BookingAgentForm from "../forms/BookingAgentForm";
+import { Tour } from "@/types/tour";
 
 interface BookingProps {
-  tourName: string;
+  tour: Tour;
   isPopUpShown: boolean;
   setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function Booking({
-  tourName,
+  tour,
   isPopUpShown,
   setIsPopUpShown,
 }: BookingProps) {
   const [isError, setIsError] = useState(false);
   const [isNotificationShown, setIsNotificationShown] = useState(false);
   const isAuthenticated = true;
+
+  const { title, tourDepartures } = tour;
 
   return (
     <>
@@ -30,7 +33,7 @@ export default function Booking({
         <div className="flex gap-x-[18px] items-center mb-5">
           <p className="text-14reg xl:text-16reg">Назва туру:</p>
           <h4 className="w-[calc(100%-82px-18px)] xl:w-[calc(100%-94px-18px)] text-14semi xl:text-16semi">
-            {tourName}
+            {title}
           </h4>
         </div>
         {isAuthenticated ? (
@@ -38,12 +41,14 @@ export default function Booking({
             setIsError={setIsError}
             setIsNotificationShown={setIsNotificationShown}
             setIsPopUpShown={setIsPopUpShown}
+            tourDepartures={tourDepartures}
           />
         ) : (
           <BookingForm
             setIsError={setIsError}
             setIsNotificationShown={setIsNotificationShown}
             setIsPopUpShown={setIsPopUpShown}
+            tourDepartures={tourDepartures}
           />
         )}
       </BookingFormModal>

@@ -4,14 +4,15 @@ import { fadeInAnimation } from "@/components/shared/animation/animationVariants
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import MainButton from "@/components/shared/buttons/MainButton";
 import Booking from "./Booking";
+import { Tour } from "@/types/tour";
 
 interface BookingWithButtonProps {
   buttonStyles?: string;
-  tourName: string;
+  tour: Tour;
 }
 
 export default function BookingWithButton({
-  tourName,
+  tour,
   buttonStyles = "",
 }: BookingWithButtonProps) {
   const [isPopUpShown, setIsPopUpShown] = useState(false);
@@ -29,7 +30,7 @@ export default function BookingWithButton({
       <Booking
         isPopUpShown={isPopUpShown}
         setIsPopUpShown={setIsPopUpShown}
-        tourName={tourName}
+        tour={tour}
       />
     </>
   );
