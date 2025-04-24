@@ -1,12 +1,14 @@
 "use client";
 import { Form, Formik, FormikHelpers, FieldArray } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
+import { Select, SelectItem } from "@heroui/react";
 import MaskedInput from "react-text-mask";
 import dynamic from "next/dynamic";
 import { Checkbox } from "@heroui/react";
 import { bookingValidation } from "@/schemas/bookingFormValidation";
 import { dateMask, phoneMask } from "@/regex/regex";
 import { handleSubmitForm } from "@/utils/handleSubmitForm";
+import { formatTourDeparturesToOptions } from "@/utils/formatTourDeparturesOptions";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 import IconButton from "../buttons/IconButton";
@@ -34,6 +36,7 @@ export interface TravelerInfo {
 }
 
 export interface ValuesBookingFormType {
+  date: string;
   travelersQty: number | undefined;
   email: string;
   phone: string;
@@ -64,6 +67,7 @@ export default function BookingForm({
   >(null);
 
   const initialValues: ValuesBookingFormType = {
+    date: "",
     travelersQty: undefined,
     email: "",
     phone: "",
@@ -85,6 +89,8 @@ export default function BookingForm({
   };
 
   const validationSchema = bookingValidation();
+
+  const selectOptions = formatTourDeparturesToOptions(tourDepartures);
 
   const submitForm = async (
     values: ValuesBookingFormType,
@@ -109,6 +115,29 @@ export default function BookingForm({
         return (
           <Form className={`${className}`}>
             <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
+              <Select
+                placeholder="Виберіть дату"
+                size="sm"
+                selectedKeys={new Set([values.date])}
+                classNames={{
+                  selectorIcon: "right-[18px]",
+                  trigger:
+                    "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4 hover:bg-white focus:bg-white",
+                  value: "!text-10reg lg:!text-12reg text-black",
+                  popoverContent:
+                    "bg-white shadow-none border border-black rounded-[6px]",
+                  listbox:
+                    "!font-normal !text-[10px] lg:!text-12reg !text-black",
+                }}
+                onSelectionChange={(selected) => {
+                  const selectedValue = Array.from(selected)[0];
+                  setFieldValue("date", selectedValue);
+                }}
+              >
+                {selectOptions.map((option) => (
+                  <SelectItem key={option.key}>{option.label}</SelectItem>
+                ))}
+              </Select>
               <ClientNumberInput
                 aria-label="travelers"
                 minValue={1}
@@ -147,9 +176,9 @@ export default function BookingForm({
                 placeholder="Кількість туристів"
                 classNames={{
                   inputWrapper:
-                    "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4 hover:bg-white",
-                  innerWrapper: "p-0",
-                  input: "!text-12reg placeholder:text-black",
+                    "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4 hover:bg-white focus:bg-white",
+                  innerWrapper: "p-0  focus:bg-white",
+                  input: "!text-10reg lg:!text-12reg placeholder:text-black",
                 }}
               />
               <FieldArray name="travelers">

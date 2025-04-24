@@ -20,7 +20,7 @@ export default function Booking({
 }: BookingProps) {
   const [isError, setIsError] = useState(false);
   const [isNotificationShown, setIsNotificationShown] = useState(false);
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   const { title, tourDepartures } = tour;
 

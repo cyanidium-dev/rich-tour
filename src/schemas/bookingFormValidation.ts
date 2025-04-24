@@ -3,6 +3,7 @@ import { latinNameRegex, phoneRegex, emailRegex } from "@/regex/regex";
 
 export const bookingValidation = () => {
   const travelerSchema = yup.object().shape({
+    date: yup.string(),
     name: yup
       .string()
       .matches(latinNameRegex, "Ім’я повинне бути латиницею")

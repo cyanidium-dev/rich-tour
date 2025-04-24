@@ -25,6 +25,7 @@ export const bookingAgentValidation = () => {
   });
 
   const bookingAgentFormValidationSchema = yup.object().shape({
+    date: yup.string(),
     travelersQty: yup
       .number()
       .typeError("Кількість туристів повинна бути числом")
