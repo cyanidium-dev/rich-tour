@@ -4,13 +4,15 @@ import "swiper/css/navigation";
 import { Suspense } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { documentsList } from "./mockedData";
+// import { documentsList } from "./mockedData";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Loader from "@/components/shared/loader/Loader";
 import DocumentCard from "./DocumentCard";
 
-export default function DocumentsSwiper() {
+// @ts-expect-error
+export default function DocumentsSwiper({items}) {
+    console.log(items);
   return (
     <Suspense fallback={<Loader />}>
       <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.8 })}>
@@ -42,7 +44,8 @@ export default function DocumentsSwiper() {
           modules={[Navigation]}
           className="documents"
         >
-          {documentsList.map((document, idx) => (
+          {/*  @ts-expect-error */}
+          {items.map((document, idx) => (
             <SwiperSlide key={idx}>
               <DocumentCard document={document} />
             </SwiperSlide>

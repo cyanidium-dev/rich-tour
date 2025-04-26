@@ -1,4 +1,4 @@
-import { allDocumentsUrl, documentsList } from "./mockedData";
+import { allDocumentsUrl } from "./mockedData";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";
@@ -6,17 +6,26 @@ import DocumentsTitle from "./DocumentsTitle";
 import MainButton from "@/components/shared/buttons/MainButton";
 import DocumentsSwiper from "./DocumentsSwiper";
 
-export default function Documents() {
-  if (!documentsList || !documentsList.length) {
+import client from "@/lib/sanity";
+import {allDocQuery} from "@/lib/queries";
+
+export default async function Documents() {
+  const documents = await client.fetch(allDocQuery);
+  if (!documents || !documents.length) {
     return null;
   }
+  // @ts-expect-error
+  const items = documents.map(({name, doc}) => ({image: {
+    url: doc.asset.url,
+      alt: name,
+    }}));
 
   return (
     <section className="mb-[148px] xl:mb-[180px]">
       <div className="pt-[65px] xl:pt-12 pb-[55px] xl:pb-[73px] mb-10 xl:mb-6 bg-black">
         <DocumentsTitle />
         <Container>
-          <DocumentsSwiper />
+          <DocumentsSwiper items={items} />
         </Container>
       </div>
       <Container>

@@ -3,7 +3,12 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";
 import FaqList from "./FaqList";
 
-export default function Faq() {
+import client from "@/lib/sanity";
+import {allFaqQuery} from "@/lib/queries";
+
+export default async function Faq() {
+    const faqItems = await client.fetch(allFaqQuery);
+
   return (
     <section className="mb-[148px] xl:mb-[180px]">
       <Container>
@@ -14,7 +19,7 @@ export default function Faq() {
         >
           Часто задавані питання
         </AnimatedWrapper>
-        <FaqList />
+        <FaqList items={faqItems} />
       </Container>
     </section>
   );

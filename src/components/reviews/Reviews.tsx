@@ -5,7 +5,12 @@ import ReviewForm from "./ReviewForm";
 import ReviewsList from "./ReviewsList";
 import AnimatedArrow from "./AnimatedArrow";
 
-export default function Reviews() {
+import client from "@/lib/sanity";
+import {allReviewsQuery} from "@/lib/queries";
+
+export default async function Reviews() {
+  const reviews = await client.fetch(allReviewsQuery);
+
   return (
     <section className="pt-9 md:pt-16 mb-[148px] xl:mb-[180px]">
       <Container className="relative">
@@ -19,7 +24,7 @@ export default function Reviews() {
         <AnimatedArrow />
         <div className="flex flex-col md:flex-row-reverse md:justify-between gap-y-16 md:gap-x-8 xl:gap-x-[115px]">
           <ReviewForm />
-          <ReviewsList />
+          <ReviewsList items={reviews} />
         </div>
       </Container>
     </section>

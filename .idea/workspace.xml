@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/lib/queries.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/sanity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eslint.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/about/documents/Documents.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/about/documents/Documents.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/about/documents/DocumentsSwiper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/about/documents/DocumentsSwiper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/faq/Faq.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/faq/Faq.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/faq/FaqList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/faq/FaqList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/reviews/Reviews.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reviews/Reviews.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/reviews/ReviewsList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reviews/ReviewsList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/cards/reviewCard/ReviewCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/cards/reviewCard/ReviewCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/reviews/Reviews.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/reviews/Reviews.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/reviews/ReviewsListDesk.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/reviews/ReviewsListDesk.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/reviews/ReviewsSwiperMob.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/reviews/ReviewsSwiperMob.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/reviews/mockedData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/reviews/mockedData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/review.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/review.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/formatDate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formatDate.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2wGS4vkB5BllIAATPY73JGyOydK" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "C:\\Projects\\Rich tour\\rich-tour\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="" />
+      <created>1745666229847</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1745666229847</updated>
+      <workItem from="1745666231037" duration="9567000" />
+      <workItem from="1745677828222" duration="24000" />
+      <workItem from="1745678137417" duration="4531000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,7 +1,7 @@
 "use client";
 import { Suspense } from "react";
 import { useReviewsItemsPerPage } from "@/hooks/useReviewsItemsPerPage";
-import { reviewsList } from "../shared/reviews/mockedData";
+// import { reviewsList } from "../shared/reviews/mockedData";
 import { listVariants } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Loader from "@/components/shared/loader/Loader";
@@ -11,8 +11,9 @@ import AnimatedListItem from "../shared/animation/AnimatedListItem";
 
 const SECTION_ID = "review-page-reviews";
 
-export default function ReviewsList() {
-  if (!reviewsList || !reviewsList.length) {
+//@ts-expect-error
+export default function ReviewsList({items}) {
+  if (!items || !items.length) {
     return null;
   }
 
@@ -20,7 +21,7 @@ export default function ReviewsList() {
     <Suspense fallback={<Loader />}>
       <div id={SECTION_ID} className="md:max-w-[66.07%]">
         <Pagination
-          items={reviewsList}
+          items={items}
           scrollTargetId={SECTION_ID}
           useItemsPerPage={useReviewsItemsPerPage}
           renderItems={(currentItems) => (
@@ -34,6 +35,7 @@ export default function ReviewsList() {
             >
               {currentItems.map((review, idx) => (
                 <AnimatedListItem key={idx}>
+                  {/*  @ts-expect-error */}
                   <ReviewCard review={review} />
                 </AnimatedListItem>
               ))}

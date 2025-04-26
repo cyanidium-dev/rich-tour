@@ -1,6 +1,6 @@
 export interface Review {
   id: string;
   name: string;
-  createdAt: string;
+  _createdAt: string;
   text: string;
 }

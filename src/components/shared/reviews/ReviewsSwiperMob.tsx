@@ -4,16 +4,17 @@ import "swiper/css/navigation";
 import { Suspense } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { reviewsList } from "./mockedData";
+// import { reviewsList } from "./mockedData";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import Loader from "@/components/shared/loader/Loader";
 import ReviewCard from "@/components/shared/cards/reviewCard/ReviewCard";
 import AnimatedWrapper from "../animation/AnimatedWrapper";
 
-export default function ReviewsSwiperMob() {
-  if (!reviewsList || !reviewsList.length) {
-    return null;
-  }
+//@ts-expect-error
+export default function ReviewsSwiperMob({items}) {
+  // if (!reviewsList || !reviewsList.length) {
+  //   return null;
+  // }
 
   return (
     <AnimatedWrapper
@@ -31,7 +32,8 @@ export default function ReviewsSwiperMob() {
           modules={[Navigation]}
           className="reviews"
         >
-          {reviewsList.map((review, idx) => (
+          {/*@ts-expect-error*/}
+          {items.map((review, idx) => (
             <SwiperSlide key={idx}>
               <ReviewCard review={review} />
             </SwiperSlide>

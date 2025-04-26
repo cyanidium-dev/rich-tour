@@ -7,7 +7,12 @@ import ReviewsSwiperMob from "./ReviewsSwiperMob";
 import ReviewsListDesk from "./ReviewsListDesk";
 import AnimatedWrapper from "../animation/AnimatedWrapper";
 
-export default function Reviews() {
+import client from "../../../lib/sanity";
+import {lastReviewsQuery} from "@/lib/queries";
+
+export default async function Reviews() {
+  const reviews = await client.fetch(lastReviewsQuery);
+
   return (
     <section className="mb-[68px] md:mb-[180px]">
       <Container className="md:flex gap-x-5">
@@ -70,7 +75,7 @@ export default function Reviews() {
           />
         </AnimatedWrapper>
       </Container>
-      <ReviewsSwiperMob />
+      <ReviewsSwiperMob items={reviews} />
       <Container>
         <AnimatedWrapper
           animation={fadeInAnimation({ y: 30, delay: 0.4 })}
@@ -84,7 +89,7 @@ export default function Reviews() {
             className="object-cover"
           />
         </AnimatedWrapper>
-        <ReviewsListDesk />
+        <ReviewsListDesk items={reviews} />
       </Container>
     </section>
   );

@@ -6,9 +6,9 @@ interface ReviewCardProps {
 }
 
 export default function ReviewCard({ review }: ReviewCardProps) {
-  const { name, createdAt, text } = review;
+  const { name, _createdAt, text } = review;
 
-  const formattedDate = formatDate(createdAt);
+  const formattedDate = formatDate(_createdAt);
 
   return (
     <div className="min-h-full px-6 py-[30px] rounded-[12px] bg-white shadow-card">
