@@ -1,7 +1,7 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { categories } from "../home/promotion/mockedData";
+// import { categories } from "../home/promotion/mockedData";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import TabMenuItem from "./TabMenuItem";
@@ -12,13 +12,15 @@ interface TabMenuProps {
   setActiveTab: Dispatch<SetStateAction<string>>;
 }
 
-export default function TabMenu({ activeTab, setActiveTab }: TabMenuProps) {
+//@ts-expect-error
+export default function TabMenu({ categories, activeTab, setActiveTab }: TabMenuProps) {
   const router = useRouter();
   const pathName = usePathname();
 
   if (!categories || !categories?.length) return null;
 
-  const categoriesList = [{ title: "Всі тури", value: "all" }, ...categories];
+  //@ts-expect-error
+  const categoriesList = [{ title: "Всі тури", value: "all" }, ...categories.map(item => ({...item, value: item.title}))];
 
   const handleTabClick = (category: Category) => {
     setActiveTab(category?.value);

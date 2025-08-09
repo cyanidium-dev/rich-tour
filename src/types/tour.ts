@@ -19,6 +19,25 @@ export interface TourDepartures {
   [key: string]: { day: number; price?: number; status: string[] }[];
 }
 
+export interface TourShortInfo {
+  _id: string;
+  slug: {
+    type: string;
+    current: string;
+  };
+  title: string;
+  description: string;
+  duration: number;
+  category: Category;
+  // earlyBooking: boolean;
+  image: {
+    asset: {
+      url: string;
+    }
+
+  };
+}
+
 export interface Tour {
   id: string;
   slug: string;

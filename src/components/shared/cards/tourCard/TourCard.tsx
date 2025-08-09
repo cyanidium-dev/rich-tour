@@ -2,23 +2,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { getDayWord } from "@/utils/getDayWord";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
-import { Tour } from "@/types/tour";
+import { TourShortInfo } from "@/types/tour";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import SecondaryButton from "../../buttons/SecondaryButton";
 
 interface TourCardProps {
-  tour: Tour;
+  tour: TourShortInfo;
 }
 
 export default function TourCard({ tour }: TourCardProps) {
-  const { title, description, images, duration, slug, category, earlyBooking } =
+  const { title, description, image, duration, slug, category } =
     tour;
 
   const isOnPromo = category?.value === "promotion";
+  const earlyBooking = false;
 
   return (
     <Link
-      href={`/tours/${slug}`}
+      href={`/tours/${slug.current}`}
       className="block relative min-h-full rounded-[12px] overflow-hidden shadow-card"
     >
       <div className="absolute -z-10 top-0 left-0 w-full aspect-[210/129] xl:aspect-[265/170]">
@@ -41,8 +42,8 @@ export default function TourCard({ tour }: TourCardProps) {
           Раннє бронювання
         </AnimatedWrapper>
         <Image
-          src={images[0]?.url}
-          alt={images[0]?.alt}
+          src={image.asset.url}
+          alt={title}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
         />

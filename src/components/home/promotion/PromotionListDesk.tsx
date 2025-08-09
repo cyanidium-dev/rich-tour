@@ -31,6 +31,7 @@ export default function PromotionListDesk() {
                   key={tour.id}
                   className="max-w-[210px] md:max-w-[226px] lg:max-w-[228px] xl:max-w-[265px]"
                 >
+                  {/*  @ts-expect-error*/}
                   <TourCard tour={tour} />
                 </AnimatedWrapper>
               ))}

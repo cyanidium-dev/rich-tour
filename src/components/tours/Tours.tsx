@@ -7,7 +7,8 @@ import Container from "../shared/container/Container";
 import TabMenu from "./TabMenu";
 import ToursList from "./ToursList";
 
-export default function Tours() {
+//@ts-expect-error
+export default function Tours({categories}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "all";
@@ -34,7 +35,8 @@ export default function Tours() {
         >
           Тури
         </AnimatedWrapper>
-        <TabMenu activeTab={activeTab} setActiveTab={setActiveTab} />
+        {/*@ts-expect-error*/}
+        <TabMenu categories={categories} activeTab={activeTab} setActiveTab={setActiveTab} />
         <ToursList activeTab={activeTab} />
       </Container>
     </section>

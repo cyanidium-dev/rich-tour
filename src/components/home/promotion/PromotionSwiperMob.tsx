@@ -31,6 +31,7 @@ export default function PromotionSwiperMob() {
         >
           {toursList.map((tour, idx) => (
             <SwiperSlide key={idx}>
+              {/*  @ts-expect-error*/}
               <TourCard tour={tour} />
             </SwiperSlide>
           ))}

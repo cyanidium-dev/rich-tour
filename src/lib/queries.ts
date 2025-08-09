@@ -28,3 +28,27 @@ export const allDocQuery = `*[_type == "doc"] | order(publishedAt desc) {
   }
 }`
 
+export const allTourCategoriesQuery = `*[_type == "tour-category" && active == true] | order(publishedAt desc) {
+  _id,
+  title,
+  image {
+    asset->{
+      url
+    }
+  }
+}`
+
+export const allBasicToursQuery = `*[_type == "tour-basic"] | order(publishedAt desc) {
+  _id,
+  title,
+  slug,
+  description,
+  categories,
+  duration,
+  image {
+    asset->{
+      url
+    }
+  }
+}`
+

@@ -9,7 +9,15 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import AnimatedArrowMob from "./AnimatedArrowMob";
 import AnimatedArrowDesk from "./AnimatedArrowDesk";
 
-export default function Tours() {
+import client from "@/lib/sanity";
+import {allTourCategoriesQuery} from "@/lib/queries";
+
+export default async function Tours() {
+  const tourCategories = await client.fetch(allTourCategoriesQuery);
+  if (!tourCategories || !tourCategories.length) {
+    return null;
+  }
+
   return (
     <section className="mb-[148px] xl:mb-[180px]">
       <Container className="relative md:flex gap-x-5">
@@ -52,43 +60,46 @@ export default function Tours() {
             >
               <div className="flex items-end relative aspect-[360/178] px-[18px] py-5 rounded-[12px] overflow-hidden">
                 <Image
-                  src="/images/home/tours/bgFirstDesk.webp"
+                  src={tourCategories[0].image.asset.url}
                   alt="background"
                   width={720}
                   height={356}
                   className="absolute top-0 left-0 -z-20 w-full h-full object-cover"
                 />
-                <p className="max-w-[46.2%] text-20med lg:text-28med">
-                  Тури Європою
+                <p className="max-w-[62.2%] text-28med lg:text-28med">
+                  {tourCategories[0].title}
                 </p>
-                <div className="absolute -z-10  bottom-[-230px] left-[-142px] lg:bottom-[-190px] lg:left-[-92px] w-[320px] aspect-[1/1] bg-main rounded-full"></div>
+                <div className="absolute -z-10  bottom-[-230px] left-[-142px] lg:bottom-[-190px] lg:left-[-92px] w-[360px] aspect-[1.15/1] bg-main rounded-full" />
               </div>
-              <div className="flex items-end justify-end relative aspect-[360/201] px-[18px] py-5 rounded-[12px] overflow-hidden">
+              <div
+                  className="flex items-end justify-end relative aspect-[360/201] px-[18px] py-5 rounded-[12px] overflow-hidden">
                 <Image
-                  src="/images/home/tours/bgSecondDesk.webp"
-                  alt="background"
-                  width={720}
-                  height={402}
-                  className="absolute top-0 left-0 -z-10 w-full h-full object-cover"
+                    src={tourCategories[1].image.asset.url}
+                    alt="background"
+                    width={720}
+                    height={402}
+                    className="absolute top-0 left-0 -z-10 w-full h-full object-cover"
                 />
                 <p className="max-w-[76.2%] text-right text-20med lg:text-28med">
-                  Під заказні групи
+                  {tourCategories[1].title}
                 </p>
+                <div
+                    className="absolute -z-10  bottom-[-230px] right-[-142px] lg:bottom-[-190px] lg:right-[-92px] w-[340px] aspect-[1.1/1] bg-main rounded-full"/>
               </div>
             </AnimatedWrapper>
             <AnimatedWrapper
-              animation={fadeInAnimation({ y: 30, delay: 0.8 })}
-              className="relative  md:w-[calc(50%-10px)] aspect-[360/399] px-[18px] py-5 rounded-[12px] overflow-hidden"
+                animation={fadeInAnimation({y: 30, delay: 0.8})}
+                className="relative  md:w-[calc(50%-10px)] aspect-[360/399] px-[18px] py-5 rounded-[12px] overflow-hidden"
             >
               <Image
-                src="/images/home/tours/bgThirdDesk.webp"
+                src={tourCategories[2].image.asset.url}
                 alt="background"
                 width={720}
                 height={798}
                 className="absolute top-0 left-0 -z-10 w-full h-full object-cover"
               />
               <p className="max-w-[69.2%] xl:max-w-[203px] text-20med lg:text-28med">
-                Львів для дітей
+                {tourCategories[2].title}
               </p>
             </AnimatedWrapper>
           </AnimatedWrapper>
@@ -99,24 +110,24 @@ export default function Tours() {
         >
           <div className="relative flex items-end aspect-[360/399] px-[18px] py-5 rounded-[12px] overflow-hidden">
             <Image
-              src="/images/home/tours/bgFourthDesk.webp"
+              src={tourCategories[3].image.asset.url}
               alt="background"
               width={720}
               height={798}
               className="absolute top-0 left-0 -z-10 w-full h-full object-cover"
             />
-            <p className="text-20med lg:text-28med">Різдвяні ярмарки Європи</p>
+            <p className="text-20med lg:text-28med">{tourCategories[3].title}</p>
           </div>
           <div className="relative aspect-[360/165] px-[18px] py-5 rounded-[12px] overflow-hidden">
             <Image
-              src="/images/home/tours/bgFifthDesk.webp"
+              src={tourCategories[4].image.asset.url}
               alt="background"
               width={720}
               height={330}
               className="absolute top-0 left-0 -z-10 w-full h-full object-cover"
             />
-            <p className="max-w-[62%] text-20med lg:text-28med">Морські тури</p>
-            <div className="absolute -z-10 top-[-232px] left-[-150px] lg:top-[-212px] lg:left-[-110px] w-[320px] aspect-[1/1] bg-main rounded-full"></div>
+            <p className="max-w-[62%] text-20med lg:text-28med">{tourCategories[4].title}</p>
+            <div className="absolute -z-10 top-[-232px] left-[-150px] lg:top-[-212px] lg:left-[-110px] w-[380px] aspect-[1.15/1] bg-main rounded-full"></div>
           </div>
         </AnimatedWrapper>
         <ToursListMob />

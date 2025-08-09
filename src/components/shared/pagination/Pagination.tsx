@@ -83,51 +83,54 @@ export default function Pagination<T>({
   return (
     <>
       <div className={`${className}`}>{renderItems(currentItems)}</div>
-      <AnimatedWrapper
-        animation={fadeInAnimation({ y: 30 })}
-        className="flex justify-center items-center gap-[33px] mt-9 mx-auto"
-      >
-        <button
-          aria-label="left"
-          className={`flex justify-center items-center p-[10.5] size-[42px] rounded-[7.6px] 
+      {items.length > itemsPerPage && (
+          <AnimatedWrapper
+              animation={fadeInAnimation({ y: 30 })}
+              className="flex justify-center items-center gap-[33px] mt-9 mx-auto"
+          >
+            <button
+                aria-label="left"
+                className={`flex justify-center items-center p-[10.5] size-[42px] rounded-[7.6px] 
           shadow-pagination transition duration-300 ease-in-out
           enabled:hover:brightness-125 enabled:active:scale-95 enabled:focus-visible:brightness-125
           ${page === 1 ? "bg-white text-black" : "bg-main text-white"}`}
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={page === 1}
-        >
-          <ArrowInCircleIcon className="size-[21px] rotate-180" />
-        </button>
-
-        <div>
-          {pageNumbers.map((page) => (
-            <button
-              key={page}
-              aria-label={page.toString()}
-              className={`px-[8px] py-2 text-16med transition duration-300 ease-in-out
-            ${page === currentPage ? "text-main" : " xl:hover:text-main"}`}
-              onClick={() => handlePageChange(page)}
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={page === 1}
             >
-              {page}
+              <ArrowInCircleIcon className="size-[21px] rotate-180" />
             </button>
-          ))}
-        </div>
 
-        <button
-          aria-label="right"
-          className={`flex justify-center items-center p-[10.5px] size-[42px] rounded-[7.6px] transition duration-300 ease-in-out
+            <div>
+              {pageNumbers.map((page) => (
+                  <button
+                      key={page}
+                      aria-label={page.toString()}
+                      className={`px-[8px] py-2 text-16med transition duration-300 ease-in-out
+            ${page === currentPage ? "text-main" : " xl:hover:text-main"}`}
+                      onClick={() => handlePageChange(page)}
+                  >
+                    {page}
+                  </button>
+              ))}
+            </div>
+
+            <button
+                aria-label="right"
+                className={`flex justify-center items-center p-[10.5px] size-[42px] rounded-[7.6px] transition duration-300 ease-in-out
            shadow-pagination enabled:hover:brightness-125 enabled:active:scale-95 enabled:focus-visible:brightness-125
           ${
-            currentPage === totalPages
-              ? "text-black bg-white"
-              : "bg-main text-white"
-          }`}
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={page === totalPages}
-        >
-          <ArrowInCircleIcon className="size-[21px]" />
-        </button>
-      </AnimatedWrapper>
+                    currentPage === totalPages
+                        ? "text-black bg-white"
+                        : "bg-main text-white"
+                }`}
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={page === totalPages}
+            >
+              <ArrowInCircleIcon className="size-[21px]" />
+            </button>
+          </AnimatedWrapper>
+      )}
+
     </>
   );
 }
