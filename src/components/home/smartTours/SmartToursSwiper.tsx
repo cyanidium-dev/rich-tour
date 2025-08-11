@@ -5,13 +5,14 @@ import { Suspense } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
-import { toursList } from "../promotion/mockedData";
+// import { toursList } from "../promotion/mockedData";
 import TourCard from "@/components/shared/cards/tourCard/TourCard";
 import Loader from "@/components/shared/loader/Loader";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 
-export default function SmartToursSwiper() {
-  if (!toursList || !toursList.length) {
+//@ts-expect-error
+export default function SmartToursSwiper({toursList}) {
+  if (!toursList || !toursList?.length) {
     return null;
   }
 
@@ -26,9 +27,9 @@ export default function SmartToursSwiper() {
           speed={1000}
           modules={[Navigation]}
         >
+          {/*@ts-expect-error*/}
           {toursList.map((tour, idx) => (
             <SwiperSlide key={idx}>
-              {/*@ts-expect-error*/}
               <TourCard tour={tour} />
             </SwiperSlide>
           ))}

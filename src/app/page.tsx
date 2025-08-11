@@ -1,8 +1,8 @@
 import Hero from "@/components/home/hero/Hero";
 import Tours from "@/components/home/tours/Tours";
-// import Promotion from "@/components/home/promotion/Promotion";
+import Promotion from "@/components/home/promotion/Promotion";
 import Benefits from "@/components/home/benefits/Benefits";
-// import SmartTours from "@/components/home/smartTours/SmartTours";
+import SmartTours from "@/components/home/smartTours/SmartTours";
 import Reviews from "@/components/shared/reviews/Reviews";
 import Step from "@/components/home/step/Step";
 import Faq from "@/components/home/faq/Faq";
@@ -13,9 +13,9 @@ export default function Home() {
     <>
       <Hero />
       <Tours />
-      {/*<Promotion />*/}
+      <Promotion />
       <Benefits />
-      {/*<SmartTours />*/}
+      <SmartTours />
       <Reviews />
       <Step />
       <Faq />
