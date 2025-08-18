@@ -6,16 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/tours/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/about/documents/DocumentsSwiper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/about/documents/DocumentsSwiper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/smartTours/SmartTours.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/smartTours/SmartTours.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/home/tours/Tours.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/tours/Tours.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/tours/ToursListMob.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/tours/ToursListMob.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/animation/AnimatedWrapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/animation/AnimatedWrapper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tours/TabMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tours/TabMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tours/ToursList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tours/ToursList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/queries.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/formatDate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formatDate.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +76,8 @@
       <workItem from="1755282855597" duration="992000" />
       <workItem from="1755304180634" duration="5734000" />
       <workItem from="1755353004193" duration="2138000" />
-      <workItem from="1755513881586" duration="4862000" />
+      <workItem from="1755513881586" duration="6683000" />
+      <workItem from="1755533233503" duration="377000" />
     </task>
     <servers />
   </component>

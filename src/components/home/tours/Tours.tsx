@@ -14,6 +14,8 @@ import AnimatedArrowDesk from "./AnimatedArrowDesk";
 import client from "@/lib/sanity";
 import {mainTourCategoriesQuery} from "@/lib/queries";
 
+export const revalidate = false;
+
 export default async function Tours() {
   const mainTourCategories = await client.fetch(mainTourCategoriesQuery);
   if (!mainTourCategories || !mainTourCategories?.length) {
