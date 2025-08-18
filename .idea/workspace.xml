@@ -6,11 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/promotion/Promotion.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/promotion/Promotion.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/tours/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/about/documents/DocumentsSwiper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/about/documents/DocumentsSwiper.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/home/smartTours/SmartTours.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/smartTours/SmartTours.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/smartTours/SmartToursSwiper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/smartTours/SmartToursSwiper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/tours/Tours.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/tours/Tours.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/tours/ToursListMob.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/tours/ToursListMob.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/animation/AnimatedWrapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/animation/AnimatedWrapper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tours/TabMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tours/TabMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tours/ToursList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tours/ToursList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lib/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/queries.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/formatDate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formatDate.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +78,14 @@
       <workItem from="1754329996655" duration="1072000" />
       <workItem from="1754398265784" duration="3216000" />
       <workItem from="1754659111877" duration="18541000" />
-      <workItem from="1754873591177" duration="4469000" />
+      <workItem from="1754873591177" duration="5168000" />
+      <workItem from="1754919703263" duration="751000" />
+      <workItem from="1754987117189" duration="3984000" />
+      <workItem from="1755263304931" duration="1413000" />
+      <workItem from="1755282855597" duration="992000" />
+      <workItem from="1755304180634" duration="5734000" />
+      <workItem from="1755353004193" duration="2138000" />
+      <workItem from="1755513881586" duration="4862000" />
     </task>
     <servers />
   </component>

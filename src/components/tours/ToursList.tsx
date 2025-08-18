@@ -10,7 +10,7 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import {TourShortInfo} from "@/types/tour";
 
 import client from "@/lib/sanity";
-import {allBasicToursQuery} from "@/lib/queries";
+import {basicToursQuery} from "@/lib/queries";
 
 const SECTION_ID = "tours-page-tours-list";
 
@@ -24,7 +24,10 @@ export default function ToursList({ activeTab }: ToursListProps) {
     useEffect(() => {
         const fetchTours = async()=> {
             try {
-                const data = await client.fetch(allBasicToursQuery);
+                const params = {
+                    categoryId: activeTab !== "all" ? activeTab : null,
+                }
+                const data = await client.fetch(basicToursQuery, params);
                 setToursList(data);
             }
             catch(error){
@@ -32,7 +35,7 @@ export default function ToursList({ activeTab }: ToursListProps) {
             }
         };
         fetchTours();
-    }, []);
+    }, [activeTab]);
 
   if (!toursList || !toursList.length) {
     return null;

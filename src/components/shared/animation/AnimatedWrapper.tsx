@@ -12,7 +12,7 @@ interface AnimatedWrapperProps extends PropsWithChildren {
 }
 
 export default function AnimatedWrapper({
-  as: Component = "div", //
+  as: Component = "div",
   className = "",
   animation = fadeInAnimation({}),
   viewport = { once: true, amount: 0.2 },

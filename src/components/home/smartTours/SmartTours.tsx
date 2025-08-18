@@ -11,7 +11,7 @@ const SECTION_ID = "smart-tours";
 
 export default async function SmartTours() {
   const tours = await client.fetch(allBasicSMARTToursQuery);
-  console.log(tours)
+
   return (
     <section
       id={SECTION_ID}

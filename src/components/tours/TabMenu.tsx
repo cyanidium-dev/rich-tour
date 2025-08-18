@@ -23,7 +23,8 @@ export default function TabMenu({ categories, activeTab, setActiveTab }: TabMenu
   const categoriesList = [{ title: "Всі тури", value: "all" }, ...categories.map(item => ({...item, value: item.title}))];
 
   const handleTabClick = (category: Category) => {
-    setActiveTab(category?.value);
+    //@ts-expect-error
+    setActiveTab(category?._id);
     if (pathName === "/tours") {
       const params = new URLSearchParams(window.location.search);
       params.set("category", category?.value);

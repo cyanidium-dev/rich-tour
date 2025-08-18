@@ -1,5 +1,4 @@
 export function formatDate(isoDate: string): string {
-  // console.log(isoDate)
   const year = isoDate?.slice(2, 4);
   const month = isoDate?.slice(5, 7);
   const day = isoDate?.slice(8, 10);

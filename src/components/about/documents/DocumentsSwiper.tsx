@@ -12,7 +12,7 @@ import DocumentCard from "./DocumentCard";
 
 // @ts-expect-error
 export default function DocumentsSwiper({items}) {
-    console.log(items);
+
   return (
     <Suspense fallback={<Loader />}>
       <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.8 })}>
