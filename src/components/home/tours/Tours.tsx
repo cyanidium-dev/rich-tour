@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { connection } from 'next/server';
+// import { unstable_noStore as noStore } from 'next/cache';
 
 import {
   fadeInAnimation,
@@ -15,12 +16,10 @@ import AnimatedArrowDesk from "./AnimatedArrowDesk";
 import client from "@/lib/sanity";
 import {mainTourCategoriesQuery} from "@/lib/queries";
 
-export const revalidate = false;
-
 export default async function Tours() {
   await connection();
+  // noStore();
   const mainTourCategories = await client.fetch(mainTourCategoriesQuery);
-  console.log(mainTourCategories);
   if (!mainTourCategories || !mainTourCategories?.length) {
     return null;
   }
