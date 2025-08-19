@@ -20,6 +20,7 @@ export const revalidate = false;
 export default async function Tours() {
   await connection();
   const mainTourCategories = await client.fetch(mainTourCategoriesQuery);
+  console.log(mainTourCategories);
   if (!mainTourCategories || !mainTourCategories?.length) {
     return null;
   }
