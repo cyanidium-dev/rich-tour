@@ -63,6 +63,32 @@ export const basicToursQuery = `*[_type == "tour-basic" && ($categoryId == null 
   }
 }`
 
+export const basicTourBySlugQuery = `*[_type == "tour-basic" && slug.current == $slug][0] {
+ _id,
+ title,
+ slug,
+ description,
+  categories,
+  duration,
+  image {
+    asset->{
+      url
+    }
+  }
+}`;
+
+export const tourQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId][0] {
+gallery[]{
+    "url": asset->url
+  },
+  programUpload {
+    "url": asset->url,
+    originalFilename,
+    mimeType
+  },
+  benefits,
+}`;
+
 export const allBasicSMARTToursQuery = `*[_type == "tour-basic" && "53499507-30ed-4085-b861-f34fc0749408" in categories[]._ref] | order(publishedAt desc) {
   _id,
   title,
