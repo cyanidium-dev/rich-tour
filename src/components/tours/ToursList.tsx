@@ -25,8 +25,9 @@ export default function ToursList({ activeTab }: ToursListProps) {
         const fetchTours = async()=> {
             try {
                 const params = {
-                    categoryId: activeTab !== "all" ? activeTab : null,
+                    categoryId: (activeTab !== "all" && activeTab) ? activeTab : null,
                 }
+                console.log(activeTab)
                 const data = await client.fetch(basicToursQuery, params);
                 setToursList(data);
             }
@@ -37,7 +38,7 @@ export default function ToursList({ activeTab }: ToursListProps) {
         fetchTours();
     }, [activeTab]);
 
-  if (!toursList || !toursList.length) {
+  if (!toursList) {
     return null;
   }
 
@@ -48,7 +49,7 @@ export default function ToursList({ activeTab }: ToursListProps) {
 
   if (!toursList?.length)
     return (
-      <p className="pt-[160px] pb-[60px] text-center text-black/70">
+      <p className="pt-[80px] pb-[40px] text-center text-black/70 font-semibold text-[22px]">
         В даній категорії немає турів
       </p>
     );

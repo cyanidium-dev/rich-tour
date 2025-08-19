@@ -12,7 +12,12 @@ export default function Tours({categories}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "all";
-  const [activeTab, setActiveTab] = useState(category);
+  const [activeTab, setActiveTab] = useState(() => {
+    if(category === "all") return "all";
+    //@ts-expect-error
+    const result = categories.find(item => item.title === category);
+    return result._id;
+  });
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
@@ -36,7 +41,7 @@ export default function Tours({categories}) {
           Тури
         </AnimatedWrapper>
         {/*@ts-expect-error*/}
-        <TabMenu categories={categories} activeTab={activeTab} setActiveTab={setActiveTab} />
+        <TabMenu categories={categories} activeTab={category} setActiveTab={setActiveTab} />
         <ToursList activeTab={activeTab} />
       </Container>
     </section>
