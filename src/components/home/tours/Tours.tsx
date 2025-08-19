@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { connection } from 'next/server';
 
 import {
   fadeInAnimation,
@@ -17,6 +18,7 @@ import {mainTourCategoriesQuery} from "@/lib/queries";
 export const revalidate = false;
 
 export default async function Tours() {
+  await connection();
   const mainTourCategories = await client.fetch(mainTourCategoriesQuery);
   if (!mainTourCategories || !mainTourCategories?.length) {
     return null;
