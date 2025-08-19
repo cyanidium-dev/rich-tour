@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-// import { connection } from 'next/server';
+import { connection } from 'next/server';
 // import { unstable_noStore as noStore } from 'next/cache';
 
 import {
@@ -17,7 +17,7 @@ import client from "@/lib/sanity";
 import {mainTourCategoriesQuery} from "@/lib/queries";
 
 export default async function Tours() {
-  // await connection();
+  await connection();
   // noStore();
   const mainTourCategories = await client.fetch(mainTourCategoriesQuery);
   if (!mainTourCategories || !mainTourCategories?.length) {
