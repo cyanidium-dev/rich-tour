@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-// import { connection } from 'next/server';
+import { connection } from 'next/server';
 
 import Tours from "@/components/tours/Tours";
 import Loader from "@/components/shared/loader/Loader";
@@ -7,10 +7,10 @@ import Loader from "@/components/shared/loader/Loader";
 import client from "@/lib/sanity";
 import {allActiveTourCategoriesQuery} from "@/lib/queries";
 
-export const revalidate = 60;
+// export const revalidate = 60;
 
 export default async function ToursPage() {
-    // await connection();
+    await connection();
     const tourCategories = await client.fetch(allActiveTourCategoriesQuery);
 
   return (
