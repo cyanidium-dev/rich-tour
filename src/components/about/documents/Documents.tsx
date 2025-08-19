@@ -1,3 +1,5 @@
+import { connection } from 'next/server';
+
 import { allDocumentsUrl } from "./mockedData";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
@@ -10,6 +12,7 @@ import client from "@/lib/sanity";
 import {allDocQuery} from "@/lib/queries";
 
 export default async function Documents() {
+  await connection();
   const documents = await client.fetch(allDocQuery);
   if (!documents || !documents.length) {
     return null;

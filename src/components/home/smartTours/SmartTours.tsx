@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { connection } from 'next/server';
+
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import SmartToursSwiper from "./SmartToursSwiper";
 import AnimatedArrow from "./AnimatedArrow";
@@ -10,6 +12,7 @@ import {allBasicSMARTToursQuery} from "@/lib/queries";
 const SECTION_ID = "smart-tours";
 
 export default async function SmartTours() {
+  await connection();
   const tours = await client.fetch(allBasicSMARTToursQuery);
 
   return (

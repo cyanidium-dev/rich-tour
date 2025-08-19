@@ -1,3 +1,5 @@
+import { connection } from 'next/server';
+
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";
@@ -7,6 +9,7 @@ import client from "@/lib/sanity";
 import {allFaqQuery} from "@/lib/queries";
 
 export default async function Faq() {
+    await connection();
     const faqItems = await client.fetch(allFaqQuery);
 
   return (

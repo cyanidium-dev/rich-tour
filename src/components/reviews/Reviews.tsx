@@ -1,3 +1,5 @@
+import { connection } from 'next/server';
+
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "../shared/container/Container";
@@ -9,6 +11,7 @@ import client from "@/lib/sanity";
 import {allReviewsQuery} from "@/lib/queries";
 
 export default async function Reviews() {
+  await connection();
   const reviews = await client.fetch(allReviewsQuery);
 
   return (

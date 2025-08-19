@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import {connection} from "next/server";
+
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import MainButton from "@/components/shared/buttons/MainButton";
 import Container from "@/components/shared/container/Container";
@@ -10,7 +12,9 @@ import AnimatedWrapper from "../animation/AnimatedWrapper";
 import client from "../../../lib/sanity";
 import {lastReviewsQuery} from "@/lib/queries";
 
+
 export default async function Reviews() {
+  await connection();
   const reviews = await client.fetch(lastReviewsQuery);
 
   return (
