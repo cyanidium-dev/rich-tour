@@ -28,7 +28,7 @@ export default async function TourPage({ params }: TourPageProps) {
   console.log(tourToDate.benefits);
   // const tour = toursList.find((tour) => tour.slug === slug);
   let tour = toursList[0];
-  console.log(tour.benefits)
+  // console.log(tour.benefits)
   tour = {
     ...tour,
     title: basicTour.title,
@@ -44,9 +44,17 @@ export default async function TourPage({ params }: TourPageProps) {
           url,
           alt: basicTour.title,
         }))
-    ]
+    ],
+    benefits: {
+      //@ts-expect-error
+      list: tourToDate.benefits.map(({children})=> ({text: children[0].text})),
+      image: {
+        url: tourToDate.gallery[3].url,
+        alt: basicTour.title,
+      }
+    }
   }
-
+  console.log(tour.benefits)
   // if (!tour) return null;
 
   return (
