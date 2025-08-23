@@ -77,7 +77,8 @@ export const basicTourBySlugQuery = `*[_type == "tour-basic" && slug.current == 
   }
 }`;
 
-export const tourQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId][0] {
+export const tourQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId] | order(dateRange.startDate asc)[0] {
+title,
 gallery[]{
     "url": asset->url
   },
@@ -87,6 +88,11 @@ gallery[]{
     mimeType
   },
   benefits,
+  sections,
+  route,
+  includes,
+  unincludes,
+  inspiration,
 }`;
 
 export const allBasicSMARTToursQuery = `*[_type == "tour-basic" && "53499507-30ed-4085-b861-f34fc0749408" in categories[]._ref] | order(publishedAt desc) {

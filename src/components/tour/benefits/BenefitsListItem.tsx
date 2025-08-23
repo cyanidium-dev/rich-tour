@@ -16,7 +16,7 @@ export default function BenefitsListItem({ listItem }: BenefitsListItemProps) {
       <div className="flex gap-x-5 items-center">
         <AnimatedWrapper
           animation={fadeInAnimation({ scale: 0.9, delay: 0.8 })}
-          className="size-[18px] xl:size-6 bg-main rounded-full"
+          className="size-[18px] bg-main rounded-full"
         ></AnimatedWrapper>
         <p className="max-w-[calc(100%-18px-20px)] xl:max-w-[calc(100%-24px-20px] text-20med">
           {text}

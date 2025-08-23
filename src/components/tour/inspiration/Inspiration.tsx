@@ -14,7 +14,7 @@ interface InspirationProps {
 }
 
 export default function Inspiration({ tour }: InspirationProps) {
-  const { program, inspiration } = tour;
+  const { programUpload, inspiration } = tour;
 
   return (
     <section className="mb-[148px] xl:mb-[180px]">
@@ -35,7 +35,7 @@ export default function Inspiration({ tour }: InspirationProps) {
           className="relative w-full max-w-[346px] mx-auto"
         >
           <AnimatedArrow />
-          <Link href={program?.url || ""}>
+          <Link href={programUpload?.url || ""}>
             <MainButton
               variant="black"
               className="w-full max-w-[346px] h-16 mx-auto"
