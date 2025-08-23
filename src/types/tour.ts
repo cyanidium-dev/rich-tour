@@ -55,7 +55,7 @@ export interface Tour {
     list: TourBenefitListItem[];
   };
   program: { url: string; list: TourProgramListItem[] };
-  programUpload: {
+  programUpload?: {
     url: string;
   };
   points: string[];
