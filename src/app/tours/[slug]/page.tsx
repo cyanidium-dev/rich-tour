@@ -97,7 +97,7 @@ export default async function TourPage({ params }: TourPageProps) {
     //@ts-expect-error
     notIncludedInCost: tourToDate.unincludes.map(({children})=> children[0].text),
   }
-  // console.log(tourToDate.inspiration)
+
   // if (!tour) return null;
 
   return (
