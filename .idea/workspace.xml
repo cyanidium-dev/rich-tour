@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/api/currency/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/telegram/Telegram.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/telegram/Telegram.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/header/currencyRate/CurrencyRate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/header/currencyRate/CurrencyRate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/benefits/BenefitsListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/benefits/BenefitsListItem.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +83,7 @@
       <workItem from="1755513881586" duration="6683000" />
       <workItem from="1755533233503" duration="957000" />
       <workItem from="1755597610240" duration="13741000" />
+      <workItem from="1759427803567" duration="8299000" />
     </task>
     <servers />
   </component>

@@ -5,7 +5,7 @@ import { toursList } from "@/components/home/promotion/mockedData";
 import Loader from "@/components/shared/loader/Loader";
 import Benefits from "@/components/tour/benefits/Benefits";
 import Hero from "@/components/tour/hero/Hero";
-// import Points from "@/components/tour/points/Points";
+import Points from "@/components/tour/points/Points";
 // import Program from "@/components/tour/program/Program";
 // import TourCostDetails from "@/components/tour/tourCostDetails/TourCostDetails";
 // import Inspiration from "@/components/tour/inspiration/Inspiration";
@@ -47,14 +47,14 @@ export default async function TourPage({ params }: TourPageProps) {
     ],
     benefits: {
       //@ts-expect-error
-      list: tourToDate.benefits.map(({children})=> ({text: children[0].text})),
+      list: tourToDate.benefits.map(({children})=> ({text: children.reduce((acum, {text})=> acum + `${text}`, "")})),
       image: {
         url: tourToDate.gallery[3].url,
         alt: basicTour.title,
       }
     }
   }
-  console.log(tour.benefits)
+console.log(tour.benefits);
   // if (!tour) return null;
 
   return (
@@ -63,7 +63,7 @@ export default async function TourPage({ params }: TourPageProps) {
         <Hero tour={tour} />
         <Benefits tour={tour} />
         {/*<Program tour={tour} />*/}
-        {/*<Points tour={tour} />*/}
+        <Points tour={tour} />
         {/*<TourCost tour={tour} />*/}
         {/*<TourCostDetails tour={tour} />*/}
         {/*<Inspiration tour={tour} />*/}

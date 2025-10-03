@@ -2,7 +2,7 @@ import { fadeInAnimation } from "@/components/shared/animation/animationVariants
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";
 import MainButton from "@/components/shared/buttons/MainButton";
-import BenefitsList from "./BenefitsList";
+// import BenefitsList from "./BenefitsList";
 
 export default function Telegram() {
   return (
@@ -25,14 +25,14 @@ export default function Telegram() {
             актуальними пропозиціями. Запрошуємо.
           </AnimatedWrapper>
           <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.8 })}>
-            <a href="" target="_blank" rel="noopener noreferrer nofollow">
+            <a href="https://t.me/+iNdMoioab40xYWRi" target="_blank" rel="noopener noreferrer nofollow">
               <MainButton className="w-full max-w-[550px] h-14 mx-auto lg:mx-0 text-14med">
                 Доєднатися до телеграм каналу
               </MainButton>
             </a>
           </AnimatedWrapper>
         </div>
-        <BenefitsList />
+        {/*<BenefitsList />*/}
       </Container>
     </section>
   );
