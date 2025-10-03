@@ -12,7 +12,7 @@ interface HeroProps {
 }
 
 export default function Hero({ tour }: HeroProps) {
-  const { title, duration, images, program } = tour;
+  const { title, duration, images, programUpload } = tour;
 
   return (
     <section className="mb-[148px] xl:mb-[180px] pt-6 xl:pt-[18px]">
@@ -44,7 +44,7 @@ export default function Hero({ tour }: HeroProps) {
                 animation={fadeInAnimation({ y: 30, delay: 0.4 })}
               >
                 <a
-                  href={program?.url || ""}
+                  href={programUpload?.url || ""}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                 >
