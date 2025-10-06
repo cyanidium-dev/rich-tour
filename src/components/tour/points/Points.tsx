@@ -37,6 +37,7 @@ export default function Points({ tour }: PointsProps) {
               alt="bus"
               width="290"
               height="99"
+              className="shrink-0"
             />
           </AnimatedWrapper>
           <AnimatedWrapper
@@ -45,10 +46,10 @@ export default function Points({ tour }: PointsProps) {
               staggerChildren: 0.5,
               delayChildren: 0.4,
             })}
-            className="flex flex-col xl:flex-row items-center gap-y-[90px] xl:gap-x-[49px]"
+            className="flex flex-col xl:flex-row items-center xl:items-stretch xl:justify-around gap-y-[90px] xl:w-[calc(100%-290px)] xl:mt-[56px]"
           >
             {points.map((point, idx) => (
-              <PointItem key={idx} point={point} />
+              <PointItem key={idx} point={point} idx={idx} />
             ))}
           </AnimatedWrapper>
         </div>
