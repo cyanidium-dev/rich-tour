@@ -1,22 +1,25 @@
 import Image from "next/image";
 import { DayButtonProps } from "react-day-picker";
-import { tourDepartures } from "./mockedData";
+// import { tourDepartures } from "./mockedData";
 
-function getDayData(date: Date) {
+//@ts-expect-error
+function getDayData(date: Date, tourDepartures) {
   const year = date.getFullYear();
   const month = `${year}-${String(date.getMonth() + 1).padStart(2, "0")}`;
   const day = date.getDate();
 
   const monthData = tourDepartures[month];
   if (!monthData) return null;
-
+//@ts-expect-error
   return monthData.find((item) => item.day === day);
 }
 
 export default function DayButton(props: DayButtonProps) {
   const { day, modifiers, ...buttonProps } = props;
   const date = day.date;
-  const dayData = getDayData(date);
+  //@ts-expect-error
+  const dayData = getDayData(date, props.tourDepartures);
+
   const status = dayData?.status || [];
 
   const iconStatuses = ["guaranteed", "hot", "discount"];
@@ -28,7 +31,9 @@ export default function DayButton(props: DayButtonProps) {
     noDeparture: "transparent",
   };
 
+  //@ts-expect-error
   const showIcons = status.filter((s) => iconStatuses.includes(s));
+  //@ts-expect-error
   const borderStatus = status.find((s) => !iconStatuses.includes(s));
 
   const borderColor =
@@ -86,6 +91,7 @@ export default function DayButton(props: DayButtonProps) {
 
       {showIcons.length > 0 && (
         <div className="absolute bottom-[2px] left-1 flex gap-[6px]">
+          {/*//@ts-expect-error*/}
           {showIcons.map((s) => {
             const icon = statusIcons[s];
             if (!icon) return null;

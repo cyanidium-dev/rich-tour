@@ -79,6 +79,7 @@ export const basicTourBySlugQuery = `*[_type == "tour-basic" && slug.current == 
 
 export const tourQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId] | order(dateRange.startDate asc)[0] {
 title,
+dateRange,
 gallery[]{
     "url": asset->url
   },
@@ -93,6 +94,11 @@ gallery[]{
   includes,
   unincludes,
   inspiration,
+}`;
+
+export const tourDatesQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId && dateRange.startDate >= now()] | order(dateRange.startDate asc) {
+    dateRange,
+    price,
 }`;
 
 export const allBasicSMARTToursQuery = `*[_type == "tour-basic" && "53499507-30ed-4085-b861-f34fc0749408" in categories[]._ref] | order(publishedAt desc) {

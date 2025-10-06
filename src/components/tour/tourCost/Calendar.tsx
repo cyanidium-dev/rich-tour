@@ -9,6 +9,7 @@ import DayButton from "./DayButton";
 import BookingWithButton from "../../shared/booking/BookingWithButton";
 import "react-day-picker/style.css";
 import { Tour } from "@/types/tour";
+// import {tourDepartures} from "@/components/tour/tourCost/mockedData";
 
 interface CalendarProps {
   tour: Tour;
@@ -61,7 +62,10 @@ export default function Calendar({ tour }: CalendarProps) {
           startMonth={initialMonth}
           endMonth={maxDate}
           components={{
-            DayButton,
+            DayButton: (props) => (
+                // @ts-expect-error
+                <DayButton{...props} tourDepartures={tour.tourDepartures} />
+            ),
           }}
           classNames={{
             month_caption: `px-2 py-[18px] text-14med`,

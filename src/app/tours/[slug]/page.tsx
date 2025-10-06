@@ -13,7 +13,8 @@ import Inspiration from "@/components/tour/inspiration/Inspiration";
 
 
 import client from "@/lib/sanity";
-import {basicTourBySlugQuery, tourQuery} from "@/lib/queries";
+import {basicTourBySlugQuery, tourDatesQuery, tourQuery} from "@/lib/queries";
+// import {tourDepartures} from "@/components/tour/tourCost/mockedData";
 
 interface TourPageProps {
   params: Promise<{ slug: string }>;
@@ -56,6 +57,20 @@ const getProgram = sections => {
   }
 }
 
+//@ts-expect-error
+const getTourDepartures = dates => dates.reduce((acum, {dateRange, price})=> {
+  const [year, month, day] = dateRange.startDate.split("-");
+  const date = `${year}-${month}`;
+  const tour =  { day: parseInt(day), price, status: ["available"] };
+  if(acum[date]) {
+    acum[date].push(tour);
+  }
+  else {
+    acum[date] = [tour]
+  }
+  return acum;
+}, {});
+
 export default async function TourPage({ params }: TourPageProps) {
   await connection();
   const { slug } = await params;
@@ -63,6 +78,7 @@ export default async function TourPage({ params }: TourPageProps) {
   const basicTour = await client.fetch(basicTourBySlugQuery, {slug});
 
   const tourToDate = await client.fetch(tourQuery, { tourBasicId: basicTour._id });
+  const tourDates = await client.fetch(tourDatesQuery, { tourBasicId: basicTour._id });
 
   let tour = toursList[0];
 
@@ -90,6 +106,7 @@ export default async function TourPage({ params }: TourPageProps) {
       }
     },
     program: getProgram(tourToDate.sections),
+    tourDepartures: getTourDepartures(tourDates),
     //@ts-expect-error
     points: tourToDate.route.map(({children})=> children[0].text),
     //@ts-expect-error
@@ -97,7 +114,8 @@ export default async function TourPage({ params }: TourPageProps) {
     //@ts-expect-error
     notIncludedInCost: tourToDate.unincludes.map(({children})=> children[0].text),
   }
-
+console.log(tour.tourDepartures)
+// console.log(getTourDepartures(tourDates))
   // if (!tour) return null;
 
   return (

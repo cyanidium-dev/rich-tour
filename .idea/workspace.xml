@@ -6,6 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/promotion/mockedData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/promotion/mockedData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/benefits/BenefitsListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/benefits/BenefitsListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/program/ProgramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/program/ProgramListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/mockedData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/mockedData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/queries.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +86,10 @@
       <workItem from="1755513881586" duration="6683000" />
       <workItem from="1755533233503" duration="957000" />
       <workItem from="1755597610240" duration="13741000" />
-      <workItem from="1759427803567" duration="9509000" />
+      <workItem from="1759427803567" duration="9864000" />
+      <workItem from="1759587025248" duration="4306000" />
+      <workItem from="1759688229741" duration="10217000" />
+      <workItem from="1759733826014" duration="598000" />
     </task>
     <servers />
   </component>

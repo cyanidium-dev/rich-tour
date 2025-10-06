@@ -13,10 +13,10 @@ export default function BenefitsListItem({ listItem }: BenefitsListItemProps) {
 
   return (
     <AnimatedListItem>
-      <div className="flex gap-x-5 items-center">
+      <div className="flex gap-x-5">
         <AnimatedWrapper
           animation={fadeInAnimation({ scale: 0.9, delay: 0.8 })}
-          className="size-[18px] bg-main rounded-full"
+          className="size-[18px] bg-main rounded-full mt-[4px]"
         ></AnimatedWrapper>
         <p className="max-w-[calc(100%-18px-20px)] xl:max-w-[calc(100%-24px-20px] text-20med">
           {text}
