@@ -16,7 +16,7 @@ interface PointsProps {
 export default function Points({ tour }: PointsProps) {
   const { points } = tour;
 
-  if (!points || !points.length) return null;
+  if (!points || !points?.length) return null;
 
   return (
     <section className="mb-[74px] xl:mb-[145px]">
