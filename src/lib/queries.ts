@@ -133,3 +133,36 @@ export const currencyQuery = `*[_type == "currency"][0]{
   euro_currency,
   euro_percent
 }`
+//
+// export const basicToursQuery = `*[_type == "tour-basic" && ($categoryId == null || $categoryId in categories[]._ref)] | order(publishedAt desc) {
+//   _id,
+//   title,
+//   slug,
+//   description,
+//   categories,
+//   duration,
+//   image {
+//     asset->{
+//       url
+//     }
+//   }
+// }`
+
+export const tourSearchQuery = `*[_type == "tour-basic" && ($categoryId == null || $categoryId in categories[]._ref)] | order(publishedAt desc) {
+  _id,
+  title,
+  slug,
+  description,
+  categories,
+  duration,
+  image {
+    asset->{
+      url
+    }
+  }
+}`
+
+export const allCOuntriesQuery = `*[_type == "country"]{
+  _id,
+  title,
+}`

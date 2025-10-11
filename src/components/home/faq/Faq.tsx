@@ -8,12 +8,14 @@ import FaqList from "./FaqList";
 import client from "@/lib/sanity";
 import {allFaqQuery} from "@/lib/queries";
 
+const SECTION_ID = "faq";
+
 export default async function Faq() {
     await connection();
     const faqItems = await client.fetch(allFaqQuery);
 
   return (
-    <section className="mb-[148px] xl:mb-[180px]">
+    <section id={SECTION_ID} className="mb-[148px] xl:mb-[180px]">
       <Container>
         <AnimatedWrapper
           as="h2"

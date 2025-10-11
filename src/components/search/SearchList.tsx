@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { useToursItemsPerPage } from "@/hooks/useToursItemsPerPage";
 import { toursList } from "../home/promotion/mockedData";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
-import TourCard from "@/components/shared/cards/tourCard/TourCard";
+// import TourCard from "@/components/shared/cards/tourCard/TourCard";
 import Loader from "@/components/shared/loader/Loader";
 import Pagination from "@/components/shared/pagination/Pagination";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
@@ -32,7 +32,6 @@ export default function SearchList() {
                   key={tour.id}
                   className="max-w-[325px] sm:max-w-[210px] md:max-w-[226px] lg:max-w-[228px] xl:max-w-[265px]"
                 >
-                  {/*  @ts-expect-error*/}
                   {/*<TourCard tour={tour} />*/}
                 </AnimatedWrapper>
               ))}

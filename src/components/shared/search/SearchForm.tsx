@@ -45,7 +45,7 @@ export default function SearchForm({ variant = "black" }: SearchFormProps) {
     inputValue: "",
     items: countries,
   });
-  console.log(countryFieldState)
+
   const [monthFieldState, setMonthFieldState] = useState<FieldState>({
     selectedKey: null,
     inputValue: "",
