@@ -49,7 +49,7 @@ export default function LoginForm({
       if (setIsPopUpShown) {
         setIsPopUpShown(false);
       }
-      router.push("/dashboard");
+      // router.push("/dashboard");
     } catch (error) {
       setIsError(true);
       setIsNotificationShown(true);

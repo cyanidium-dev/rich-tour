@@ -65,7 +65,7 @@ export default function SignUpForm({
       if (setIsPopUpShown) {
         setIsPopUpShown(false);
       }
-      router.push("/dashboard");
+      // router.push("/dashboard");
     } catch (error) {
       setIsError(true);
       setIsNotificationShown(true);
