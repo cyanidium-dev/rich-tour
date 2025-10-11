@@ -39,6 +39,7 @@ export default function SignUpForm({
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
+  console.log(router);
 
   const initialValues = {
     email: "",

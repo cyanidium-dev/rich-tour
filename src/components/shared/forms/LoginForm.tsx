@@ -30,6 +30,7 @@ export default function LoginForm({
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
+  conosle.log(router);
 
   const initialValues = {
     email: "",
