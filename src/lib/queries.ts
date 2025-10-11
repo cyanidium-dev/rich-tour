@@ -127,4 +127,9 @@ export const allBasicToursWithPromotionQuery = `*[_type == "tour-basic" && _id i
   }
 }`
 
-
+export const currencyQuery = `*[_type == "currency"][0]{
+  usd_currency,
+  usd_percent,
+  euro_currency,
+  euro_percent
+}`

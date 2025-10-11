@@ -11,6 +11,7 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 const SECTION_ID = "search-page-search-list";
 
 export default function SearchList() {
+
   return (
     <Suspense fallback={<Loader />}>
       <div className="flex flex-col items-center justify-center mt-[70px] xl:mt-[82px]">
@@ -32,7 +33,7 @@ export default function SearchList() {
                   className="max-w-[325px] sm:max-w-[210px] md:max-w-[226px] lg:max-w-[228px] xl:max-w-[265px]"
                 >
                   {/*  @ts-expect-error*/}
-                  <TourCard tour={tour} />
+                  {/*<TourCard tour={tour} />*/}
                 </AnimatedWrapper>
               ))}
             </ul>

@@ -1,4 +1,5 @@
 "use client";
+
 import { Key } from "@react-types/shared";
 import { useState } from "react";
 import { useFilter } from "@react-aria/i18n";
@@ -25,13 +26,26 @@ interface FieldState {
   items: { key: Key; label: string }[];
 }
 
+//@ts-expect-error
+const createSerchLink = ({selectedKey: country}, {selectedKey: month}) => {
+  let searchLink = "/search";
+  if(country && month) {
+    searchLink += `?country=${country}&month=${month}`;
+  } else if(country && !month) {
+    searchLink += `?country=${country}`;
+  } else if(!country && month) {
+    searchLink += `?month=${month}`;
+  }
+  return searchLink;
+}
+
 export default function SearchForm({ variant = "black" }: SearchFormProps) {
   const [countryFieldState, setCountryFieldState] = useState<FieldState>({
     selectedKey: null,
     inputValue: "",
     items: countries,
   });
-
+  console.log(countryFieldState)
   const [monthFieldState, setMonthFieldState] = useState<FieldState>({
     selectedKey: null,
     inputValue: "",
@@ -89,6 +103,8 @@ export default function SearchForm({ variant = "black" }: SearchFormProps) {
       setIsInputOpen(isOpen);
     }, 100);
   };
+
+  const searchLink = createSerchLink(countryFieldState, monthFieldState);
 
   return (
     <AnimatedWrapper
@@ -199,7 +215,7 @@ export default function SearchForm({ variant = "black" }: SearchFormProps) {
       </div>
 
       <Link
-        href="/search"
+        href={searchLink}
         className={`block w-full md:w-[calc(33.3%-6px)] ${
           isInputOpen ? "pointer-events-none" : ""
         }`}
