@@ -48,8 +48,10 @@ const getProgram = sections => {
   const list = sections.map(({content})=> ({
     //@ts-expect-error
     sublist: content.map(({children})=> ({
-      title: children[0].text
+      title: children[0].text.replaceAll("\n", "")
     }))
+        //@ts-expect-error
+        .filter(({title}) => Boolean(title))
   }));
 
   return {
@@ -116,7 +118,7 @@ export default async function TourPage({ params }: TourPageProps) {
     //@ts-expect-error
     notIncludedInCost: tourToDate.unincludes.map(({children})=> children[0].text),
   }
-console.log(tour.tourDepartures)
+
 // console.log(getTourDepartures(tourDates))
   // if (!tour) return null;
 
