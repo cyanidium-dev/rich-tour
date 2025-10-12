@@ -90,6 +90,7 @@ gallery[]{
   },
   benefits,
   sections,
+  excursions,
   route,
   includes,
   unincludes,

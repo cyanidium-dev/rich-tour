@@ -5,7 +5,8 @@ import { toursList } from "@/components/home/promotion/mockedData";
 import Loader from "@/components/shared/loader/Loader";
 import Benefits from "@/components/tour/benefits/Benefits";
 import Hero from "@/components/tour/hero/Hero";
- import Program from "@/components/tour/program/Program";
+import Program from "@/components/tour/program/Program";
+import Excursions from "@/components/tour/excursions/Excursions";
 import Points from "@/components/tour/points/Points";
 import TourCost from "@/components/tour/tourCost/TourCost";
 import TourCostDetails from "@/components/tour/tourCostDetails/TourCostDetails";
@@ -106,6 +107,7 @@ export default async function TourPage({ params }: TourPageProps) {
       }
     },
     program: getProgram(tourToDate.sections),
+    excursions: getProgram(tourToDate.excursions),
     tourDepartures: getTourDepartures(tourDates),
     //@ts-expect-error
     points: tourToDate.route.map(({children})=> children[0].text),
@@ -124,6 +126,7 @@ console.log(tour.tourDepartures)
         <Hero tour={tour} />
         <Benefits tour={tour} />
         <Program tour={tour} />
+        <Excursions tour={tour} />
         <Points tour={tour} />
         <TourCost tour={tour} />
         <TourCostDetails tour={tour} />
