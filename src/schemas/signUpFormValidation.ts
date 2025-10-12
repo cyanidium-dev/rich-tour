@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { emailRegex, phoneRegex } from "@/regex/regex";
+import { emailRegex, phoneRegex, edrpouRegex } from "@/regex/regex";
 
 export const signUpValidation = () => {
   const signUpFormValidationSchema = yup.object().shape({
@@ -20,7 +20,7 @@ export const signUpValidation = () => {
         (value) => !!value && value.length >= 6 && value[5] === "0"
       )
       .required("Дане поле обов'язкове до заповнення"),
-    license: yup.string().min(2, "Має бути не менше 2 символів"),
+    edrpou: yup.string().matches(edrpouRegex, "ЄДРПОУ має складатися з 8 чисел").min(2, "Має бути 8 символів").max(2, "Має бути 8 символів"),
     city: yup
       .string()
       .min(2, "Має бути не менше 2 символів")
@@ -37,10 +37,9 @@ export const signUpValidation = () => {
       .matches(
         /^(https:\/\/|www\.)/,
         "Посилання має починатися з https:// або www."
-      )
-      .required("Дане поле обов'язкове до заповнення"),
+      ),
     legalCompanyName: yup.string().min(2, "Має бути не менше 2 символів"),
-    country: yup
+    taxForm: yup
       .string()
       .min(2, "Має бути не менше 2 символів")
       .required("Дане поле обов'язкове до заповнення"),

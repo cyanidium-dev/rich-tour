@@ -1,11 +1,12 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import { Form, Formik, FormikHelpers } from "formik";
 import MaskedInput from "react-text-mask";
 import { signUpValidation } from "@/schemas/signUpFormValidation";
-import { phoneMask } from "@/regex/regex";
+import { phoneMask, edrpouMask } from "@/regex/regex";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 
@@ -111,10 +112,12 @@ export default function SignUpForm({
               labelClassName="md:w-[calc(50%-10px)] xl:w-[calc(50%-22.5px)]"
             />
             <CustomizedInput
-              fieldName="license"
-              placeholder="Номер ліцензії"
+              fieldName="edrpou"
+              placeholder="ЄДРПОУ"
               errors={errors}
               touched={touched}
+              as={MaskedInput}
+              mask={edrpouMask}
               labelClassName="md:w-[calc(50%-10px)] xl:w-[calc(50%-22.5px)]"
             />
             <CustomizedInput
@@ -134,7 +137,7 @@ export default function SignUpForm({
             />
             <CustomizedInput
               fieldName="site"
-              placeholder="Сайт*"
+              placeholder="Сайт"
               errors={errors}
               touched={touched}
               labelClassName="md:w-[calc(50%-10px)] xl:w-[calc(50%-22.5px)]"
@@ -147,8 +150,8 @@ export default function SignUpForm({
               labelClassName="md:w-[calc(50%-10px)] xl:w-[calc(50%-22.5px)]"
             />
             <CustomizedInput
-              fieldName="country"
-              placeholder="Країна*"
+              fieldName="taxForm"
+              placeholder="Форма оподаткування*"
               errors={errors}
               touched={touched}
               labelClassName="md:w-[calc(50%-10px)] xl:w-[calc(50%-22.5px)]"
