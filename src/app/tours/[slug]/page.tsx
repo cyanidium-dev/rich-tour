@@ -44,6 +44,7 @@ return serverList.reduce((acum, {children, level})=> {
 
 //@ts-expect-error
 const getProgram = sections => {
+  if(!sections || !sections.length) return null;
   //@ts-expect-error
   const list = sections.map(({content})=> ({
     //@ts-expect-error
@@ -82,7 +83,6 @@ export default async function TourPage({ params }: TourPageProps) {
 
   const tourToDate = await client.fetch(tourQuery, { tourBasicId: basicTour._id });
   const tourDates = await client.fetch(tourDatesQuery, { tourBasicId: basicTour._id });
-
   let tour = toursList[0];
 
   tour = {
@@ -108,7 +108,9 @@ export default async function TourPage({ params }: TourPageProps) {
         alt: basicTour.title,
       }
     },
+    //@ts-expect-error
     program: getProgram(tourToDate.sections),
+    //@ts-expect-error
     excursions: getProgram(tourToDate.excursions),
     tourDepartures: getTourDepartures(tourDates),
     //@ts-expect-error
@@ -128,7 +130,7 @@ export default async function TourPage({ params }: TourPageProps) {
         <Hero tour={tour} />
         <Benefits tour={tour} />
         <Program tour={tour} />
-        <Excursions tour={tour} />
+        {tour?.excursions && <Excursions tour={tour} />}
         <Points tour={tour} />
         <TourCost tour={tour} />
         <TourCostDetails tour={tour} />
