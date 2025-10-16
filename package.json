@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroui/react": "^2.7.6",
+    "@portabletext/react": "^4.0.3",
     "@react-aria/i18n": "^3.12.7",
     "@sanity/image-url": "^1.1.0",
     "axios": "^1.8.4",

@@ -1,10 +1,11 @@
 import { TourProgramListItem } from "@/types/tour";
 import {
   fadeInAnimation,
-  listVariants,
+  // listVariants,
 } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
+// import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
+import BlockContent from "@/components/shared/BlockContent/BlockContent";
 
 interface ProgramListItemProps {
   programItem: TourProgramListItem;
@@ -13,46 +14,50 @@ interface ProgramListItemProps {
 
 export default function ProgramListItem({
   programItem,
-  idx,
+  // idx,
 }: ProgramListItemProps) {
-  const { description, sublist } = programItem;
+  //@ts-expect-error
+  const { title, content } = programItem;
 
   return (
     <AnimatedWrapper as="li" animation={fadeInAnimation({ y: 30 })}>
+
       <div className="h-[61px] py-2 px-4 md:px-[10px] mb-7 rounded-full bg-main">
         <p className="flex justify-center items-center w-full md:w-fit h-full px-9 rounded-full bg-white text-20semi">
-          {idx + 1}&nbsp;день
+          {title}
+          {/*{idx + 1}&nbsp;день*/}
         </p>
       </div>
-      {description ? (
-        <p className="mb-7 xl:mb-10 text-14reg xl:text-20reg">{description}</p>
-      ) : null}
-      {!sublist || !sublist.length ? null : (
-        <AnimatedWrapper
-          as="ul"
-          animation={listVariants({ staggerChildren: 0.5, delayChildren: 0.4 })}
-          className="flex flex-col gap-y-5 xl:gap-y-7"
-        >
-          {sublist.map((sublistItem, idx) => (
-            <AnimatedListItem key={idx}>
-              <div className="flex gap-x-5">
-                <AnimatedWrapper
-                  animation={fadeInAnimation({ scale: 0.9, delay: 0.8 })}
-                  className="size-[18px] bg-main rounded-full  mt-[4px]"
-                ></AnimatedWrapper>
-                <p className="max-w-[calc(100%-18px-20px)] xl:max-w-[calc(100%-24px-20px] text-20med">
-                  {sublistItem?.title}
-                </p>
-              </div>
-              {sublistItem?.description ? (
-                <p className="pl-[38px] xl:pl-[44px] mt-3 text-14reg xl:text-16reg">
-                  {sublistItem?.description}
-                </p>
-              ) : null}
-            </AnimatedListItem>
-          ))}
-        </AnimatedWrapper>
-      )}
+      <BlockContent value={content} />
+      {/*{description ? (*/}
+      {/*  <p className="mb-7 xl:mb-10 text-14reg xl:text-20reg">{description}</p>*/}
+      {/*) : null}*/}
+      {/*{!sublist || !sublist.length ? null : (*/}
+      {/*  <AnimatedWrapper*/}
+      {/*    as="ul"*/}
+      {/*    animation={listVariants({ staggerChildren: 0.5, delayChildren: 0.4 })}*/}
+      {/*    className="flex flex-col gap-y-5 xl:gap-y-7"*/}
+      {/*  >*/}
+      {/*    {sublist.map((sublistItem, idx) => (*/}
+      {/*      <AnimatedListItem key={idx}>*/}
+      {/*        <div className="flex gap-x-5">*/}
+      {/*          <AnimatedWrapper*/}
+      {/*            animation={fadeInAnimation({ scale: 0.9, delay: 0.8 })}*/}
+      {/*            className="size-[18px] bg-main rounded-full  mt-[4px]"*/}
+      {/*          ></AnimatedWrapper>*/}
+      {/*          <p className="max-w-[calc(100%-18px-20px)] xl:max-w-[calc(100%-24px-20px] text-20med">*/}
+      {/*            {sublistItem?.title}*/}
+      {/*          </p>*/}
+      {/*        </div>*/}
+      {/*        {sublistItem?.description ? (*/}
+      {/*          <p className="pl-[38px] xl:pl-[44px] mt-3 text-14reg xl:text-16reg">*/}
+      {/*            {sublistItem?.description}*/}
+      {/*          </p>*/}
+      {/*        ) : null}*/}
+      {/*      </AnimatedListItem>*/}
+      {/*    ))}*/}
+      {/*  </AnimatedWrapper>*/}
+      {/*)}*/}
     </AnimatedWrapper>
   );
 }

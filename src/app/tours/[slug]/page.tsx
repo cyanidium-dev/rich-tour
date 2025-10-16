@@ -45,8 +45,11 @@ return serverList.reduce((acum, {children, level})=> {
 //@ts-expect-error
 const getProgram = sections => {
   if(!sections || !sections.length) return null;
+  console.log(sections)
   //@ts-expect-error
-  const list = sections.map(({content})=> ({
+  const list = sections.map(({content, title})=> ({
+    content,
+    title,
     //@ts-expect-error
     sublist: content.map(({children})=> ({
       title: children[0].text.replaceAll("\n", "")
@@ -121,7 +124,6 @@ export default async function TourPage({ params }: TourPageProps) {
     notIncludedInCost: tourToDate.unincludes.map(({children})=> children[0].text),
   }
 
-// console.log(getTourDepartures(tourDates))
   // if (!tour) return null;
 
   return (

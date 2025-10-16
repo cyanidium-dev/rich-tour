@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/shared/BlockContent/BlockContent.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/program/ProgramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/program/ProgramListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +21,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
+        <option value="JSX File" />
       </list>
     </option>
   </component>
@@ -91,7 +96,8 @@
       <workItem from="1759733826014" duration="598000" />
       <workItem from="1760176833235" duration="184000" />
       <workItem from="1760181419388" duration="22692000" />
-      <workItem from="1760335626174" duration="1257000" />
+      <workItem from="1760335626174" duration="1871000" />
+      <workItem from="1760606210790" duration="2800000" />
     </task>
     <servers />
   </component>
