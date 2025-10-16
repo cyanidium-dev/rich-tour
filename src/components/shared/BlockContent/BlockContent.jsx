@@ -45,25 +45,60 @@ const components = {
                 </a>
             )
         },
-        strong: ({ children }) => (
-            <div className="flex gap-x-5">
-                <div
-                    className="size-[18px] bg-main rounded-full mt-[4px]"
-                    style={{
-                        opacity: 1,
-                        transform:
-                            'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)',
-                        willChange: 'opacity, transform',
-                    }}
-                />
-                <p className="max-w-[calc(100%-18px-20px)] xl:max-w-[calc(100%-24px-20px)] text-20med">
-                    {children}
-                </p>
-            </div>
-        ),
+        // strong: ({ children }) => (
+        //     <div className="flex gap-x-5">
+        //         <div
+        //             className="size-[18px] bg-main rounded-full mt-[4px]"
+        //             style={{
+        //                 opacity: 1,
+        //                 transform:
+        //                     'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)',
+        //                 willChange: 'opacity, transform',
+        //             }}
+        //         />
+        //         <p className="max-w-[calc(100%-18px-20px)] xl:max-w-[calc(100%-24px-20px)] text-20med">
+        //             {children}
+        //         </p>
+        //     </div>
+        // ),
     },
 
     block: {
+        normal: ({ children, value }) => {
+            // Проверяем, есть ли в children strong
+            const hasStrong = value?.children?.some(
+                (child) => child.marks?.includes('strong')
+            )
+
+            if (hasStrong) {
+                // Находим текст со strong
+                const strongText = value.children
+                    .filter((child) => child.marks?.includes('strong'))
+                    .map((child) => child.text)
+                    .join('')
+
+                return (
+                    <div className="flex gap-x-5 mb-4">
+                        <div
+                            className="size-[18px] bg-main rounded-full mt-[4px]"
+                            style={{
+                                opacity: 1,
+                                transform: 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)',
+                                willChange: 'opacity, transform',
+                            }}
+                        />
+                        <p className="max-w-[calc(100%-18px-20px)] xl:max-w-[calc(100%-24px-20px)] text-20med">
+                            {strongText}
+                        </p>
+                    </div>
+                )
+            }
+
+            // Если strong нет — обычный параграф
+            return (
+                <p className="mb-3 xl:mb-3 ml-10 text-14reg xl:text-16reg">{children}</p>
+            )
+        },
         h1: ({ children }) => (
             <h1 className="text-4xl font-bold mt-8 mb-4">{children}</h1>
         ),
@@ -76,9 +111,9 @@ const components = {
         h4: ({ children }) => (
             <h4 className="text-xl font-medium mt-3 mb-2">{children}</h4>
         ),
-        normal: ({ children }) => (
-            <p className="mb-7 xl:mb-10 text-14reg xl:text-20reg">{children}</p>
-        ),
+        // normal: ({ children }) => (
+        //     <p className="mb-3 xl:mb-3 text-14reg xl:text-16reg">{children}</p>
+        // ),
         blockquote: ({children}) => (
             <blockquote className="border-l-4 border-gray-400 pl-4 italic my-4 text-gray-600">
                 {children}
