@@ -1,10 +1,10 @@
 import { TourProgramListItem } from "@/types/tour";
 import {
   fadeInAnimation,
-  listVariants,
+  // listVariants,
 } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
+// import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
 import BlockContent from "@/components/shared/BlockContent/BlockContent";
 
 interface ProgramListItemProps {
