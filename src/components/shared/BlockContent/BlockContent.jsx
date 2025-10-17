@@ -1,6 +1,25 @@
-// components/BlockContent.js
 import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
+
+function renderHeader(children) {
+    return (
+        <div className="flex gap-x-5 mb-4">
+            <div
+                className="size-[18px] bg-main rounded-full mt-[4px]"
+                style={{
+                    opacity: 1,
+                    transform:
+                        'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)',
+                    willChange: 'opacity, transform',
+                }}
+            />
+            <p className="max-w-[calc(100%-18px-20px)] xl:max-w-[calc(100%-24px-20px)] text-20med font-normal">
+                {children}
+            </p>
+        </div>
+    )
+}
+
 
 const components = {
     // types: {
@@ -64,56 +83,15 @@ const components = {
     },
 
     block: {
-        normal: ({ children, value }) => {
-            // Проверяем, есть ли в children strong
-            const hasStrong = value?.children?.some(
-                (child) => child.marks?.includes('strong')
-            )
+        normal: ({ children }) => (
+            <p className="mb-3 xl:mb-3 ml-10 text-14reg xl:text-16reg">{children}</p>
+        ),
 
-            if (hasStrong) {
-                // Находим текст со strong
-                const strongText = value.children
-                    .filter((child) => child.marks?.includes('strong'))
-                    .map((child) => child.text)
-                    .join('')
+        h1: ({ children }) => renderHeader(children),
+        h2: ({ children }) => renderHeader(children),
+        h3: ({ children }) => renderHeader(children),
+        h4: ({ children }) => renderHeader(children),
 
-                return (
-                    <div className="flex gap-x-5 mb-4">
-                        <div
-                            className="size-[18px] bg-main rounded-full mt-[4px]"
-                            style={{
-                                opacity: 1,
-                                transform: 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)',
-                                willChange: 'opacity, transform',
-                            }}
-                        />
-                        <p className="max-w-[calc(100%-18px-20px)] xl:max-w-[calc(100%-24px-20px)] text-20med">
-                            {strongText}
-                        </p>
-                    </div>
-                )
-            }
-
-            // Если strong нет — обычный параграф
-            return (
-                <p className="mb-3 xl:mb-3 ml-10 text-14reg xl:text-16reg">{children}</p>
-            )
-        },
-        h1: ({ children }) => (
-            <h1 className="text-4xl font-bold mt-8 mb-4">{children}</h1>
-        ),
-        h2: ({ children }) => (
-            <h2 className="text-3xl font-semibold mt-6 mb-3">{children}</h2>
-        ),
-        h3: ({ children }) => (
-            <h3 className="text-2xl font-medium mt-4 mb-2">{children}</h3>
-        ),
-        h4: ({ children }) => (
-            <h4 className="text-xl font-medium mt-3 mb-2">{children}</h4>
-        ),
-        // normal: ({ children }) => (
-        //     <p className="mb-3 xl:mb-3 text-14reg xl:text-16reg">{children}</p>
-        // ),
         blockquote: ({children}) => (
             <blockquote className="border-l-4 border-gray-400 pl-4 italic my-4 text-gray-600">
                 {children}
