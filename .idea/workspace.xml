@@ -7,10 +7,7 @@
     <list default="true" id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/about/team/Team.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/about/team/Team.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/about/team/TeamCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/about/team/TeamCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/queries.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +103,7 @@
       <workItem from="1760967545588" duration="2584000" />
       <workItem from="1760979355426" duration="3939000" />
       <workItem from="1761114747453" duration="597000" />
-      <workItem from="1761130039736" duration="4910000" />
+      <workItem from="1761130039736" duration="6244000" />
     </task>
     <servers />
   </component>

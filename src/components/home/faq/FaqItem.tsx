@@ -6,7 +6,7 @@ import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
 interface FaqItemProps {
   faqItem: {
     title: string;
-    description: string;
+    text: string;
   };
 }
 
@@ -14,7 +14,7 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
   const [isShownMore, setIsShownMore] = useState(false);
   const toggleShowMore = () => setIsShownMore(!isShownMore);
 
-  const { title, description } = faqItem;
+  const { title, text } = faqItem;
 
   return (
     <AnimatedListItem
@@ -37,7 +37,7 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
           isShownMore ? "max-h-[600px] ease-in" : "max-h-0 ease-out"
         }`}
       >
-        <p className={`pt-[18px] xl:pt-6`}>{description}</p>
+        <p className={`pt-[18px] xl:pt-6`}>{text}</p>
       </div>
     </AnimatedListItem>
   );
