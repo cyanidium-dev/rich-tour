@@ -94,8 +94,8 @@ export const basicTourBySlugQuery = `*[_type == "tour-basic" && slug.current == 
 export const tourQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId] | order(dateRange.startDate asc)[0] {
 title,
 dateRange,
-guaranteedDeparture,
-hotTour,
+guaranteed,
+hot,
 discount,
 availability,
 gallery[]{

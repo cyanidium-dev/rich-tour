@@ -19,7 +19,7 @@ export default function DayButton(props: DayButtonProps) {
   const date = day.date;
   //@ts-expect-error
   const dayData = getDayData(date, props.tourDepartures);
-
+// console.log(dayData)
   const status = dayData?.status || [];
 
   const iconStatuses = ["guaranteed", "hot", "discount"];
