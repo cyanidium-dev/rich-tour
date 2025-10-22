@@ -85,7 +85,7 @@ export default function DayButton(props: DayButtonProps) {
 
       {hasPrice && (
         <span className="text-10semi text-black mt-[1px]">
-          {dayData.price}$
+          {dayData.price}&euro;
         </span>
       )}
 

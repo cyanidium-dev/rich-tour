@@ -28,6 +28,20 @@ export const allDocQuery = `*[_type == "doc"] | order(publishedAt desc) {
   }
 }`
 
+export const allTeamQuery = `*[_type == "team"] | order(publishedAt desc) {
+  _id,
+  name,
+  role,
+  instagram,
+  telegram,
+  tiktok,
+  photo {
+    asset->{
+      url
+    }
+  }
+}`
+
 export const mainTourCategoriesQuery = `*[_type == "tour-category" && main == true] | order(publishedAt desc)[0...5] {
   _id,
   title,
@@ -80,6 +94,10 @@ export const basicTourBySlugQuery = `*[_type == "tour-basic" && slug.current == 
 export const tourQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId] | order(dateRange.startDate asc)[0] {
 title,
 dateRange,
+guaranteedDeparture,
+hotTour,
+discount,
+availability,
 gallery[]{
     "url": asset->url
   },

@@ -1,10 +1,26 @@
-import { teamMembers } from "./mockedData";
+// import { teamMembers } from "./mockedData";
 import Container from "@/components/shared/container/Container";
 import TeamInfo from "./TeamInfo";
 import TeamListDesk from "./TeamListDesk";
 import TeamSwiperMob from "./TeamSwiperMob";
 
-export default function Team() {
+import client from "@/lib/sanity";
+import {allTeamQuery} from "@/lib/queries";
+
+export default async function Team() {
+    const team = await client.fetch(allTeamQuery);
+    //@ts-expect-error
+    const teamMembers = team?.map(({name, role, photo, instagram, telegram, tiktok}) => ({
+        name,
+        role,
+        photo: { url: photo.asset.url, alt: name },
+        socials: {
+            instagram,
+            telegram,
+            tiktok,
+        }
+    }));
+
   if (!teamMembers || !teamMembers.length) {
     return null;
   }

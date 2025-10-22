@@ -7,16 +7,27 @@ import { TeamMember } from "@/types/team";
 interface TeamCardProps {
   teamMember: TeamMember;
 }
+//@ts-expect-error
+const getSocialList = socials => {
+  const socialList = [];
+  const { instagram, telegram, tiktok } = socials;
+  if(instagram) {
+    socialList.push({ link: instagram, icon: <InstagramIcon className="size-7" /> });
+  }
+  if(telegram) {
+    socialList.push({ link: instagram, icon: <TelegramIcon /> });
+  }
+  if(tiktok) {
+    socialList.push({ link: tiktok, icon: <TiktokIcon /> });
+  }
+  return socialList;
+}
 
 export default function TeamCard({ teamMember }: TeamCardProps) {
   const { photo, name, role, socials } = teamMember;
-  const { instagram, telegram, tiktok } = socials;
+  // const { instagram, telegram, tiktok } = socials;
 
-  const socialList = [
-    { link: instagram || "", icon: <InstagramIcon className="size-7" /> },
-    { link: telegram || "", icon: <TelegramIcon /> },
-    { link: tiktok || "", icon: <TiktokIcon /> },
-  ];
+  const socialList = getSocialList(socials);
 
   return (
     <div className="relative max-w-[325px] md:max-w-[226px] lg:max-w-[228px] xl:max-w-[265px] min-h-full bg-white rounded-[12px] shadow-card overflow-hidden">

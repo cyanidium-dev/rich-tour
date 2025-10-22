@@ -86,6 +86,9 @@ export default async function TourPage({ params }: TourPageProps) {
     title: basicTour.title,
     duration: basicTour.duration,
     programUpload: tourToDate.programUpload,
+    guaranteedDeparture: tourToDate.guaranteedDeparture,
+    hotTour: tourToDate.hotTour,
+    discount: tourToDate.discount,
     images: [
       {
         alt: basicTour.title,
@@ -116,7 +119,7 @@ export default async function TourPage({ params }: TourPageProps) {
     //@ts-expect-error
     notIncludedInCost: tourToDate.unincludes.map(({children})=> children[0].text),
   }
-
+console.log(tour);
   // if (!tour) return null;
 
   return (
