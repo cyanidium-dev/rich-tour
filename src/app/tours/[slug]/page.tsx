@@ -10,7 +10,7 @@ import Excursions from "@/components/tour/excursions/Excursions";
 import Points from "@/components/tour/points/Points";
 import TourCost from "@/components/tour/tourCost/TourCost";
 import TourCostDetails from "@/components/tour/tourCostDetails/TourCostDetails";
-import PricePerMonth from "@/components/tour/prices/PricePerMonth";
+// import PricePerMonth from "@/components/tour/prices/PricePerMonth";
 import Inspiration from "@/components/tour/inspiration/Inspiration";
 
 import client from "@/lib/sanity";
@@ -129,7 +129,7 @@ export default async function TourPage({ params }: TourPageProps) {
         <Benefits tour={tour} />
         <Program tour={tour} />
         {tour?.excursions && <Excursions tour={tour} />}
-        <PricePerMonth />
+        {/*<PricePerMonth />*/}
         <Points tour={tour} />
         <TourCost tour={tour} />
         <TourCostDetails tour={tour} />

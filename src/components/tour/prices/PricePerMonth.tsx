@@ -41,10 +41,10 @@ const PricePerMonth = ()=> {
 
                 {/* 💻 Десктопная версия */}
                 <div className="hidden md:block bg-white overflow-hidden text-center text-base">
-                    <table className="w-full border-collapse rounded-lg shadow">
-                        <thead>
-                        <tr className="bg-[#E43A3A] text-white">
-                            <th className="p-3 font-medium">Період</th>
+                    <table className="w-full rounded-lg shadow">
+                        <thead className="bg-[#E43A3A] text-white">
+                        <tr className="">
+                            <th className="p-3 font-medium border-l border-white">Період</th>
                             <th className="p-3 font-normal">Червень</th>
                             <th className="p-3 font-normal">Липень / Серпень</th>
                             <th className="p-3 font-normal">Вересень</th>
