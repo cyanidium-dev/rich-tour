@@ -38,8 +38,8 @@ export default function TourCost({ tour }: TourCostProps) {
               className="relative h-[544px] rounded-[12px] overflow-hidden"
             >
               <Image
-                src={images[3].url}
-                alt={images[3].alt}
+                src={images[4].url}
+                alt={images[4].alt}
                 fill
                 sizes="30vw"
                 className="object-cover"
@@ -57,8 +57,8 @@ export default function TourCost({ tour }: TourCostProps) {
               className="relative h-[702px] rounded-[12px] overflow-hidden"
             >
               <Image
-                src={images[4].url}
-                alt={images[4].alt}
+                src={images[5].url}
+                alt={images[5].alt}
                 fill
                 sizes="30vw"
                 className="object-cover"

@@ -10,7 +10,7 @@ export default function AnimatedArrow() {
       viewBox="0 0 290 161"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="hidden md:block absolute -z-10 left-[calc(50%-145px)] top-[-82px] w-[290px] h-auto"
+      className="hidden md:block  -z-10 left-[calc(50%-350px)] top-[150px] absolute scale-y-[-1] w-[290px] h-auto"
     >
       {/* Основна дуга */}
       <motion.path

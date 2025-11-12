@@ -13,7 +13,7 @@ const navMenuList = [
   { title: "Про нас", link: "/about" },
   { title: "SMART-тури", link: "/#smart-tours" },
   { title: "Корпоративне обслуговування", link: "/corporate" },
-  { title: "STEP", link: "/#faq" },
+  { title: "STEP", link: "/step" },
   { title: "Контакти", link: "/contacts" },
 ];
 
