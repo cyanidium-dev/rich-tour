@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/images/addional-info-arrow-desk.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/addional-info-arrow-mob.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/icons/arrow-down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/tour/additionalInfo/AdditionalInfo.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/CloseHotelModalIcon.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelContent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelModalContent.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/Hotels.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelsTitle.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/context/CurrencyContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/providers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/providers.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/header/currencyRate/CurrencyRate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/header/currencyRate/CurrencyRate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/queries.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/regex/regex.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/regex/regex.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/signUpFormValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/signUpFormValidation.ts" afterDir="false" />
-    </list>
+    <list default="true" id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +74,7 @@
       <workItem from="1767093192641" duration="336000" />
       <workItem from="1767117413511" duration="7618000" />
       <workItem from="1767139044983" duration="23533000" />
-      <workItem from="1767348143858" duration="4242000" />
+      <workItem from="1767348143858" duration="4662000" />
     </task>
     <servers />
   </component>
