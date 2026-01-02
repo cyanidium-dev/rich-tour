@@ -1,10 +1,11 @@
-import { createClient } from 'next-sanity'
+import { createClient } from "next-sanity";
 
 const client = createClient({
-    projectId: 'elggedkx', // замените на ваш ID
-    dataset: 'production',
-    apiVersion: '2025-04-26',
-    useCdn: true,
-})
+    projectId: "elggedkx",
+    dataset: "production",
+    apiVersion: "2025-04-26",
+    token: process.env.SANITY_API_TOKEN,
+    useCdn: false,
+});
 
 export default client;
