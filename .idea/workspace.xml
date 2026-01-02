@@ -5,38 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/agent/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/webhooks/sanity/tour/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/webhooks/sanity/user/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/agentContract/AgentContract.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/hero/AnimatedArrow.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/hero/Hero.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/Menu.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/TabMenu.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/TabMenuItem.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/AgentInfoFormWithNotifications.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/Category.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/ChangePasswordContent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/ChangePasswordFormWithNotifications.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/MenuContent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrderItem.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrdersContent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/SettingsContent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/ToursContent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/mockedData.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/telegram/BenefitItem.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/telegram/BenefitsList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/telegram/Telegram.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/crm/getCrmToken.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/crm/sendAgentToCrm.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middleware.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/agent/tours/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/auth/change-password/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/auth/logout/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/getAuthUser.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.local" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eslint.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/agent/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/agent/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/agentContract/AgentContract.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/agentContract/AgentContract.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/hero/Hero.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/hero/Hero.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/Menu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/TabMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/TabMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/TabMenuItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/TabMenuItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/MenuContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/MenuContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/OrdersContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrdersContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/ChangePassword.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/ChangePassword.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/shared/forms/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/LoginForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/loginFormValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/loginFormValidation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/header/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/header/HeaderDesk.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/header/HeaderDesk.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/header/HeaderMob.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/header/HeaderMob.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/resetPasswordFormValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/resetPasswordFormValidation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +107,7 @@
       <workItem from="1767093192641" duration="336000" />
       <workItem from="1767117413511" duration="7618000" />
       <workItem from="1767139044983" duration="23533000" />
-      <workItem from="1767348143858" duration="12113000" />
+      <workItem from="1767348143858" duration="16781000" />
     </task>
     <servers />
   </component>

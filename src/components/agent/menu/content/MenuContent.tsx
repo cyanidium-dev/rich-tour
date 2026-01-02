@@ -12,6 +12,8 @@ export default function MenuContent() {
   switch (menu) {
     case "orders":
       return <OrdersContent />;
+    case "archive":
+      return <OrdersContent />;
     case "tours":
       return <ToursContent />;
     case "settings":

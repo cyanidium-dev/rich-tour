@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { email } from "@/components/shared/footer/mockedData";
+// import Image from "next/image";
+// import { email } from "@/components/shared/footer/mockedData";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";

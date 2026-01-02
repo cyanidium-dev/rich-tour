@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { resetPasswordValidation } from "@/schemas/resetPasswordFormValidation";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
+import axios from "axios";
 
 export interface ValuesChangePasswordFormType {
   password: string;
@@ -35,16 +36,30 @@ export default function ChangePasswordForm({
   const validationSchema = resetPasswordValidation();
 
   const submitForm = async (
-    values: ValuesChangePasswordFormType,
-    formikHelpers: FormikHelpers<ValuesChangePasswordFormType>
+      values: ValuesChangePasswordFormType,
+      formikHelpers: FormikHelpers<ValuesChangePasswordFormType>
   ) => {
     const { resetForm } = formikHelpers;
+
     try {
+      setIsError(false);
       setIsLoading(true);
+
+      await axios.post(
+          "/api/auth/change-password",
+          {
+            password: values.password,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+      );
+
       resetForm();
-      if (setIsPopUpShown) {
-        setIsPopUpShown(false);
-      }
+      setIsPopUpShown?.(false);
     } catch (error) {
       setIsError(true);
       return error;

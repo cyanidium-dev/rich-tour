@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import TabMenu from "./TabMenu";
-// import MenuContent from "./content/MenuContent";
+import MenuContent from "./content/MenuContent";
 
 export default function Menu() {
   const router = useRouter();
@@ -21,8 +21,7 @@ export default function Menu() {
   return (
     <section className="mb-[148px] xl:mb-[180px]">
       <TabMenu activeTab={activeTab} setActiveTab={setActiveTab} />
-      {/*Убрал интеграции чтобы не ломать проект */}
-      {/*<MenuContent />*/}
+      <MenuContent />
     </section>
   );
 }

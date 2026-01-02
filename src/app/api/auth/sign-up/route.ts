@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         license,
         country,
         city,
-        agencyCrmId,
+        // agencyCrmId,
     } = body;
 
     if (!email || !phone || !password || !firstName || !lastName) {
@@ -67,22 +67,22 @@ export async function POST(req: Request) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const sanityAgent = await client.create({
-        _type: "companyUser",
-
-        email,
-        phone,
-        passwordHash,
-
-        firstName,
-        lastName,
-        middleName,
-
-        site,
-        license,
-        country,
-        city,
-    });
+    // const sanityAgent = await client.create({
+    //     _type: "companyUser",
+    //
+    //     email,
+    //     phone,
+    //     passwordHash,
+    //
+    //     firstName,
+    //     lastName,
+    //     middleName,
+    //
+    //     site,
+    //     license,
+    //     country,
+    //     city,
+    // });
 
     /*
     try {
