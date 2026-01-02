@@ -1,53 +1,58 @@
 import * as yup from "yup";
 import { emailRegex, phoneRegex, edrpouRegex } from "@/regex/regex";
 
-export const signUpValidation = () => {
-  const signUpFormValidationSchema = yup.object().shape({
-    email: yup
-      .string()
-      .matches(emailRegex, "Введіть валідний email")
-      .required("Дане поле обов'язкове до заповнення"),
-    companyName: yup
-      .string()
-      .min(2, "Має бути не менше 2 символів")
-      .required("Дане поле обов'язкове до заповнення"),
-    phone: yup
-      .string()
-      .matches(phoneRegex, "Вкажіть правильний номер телефону")
-      .test(
-        "sixth-char-zero",
-        "Після +38 має бути цифра 0",
-        (value) => !!value && value.length >= 6 && value[5] === "0"
-      )
-      .required("Дане поле обов'язкове до заповнення"),
-    edrpou: yup.string().transform((v) => (v ?? "").replace(/\D/g, "")).matches(edrpouRegex, "ЄДРПОУ має складатися з 8-10 чисел").min(2, "Має бути 8-10 символів").max(10, "Має бути 8-10 символів"),
-    city: yup
-      .string()
-      .min(2, "Має бути не менше 2 символів")
-      .required("Дане поле обов'язкове до заповнення"),
-    password: yup
-      .string()
-      .min(6, "Має бути не менше 6 символів")
-      // .matches(/[A-Za-zА-Яа-яІіЇїЄєҐґ]/, "Має містити хоча б одну літеру")
-      // .matches(/\d/, "Має містити хоча б одну цифру")
-      .required("Дане поле обов'язкове до заповнення"),
-    site: yup
-        .string()
-        .notRequired()
-        .test(
-            "is-valid-site",
-            "Посилання має починатися з https:// або www.",
-            (value) => {
-              if (!value) return true; // ← пусто = ОК
-              return /^(https:\/\/|www\.)/.test(value);
-            }
-        ),
-    legalCompanyName: yup.string().min(2, "Має бути не менше 2 символів"),
-    taxForm: yup
-      .string()
-      .min(2, "Має бути не менше 2 символів")
-      .required("Дане поле обов'язкове до заповнення"),
-  });
+export const signUpValidation = () =>
+    yup.object().shape({
+        email: yup
+            .string()
+            .matches(emailRegex, "Введіть валідний email")
+            .required("Обовʼязкове поле"),
 
-  return signUpFormValidationSchema;
-};
+        companyName: yup
+            .string()
+            .min(2)
+            .required("Обовʼязкове поле"),
+
+        legalCompanyName: yup
+            .string()
+            .min(2)
+            .required("Обовʼязкове поле"),
+
+        phone: yup
+            .string()
+            .matches(phoneRegex, "Некоректний номер")
+            .required("Обовʼязкове поле"),
+
+        edrpou: yup
+            .string()
+            .transform((v) => (v ?? "").replace(/\D/g, ""))
+            .matches(edrpouRegex, "ЄДРПОУ має містити 8–10 цифр")
+            .required("Обовʼязкове поле"),
+
+        city: yup
+            .string()
+            .min(2)
+            .required("Обовʼязкове поле"),
+
+        taxForm: yup
+            .string()
+            .oneOf(["fop", "tov", "other"])
+            .required("Обовʼязкове поле"),
+
+        password: yup
+            .string()
+            .min(6)
+            .required("Обовʼязкове поле"),
+
+        site: yup
+            .string()
+            .notRequired()
+            .test(
+                "is-valid-site",
+                "Посилання має починатися з https:// або www.",
+                (value) => {
+                    if (!value) return true;
+                    return /^(https:\/\/|www\.)/.test(value);
+                }
+            ),
+    });

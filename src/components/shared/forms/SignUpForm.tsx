@@ -16,13 +16,13 @@ import SubmitButton from "./formComponents/SubmitButton";
 export interface ValuesSignUpFormType {
     email: string;
     companyName: string;
+    legalCompanyName: string;
     phone: string;
-    license?: string;
+    edrpou: string;
     city: string;
+    taxForm: "fop" | "tov" | "other";
     password: string;
     site?: string;
-    legalCompanyName?: string;
-    country: string;
 }
 
 interface SignUpFormProps {
@@ -46,13 +46,13 @@ export default function SignUpForm({
     const initialValues: ValuesSignUpFormType = {
         email: "",
         companyName: "",
+        legalCompanyName: "",
         phone: "",
-        license: "",
+        edrpou: "",
         city: "",
+        taxForm: "fop",
         password: "",
         site: "",
-        legalCompanyName: "",
-        country: "",
     };
 
     const submitForm = async (
@@ -91,86 +91,25 @@ export default function SignUpForm({
         >
             {({ errors, touched, dirty, isValid }) => (
                 <Form className={className}>
-                    <div
-                        className="
-              grid grid-cols-1
-              md:grid-cols-2
-              gap-y-5 gap-x-5
-              xl:gap-x-[45px]
-              mb-6
-            "
-                    >
-                        {/* Левая колонка */}
-                        <CustomizedInput
-                            fieldName="email"
-                            inputType="email"
-                            placeholder="Email*"
-                            errors={errors}
-                            touched={touched}
-                        />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-5 xl:gap-x-[45px] mb-6">
+                        <CustomizedInput fieldName="email" inputType="email" placeholder="Email*" errors={errors} touched={touched} />
+                        <CustomizedInput fieldName="password" inputType="password" placeholder="Пароль*" errors={errors} touched={touched} />
 
-                        {/* Правая колонка */}
-                        <CustomizedInput
-                            fieldName="password"
-                            inputType="password"
-                            placeholder="Пароль*"
-                            errors={errors}
-                            touched={touched}
-                        />
+                        <CustomizedInput fieldName="companyName" placeholder="Повна назва компанії*" errors={errors} touched={touched} />
+                        <CustomizedInput fieldName="legalCompanyName" placeholder="Юридична назва компанії*" errors={errors} touched={touched} />
 
-                        <CustomizedInput
-                            fieldName="companyName"
-                            placeholder="Повне імʼя назви фірми*"
-                            errors={errors}
-                            touched={touched}
-                        />
+                        <CustomizedInput fieldName="phone" inputType="tel" as={MaskedInput} mask={phoneMask} placeholder="Телефон*" errors={errors} touched={touched} />
+                        <CustomizedInput fieldName="edrpou" as={MaskedInput} mask={edrpouMask} placeholder="ЄДРПОУ*" errors={errors} touched={touched} />
 
-                        <CustomizedInput
-                            fieldName="site"
-                            placeholder="Сайт*"
-                            errors={errors}
-                            touched={touched}
-                        />
+                        <CustomizedInput fieldName="city" placeholder="Місто*" errors={errors} touched={touched} />
+                        <CustomizedInput fieldName="site" placeholder="Сайт" errors={errors} touched={touched} />
 
-                        <CustomizedInput
-                            fieldName="phone"
-                            inputType="tel"
-                            as={MaskedInput}
-                            mask={phoneMask}
-                            placeholder="Телефон*"
-                            errors={errors}
-                            touched={touched}
-                        />
+                        <CustomizedInput fieldName="taxForm" as="select" errors={errors} touched={touched}>
+                            <option value="fop">ФОП</option>
+                            <option value="tov">ТОВ</option>
+                            <option value="other">Інше</option>
+                        </CustomizedInput>
 
-                        <CustomizedInput
-                            fieldName="legalCompanyName"
-                            placeholder="Юридична назва фірми"
-                            errors={errors}
-                            touched={touched}
-                        />
-
-                        <CustomizedInput
-                            fieldName="license"
-                            placeholder="Номер ліцензії"
-                            errors={errors}
-                            touched={touched}
-                        />
-
-                        <CustomizedInput
-                            fieldName="country"
-                            placeholder="Країна*"
-                            errors={errors}
-                            touched={touched}
-                        />
-
-                        <CustomizedInput
-                            fieldName="city"
-                            placeholder="Місто*"
-                            errors={errors}
-                            touched={touched}
-                        />
-
-                        {/* Кнопка — строго справа снизу */}
                         <div className="md:col-start-2 flex flex-col gap-3">
                             <SubmitButton
                                 dirty={dirty}
@@ -181,13 +120,10 @@ export default function SignUpForm({
                                 className="w-full"
                             />
 
-                            <p className="text-12reg text-center text-white/70">
+                            <p className="text-12reg text-center">
                                 Уже маєте аккаунт?{" "}
-                                <Link
-                                    href="/auth/sign-in"
-                                    className="underline hover:text-main transition"
-                                >
-                                    Вхід в кабінет агента
+                                <Link href="/auth/sign-in" className="underline hover:text-main">
+                                    Вхід
                                 </Link>
                             </p>
                         </div>

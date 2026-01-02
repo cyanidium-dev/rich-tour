@@ -5,17 +5,14 @@ import client from "@/lib/sanity";
 
 type SignUpBody = {
     email: string;
+    companyName: string;
+    legalCompanyName: string;
     phone: string;
+    edrpou: string;
+    city: string;
+    taxForm: "fop" | "tov" | "other";
     password: string;
-
-    firstName: string;
-    lastName: string;
-    middleName?: string;
-
     site?: string;
-    license?: string;
-    country?: string;
-    city?: string;
 
     agencyCrmId?: string;
 };
@@ -26,35 +23,37 @@ export async function POST(req: Request) {
     try {
         body = await req.json();
     } catch {
-        return NextResponse.json(
-            { error: "INVALID_BODY" },
-            { status: 400 }
-        );
+        return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 });
     }
 
     const {
         email,
+        companyName,
+        legalCompanyName,
         phone,
-        password,
-        firstName,
-        lastName,
-        middleName,
-        site,
-        license,
-        country,
+        edrpou,
         city,
+        taxForm,
+        password,
+        site,
         // agencyCrmId,
     } = body;
 
-    if (!email || !phone || !password || !firstName || !lastName) {
-        return NextResponse.json(
-            { error: "MISSING_FIELDS" },
-            { status: 400 }
-        );
+    if (
+        !email ||
+        !companyName ||
+        !legalCompanyName ||
+        !phone ||
+        !edrpou ||
+        !city ||
+        !taxForm ||
+        !password
+    ) {
+        return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
     }
 
     const existingUser = await client.fetch(
-        `*[_type == "companyUser" && email == $email][0]{ _id }`,
+        `*[_type == "agentUser" && email == $email][0]{ _id }`,
         { email }
     );
 
@@ -67,22 +66,18 @@ export async function POST(req: Request) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    // const sanityAgent = await client.create({
-    //     _type: "companyUser",
-    //
-    //     email,
-    //     phone,
-    //     passwordHash,
-    //
-    //     firstName,
-    //     lastName,
-    //     middleName,
-    //
-    //     site,
-    //     license,
-    //     country,
-    //     city,
-    // });
+    const sanityAgent = await client.create({
+        _type: "agentUser",
+        email,
+        companyName,
+        legalCompanyName,
+        phone,
+        edrpou,
+        city,
+        taxForm,
+        site,
+        passwordHash,
+    });
 
     /*
     try {
@@ -93,9 +88,7 @@ export async function POST(req: Request) {
           restapipassword: process.env.CRM_REST_API_PASSWORD,
         },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
@@ -103,11 +96,9 @@ export async function POST(req: Request) {
       if (!token) throw new Error("CRM token missing");
 
       const crmPersonPayload: any = {
-        typesex: "person",
+        typesex: "company",
 
-        name: firstName,
-        namelast: lastName,
-        namemiddle: middleName,
+        companyname: legalCompanyName,
 
         externalid: sanityAgent._id,
         findbyArray: ["externalid"],
@@ -121,11 +112,11 @@ export async function POST(req: Request) {
         returnwithoutupdate: false,
 
         customfields: {
-          Vebsait: site,
-          Litsenziya: license,
-          Krana: country,
-          Misto: city,
+          Marketingovanazvaagentsi: companyName,
+          DRPOUagentsi: edrpou,
+          Mistorestratsi: city,
           Parolsait: password,
+          Vebsait: site,
         },
       };
 
@@ -148,8 +139,5 @@ export async function POST(req: Request) {
     }
     */
 
-    return NextResponse.json(
-        { success: true },
-        { status: 201 }
-    );
+    return NextResponse.json({ success: true }, { status: 201 });
 }
