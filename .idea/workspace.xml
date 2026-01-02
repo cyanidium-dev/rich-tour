@@ -4,7 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="" />
+    <list default="true" id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/agent/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/webhooks/sanity/tour/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/webhooks/sanity/user/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/agentContract/AgentContract.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/hero/AnimatedArrow.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/hero/Hero.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/Menu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/TabMenu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/TabMenuItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/AgentInfoFormWithNotifications.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/Category.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/ChangePasswordContent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/ChangePasswordFormWithNotifications.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/MenuContent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrderItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrdersContent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/SettingsContent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/ToursContent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/mockedData.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/telegram/BenefitItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/telegram/BenefitsList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/telegram/Telegram.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/crm/getCrmToken.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/crm/sendAgentToCrm.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env.local" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/loginFormValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/loginFormValidation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +49,7 @@
       <list>
         <option value="TypeScript JSX File" />
         <option value="JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -33,26 +68,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Projects/Rich tour/rich-tour/src/components/tour/hotels&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Projects\\Rich tour\\rich-tour\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Projects/Rich tour/rich-tour/src/app",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "C:\\Projects\\Rich tour\\rich-tour\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Projects\Rich tour\rich-tour\src\app" />
+      <recent name="C:\Projects\Rich tour\rich-tour\src\components" />
       <recent name="C:\Projects\Rich tour\rich-tour\src\components\tour\hotels" />
       <recent name="C:\Projects\Rich tour\rich-tour\public\images" />
       <recent name="C:\Projects\Rich tour\rich-tour\src\components\tour\additionalInfo" />
-      <recent name="C:\Projects\Rich tour\rich-tour\public\images\icons" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Projects\Rich tour\rich-tour\src\app\api\webhooks\sanity\user" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -74,11 +113,22 @@
       <workItem from="1767093192641" duration="336000" />
       <workItem from="1767117413511" duration="7618000" />
       <workItem from="1767139044983" duration="23533000" />
-      <workItem from="1767348143858" duration="4662000" />
+      <workItem from="1767348143858" duration="12113000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/schemas/loginFormValidation.ts</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
