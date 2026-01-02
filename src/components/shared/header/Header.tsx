@@ -3,6 +3,8 @@ import HeaderDesk from "./HeaderDesk";
 import AnimatedWrapper from "../animation/AnimatedWrapper";
 import { getAuthUser } from "@/lib/getAuthUser";
 
+export const dynamic = "force-dynamic";
+
 export default async function Header() {
     const user = await getAuthUser();
 

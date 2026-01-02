@@ -28,16 +28,20 @@ export const signUpValidation = () => {
     password: yup
       .string()
       .min(6, "Має бути не менше 6 символів")
-      .matches(/[A-Za-zА-Яа-яІіЇїЄєҐґ]/, "Має містити хоча б одну літеру")
-      .matches(/\d/, "Має містити хоча б одну цифру")
+      // .matches(/[A-Za-zА-Яа-яІіЇїЄєҐґ]/, "Має містити хоча б одну літеру")
+      // .matches(/\d/, "Має містити хоча б одну цифру")
       .required("Дане поле обов'язкове до заповнення"),
     site: yup
-      .string()
-      // .min(2, "Має бути не менше 2 символів")
-      .matches(
-        /^(https:\/\/|www\.)/,
-        "Посилання має починатися з https:// або www."
-      ),
+        .string()
+        .notRequired()
+        .test(
+            "is-valid-site",
+            "Посилання має починатися з https:// або www.",
+            (value) => {
+              if (!value) return true; // ← пусто = ОК
+              return /^(https:\/\/|www\.)/.test(value);
+            }
+        ),
     legalCompanyName: yup.string().min(2, "Має бути не менше 2 символів"),
     taxForm: yup
       .string()

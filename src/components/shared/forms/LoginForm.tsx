@@ -71,11 +71,13 @@ export default function LoginForm({
             setIsPopUpShown?.(false);
 
             if (role === "agent") {
+                router.refresh();
                 router.push("/agent");
                 return;
             }
 
             if (role === "agency") {
+                router.refresh();
                 router.push("/agency");
                 return;
             }
