@@ -98,6 +98,19 @@ guaranteed,
 hot,
 discount,
 availability,
+ hotels[]{
+    title,
+    stars,
+    price,
+    shortDescription,
+    fullDescription,
+    gallery[]{
+      asset->{
+        url
+      }
+    }
+  },
+additionalConditions,
 gallery[]{
     "url": asset->url
   },

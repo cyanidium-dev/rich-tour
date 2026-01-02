@@ -12,6 +12,8 @@ import TourCost from "@/components/tour/tourCost/TourCost";
 import TourCostDetails from "@/components/tour/tourCostDetails/TourCostDetails";
 // import PricePerMonth from "@/components/tour/prices/PricePerMonth";
 import Inspiration from "@/components/tour/inspiration/Inspiration";
+import AdditionalInfo from "@/components/tour/additionalInfo/AdditionalInfo";
+import Hotels from "@/components/tour/hotels/Hotels";
 
 import client from "@/lib/sanity";
 import {basicTourBySlugQuery, tourDatesQuery, tourQuery} from "@/lib/queries";
@@ -54,6 +56,31 @@ const getProgram = sections => {
   return {
     url: "",
     list,
+  }
+}
+
+//@ts-expect-error
+const getAdditionalInfo = (additionalConditions): string => {
+  let result = "";
+  if(additionalConditions?.length) {
+    //@ts-expect-error
+    result = additionalConditions[0].children.map(({text})=> text).join("")
+  }
+  return result;
+}
+
+//@ts-expect-error
+const getHotels = (data) => {
+  if(!data) return null;
+
+  return {
+    title: data[0].title,
+    stars: data[0].stars,
+    price: data[0].price,
+    shortDescription: data[0].shortDescription,
+    fullDescription: data[0].fullDescription,
+    // @ts-expect-error
+    gallery: data[0].gallery.map(({asset})=> asset.url),
   }
 }
 
@@ -109,9 +136,11 @@ export default async function TourPage({ params }: TourPageProps) {
     },
     //@ts-expect-error
     program: getProgram(tourToDate.sections),
+    hotels: getHotels(tourToDate.hotels),
     //@ts-expect-error
     excursions: getProgram(tourToDate.excursions),
     tourDepartures: getTourDepartures(tourDates),
+    additionalInfo: getAdditionalInfo(tourToDate.additionalConditions),
     //@ts-expect-error
     points: tourToDate.route.map(({children})=> children[0].text),
     //@ts-expect-error
@@ -127,11 +156,15 @@ export default async function TourPage({ params }: TourPageProps) {
       <Suspense fallback={<Loader />}>
         <Hero tour={tour} />
         <Benefits tour={tour} />
+        {/*@ts-expect-error */}
+        {tour.hotels && <Hotels {...tour.hotels} />}
         <Program tour={tour} />
         {tour?.excursions && <Excursions tour={tour} />}
         {/*<PricePerMonth />*/}
         <Points tour={tour} />
         <TourCost tour={tour} />
+        {/*@ts-expect-error */}
+        {tour.additionalInfo && <AdditionalInfo text={tour.additionalInfo} />}
         <TourCostDetails tour={tour} />
         {tourToDate.inspiration && <Inspiration tour={tour} />}
       </Suspense>

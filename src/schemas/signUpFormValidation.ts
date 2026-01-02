@@ -20,7 +20,7 @@ export const signUpValidation = () => {
         (value) => !!value && value.length >= 6 && value[5] === "0"
       )
       .required("Дане поле обов'язкове до заповнення"),
-    edrpou: yup.string().matches(edrpouRegex, "ЄДРПОУ має складатися з 8 чисел").min(2, "Має бути 8 символів").max(2, "Має бути 8 символів"),
+    edrpou: yup.string().transform((v) => (v ?? "").replace(/\D/g, "")).matches(edrpouRegex, "ЄДРПОУ має складатися з 8-10 чисел").min(2, "Має бути 8-10 символів").max(10, "Має бути 8-10 символів"),
     city: yup
       .string()
       .min(2, "Має бути не менше 2 символів")
@@ -33,7 +33,7 @@ export const signUpValidation = () => {
       .required("Дане поле обов'язкове до заповнення"),
     site: yup
       .string()
-      .min(2, "Має бути не менше 2 символів")
+      // .min(2, "Має бути не менше 2 символів")
       .matches(
         /^(https:\/\/|www\.)/,
         "Посилання має починатися з https:// або www."

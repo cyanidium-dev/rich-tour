@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import { Form, Formik, FormikHelpers } from "formik";
@@ -39,8 +39,7 @@ export default function SignUpForm({
 }: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
-  console.log(router);
+  // const router = useRouter();
 
   const initialValues = {
     email: "",

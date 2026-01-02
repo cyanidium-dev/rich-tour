@@ -10,15 +10,28 @@ import BookingWithButton from "../../shared/booking/BookingWithButton";
 import "react-day-picker/style.css";
 import { Tour } from "@/types/tour";
 // import {tourDepartures} from "@/components/tour/tourCost/mockedData";
+import {useCurrency} from "@/context/CurrencyContext";
 
 interface CalendarProps {
   tour: Tour;
+}
+
+//@ts-expect-error
+const getTourDepatures = (tourDepartures, convert) => {
+  const result = {};
+  for(const [key, value] of Object.entries(tourDepartures)) {
+    //@ts-expect-error
+    result[key] = value.map(item => ({...item, price: convert(item.price)}))
+  }
+  return result;
 }
 
 export default function Calendar({ tour }: CalendarProps) {
   const [selected, setSelected] = useState<Date>();
 
   const defaultClassNames = getDefaultClassNames();
+
+  const {convert, selected: currency} = useCurrency();
 
   const customUk: Locale = {
     ...uk,
@@ -40,6 +53,8 @@ export default function Calendar({ tour }: CalendarProps) {
 
   const initialMonth = today;
   const maxDate = new Date(nextYear, 11, 31);
+
+  const tourDepartures = getTourDepatures(tour.tourDepartures, convert);
 
   return (
     <div className="max-w-[325px] xl:w-[calc(33.3%-26.67px)] mx-auto flex flex-col gap-y-7">
@@ -64,7 +79,7 @@ export default function Calendar({ tour }: CalendarProps) {
           components={{
             DayButton: (props) => (
                 // @ts-expect-error
-                <DayButton{...props} tourDepartures={tour.tourDepartures} />
+                <DayButton{...props} currency={currency} tourDepartures={tourDepartures} />
             ),
           }}
           classNames={{

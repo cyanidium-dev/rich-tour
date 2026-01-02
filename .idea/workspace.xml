@@ -4,7 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="" />
+    <list default="true" id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/images/addional-info-arrow-desk.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/addional-info-arrow-mob.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/icons/arrow-down.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/tour/additionalInfo/AdditionalInfo.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/CloseHotelModalIcon.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelContent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelModalContent.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/Hotels.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelsTitle.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/context/CurrencyContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/providers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/providers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/header/currencyRate/CurrencyRate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/header/currencyRate/CurrencyRate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/queries.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/regex/regex.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/regex/regex.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/signUpFormValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/signUpFormValidation.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,9 +36,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JSX File" />
         <option value="TypeScript JSX File" />
-        <option value="TypeScript File" />
+        <option value="JSX File" />
       </list>
     </option>
   </component>
@@ -23,9 +45,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2wGS4vkB5BllIAATPY73JGyOydK" />
+  <component name="ProjectId" id="37LHbWFTvOdxVQ2Lmyut6terDAS" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -33,25 +56,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Projects/Rich tour/rich-tour/src/components/tour/prices",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "C:\\Projects\\Rich tour\\rich-tour\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Projects/Rich tour/rich-tour/src/components/tour/hotels&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Projects\\Rich tour\\rich-tour\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Projects\Rich tour\rich-tour\src\components\tour\prices" />
-      <recent name="C:\Projects\Rich tour\rich-tour\src\components\shared\icons" />
-      <recent name="C:\Projects\Rich tour\rich-tour\src\components\tour" />
+      <recent name="C:\Projects\Rich tour\rich-tour\src\components\tour\hotels" />
+      <recent name="C:\Projects\Rich tour\rich-tour\public\images" />
+      <recent name="C:\Projects\Rich tour\rich-tour\src\components\tour\additionalInfo" />
+      <recent name="C:\Projects\Rich tour\rich-tour\public\images\icons" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -64,47 +88,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="36cdf8e2-cb1c-4d06-a83b-1f9762ab2ada" name="Changes" comment="" />
-      <created>1745666229847</created>
+      <changelist id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="" />
+      <created>1766675502955</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1745666229847</updated>
-      <workItem from="1745666231037" duration="9567000" />
-      <workItem from="1745677828222" duration="24000" />
-      <workItem from="1745678137417" duration="4531000" />
-      <workItem from="1749192771199" duration="663000" />
-      <workItem from="1754329996655" duration="1072000" />
-      <workItem from="1754398265784" duration="3216000" />
-      <workItem from="1754659111877" duration="18541000" />
-      <workItem from="1754873591177" duration="5168000" />
-      <workItem from="1754919703263" duration="751000" />
-      <workItem from="1754987117189" duration="3984000" />
-      <workItem from="1755263304931" duration="1413000" />
-      <workItem from="1755282855597" duration="992000" />
-      <workItem from="1755304180634" duration="5734000" />
-      <workItem from="1755353004193" duration="2138000" />
-      <workItem from="1755513881586" duration="6683000" />
-      <workItem from="1755533233503" duration="957000" />
-      <workItem from="1755597610240" duration="13741000" />
-      <workItem from="1759427803567" duration="9864000" />
-      <workItem from="1759587025248" duration="4306000" />
-      <workItem from="1759688229741" duration="10217000" />
-      <workItem from="1759733826014" duration="598000" />
-      <workItem from="1760176833235" duration="184000" />
-      <workItem from="1760181419388" duration="22692000" />
-      <workItem from="1760335626174" duration="1871000" />
-      <workItem from="1760606210790" duration="5911000" />
-      <workItem from="1760618516685" duration="2435000" />
-      <workItem from="1760699018391" duration="2698000" />
-      <workItem from="1760942257004" duration="1227000" />
-      <workItem from="1760960329417" duration="1695000" />
-      <workItem from="1760967545588" duration="2584000" />
-      <workItem from="1760979355426" duration="3939000" />
-      <workItem from="1761114747453" duration="597000" />
-      <workItem from="1761130039736" duration="7055000" />
-      <workItem from="1761202542028" duration="297000" />
-      <workItem from="1762931486230" duration="2894000" />
-      <workItem from="1762937911138" duration="8707000" />
+      <updated>1766675502955</updated>
+      <workItem from="1766675504218" duration="676000" />
+      <workItem from="1767093192641" duration="336000" />
+      <workItem from="1767117413511" duration="7618000" />
+      <workItem from="1767139044983" duration="23533000" />
+      <workItem from="1767348143858" duration="4242000" />
     </task>
     <servers />
   </component>

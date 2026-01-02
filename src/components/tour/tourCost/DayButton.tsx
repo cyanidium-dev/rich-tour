@@ -19,7 +19,7 @@ export default function DayButton(props: DayButtonProps) {
   const date = day.date;
   //@ts-expect-error
   const dayData = getDayData(date, props.tourDepartures);
-console.log(props)
+
   const status = dayData?.status || [];
 
   const iconStatuses = ["guaranteed", "hot", "discount"];
@@ -85,7 +85,8 @@ console.log(props)
 
       {hasPrice && (
         <span className="text-10semi text-black mt-[1px]">
-          {dayData.price}&euro;
+          {/*@ts-expect-error*/}
+          {dayData.price}{props.currency === "EUR" ? "€" : "₴"}
         </span>
       )}
 
