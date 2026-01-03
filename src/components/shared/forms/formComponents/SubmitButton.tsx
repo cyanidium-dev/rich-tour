@@ -1,31 +1,39 @@
 import FormButton from "../../buttons/FormButton";
 
 interface SubmitButtonProps {
-  dirty: boolean;
   isValid: boolean;
   isLoading: boolean;
   text: string;
   variant?: "red" | "black";
   className?: string;
+
+  requireDirty?: boolean;
+  dirty?: boolean;
 }
 
 export default function SubmitButton({
-  dirty,
-  isValid,
-  isLoading,
-  text,
-  variant = "red",
-  className = "w-full",
-}: SubmitButtonProps) {
+                                       isValid,
+                                       isLoading,
+                                       text,
+                                       variant = "red",
+                                       className = "w-full",
+                                       requireDirty = false,
+                                       dirty = false,
+                                     }: SubmitButtonProps) {
+  const isDisabled =
+      isLoading ||
+      !isValid ||
+      (requireDirty && !dirty);
+
   return (
-    <FormButton
-      type="submit"
-      disabled={!(dirty && isValid) || isLoading}
-      isLoading={isLoading}
-      className={className}
-      variant={variant}
-    >
-      {isLoading ? "Надсилання..." : text}
-    </FormButton>
+      <FormButton
+          type="submit"
+          disabled={isDisabled}
+          isLoading={isLoading}
+          className={className}
+          variant={variant}
+      >
+        {isLoading ? "Надсилання..." : text}
+      </FormButton>
   );
 }

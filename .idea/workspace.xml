@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/api/agent/me/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/agent/update/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/AgentInfoForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/AgentInfoForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/formComponents/SubmitButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/formComponents/SubmitButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/agentInfoFormValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/agentInfoFormValidation.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +88,7 @@
       <workItem from="1767139044983" duration="23533000" />
       <workItem from="1767348143858" duration="19227000" />
       <workItem from="1767368127663" duration="2548000" />
-      <workItem from="1767437370649" duration="1988000" />
+      <workItem from="1767437370649" duration="4827000" />
     </task>
     <servers />
   </component>
