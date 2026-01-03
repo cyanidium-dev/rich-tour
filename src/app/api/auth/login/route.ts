@@ -14,21 +14,16 @@ export async function POST(req: Request) {
     try {
         body = await req.json();
     } catch {
-        return NextResponse.json(
-            { error: "INVALID_BODY" },
-            { status: 400 }
-        );
+        return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 });
     }
 
     const { email, password } = body;
 
     if (!email || !password) {
-        return NextResponse.json(
-            { error: "MISSING_FIELDS" },
-            { status: 400 }
-        );
+        return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
     }
 
+    // ───────────── AGENT ─────────────
     const agentUser = await client.fetch<{
         _id: string;
         email: string;
@@ -46,10 +41,7 @@ export async function POST(req: Request) {
         const isValid = await bcrypt.compare(password, agentUser.passwordHash);
 
         if (!isValid) {
-            return NextResponse.json(
-                { error: "INVALID_CREDENTIALS" },
-                { status: 401 }
-            );
+            return NextResponse.json({ error: "INVALID_CREDENTIALS" }, { status: 401 });
         }
 
         const token = jwt.sign(
@@ -66,7 +58,7 @@ export async function POST(req: Request) {
 
         response.cookies.set("auth_token", token, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
             maxAge: 60 * 60 * 24 * 7,
@@ -75,6 +67,7 @@ export async function POST(req: Request) {
         return response;
     }
 
+    // ───────────── AGENCY ─────────────
     const agencyUser = await client.fetch<{
         _id: string;
         login: string;
@@ -92,10 +85,7 @@ export async function POST(req: Request) {
         const isValid = await bcrypt.compare(password, agencyUser.passwordHash);
 
         if (!isValid) {
-            return NextResponse.json(
-                { error: "INVALID_CREDENTIALS" },
-                { status: 401 }
-            );
+            return NextResponse.json({ error: "INVALID_CREDENTIALS" }, { status: 401 });
         }
 
         const token = jwt.sign(
@@ -112,7 +102,7 @@ export async function POST(req: Request) {
 
         response.cookies.set("auth_token", token, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
             maxAge: 60 * 60 * 24 * 7,
@@ -121,8 +111,5 @@ export async function POST(req: Request) {
         return response;
     }
 
-    return NextResponse.json(
-        { error: "INVALID_CREDENTIALS" },
-        { status: 401 }
-    );
+    return NextResponse.json({ error: "INVALID_CREDENTIALS" }, { status: 401 });
 }

@@ -25,10 +25,12 @@ export default function TabMenu({ activeTab, setActiveTab }: TabMenuProps) {
   const handleTabClick = async (menu: { title: string; value: string }) => {
     if (menu.value === "sign-out") {
       try {
-        await axios.post("/api/auth/logout", {}, { withCredentials: true });
+        await fetch("/api/auth/logout", {
+          method: "POST",
+          credentials: "include",
+        });
       } finally {
-        router.refresh();
-        router.push("/");
+        window.location.href = "/";
       }
       return;
     }

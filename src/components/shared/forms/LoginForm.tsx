@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import { Form, Formik, FormikHelpers } from "formik";
-import axios, { AxiosError } from "axios";
 import { loginValidation } from "@/schemas/loginFormValidation";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
@@ -41,53 +40,46 @@ export default function LoginForm({
         password: "",
     };
 
-    const validationSchema = loginValidation();
-
     const submitForm = async (
         values: ValuesLoginFormType,
-        formikHelpers: FormikHelpers<ValuesLoginFormType>
+        { resetForm }: FormikHelpers<ValuesLoginFormType>
     ) => {
-        const { resetForm } = formikHelpers;
-
         try {
             setIsError(false);
             setIsNotificationShown(false);
             setIsLoading(true);
 
-            const response = await axios.post<LoginApiSuccess>(
-                "/api/auth/login",
-                values,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    withCredentials: true,
-                }
-            );
+            const res = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify(values),
+            });
 
-            const { role } = response.data;
+            if (!res.ok) {
+                throw new Error("LOGIN_FAILED");
+            }
+
+            const data: LoginApiSuccess = await res.json();
 
             resetForm();
             setIsPopUpShown?.(false);
 
-            if (role === "agent") {
-                router.refresh();
-                router.push("/agent");
+            if (data.role === "agent") {
+                window.location.href = "/agent";
                 return;
             }
 
-            if (role === "agency") {
-                router.refresh();
-                router.push("/agency");
+            if (data.role === "agency") {
+                window.location.href = "/agency";
                 return;
             }
 
             throw new Error("UNKNOWN_ROLE");
         } catch (error) {
-            const err = error as AxiosError;
+            console.error(error);
             setIsError(true);
             setIsNotificationShown(true);
-            return err;
         } finally {
             setIsLoading(false);
         }
@@ -97,11 +89,11 @@ export default function LoginForm({
         <Formik
             initialValues={initialValues}
             onSubmit={submitForm}
-            validationSchema={validationSchema}
+            validationSchema={loginValidation()}
         >
             {({ errors, touched, dirty, isValid }) => (
                 <Form className={className}>
-                    <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
+                    <div className="flex flex-col w-full gap-y-5 mb-[18px]">
                         <CustomizedInput
                             fieldName="email"
                             inputType="text"
@@ -119,11 +111,8 @@ export default function LoginForm({
                     </div>
 
                     <p className="mb-4 text-12reg text-center">
-                        Забули пароль?&nbsp;
-                        <Link
-                            href="/auth/forgot-password"
-                            className="xl:hover:text-main focus-visible:text-main transition duration-300 ease-in-out"
-                        >
+                        Забули пароль?{" "}
+                        <Link href="/auth/forgot-password" className="hover:text-main">
                             Відновити
                         </Link>
                     </p>
@@ -139,7 +128,7 @@ export default function LoginForm({
                     <div className="mt-4 pt-4 border-t border-black">
                         <Link
                             href="/auth/sign-up"
-                            className="block text-12reg text-center xl:hover:text-main focus-visible:text-main transition duration-300 ease-in-out"
+                            className="block text-12reg text-center hover:text-main"
                         >
                             Створити новий доступ
                         </Link>

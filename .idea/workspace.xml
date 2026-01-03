@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/signUpFormValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/signUpFormValidation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/LoginForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +84,8 @@
       <workItem from="1767117413511" duration="7618000" />
       <workItem from="1767139044983" duration="23533000" />
       <workItem from="1767348143858" duration="19227000" />
-      <workItem from="1767368127663" duration="722000" />
+      <workItem from="1767368127663" duration="2548000" />
+      <workItem from="1767437370649" duration="1988000" />
     </task>
     <servers />
   </component>
