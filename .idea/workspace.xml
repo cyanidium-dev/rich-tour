@@ -4,13 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/api/agent/me/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/agent/update/route.ts" afterDir="false" />
+    <list default="true" id="5c14b0d2-de22-4964-801c-dc6c1b8f2a8e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/api/webhooks/sanity/agency/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/AgentInfoSection.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/crm/sendAgencyToCrm.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/getAuthUserProfile.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/agent/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/agent/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/currency/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/currency/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/Menu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/AgentInfoFormWithNotifications.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/AgentInfoFormWithNotifications.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/MenuContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/MenuContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/SettingsContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/SettingsContent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/shared/forms/AgentInfoForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/AgentInfoForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/formComponents/SubmitButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/formComponents/SubmitButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/agentInfoFormValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/agentInfoFormValidation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/context/CurrencyContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/context/CurrencyContext.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +27,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
-        <option value="JSX File" />
         <option value="TypeScript File" />
       </list>
     </option>
@@ -29,11 +34,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 3
-}</component>
-  <component name="ProjectId" id="37LHbWFTvOdxVQ2Lmyut6terDAS" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="38CkEexNfIjSseKqqvS0ij2q9oP" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -41,32 +46,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Projects/Rich tour/rich-tour/src/app&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Projects\\Rich tour\\rich-tour\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "C:\\Projects\\Rich tour\\rich-tour\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Projects\Rich tour\rich-tour\src\app" />
-      <recent name="C:\Projects\Rich tour\rich-tour\src\components" />
-      <recent name="C:\Projects\Rich tour\rich-tour\src\components\tour\hotels" />
-      <recent name="C:\Projects\Rich tour\rich-tour\public\images" />
-      <recent name="C:\Projects\Rich tour\rich-tour\src\components\tour\additionalInfo" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Projects\Rich tour\rich-tour\src\app\api\webhooks\sanity\user" />
-    </key>
-  </component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -77,32 +69,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a7b34227-869b-444b-abe2-20427126b499" name="Changes" comment="" />
-      <created>1766675502955</created>
+      <changelist id="5c14b0d2-de22-4964-801c-dc6c1b8f2a8e" name="Changes" comment="" />
+      <created>1768310833135</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1766675502955</updated>
-      <workItem from="1766675504218" duration="676000" />
-      <workItem from="1767093192641" duration="336000" />
-      <workItem from="1767117413511" duration="7618000" />
-      <workItem from="1767139044983" duration="23533000" />
-      <workItem from="1767348143858" duration="19227000" />
-      <workItem from="1767368127663" duration="2548000" />
-      <workItem from="1767437370649" duration="4827000" />
+      <updated>1768310833135</updated>
+      <workItem from="1768310835092" duration="3292000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/schemas/loginFormValidation.ts</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

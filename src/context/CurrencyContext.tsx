@@ -35,7 +35,6 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
     };
 
     useEffect(() => {
-        // восстановление выбранной валюты
         const stored = localStorage.getItem(
             SELECTED_STORAGE_KEY
         ) as Currency | null;

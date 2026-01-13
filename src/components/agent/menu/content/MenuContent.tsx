@@ -5,7 +5,7 @@ import SettingsContent from "./SettingsContent";
 import ChangePasswordContent from "./ChangePasswordContent";
 import { useSearchParams } from "next/navigation";
 
-export default function MenuContent() {
+export default function MenuContent({ user }: { user: any }) {
   const searchParams = useSearchParams();
   const menu = searchParams.get("menu") || "orders";
 
@@ -17,7 +17,7 @@ export default function MenuContent() {
     case "tours":
       return <ToursContent />;
     case "settings":
-      return <SettingsContent />;
+      return <SettingsContent user={user} />;
     case "change-password":
       return <ChangePasswordContent />;
     case "sign-out":

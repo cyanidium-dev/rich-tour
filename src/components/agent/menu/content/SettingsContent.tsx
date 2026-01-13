@@ -2,9 +2,10 @@ import Image from "next/image";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";
-import AgentInfoFormWithNotifications from "./AgentInfoFormWithNotifications";
+// import AgentInfoFormWithNotifications from "./AgentInfoFormWithNotifications";
+import AgentInfoSection from "@/components/agent/menu/content/AgentInfoSection";
 
-export default function SettingsContent() {
+export default function SettingsContent({ user }: { user: any }) {
   return (
     <Container className="flex flex-col gap-6 xl:flex-row-reverse xl:justify-between">
       <div className="xl:w-[40.6%]">
@@ -35,7 +36,7 @@ export default function SettingsContent() {
           />
         </AnimatedWrapper>
       </div>
-      <AgentInfoFormWithNotifications />
+      <AgentInfoSection user={user} />
     </Container>
   );
 }

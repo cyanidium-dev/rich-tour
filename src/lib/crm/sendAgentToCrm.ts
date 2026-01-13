@@ -1,53 +1,49 @@
-import axios from "axios";
+import axios from 'axios'
 
 interface SendAgentToCrmParams {
-    token: string;
+    token: string
 
-    externalId: string;        // _id из Sanity (контакт)
-    agencyCrmId: string;       // код агенции в CRM
+    externalId: string
 
-    firstName: string;
-    lastName: string;
-    middleName?: string;
+    fullName: string
+    agencyCrmId: number
 
-    phone: string;
-    email: string;
+    phone: string
+    email: string
 
-    website?: string;
-    license?: string;
-    country?: string;
-    city?: string;
-
-    password: string; // ⚠️ только если CRM требует
+    website?: string
+    license?: string
+    city?: string
+    taxForm?: string
+    legalCompanyName?: string
 }
 
 export async function sendAgentToCrm({
                                          token,
                                          externalId,
+
+                                         fullName,
                                          agencyCrmId,
-                                         firstName,
-                                         lastName,
-                                         middleName,
+
                                          phone,
                                          email,
+
                                          website,
                                          license,
-                                         country,
                                          city,
-                                         password,
+                                         taxForm,
+                                         legalCompanyName,
                                      }: SendAgentToCrmParams) {
     const payload = [
         {
-            typesex: "person",
+            typesex: 'man',
 
-            name: firstName,
-            namelast: lastName,
-            namemiddle: middleName,
+            name: fullName,
 
             companys: [agencyCrmId],
 
             externalid: externalId,
-            findbyArray: ["externalid"],
+            findbyArray: ['externalid'],
 
             phones: [phone],
             addnewphone: true,
@@ -60,17 +56,17 @@ export async function sendAgentToCrm({
             customfields: {
                 Vebsait: website,
                 Litsenziya: license,
-                Krana: country,
                 Misto: city,
-                Parolsait: password, // ❗ см. комментарий ниже
+                taxForm: taxForm,
+                legalCompanyName: legalCompanyName,
             },
         },
-    ];
+    ]
 
     await axios.post(process.env.CRM_ORDER_SET_URL!, payload, {
         headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
         },
-    });
+    })
 }
