@@ -4,9 +4,9 @@ interface SendAgentToCrmParams {
     token: string
 
     externalId: string
-
     fullName: string
-    agencyCrmId: number
+
+    agencyCrmId?: number
 
     phone: string
     email: string
@@ -21,39 +21,46 @@ interface SendAgentToCrmParams {
 export async function sendAgentToCrm({
                                          token,
                                          externalId,
-
                                          fullName,
                                          agencyCrmId,
-
                                          phone,
                                          email,
-
                                          website,
                                          license,
                                          city,
                                          taxForm,
                                          legalCompanyName,
-                                     }: SendAgentToCrmParams) {
-    const payload = [
-        {
-            externalid: externalId,
-            typesex: 'man',
-            name: fullName,
+                                     }: SendAgentToCrmParams): Promise<string> {
+    const payloadItem: any = {
+        externalid: externalId,
+        typesex: 'man',
+        name: fullName,
 
-            companys: [agencyCrmId],
+        findbyArray: ['externalid'],
 
-            emails: [email],
-            phones: [phone],
+        emails: [email],
+        phones: [phone],
 
-            customfields: {
-                Vebsait: website,
-                Litsenziya: license,
-                Misto: city,
-                taxForm: taxForm,
-                legalCompanyName: legalCompanyName,
-            },
+        customfields: {
+            Vebsait: website,
+            Litsenziya: license,
+            Misto: city,
+            taxForm,
+            legalCompanyName,
         },
-    ]
+    }
 
-    await postToCrm(token, payload)
+    // ✅ добавляем companys ТОЛЬКО если есть agencyCrmId
+    if (agencyCrmId) {
+        payloadItem.companys = [agencyCrmId]
+    }
+
+    const { data } = await postToCrm(token, [payloadItem])
+
+    const crmId = data?.dataArray?.[0]
+    if (!crmId) {
+        throw new Error('CRM did not return agent crmId')
+    }
+
+    return String(crmId)
 }

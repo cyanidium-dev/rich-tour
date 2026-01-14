@@ -1,8 +1,7 @@
 import { postToCrm } from './postToCrm'
+import { getCrmToken } from './getCrmToken'
 
 interface SendAgencyToCrmParams {
-    token: string
-
     externalId: string
 
     legalAgencyName: string
@@ -19,7 +18,6 @@ interface SendAgencyToCrmParams {
 }
 
 export async function sendAgencyToCrm({
-                                          token,
                                           externalId,
 
                                           legalAgencyName,
@@ -33,7 +31,9 @@ export async function sendAgencyToCrm({
                                           city,
                                           legalAddress,
                                           mainOfficeEmail,
-                                      }: SendAgencyToCrmParams) {
+                                      }: SendAgencyToCrmParams): Promise<string> {
+    const token = await getCrmToken()
+
     const payload = [
         {
             externalid: externalId,
@@ -56,5 +56,13 @@ export async function sendAgencyToCrm({
         },
     ]
 
-    await postToCrm(token, payload)
+    const { data } = await postToCrm(token, payload)
+
+    const crmId = data?.dataArray?.[0]
+
+    if (!crmId) {
+        throw new Error('CRM did not return agency crmId')
+    }
+
+    return crmId
 }
