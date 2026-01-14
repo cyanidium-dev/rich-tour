@@ -4,7 +4,6 @@ import { sendAgencyToCrm } from '@/lib/crm/sendAgencyToCrm'
 import {sendAgentToCrm} from "@/lib/crm/sendAgentToCrm";
 
 export async function POST(req: NextRequest) {
-
     const secret = req.headers.get('x-sanity-secret')
     if (secret !== process.env.SANITY_WEBHOOK_SECRET) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
