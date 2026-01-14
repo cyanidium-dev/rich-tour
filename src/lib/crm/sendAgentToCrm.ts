@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { postToCrm } from './postToCrm'
 
 interface SendAgentToCrmParams {
     token: string
@@ -36,22 +36,14 @@ export async function sendAgentToCrm({
                                      }: SendAgentToCrmParams) {
     const payload = [
         {
+            externalid: externalId,
             typesex: 'man',
-
             name: fullName,
 
             companys: [agencyCrmId],
 
-            externalid: externalId,
-            findbyArray: ['externalid'],
-
-            phones: [phone],
-            addnewphone: true,
-
             emails: [email],
-            addnewemail: true,
-
-            returnwithoutupdate: false,
+            phones: [phone],
 
             customfields: {
                 Vebsait: website,
@@ -63,10 +55,5 @@ export async function sendAgentToCrm({
         },
     ]
 
-    await axios.post(process.env.CRM_ORDER_SET_URL!, payload, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-    })
+    await postToCrm(token, payload)
 }

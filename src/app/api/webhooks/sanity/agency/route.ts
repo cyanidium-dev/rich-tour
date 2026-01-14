@@ -4,8 +4,8 @@ import { sendAgencyToCrm } from '@/lib/crm/sendAgencyToCrm'
 import {sendAgentToCrm} from "@/lib/crm/sendAgentToCrm";
 
 export async function POST(req: NextRequest) {
-    const secret = req.headers.get('x-sanity-secret')
 
+    const secret = req.headers.get('x-sanity-secret')
     if (secret !== process.env.SANITY_WEBHOOK_SECRET) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
@@ -42,8 +42,21 @@ export async function POST(req: NextRequest) {
                 await handleAgency(payload)
                 break
         }
-    } catch {
-        return NextResponse.json({ error: 'Handler failed' }, { status: 500 })
+    } catch (error: any) {
+        console.error('❌ Webhook error:', {
+            message: error?.message,
+            stack: error?.stack,
+            response: error?.response?.data,
+            status: error?.response?.status,
+        })
+
+        return NextResponse.json(
+            {
+                error: 'Webhook processing failed',
+                details: error?.response?.data ?? error?.message ?? 'Unknown error',
+            },
+            { status: 500 }
+        )
     }
 
     return NextResponse.json({ ok: true })
@@ -73,7 +86,7 @@ async function handleAgent(agent: any) {
 
 async function handleAgency(agency: any) {
     const token = await getCrmToken()
-
+    console.log("start add");
     await sendAgencyToCrm({
         token,
         externalId: agency._id,

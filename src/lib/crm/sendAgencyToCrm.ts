@@ -1,9 +1,9 @@
-import axios from 'axios'
+import { postToCrm } from './postToCrm'
 
 interface SendAgencyToCrmParams {
     token: string
 
-    externalId: string // _id из Sanity
+    externalId: string
 
     legalAgencyName: string
     marketingAgencyName?: string
@@ -36,20 +36,14 @@ export async function sendAgencyToCrm({
                                       }: SendAgencyToCrmParams) {
     const payload = [
         {
+            externalid: externalId,
             typesex: 'company',
-
             companyname: legalAgencyName,
 
-            externalid: externalId,
             findbyArray: ['externalid'],
 
-            phones: [phone],
-            addnewphone: true,
-
             emails: [email],
-            addnewemail: true,
-
-            returnwithoutupdate: false,
+            phones: [phone],
 
             customfields: {
                 Marketingovanazvaagentsi: marketingAgencyName,
@@ -62,11 +56,5 @@ export async function sendAgencyToCrm({
         },
     ]
 
-    await axios.post(process.env.CRM_ORDER_SET_URL!, payload, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-    })
+    await postToCrm(token, payload)
 }
-
