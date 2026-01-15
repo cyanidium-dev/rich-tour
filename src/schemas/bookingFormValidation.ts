@@ -17,11 +17,23 @@ export const bookingValidation = () => {
       .matches(phoneRegex, "Вкажіть правильний номер телефону")
       .notRequired()
       .nullable(),
-    passport: yup.string().required("Вкажіть номер паспорта"),
+    passport: yup.string().when("passportInProgress", {
+      is: false,
+      then: (schema) =>
+          schema.required("Вкажіть номер паспорта"),
+      otherwise: (schema) =>
+          schema.notRequired().nullable(),
+    }),
     birthDate: yup.string().required("Вкажіть дату народження"),
     passportExpiration: yup
-      .string()
-      .required("Вкажіть дату закінчення дії паспорта"),
+        .string()
+        .when("passportInProgress", {
+          is: false,
+          then: (schema) =>
+              schema.required("Вкажіть дату закінчення дії паспорта"),
+          otherwise: (schema) =>
+              schema.notRequired().nullable(),
+        }),
     boardingCity: yup.string().required("Вкажіть місто посадки"),
   });
 

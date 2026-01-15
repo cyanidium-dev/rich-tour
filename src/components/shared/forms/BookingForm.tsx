@@ -414,8 +414,6 @@ export default function BookingForm({
 {/*  {JSON.stringify(errors, null, 2)}*/}
 {/*</pre>*/}
               <SubmitButton
-                  dirty={dirty}
-                  isValid={isValid}
                   isLoading={isLoading}
                   text="Забронювати"
                   variant={variant}
