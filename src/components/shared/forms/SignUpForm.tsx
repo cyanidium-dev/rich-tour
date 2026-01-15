@@ -75,7 +75,8 @@ export default function SignUpForm({
                 setIsPopUpShown?.(false);
                 router.push("/auth/sign-in");
             }, 1500);
-        } catch {
+        } catch(error) {
+            console.log(error);
             setIsError(true);
             setIsNotificationShown(true);
         } finally {

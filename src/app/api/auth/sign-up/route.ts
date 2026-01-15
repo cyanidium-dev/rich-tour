@@ -1,29 +1,31 @@
-import { NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
-// import axios from "axios";
-import client from "@/lib/sanity";
+import { NextResponse } from "next/server"
+import bcrypt from "bcryptjs"
+import client from "@/lib/sanity"
+
+import { getCrmToken } from "@/lib/crm/getCrmToken"
+import { sendAgentToCrm } from "@/lib/crm/sendAgentToCrm"
+import { updateAgentCrmId } from "@/lib/crm/updateAgentCrmId"
 
 type SignUpBody = {
-    email: string;
-    companyName: string;
-    legalCompanyName: string;
-    phone: string;
-    edrpou: string;
-    city: string;
-    taxForm: "fop" | "tov" | "other";
-    password: string;
-    site?: string;
-
-    agencyCrmId?: string;
-};
+    email: string
+    companyName: string
+    legalCompanyName: string
+    phone: string
+    edrpou: string
+    city: string
+    taxForm: "fop" | "tov" | "other"
+    password: string
+    site?: string
+    agencyCrmId?: string
+}
 
 export async function POST(req: Request) {
-    let body: SignUpBody;
+    let body: SignUpBody
 
     try {
-        body = await req.json();
+        body = await req.json()
     } catch {
-        return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 });
+        return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 })
     }
 
     const {
@@ -36,8 +38,8 @@ export async function POST(req: Request) {
         taxForm,
         password,
         site,
-        // agencyCrmId,
-    } = body;
+        agencyCrmId,
+    } = body
 
     if (
         !email ||
@@ -49,23 +51,25 @@ export async function POST(req: Request) {
         !taxForm ||
         !password
     ) {
-        return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
+        return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 })
     }
 
+    // 🔍 проверка существования
     const existingUser = await client.fetch(
         `*[_type == "agentUser" && email == $email][0]{ _id }`,
         { email }
-    );
+    )
 
     if (existingUser) {
         return NextResponse.json(
             { error: "USER_ALREADY_EXISTS" },
             { status: 409 }
-        );
+        )
     }
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, 10)
 
+    // 🧾 1. создаём агента в Sanity
     const sanityAgent = await client.create({
         _type: "agentUser",
         email,
@@ -77,67 +81,50 @@ export async function POST(req: Request) {
         taxForm,
         site,
         passwordHash,
-    });
+    })
 
-    /*
     try {
-      const tokenResponse = await axios.post(
-        process.env.CRM_TOKEN_URL!,
-        {
-          login: process.env.CRM_LOGIN,
-          restapipassword: process.env.CRM_REST_API_PASSWORD,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+        // 🔐 2. CRM
+        const token = await getCrmToken()
 
-      const token = tokenResponse.data?.token;
-      if (!token) throw new Error("CRM token missing");
+        const crmId = await sendAgentToCrm({
+            token,
+            externalId: sanityAgent._id,
+            fullName: companyName,
+            agencyCrmId: agencyCrmId ? Number(agencyCrmId) : undefined,
+            phone,
+            email,
+            website: site,
+            license: edrpou,
+            city,
+            taxForm,
+            legalCompanyName,
+        })
 
-      const crmPersonPayload: any = {
-        typesex: "company",
+        // 🧷 3. сохраняем crmId в Sanity
+        await updateAgentCrmId(sanityAgent._id, crmId)
 
-        companyname: legalCompanyName,
+        return NextResponse.json(
+            {
+                success: true,
+                sanityId: sanityAgent._id,
+                crmId,
+            },
+            { status: 201 }
+        )
+    } catch (error: any) {
+        console.error("❌ CRM error during signup → rollback", {
+            error: error?.message,
+        })
 
-        externalid: sanityAgent._id,
-        findbyArray: ["externalid"],
+        // 🔥 откат
+        await client.delete(sanityAgent._id)
 
-        phones: [phone],
-        addnewphone: true,
-
-        emails: [email],
-        addnewemail: true,
-
-        returnwithoutupdate: false,
-
-        customfields: {
-          Marketingovanazvaagentsi: companyName,
-          DRPOUagentsi: edrpou,
-          Mistorestratsi: city,
-          Parolsait: password,
-          Vebsait: site,
-        },
-      };
-
-      if (agencyCrmId) {
-        crmPersonPayload.companys = [agencyCrmId];
-      }
-
-      await axios.post(
-        process.env.CRM_ORDER_SET_URL!,
-        [crmPersonPayload],
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    } catch (error) {
-      console.error(error);
+        return NextResponse.json(
+            {
+                error: "CRM_REGISTRATION_FAILED",
+            },
+            { status: 502 }
+        )
     }
-    */
-
-    return NextResponse.json({ success: true }, { status: 201 });
 }
