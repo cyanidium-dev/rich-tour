@@ -64,5 +64,5 @@ export async function sendAgencyToCrm({
         throw new Error('CRM did not return agency crmId')
     }
 
-    return crmId
+    return String(crmId);
 }

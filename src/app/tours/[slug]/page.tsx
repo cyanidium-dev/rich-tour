@@ -80,7 +80,7 @@ const getHotels = (data) => {
     shortDescription: data[0].shortDescription,
     fullDescription: data[0].fullDescription,
     // @ts-expect-error
-    gallery: data[0].gallery.map(({asset})=> asset.url),
+    gallery: data[0].gallery?.map(({asset})=> asset.url) | [],
   }
 }
 
