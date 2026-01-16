@@ -96,6 +96,7 @@ title,
 dateRange,
 guaranteed,
 hot,
+crmNumber,
 discount,
 availability,
  hotels[]{
@@ -166,7 +167,7 @@ export const currencyQuery = `*[_type == "currency"][0]{
   euro_percent
 }`
 //
-// export const basicToursQuery = `*[_type == "tour-basic" && ($categoryId == null || $categoryId in categories[]._ref)] | order(publishedAt desc) {
+// export const basicToursQuery = `*[_type == "tour-basic" && ($categoryId == null || $categoryId in categories[]._ref)] | booking(publishedAt desc) {
 //   _id,
 //   title,
 //   slug,

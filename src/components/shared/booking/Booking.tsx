@@ -22,7 +22,9 @@ export default function Booking({
   const [isNotificationShown, setIsNotificationShown] = useState(false);
   const isAuthenticated = false;
 
-  const { title, tourDepartures } = tour;
+  //@ts-expect-error
+  const { title, tourDepartures, crmNumber } = tour;
+  console.log(crmNumber)
 
   return (
     <>
@@ -49,6 +51,7 @@ export default function Booking({
             setIsNotificationShown={setIsNotificationShown}
             setIsPopUpShown={setIsPopUpShown}
             tourDepartures={tourDepartures}
+            tourId={crmNumber}
           />
         )}
       </BookingFormModal>

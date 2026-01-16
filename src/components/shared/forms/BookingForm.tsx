@@ -14,6 +14,7 @@ import SubmitButton from "./formComponents/SubmitButton";
 import IconButton from "../buttons/IconButton";
 import TrashIcon from "../icons/TrashIcon";
 import { TourDepartures } from "@/types/tour";
+import axios from 'axios'
 
 const ClientNumberInput = dynamic(
   () => import("@heroui/react").then((mod) => mod.NumberInput),
@@ -44,12 +45,17 @@ export interface ValuesBookingFormType {
   travelers: TravelerInfo[];
 }
 
+type BookingPayload = ValuesBookingFormType & {
+  tourId: string;
+};
+
 interface BookingFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
   setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
   setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
   tourDepartures: TourDepartures;
   className?: string;
+  tourId: string;
   variant?: "red" | "black";
 }
 
@@ -60,6 +66,7 @@ export default function BookingForm({
   tourDepartures,
   className = "",
   variant = "red",
+    tourId,
 }: BookingFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [focusedTravelerIndex, setFocusedTravelerIndex] = useState<
@@ -96,13 +103,20 @@ export default function BookingForm({
     values: ValuesBookingFormType,
     formikHelpers: FormikHelpers<ValuesBookingFormType>
   ) => {
-    await handleSubmitForm<ValuesBookingFormType>(
-      formikHelpers,
-      setIsLoading,
-      setIsError,
-      setIsNotificationShown,
-      setIsPopUpShown
-    );
+    const payload = {
+      ...values,
+      tourId,
+    };
+    const response = await axios.post('/api/booking', payload)
+
+    console.log('API RESPONSE:', response.data);
+    // await handleSubmitForm<ValuesBookingFormType>(
+    //   formikHelpers,
+    //   setIsLoading,
+    //   setIsError,
+    //   setIsNotificationShown,
+    //   setIsPopUpShown
+    // );
   };
 
   return (

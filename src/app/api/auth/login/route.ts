@@ -28,11 +28,13 @@ export async function POST(req: Request) {
         _id: string;
         email: string;
         passwordHash: string;
+        crmId: number;
     } | null>(
         `*[_type == "agentUser" && email == $email][0]{
       _id,
       email,
-      passwordHash
+      passwordHash,
+      crmId,
     }`,
         { email }
     );
@@ -49,6 +51,7 @@ export async function POST(req: Request) {
                 sub: agentUser._id,
                 role: "agent",
                 email: agentUser.email,
+                crmId: agentUser.crmId,
             },
             process.env.JWT_SECRET!,
             { expiresIn: "7d" }

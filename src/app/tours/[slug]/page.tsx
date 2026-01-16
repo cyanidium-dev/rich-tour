@@ -116,6 +116,7 @@ export default async function TourPage({ params }: TourPageProps) {
     guaranteed: tourToDate.guaranteed,
     hot: tourToDate.hot,
     discount: tourToDate.discount,
+    crmNumber: tourToDate?.crmNumber,
     images: [
       {
         alt: basicTour.title,

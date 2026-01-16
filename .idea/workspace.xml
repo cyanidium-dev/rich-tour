@@ -5,8 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c14b0d2-de22-4964-801c-dc6c1b8f2a8e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/lib/api/sendBooking.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/crm/helpers.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/crm/mapBookingToCrmOrder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/crm/mapTravelerToCrmPayload.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/crm/postOrderToCrm.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/crm/sendOrderToCrm.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/crm/sendTravelersToCrm.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/utils/generateUuid.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/order/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/booking/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/booking/Booking.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/booking/Booking.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/crm/postToCrm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/postToCrm.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/queries.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/handleSubmitForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/handleSubmitForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +86,7 @@
       <workItem from="1768310835092" duration="7360000" />
       <workItem from="1768333645632" duration="13521000" />
       <workItem from="1768468398021" duration="8288000" />
-      <workItem from="1768482208290" duration="3538000" />
+      <workItem from="1768482208290" duration="12474000" />
     </task>
     <servers />
   </component>
