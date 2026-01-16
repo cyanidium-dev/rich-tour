@@ -109,14 +109,14 @@ export default function BookingForm({
     };
     const response = await axios.post('/api/booking', payload)
 
-    console.log('API RESPONSE:', response.data);
-    // await handleSubmitForm<ValuesBookingFormType>(
-    //   formikHelpers,
-    //   setIsLoading,
-    //   setIsError,
-    //   setIsNotificationShown,
-    //   setIsPopUpShown
-    // );
+    // console.log('API RESPONSE:', response.data);
+    await handleSubmitForm<ValuesBookingFormType>(
+      formikHelpers,
+      setIsLoading,
+      setIsError,
+      setIsNotificationShown,
+      setIsPopUpShown
+    );
   };
 
   return (
