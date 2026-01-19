@@ -107,9 +107,9 @@ export default function BookingForm({
       ...values,
       tourId,
     };
-    // const response = await axios.post('/api/booking', payload);
+    const response = await axios.post('/api/booking', payload);
 
-    // console.log('API RESPONSE:', response.data);
+    console.log('API RESPONSE:', response.data);
     await handleSubmitForm(
         payload,
         formikHelpers,
