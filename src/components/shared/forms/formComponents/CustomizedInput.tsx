@@ -27,6 +27,7 @@ interface CustomizedInputProps {
   onFocus?: (e: React.FocusEvent<any>) => void;
   onBlur?: (e: React.FocusEvent<any>) => void;
 
+    disabled?: boolean;
   isLoading?: boolean;
 
   children?: ReactNode;
@@ -57,6 +58,7 @@ export default function CustomizedInput({
                                           onFocus,
                                           onBlur,
 
+                                            disabled,
                                           isLoading = false,
                                           children,
                                         }: CustomizedInputProps) {
@@ -75,7 +77,7 @@ export default function CustomizedInput({
               type={inputType}
               placeholder={placeholder}
               autoComplete="on"
-              disabled={isLoading}
+              disabled={disabled || isLoading}
               onChange={onChange || handleChange}
               onFocus={onFocus}
               onBlur={onBlur}
@@ -85,6 +87,7 @@ export default function CustomizedInput({
             ${fieldClassName}
             ${fieldFontSize}
             ${isError && isTouched ? "border-red" : "border-black"}
+            ${disabled ? "opacity-50 cursor-not-allowed bg-gray-100" : ""}
           `}
           >
             {children}

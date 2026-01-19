@@ -1,6 +1,6 @@
 "use client";
 import { Form, Formik, FormikHelpers, FieldArray } from "formik";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import { Select, SelectItem } from "@heroui/react";
 import MaskedInput from "react-text-mask";
 import dynamic from "next/dynamic";
@@ -38,7 +38,7 @@ export interface TravelerInfo {
 
 export interface ValuesBookingFormType {
   date: string;
-  travelersQty: number | undefined;
+  travelersQty: number | null;
   email: string;
   phone: string;
   message: string;
@@ -75,7 +75,7 @@ export default function BookingForm({
 
   const initialValues: ValuesBookingFormType = {
     date: "",
-    travelersQty: undefined,
+    travelersQty: null,
     email: "",
     phone: "",
     message: "",
@@ -107,15 +107,16 @@ export default function BookingForm({
       ...values,
       tourId,
     };
-    const response = await axios.post('/api/booking', payload)
+    // const response = await axios.post('/api/booking', payload);
 
     // console.log('API RESPONSE:', response.data);
-    await handleSubmitForm<ValuesBookingFormType>(
-      formikHelpers,
-      setIsLoading,
-      setIsError,
-      setIsNotificationShown,
-      setIsPopUpShown
+    await handleSubmitForm(
+        payload,
+        formikHelpers,
+        setIsLoading,
+        setIsError,
+        setIsNotificationShown,
+        setIsPopUpShown
     );
   };
 
@@ -125,7 +126,13 @@ export default function BookingForm({
       onSubmit={submitForm}
       validationSchema={validationSchema}
     >
-      {({ errors, touched, dirty, isValid, setFieldValue, values }) => {
+      {({ errors, setFieldTouched, touched, dirty, isValid, setFieldValue, values }) => {
+        useEffect(() => {
+          if (!values.date && selectOptions.length > 0) {
+            setFieldValue("date", selectOptions[0].key);
+          }
+        }, [values.date, selectOptions, setFieldValue]);
+
         return (
             <Form className={`${className}`}>
               <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
@@ -156,15 +163,19 @@ export default function BookingForm({
                     aria-label="travelers"
                     minValue={1}
                     value={values.travelersQty}
-                    onChange={(value) => {
+                    onValueChange={(value) => {
+                      setFieldTouched("travelersQty", true);
+                      if (typeof value !== "number" || Number.isNaN(value)) {
+                        setFieldValue("travelersQty", null);
+                        return;
+                      }
                       setFieldValue("travelersQty", value);
-                      if (Number(value) > values.travelers.length) {
+
+                      if (!value) return;
+
+                      if (value > values.travelers.length) {
                         const newTravelers = [...values.travelers];
-                        for (
-                            let i = values.travelers.length;
-                            i < Number(value);
-                            i++
-                        ) {
+                        for (let i = values.travelers.length; i < value; i++) {
                           newTravelers.push({
                             name: "",
                             surname: "",
@@ -179,22 +190,22 @@ export default function BookingForm({
                           });
                         }
                         setFieldValue("travelers", newTravelers);
-                      } else if (Number(value) < values.travelers.length) {
-                        const newTravelers = values.travelers.slice(
-                            0,
-                            Number(value)
-                        );
-                        setFieldValue("travelers", newTravelers);
+                      } else if (value < values.travelers.length) {
+                        setFieldValue("travelers", values.travelers.slice(0, value));
                       }
                     }}
                     placeholder="Кількість туристів"
                     classNames={{
                       inputWrapper:
-                          "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4 hover:bg-white focus:bg-white",
-                      innerWrapper: "p-0  focus:bg-white",
-                      input: "!text-10reg lg:!text-12reg placeholder:text-black",
+                          "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4",
+                      input: "!text-10reg lg:!text-12reg",
                     }}
                 />
+                {touched.travelersQty && errors.travelersQty && (
+                    <p className="text-9reg text-red ml-2 mt-1">
+                      {errors.travelersQty}
+                    </p>
+                )}
                 <FieldArray name="travelers">
                   {({remove}) => (
                       <div className="flex flex-col gap-y-4">
@@ -266,6 +277,7 @@ export default function BookingForm({
                                             onFocus={() => setFocusedTravelerIndex(index)}
                                             labelClassName="lg:w-[276px]"
                                             fieldFontSize="text-10reg lg:text-12reg"
+                                            disabled={values.travelers[index].passportInProgress}
                                         />
                                       </div>
                                       <div className="flex flex-col lg:flex-row gap-y-4 gap-x-3">
@@ -290,6 +302,7 @@ export default function BookingForm({
                                             onFocus={() => setFocusedTravelerIndex(index)}
                                             labelClassName="lg:w-[208px]"
                                             fieldFontSize="text-10reg lg:text-12reg"
+                                            disabled={values.travelers[index].passportInProgress}
                                         />
                                         <CustomizedInput
                                             fieldName={`travelers[${index}].boardingCity`}
@@ -367,23 +380,22 @@ export default function BookingForm({
                                     </>
                                 )}
                               </div>
-                              <IconButton
-                                  handleClick={() => {
-                                    if (
-                                        values.travelers.length > 1 &&
-                                        typeof values.travelersQty === "number"
-                                    ) {
-                                      remove(index);
-                                      setFieldValue(
-                                          "travelersQty",
-                                          values.travelersQty - 1
-                                      );
-                                    }
-                                  }}
-                                  className="h-[38px]"
-                              >
-                                <TrashIcon className="size-6"/>
-                              </IconButton>
+                              {values.travelers.length > 1 && (
+                                  <IconButton
+                                      handleClick={() => {
+                                        remove(index);
+                                        setFieldValue(
+                                            "travelersQty",
+                                            typeof values.travelersQty === "number"
+                                                ? values.travelersQty - 1
+                                                : null
+                                        );
+                                      }}
+                                      className="h-[38px]"
+                                  >
+                                    <TrashIcon className="size-6" />
+                                  </IconButton>
+                              )}
                             </div>
                         ))}
                       </div>

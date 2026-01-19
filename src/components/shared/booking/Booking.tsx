@@ -24,7 +24,6 @@ export default function Booking({
 
   //@ts-expect-error
   const { title, tourDepartures, crmNumber } = tour;
-  console.log(crmNumber)
 
   return (
     <>

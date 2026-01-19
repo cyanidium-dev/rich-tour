@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { latinNameRegex, phoneRegex, emailRegex } from "@/regex/regex";
+import { latinNameRegex, phoneRegex, emailRegex, isValidBirthDate, isValidPassportExpirationDate } from "@/regex/regex";
 
 export const bookingValidation = () => {
   const travelerSchema = yup.object().shape({
@@ -24,26 +24,39 @@ export const bookingValidation = () => {
       otherwise: (schema) =>
           schema.notRequired().nullable(),
     }),
-    birthDate: yup.string().required("Вкажіть дату народження"),
-    passportExpiration: yup
-        .string()
-        .when("passportInProgress", {
-          is: false,
-          then: (schema) =>
-              schema.required("Вкажіть дату закінчення дії паспорта"),
-          otherwise: (schema) =>
-              schema.notRequired().nullable(),
-        }),
+        birthDate: yup
+            .string()
+            .required("Вкажіть дату народження")
+            .test(
+                "birth-date",
+                "Дата народження некоректна",
+                (value) => isValidBirthDate(value)
+            ),
+    passportExpiration: yup.string().when("passportInProgress", {
+      is: false,
+      then: (schema) =>
+          schema
+              .required("Вкажіть дату закінчення дії паспорта")
+              .test(
+                  "passport-expiration",
+                  "Паспорт має бути дійсний щонайменше 6 місяців",
+                  (value) => isValidPassportExpirationDate(value)
+              ),
+      otherwise: (schema) => schema.notRequired().nullable(),
+    }),
     boardingCity: yup.string().required("Вкажіть місто посадки"),
   });
 
   const bookingFormValidationSchema = yup.object().shape({
     travelersQty: yup
-      .number()
-      .typeError("Кількість туристів повинна бути числом")
-      .integer("Кількість туристів повинна бути цілим числом")
-      .positive("Кількість туристів повинна бути додатньою")
-      .required("Вкажіть кількість туристів"),
+        .number()
+        .nullable()
+        .transform((value, originalValue) =>
+            originalValue === null ? null : value
+        )
+        .integer("Кількість туристів повинна бути цілим числом")
+        .positive("Кількість туристів повинна бути додатньою")
+        .required("Вкажіть кількість туристів"),
     email: yup
       .string()
       .matches(emailRegex, "Введіть валідний email")

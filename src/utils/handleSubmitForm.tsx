@@ -1,13 +1,13 @@
 // utils/handleSubmitForm.ts
-import { FormikHelpers } from 'formik'
-import { Dispatch, SetStateAction } from 'react'
-import axios from 'axios'
-import { sendBooking } from '@/lib/api/sendBooking'
-import { ValuesBookingFormType } from '@/components/shared/forms/BookingForm'
+import { FormikHelpers } from "formik";
+import { Dispatch, SetStateAction } from "react";
+import axios from "axios";
+import { sendBooking } from "@/lib/api/sendBooking";
+import { ValuesBookingFormType } from "@/components/shared/forms/BookingForm";
 
 type BookingSubmitValues = ValuesBookingFormType & {
-  tourId: string
-}
+  tourId: string;
+};
 
 export const handleSubmitForm = async (
     values: BookingSubmitValues,
@@ -18,26 +18,28 @@ export const handleSubmitForm = async (
     setIsPopUpShown?: Dispatch<SetStateAction<boolean>>
 ) => {
   try {
-    setIsLoading(true)
-    setIsError(false)
+    setIsLoading(true);
+    setIsError(false);
 
-    await sendBooking(values)
+    await sendBooking(values);
 
-    resetForm()
+    resetForm();
 
     if (setIsPopUpShown) {
-      setIsPopUpShown(false)
+      setIsPopUpShown(false);
     }
+
+    setIsNotificationShown(true);
   } catch (error) {
-    console.error(error)
+    console.error(error);
 
     if (axios.isAxiosError(error)) {
-      console.error('Axios error:', error.response?.data)
+      console.error("Axios error:", error.response?.data);
     }
 
-    setIsError(true)
+    setIsError(true);
+    setIsNotificationShown(true);
   } finally {
-    setIsLoading(false)
-    setIsNotificationShown(true)
+    setIsLoading(false);
   }
-}
+};
