@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
-import { getAuthUser } from "@/lib/getAuthUser";
+import { getAuthUser } from "@/lib/sanity/users/getAuthUser";
+import {getAgentOrdersFromCrm} from "@/lib/crm/getAgentOrdersFromCrm";
 
 export async function GET() {
     const user = await getAuthUser();
@@ -12,36 +13,33 @@ export async function GET() {
         );
     }
 
-    const crmTokenRes = await axios.post(
-        process.env.CRM_TOKEN_URL!,
-        {
-            login: process.env.CRM_LOGIN,
-            restapipassword: process.env.CRM_REST_API_PASSWORD,
-        }
-    );
-
-    const token = crmTokenRes.data?.token;
-
-    if (!token) {
-        return NextResponse.json(
-            { error: "CRM_AUTH_FAILED" },
-            { status: 500 }
-        );
-    }
-
-    const toursRes = await axios.post(
-        process.env.CRM_ORDER_SET_URL!,
-        {
-            agentExternalId: user.sub,
+    const payload = {
+        limit: 200,
+        filter: {
+            //@ts-expect-error
+            clientid: user.crmId,
         },
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
+        fields: [
+            "id",
+            "clientname",
+            "externalid",
+            "statusid",
+            "customfields.Nazvaturu",
+            "customfields.zagalsumabezkomisi",
+            "customfields.zagalnasumapokomisi",
+            "customfields.Oplachenopozayavtsi",
+            "customfields.Zalishilosoplatitipozayavtsi",
+            "customfields.Dataturut",
+            "customfields.Datazakinchennyaturu",
+            "customfields.Dodatkovidani",
+            "orderproducts",
+        ],
 
-    const tours = toursRes.data?.orders || [];
+        orderproductfields: ["name"],
+    };
 
-    return NextResponse.json({ tours });
+    const orders = await getAgentOrdersFromCrm(payload);
+    console.log(orders);
+
+    return NextResponse.json({ orders });
 }

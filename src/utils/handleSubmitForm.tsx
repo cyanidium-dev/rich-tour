@@ -2,7 +2,7 @@
 import { FormikHelpers } from "formik";
 import { Dispatch, SetStateAction } from "react";
 import axios from "axios";
-import { sendBooking } from "@/lib/api/sendBooking";
+
 import { ValuesBookingFormType } from "@/components/shared/forms/BookingForm";
 
 type BookingSubmitValues = ValuesBookingFormType & {
@@ -20,8 +20,6 @@ export const handleSubmitForm = async (
   try {
     setIsLoading(true);
     setIsError(false);
-
-    await sendBooking(values);
 
     resetForm();
 

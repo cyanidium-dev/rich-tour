@@ -1,19 +1,32 @@
 import { Order } from "@/types/order";
 
-export interface OrderItem {
-  order: Order;
+interface OrderItemProps {
+    order: Order;
 }
 
-export default function OrderItem({ order }: OrderItem) {
-  const { title, daysQuantity, tourCost, commission, comment } = order;
+export default function OrderItem({ order }: OrderItemProps) {
+    return (
+        <tr className="border-b border-gray-200 hover:bg-gray-50 transition-colors text-14semi">
+            <td className="px-2 py-[20px]">{order.index}</td>
+            <td className="px-2 py-[20px]">{order.orderNumber}</td>
+            <td className="px-2 py-[20px]">{order.tourTitle ? order.tourTitle : "—"}</td>
+            <td className="px-2 py-[20px]">{order.daysQuantity ? order.daysQuantity : "—"}</td>
+            <td className="px-2 py-[20px]">{order.tourists}</td>
 
-  return (
-    <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_2fr] gap-x-4 text-14light">
-      <p className="px-2 py-3 sticky left-0 bg-white z-10">{title}</p>
-      <p className="px-2 py-3">{daysQuantity}</p>
-      <p className="px-2 py-3">{tourCost}</p>
-      <p className="px-2 py-3">{commission}</p>
-      <p className="px-2 py-3">{comment}</p>
-    </div>
-  );
+            <td className="px-2 py-[20px]">{order.totalCost ? `${order.totalCost} €` : "—"}</td>
+            <td className="px-2 py-[20px]">{order.commission ? `${order.commission} €` : "—"}</td>
+            <td className="px-2 py-[20px]">{order.paidAmount} €</td>
+            <td className="px-2 py-[20px]">{order.remainingAmount ? `${order.remainingAmount} €` : "—"}</td>
+
+            <td className="px-2 py-[20px]">
+                {order.startDate ? `${order.startDate} – ${order.endDate}` : "—"}
+            </td>
+
+            <td className="px-2 py-[20px] capitalize">
+                {order.status}
+            </td>
+
+            <td className="px-2 py-[20px]">{order.comment}</td>
+        </tr>
+    );
 }

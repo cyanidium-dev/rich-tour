@@ -4,8 +4,22 @@ import { fadeInAnimation } from "@/components/shared/animation/animationVariants
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";
 import MainButton from "@/components/shared/buttons/MainButton";
+import client from "@/lib/sanity/client";
+import { siteSettingsQuery } from "@/lib/sanity/queries";
 
-export default function AgentContract() {
+type SiteSettings = {
+  agentContract?: { asset?: { url?: string } };
+  touristContract?: { asset?: { url?: string } };
+  telegram?: string;
+};
+
+export default async function AgentContract() {
+  const data: SiteSettings = await client.fetch(siteSettingsQuery);
+
+  const agentUrl = data?.agentContract?.asset?.url;
+  const touristUrl = data?.touristContract?.asset?.url;
+  const telegramUrl = data?.telegram;
+
   return (
     <section className="mb-[148px] xl:mb-[86px]">
       <Container className="flex flex-col md:flex-row gap-x-5 gap-y-7">
@@ -33,7 +47,7 @@ export default function AgentContract() {
               viewport={{once: true, amount: 0.8}}
           >
             <a
-                href=""
+                href={agentUrl}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
                 className="block mb-3 mx-auto md:mx-0"
@@ -43,10 +57,10 @@ export default function AgentContract() {
               </MainButton>
             </a>
             <a
-                href=""
+                href={touristUrl}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="block md:mb-3"
+                className="block mb-3"
             >
               <MainButton
                   variant="ghost red"
@@ -56,7 +70,7 @@ export default function AgentContract() {
               </MainButton>
             </a>
             <a
-                href=""
+                href={telegramUrl}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
                 className="block md:mb-3"

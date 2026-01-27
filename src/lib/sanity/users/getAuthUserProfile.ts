@@ -1,5 +1,5 @@
 // lib/getAuthAgentProfile.ts
-import client from "@/lib/sanity";
+import client from "@/lib/sanity/client";
 import { getAuthUser } from "./getAuthUser";
 
 export type AgentProfile = {

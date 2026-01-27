@@ -9,8 +9,8 @@ import Pagination from "@/components/shared/pagination/Pagination";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import {TourShortInfo} from "@/types/tour";
 
-import client from "@/lib/sanity";
-import {basicToursQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {basicToursQuery} from "@/lib/sanity/queries";
 
 const SECTION_ID = "tours-page-tours-list";
 

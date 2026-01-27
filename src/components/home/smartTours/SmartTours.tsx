@@ -6,8 +6,8 @@ import SmartToursSwiper from "./SmartToursSwiper";
 import AnimatedArrow from "./AnimatedArrow";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 
-import client from "@/lib/sanity";
-import {allBasicSMARTToursQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {allBasicSMARTToursQuery} from "@/lib/sanity/queries";
 
 const SECTION_ID = "smart-tours";
 

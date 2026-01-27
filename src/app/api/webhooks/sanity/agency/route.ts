@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import client from "@/lib/sanity";
+import client from "@/lib/sanity/client";
 
-import { getCrmToken } from '@/lib/crm/getCrmToken'
+import { getCrmToken } from '@/lib/crm/utils/getCrmToken'
 import { sendAgencyToCrm } from '@/lib/crm/sendAgencyToCrm'
-import { sendAgentToCrm } from '@/lib/crm/sendAgentToCrm'
+import { sendAgentToCrm } from '@/lib/crm/users/sendAgentToCrm'
 import { updateAgencyCrmId } from '@/lib/crm/updateAgencyCrmId'
-import { updateAgentCrmId } from '@/lib/crm/updateAgentCrmId'
+import { updateAgentCrmId } from '@/lib/sanity/users/updateAgentCrmId'
 import {updateAgentAgencyCrmId} from "@/lib/crm/updateAgentAgencyCrmId";
 
 export async function POST(req: NextRequest) {
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
  * ───────────────────────────── */
 
 async function handleAgent(agent: any) {
-    console.log('start add/update agent', agent._id)
+    console.log('start add/profile agent', agent._id)
 // 🔒 1️⃣ Сохраняем agencyCrmId, если он изменился
     if (
         agent.agencyCrmId &&
@@ -75,11 +75,8 @@ async function handleAgent(agent: any) {
         )
     }
     try {
-        const token = await getCrmToken()
         console.log("agency CRM id", agent.agencyCrmId)
         const crmId = await sendAgentToCrm({
-            token,
-
             externalId: agent._id,
             fullName: agent.companyName,
 
@@ -122,7 +119,7 @@ async function handleAgent(agent: any) {
  * ───────────────────────────── */
 
 async function handleAgency(agency: any) {
-    console.log('start add/update agency', agency._id);
+    console.log('start add/profile agency', agency._id);
 
     try {
         const crmId = await sendAgencyToCrm({

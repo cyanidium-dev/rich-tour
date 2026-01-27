@@ -1,8 +1,8 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-import client from "@/lib/sanity";
-import { currencyQuery } from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import { currencyQuery } from "@/lib/sanity/queries";
 
 // ================= helpers =================
 

@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
-import client from "@/lib/sanity"
+import client from "@/lib/sanity/client"
 
-import { getCrmToken } from "@/lib/crm/getCrmToken"
-import { sendAgentToCrm } from "@/lib/crm/sendAgentToCrm"
-import { updateAgentCrmId } from "@/lib/crm/updateAgentCrmId"
+import { sendAgentToCrm } from "@/lib/crm/users/sendAgentToCrm"
+// import { updateAgentCrmId } from "@/lib/sanity/users/updateAgentCrmId"
 
 type SignUpBody = {
     email: string
@@ -54,7 +53,6 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 })
     }
 
-    // 🔍 проверка существования
     const existingUser = await client.fetch(
         `*[_type == "agentUser" && email == $email][0]{ _id }`,
         { email }
@@ -69,7 +67,6 @@ export async function POST(req: Request) {
 
     const passwordHash = await bcrypt.hash(password, 10)
 
-    // 🧾 1. создаём агента в Sanity
     const sanityAgent = await client.create({
         _type: "agentUser",
         email,
@@ -81,14 +78,10 @@ export async function POST(req: Request) {
         taxForm,
         site,
         passwordHash,
-    })
+    });
 
     try {
-        // 🔐 2. CRM
-        const token = await getCrmToken()
-
         const crmId = await sendAgentToCrm({
-            token,
             externalId: sanityAgent._id,
             fullName: companyName,
             agencyCrmId: agencyCrmId ? Number(agencyCrmId) : undefined,
@@ -99,10 +92,10 @@ export async function POST(req: Request) {
             city,
             taxForm,
             legalCompanyName,
-        })
+        });
 
-        // 🧷 3. сохраняем crmId в Sanity
-        await updateAgentCrmId(sanityAgent._id, crmId)
+        // await updateAgentCrmId(sanityAgent._id, crmId)
+        await  client.patch(sanityAgent._id).setIfMissing({ crmId }).commit();
 
         return NextResponse.json(
             {
@@ -117,7 +110,6 @@ export async function POST(req: Request) {
             error: error?.message,
         })
 
-        // 🔥 откат
         await client.delete(sanityAgent._id)
 
         return NextResponse.json(

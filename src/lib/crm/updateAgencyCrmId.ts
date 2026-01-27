@@ -1,4 +1,4 @@
-import client from "../sanity";
+import client from "../sanity/client";
 
 export async function updateAgencyCrmId(
     sanityId: string,

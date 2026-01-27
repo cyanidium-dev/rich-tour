@@ -12,10 +12,11 @@ export async function POST(req: Request) {
         // ─────────────────────────────────────────────
         // 1️⃣ Пытаемся получить crmId агента из JWT
         // ─────────────────────────────────────────────
-        let crmUserId: number | null = null
+        let crmUserId: number | string | null = null
 
         const cookieStore = await cookies()
-        const token = cookieStore.get('auth_token')?.value
+        const token = cookieStore.get('auth_token')?.value;
+        console.log("token", token);
 
         if (token) {
             try {
@@ -24,7 +25,8 @@ export async function POST(req: Request) {
                     new TextEncoder().encode(process.env.JWT_SECRET!)
                 )
 
-                if (typeof payload.crmId === 'number') {
+                if (payload.crmId) {
+                    //@ts-expect-error
                     crmUserId = payload.crmId
                 }
             } catch {
@@ -32,7 +34,7 @@ export async function POST(req: Request) {
                 crmUserId = null
             }
         }
-
+        console.log("crmUserId", crmUserId);
         // ─────────────────────────────────────────────
         // 2️⃣ Создаём / находим туристов в CRM
         // ─────────────────────────────────────────────
@@ -58,7 +60,7 @@ export async function POST(req: Request) {
             crmOrderId,
         })
     } catch (error) {
-        console.error('BOOKING ERROR:', error)
+        console.error('BOOKING ERROR:', error);
 
         return NextResponse.json(
             { error: 'Failed to create booking' },

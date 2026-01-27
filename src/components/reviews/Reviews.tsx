@@ -7,8 +7,8 @@ import ReviewForm from "./ReviewForm";
 import ReviewsList from "./ReviewsList";
 import AnimatedArrow from "./AnimatedArrow";
 
-import client from "@/lib/sanity";
-import {allReviewsQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {allReviewsQuery} from "@/lib/sanity/queries";
 
 export default async function Reviews() {
   await connection();

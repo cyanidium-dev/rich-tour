@@ -1,5 +1,5 @@
 // lib/crm/sendOrderToCrm.ts
-import { getCrmToken } from './getCrmToken'
+import { getCrmToken } from './utils/getCrmToken'
 import { postOrderToCrm } from './postOrderToCrm'
 import { mapBookingToCrmOrder } from './mapBookingToCrmOrder'
 

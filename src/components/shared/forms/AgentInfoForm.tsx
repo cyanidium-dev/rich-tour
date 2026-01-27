@@ -10,17 +10,16 @@ import { phoneMask } from "@/regex/regex";
 
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
+import {ValuesSignUpFormType} from "@/components/shared/forms/SignUpForm";
 
 export interface ValuesAgentInfoFormType {
   email: string;
   companyName: string;
+  legalCompanyName?: string;
   site?: string;
   phone: string;
-  license?: string;
-  country: string;
+  edrpou?: string;
   city: string;
-  legalAddress?: string;
-  actualAddress?: string;
 }
 
 interface AgentInfoFormProps {
@@ -32,6 +31,10 @@ interface AgentInfoFormProps {
   variant?: "red" | "black";
 }
 
+const normalizeMaskedValue = (value: string) =>
+    value.replace(/_/g, "").trim();
+
+
 export default function AgentInfoForm({
                                         initialValues,
                                         setIsError,
@@ -41,7 +44,7 @@ export default function AgentInfoForm({
                                         variant = "red",
                                       }: AgentInfoFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-console.log(initialValues)
+
   const submitForm = async (
       values: ValuesAgentInfoFormType,
       { resetForm }: FormikHelpers<ValuesAgentInfoFormType>
@@ -51,7 +54,13 @@ console.log(initialValues)
       setIsError(false);
       setIsNotificationShown(false);
 
-      await axios.patch("/api/agent/profile", values, {
+      const payload = {
+        ...values,
+        edrpou: normalizeMaskedValue(values.edrpou),
+        phone: normalizeMaskedValue(values.phone),
+      };
+
+      await axios.patch("/api/agent/profile", payload, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -92,14 +101,14 @@ console.log(initialValues)
 
                 <CustomizedInput
                     fieldName="companyName"
-                    placeholder="Повне ім’я назви фірми"
+                    placeholder="Повна назва компанії"
                     errors={errors}
                     touched={touched}
                 />
 
                 <CustomizedInput
-                    fieldName="site"
-                    placeholder="Сайт"
+                    fieldName="legalCompanyName"
+                    placeholder="Юридична назва компанії"
                     errors={errors}
                     touched={touched}
                 />
@@ -115,18 +124,8 @@ console.log(initialValues)
                 />
 
                 <CustomizedInput
-                    fieldName="license"
-                    placeholder="Номер ліцензії"
-                    errors={errors}
-                    touched={touched}
-                />
-              </div>
-
-              {/* Правая колонка */}
-              <div className="flex flex-col gap-[18px] md:w-[calc(50%-10px)] xl:w-full">
-                <CustomizedInput
-                    fieldName="country"
-                    placeholder="Країна"
+                    fieldName="edrpou"
+                    placeholder="ЄДРПОУ"
                     errors={errors}
                     touched={touched}
                 />
@@ -139,18 +138,30 @@ console.log(initialValues)
                 />
 
                 <CustomizedInput
-                    fieldName="legalAddress"
-                    placeholder="Юридична адреса"
+                    fieldName="site"
+                    placeholder="Сайт"
                     errors={errors}
                     touched={touched}
                 />
 
+                <CustomizedInput fieldName="taxForm" as="select" errors={errors} touched={touched}>
+                  <option value="fop">ФОП</option>
+                  <option value="tov">ТОВ</option>
+                  <option value="other">Інше</option>
+                </CustomizedInput>
+              </div>
+
+              {/* Правая колонка */}
+              <div className="flex flex-col gap-[18px] md:w-[calc(50%-10px)] xl:w-full">
+
                 <CustomizedInput
-                    fieldName="actualAddress"
-                    placeholder="Фактична адреса"
+                    fieldName="city"
+                    placeholder="Місто"
                     errors={errors}
                     touched={touched}
                 />
+
+
 
                 <SubmitButton
                     dirty={dirty}

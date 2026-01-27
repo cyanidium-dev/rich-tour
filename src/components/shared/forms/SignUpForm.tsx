@@ -33,6 +33,9 @@ interface SignUpFormProps {
     variant?: "red" | "black";
 }
 
+const normalizeMaskedValue = (value: string) =>
+    value.replace(/_/g, "").trim();
+
 export default function SignUpForm({
                                        setIsError,
                                        setIsNotificationShown,
@@ -64,7 +67,13 @@ export default function SignUpForm({
             setIsNotificationShown(false);
             setIsLoading(true);
 
-            await axios.post("/api/auth/sign-up", values, {
+            const payload: ValuesSignUpFormType = {
+                ...values,
+                edrpou: normalizeMaskedValue(values.edrpou),
+                phone: normalizeMaskedValue(values.phone),
+            };
+
+            await axios.post("/api/auth/sign-up", payload, {
                 headers: { "Content-Type": "application/json" },
             });
 
@@ -100,7 +109,7 @@ export default function SignUpForm({
                         <CustomizedInput fieldName="legalCompanyName" placeholder="Юридична назва компанії*" errors={errors} touched={touched} />
 
                         <CustomizedInput fieldName="phone" inputType="tel" as={MaskedInput} mask={phoneMask} placeholder="Телефон*" errors={errors} touched={touched} />
-                        <CustomizedInput fieldName="edrpou" as={MaskedInput} mask={edrpouMask} placeholder="ЄДРПОУ*" errors={errors} touched={touched} />
+                        <CustomizedInput fieldName="edrpou" as={MaskedInput} mask={edrpouMask} placeholder="ЄДРПОУ*" errors={errors} touched={touched}  />
 
                         <CustomizedInput fieldName="city" placeholder="Місто*" errors={errors} touched={touched} />
                         <CustomizedInput fieldName="site" placeholder="Сайт" errors={errors} touched={touched} />

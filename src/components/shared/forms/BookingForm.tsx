@@ -368,10 +368,12 @@ export default function BookingForm({
                                               values.travelers[index].passportInProgress
                                             }
                                             onValueChange={(value) => {
-                                              setFieldValue(
-                                                  `travelers[${index}].passportInProgress`,
-                                                  value
-                                              );
+                                              setFieldValue(`travelers[${index}].passportInProgress`, value);
+
+                                              if (value) {
+                                                setFieldValue(`travelers[${index}].passport`, "");
+                                                setFieldValue(`travelers[${index}].passportExpiration`, "");
+                                              }
                                             }}
                                         >
                                           Паспорт виготовляється

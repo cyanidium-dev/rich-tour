@@ -1,8 +1,6 @@
-import { postToCrm } from './postToCrm'
+import { postToCrm } from '../utils/postToCrm'
 
 interface SendAgentToCrmParams {
-    token: string
-
     externalId: string
     fullName: string
 
@@ -19,7 +17,6 @@ interface SendAgentToCrmParams {
 }
 
 export async function sendAgentToCrm({
-                                         token,
                                          externalId,
                                          fullName,
                                          agencyCrmId,
@@ -50,14 +47,13 @@ export async function sendAgentToCrm({
         },
     }
 
-    // ✅ добавляем companys ТОЛЬКО если есть agencyCrmId
     if (agencyCrmId) {
         payloadItem.companys = [agencyCrmId]
     }
 
-    const { data } = await postToCrm(token, [payloadItem])
+    const  data = await postToCrm([payloadItem], "contact/set/")
 
-    const crmId = data?.dataArray?.[0]
+    const crmId = data?.dataArray?.[0];
     if (!crmId) {
         throw new Error('CRM did not return agent crmId')
     }

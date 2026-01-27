@@ -4,8 +4,8 @@ import { connection } from 'next/server';
 import Search from "@/components/search/Search";
 import Loader from "@/components/shared/loader/Loader";
 
-import client from "@/lib/sanity";
-import {allCOuntriesQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {allCOuntriesQuery} from "@/lib/sanity/queries";
 
 //@ts-expect-error
 export default async function SearchPage({ searchParams }) {

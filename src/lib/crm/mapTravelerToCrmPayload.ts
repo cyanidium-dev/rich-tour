@@ -1,5 +1,5 @@
 import {TravelerInfo} from "@/components/shared/forms/BookingForm";
-import { yesNo } from './helpers'
+import { yesNo } from './utils/helpers'
 
 export function mapTravelerToCrmPayload(traveler: TravelerInfo) {
     const hasPassport = Boolean(traveler.passport)

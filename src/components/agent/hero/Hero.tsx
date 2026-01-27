@@ -6,7 +6,7 @@ import Container from "@/components/shared/container/Container";
 export default function Hero() {
     return (
         <section className="relative ">
-            <Container className="relative pt-[40px] xl:pt-[40px] pb-[59px] xl:pb-[86px]">
+            <Container className="relative pt-[40px] xl:pt-[40px] pb-[22px] xl:pb-[86px]">
                 <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_520px] items-center gap-y-10 lg:gap-x-10">
                     <AnimatedWrapper
                         as="h1"

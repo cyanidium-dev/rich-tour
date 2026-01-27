@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import client from "@/lib/sanity";
+import client from "@/lib/sanity/client";
 import { cookies } from "next/headers";
 
 export async function PATCH(req: Request) {

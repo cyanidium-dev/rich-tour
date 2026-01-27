@@ -1,19 +1,12 @@
-import axios from 'axios'
+import crmInstance from "@/lib/crm/utils/crmInstance";
 
 export async function getCrmToken(): Promise<string> {
-    const url = `${process.env.CRM_API_URL}token/get/`
-
-    const { data } = await axios.post(
-        url,
+    const { data } = await crmInstance.post(
+        "token/get/",
         {
             login: process.env.CRM_LOGIN,
             restapipassword: process.env.CRM_REST_API_PASSWORD,
         },
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }
     )
 
     const token = data?.dataArray?.token

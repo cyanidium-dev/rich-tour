@@ -12,7 +12,7 @@ interface ProvidersProps {
 export default function Providers({ children }: ProvidersProps) {
   return (
     <SplashGate>
-      <HeroUIProvider className="flex flex-col min-h-screen">
+      <HeroUIProvider className="flex flex-col min-h-screen" locale="uk-UA">
           <CurrencyProvider>
               {children}
           </CurrencyProvider>

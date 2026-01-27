@@ -199,3 +199,17 @@ export const allCOuntriesQuery = `*[_type == "country"]{
   _id,
   title,
 }`
+
+export const siteSettingsQuery = `*[_type == "siteSettings"][0]{
+  agentContract {
+    asset->{
+      url
+    }
+  },
+  touristContract {
+    asset->{
+      url
+    }
+  },
+  telegram
+}`;

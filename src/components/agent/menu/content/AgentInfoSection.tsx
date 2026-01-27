@@ -1,6 +1,7 @@
 import AgentInfoFormWithNotifications from "./AgentInfoFormWithNotifications";
 
 export default function AgentInfoSection({ user }: { user: any }) {
+
     return (
         <AgentInfoFormWithNotifications
             initialData={{

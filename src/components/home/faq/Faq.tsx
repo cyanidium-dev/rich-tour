@@ -5,8 +5,8 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Container from "@/components/shared/container/Container";
 import FaqList from "./FaqList";
 
-import client from "@/lib/sanity";
-import {allFaqQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {allFaqQuery} from "@/lib/sanity/queries";
 
 const SECTION_ID = "faq";
 

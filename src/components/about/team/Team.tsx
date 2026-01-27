@@ -4,8 +4,8 @@ import TeamInfo from "./TeamInfo";
 import TeamListDesk from "./TeamListDesk";
 import TeamSwiperMob from "./TeamSwiperMob";
 
-import client from "@/lib/sanity";
-import {allTeamQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {allTeamQuery} from "@/lib/sanity/queries";
 
 export default async function Team() {
     const team = await client.fetch(allTeamQuery);

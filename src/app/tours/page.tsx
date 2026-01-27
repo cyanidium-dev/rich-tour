@@ -4,8 +4,8 @@ import { connection } from 'next/server';
 import Tours from "@/components/tours/Tours";
 import Loader from "@/components/shared/loader/Loader";
 
-import client from "@/lib/sanity";
-import {allActiveTourCategoriesQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {allActiveTourCategoriesQuery} from "@/lib/sanity/queries";
 
 // export const revalidate = 60;
 

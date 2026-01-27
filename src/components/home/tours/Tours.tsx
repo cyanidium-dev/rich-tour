@@ -13,8 +13,8 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import AnimatedArrowMob from "./AnimatedArrowMob";
 import AnimatedArrowDesk from "./AnimatedArrowDesk";
 
-import client from "@/lib/sanity";
-import {mainTourCategoriesQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {mainTourCategoriesQuery} from "@/lib/sanity/queries";
 
 export default async function Tours() {
   await connection();

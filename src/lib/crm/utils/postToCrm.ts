@@ -1,20 +1,22 @@
-import axios from 'axios'
+import {isAxiosError} from "axios";
+
+import crmInstance from "@/lib/crm/utils/crmInstance";
+import {getCrmToken} from "@/lib/crm/utils/getCrmToken";
 
 export async function postToCrm(
-    token: string,
-    payload: any
+    payload: any,
+    url: string,
 ) {
-    const url = `${process.env.CRM_API_URL}contact/set/`
-
+    const token = await getCrmToken();
     try {
-        return await axios.post(url, payload, {
+        const {data} = await crmInstance.post(url, payload, {
             headers: {
                 token,
-                'Content-Type': 'application/json',
             },
-        })
+        });
+        return data;
     } catch (error) {
-        if (axios.isAxiosError(error)) {
+        if (isAxiosError(error)) {
             console.error('❌ CRM ERROR STATUS:', error.response?.status)
             console.error('❌ CRM ERROR DATA:', error.response?.data)
             console.error('❌ CRM ERROR HEADERS:', error.response?.headers)

@@ -1,7 +1,7 @@
 import HeaderMob from "./HeaderMob";
 import HeaderDesk from "./HeaderDesk";
 import AnimatedWrapper from "../animation/AnimatedWrapper";
-import { getAuthUser } from "@/lib/getAuthUser";
+import { getAuthUser } from "@/lib/sanity/users/getAuthUser";
 
 export const dynamic = "force-dynamic";
 

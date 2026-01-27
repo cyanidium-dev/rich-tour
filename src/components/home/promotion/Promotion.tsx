@@ -3,8 +3,8 @@ import PromotionTitle from "./PromotionTitle";
 import PromotionSwiperMob from "./PromotionSwiperMob";
 import PromotionListDesk from "./PromotionListDesk";
 
-import client from "@/lib/sanity";
-import {allBasicToursWithPromotionQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {allBasicToursWithPromotionQuery} from "@/lib/sanity/queries";
 
 const SECTION_ID = "promotion-tours-list";
 

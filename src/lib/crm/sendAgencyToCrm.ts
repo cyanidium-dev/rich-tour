@@ -1,5 +1,5 @@
-import { postToCrm } from './postToCrm'
-import { getCrmToken } from './getCrmToken'
+import { postToCrm } from './utils/postToCrm'
+import { getCrmToken } from './utils/getCrmToken'
 
 interface SendAgencyToCrmParams {
     externalId: string

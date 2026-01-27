@@ -8,8 +8,8 @@ import DocumentsTitle from "./DocumentsTitle";
 import MainButton from "@/components/shared/buttons/MainButton";
 import DocumentsSwiper from "./DocumentsSwiper";
 
-import client from "@/lib/sanity";
-import {allDocQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {allDocQuery} from "@/lib/sanity/queries";
 
 export default async function Documents() {
   await connection();

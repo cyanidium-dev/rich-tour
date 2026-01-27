@@ -15,8 +15,8 @@ import Inspiration from "@/components/tour/inspiration/Inspiration";
 import AdditionalInfo from "@/components/tour/additionalInfo/AdditionalInfo";
 import Hotels from "@/components/tour/hotels/Hotels";
 
-import client from "@/lib/sanity";
-import {basicTourBySlugQuery, tourDatesQuery, tourQuery} from "@/lib/queries";
+import client from "@/lib/sanity/client";
+import {basicTourBySlugQuery, tourDatesQuery, tourQuery} from "@/lib/sanity/queries";
 // import {tourDepartures} from "@/components/tour/tourCost/mockedData";
 
 interface TourPageProps {

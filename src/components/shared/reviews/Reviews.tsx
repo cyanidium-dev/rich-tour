@@ -9,8 +9,8 @@ import ReviewsSwiperMob from "./ReviewsSwiperMob";
 import ReviewsListDesk from "./ReviewsListDesk";
 import AnimatedWrapper from "../animation/AnimatedWrapper";
 
-import client from "../../../lib/sanity";
-import {lastReviewsQuery} from "@/lib/queries";
+import client from "../../../lib/sanity/client";
+import {lastReviewsQuery} from "@/lib/sanity/queries";
 
 
 export default async function Reviews() {

@@ -1,5 +1,5 @@
 import { generateUuid } from '@/lib/utils/generateUuid'
-import { toCrmDate } from '@/lib/crm/helpers'
+import { toCrmDate } from '@/lib/crm/utils/helpers'
 
 interface MapBookingParams {
     tourId: number | string

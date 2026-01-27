@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import client from "@/lib/sanity";
+import client from "@/lib/sanity/client";
 
 type LoginBody = {
     email: string;

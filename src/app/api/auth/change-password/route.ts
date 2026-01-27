@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import client from "@/lib/sanity";
-import { getAuthUser } from "@/lib/getAuthUser";
+import client from "@/lib/sanity/client";
+import { getAuthUser } from "@/lib/sanity/users/getAuthUser";
 
 type Body = {
     password: string;

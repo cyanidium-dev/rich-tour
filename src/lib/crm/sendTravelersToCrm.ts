@@ -1,5 +1,5 @@
-import { getCrmToken } from './getCrmToken'
-import { postToCrm } from './postToCrm'
+import { getCrmToken } from './utils/getCrmToken'
+import { postToCrm } from './utils/postToCrm'
 import {TravelerInfo} from "@/components/shared/forms/BookingForm";
 import { mapTravelerToCrmPayload } from './mapTravelerToCrmPayload'
 
