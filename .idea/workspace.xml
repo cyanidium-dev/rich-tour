@@ -5,65 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c14b0d2-de22-4964-801c-dc6c1b8f2a8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrdersFilters.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/SearchInput.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/agent/menu/content/order-filters.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/crm/getAgentOrdersFromCrm.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/crm/utils/crmInstance.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/agent/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/agent/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/agent/me/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/agent/me/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/agent/tours/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/agent/tours/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/agent/update/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/agent/profile/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/auth/change-password/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/change-password/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/sign-up/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/booking/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/booking/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/currency/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/currency/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/webhooks/sanity/agency/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/webhooks/sanity/agency/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/webhooks/sanity/tour/route.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/providers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/providers.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/search/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/search/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/tours/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/about/documents/Documents.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/about/documents/Documents.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/about/team/Team.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/about/team/Team.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/agent/agentContract/AgentContract.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/agentContract/AgentContract.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/agent/hero/Hero.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/hero/Hero.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/AgentInfoSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/AgentInfoSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/Category.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/Category.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/OrderItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrderItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/OrdersContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrdersContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/faq/Faq.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/faq/Faq.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/promotion/Promotion.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/promotion/Promotion.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/smartTours/SmartTours.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/smartTours/SmartTours.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/tours/Tours.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/tours/Tours.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/reviews/Reviews.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reviews/Reviews.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/AgentInfoForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/AgentInfoForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/SignUpForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/header/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/reviews/Reviews.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/reviews/Reviews.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tours/ToursList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tours/ToursList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/getCrmToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/utils/getCrmToken.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/utils/helpers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/mapBookingToCrmOrder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/mapBookingToCrmOrder.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/mapTravelerToCrmPayload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/mapTravelerToCrmPayload.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/postToCrm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/utils/postToCrm.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/sendAgencyToCrm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/sendAgencyToCrm.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/sendAgentToCrm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/users/sendAgentToCrm.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/sendOrderToCrm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/sendOrderToCrm.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/sendTravelersToCrm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/sendTravelersToCrm.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/updateAgencyCrmId.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/updateAgencyCrmId.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/updateAgentAgencyCrmId.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/updateAgentAgencyCrmId.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/updateAgentCrmId.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/sanity/users/updateAgentCrmId.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/getAuthUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/sanity/users/getAuthUser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/getAuthUserProfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/sanity/users/getAuthUserProfile.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/sanity/queries.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/sanity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/sanity/client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/utils/generateUuid.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/utils/generateUuid.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/order.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/handleSubmitForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/handleSubmitForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +93,10 @@
       <workItem from="1769414581538" duration="18000" />
       <workItem from="1769420083491" duration="589000" />
       <workItem from="1769438173604" duration="1527000" />
-      <workItem from="1769496945265" duration="5681000" />
+      <workItem from="1769496945265" duration="6295000" />
+      <workItem from="1769717286439" duration="1260000" />
+      <workItem from="1769765187581" duration="396000" />
+      <workItem from="1769859157123" duration="341000" />
     </task>
     <servers />
   </component>

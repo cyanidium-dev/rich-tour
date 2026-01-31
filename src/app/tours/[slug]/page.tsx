@@ -73,15 +73,16 @@ const getAdditionalInfo = (additionalConditions): string => {
 const getHotels = (data) => {
   if(!data) return null;
 
-  return {
+  const hotels = {
     title: data[0].title,
     stars: data[0].stars,
     price: data[0].price,
     shortDescription: data[0].shortDescription,
     fullDescription: data[0].fullDescription,
     // @ts-expect-error
-    gallery: data[0].gallery?.map(({asset})=> asset.url) | [],
+    gallery: data[0].gallery ? data[0].gallery.map(({asset})=> asset.url) : [],
   }
+  return hotels;
 }
 
 //@ts-expect-error
