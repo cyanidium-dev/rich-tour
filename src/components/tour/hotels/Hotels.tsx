@@ -55,9 +55,9 @@ export default function Hotels({title, stars, price, shortDescription, gallery})
                     </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 overflow-hidden max-h-32">
                     {/*@ts-expect-error */}
-                    {gallery.slice(1).map((url, i) => <Image key={i} width={265} height={161} alt={title}  className="rounded-2xl object-cover w-full h-32" src={url} />)}
+                    {gallery.slice(1, 5).map((url, i) => <Image key={i} width={265} height={161} alt={title}  className="rounded-2xl object-cover w-full h-32" src={url} />)}
                 </div>
             </Container>
         </section>
