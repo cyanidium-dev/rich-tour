@@ -17,6 +17,7 @@ import Hotels from "@/components/tour/hotels/Hotels";
 
 import client from "@/lib/sanity/client";
 import {basicTourBySlugQuery, tourDatesQuery, tourQuery} from "@/lib/sanity/queries";
+import { getAuthAgentProfile } from "@/lib/sanity/users/getAuthUserProfile";
 // import {tourDepartures} from "@/components/tour/tourCost/mockedData";
 
 interface TourPageProps {
@@ -107,6 +108,7 @@ export default async function TourPage({ params }: TourPageProps) {
 
   const tourToDate = await client.fetch(tourQuery, { tourBasicId: basicTour._id });
   const tourDates = await client.fetch(tourDatesQuery, { tourBasicId: basicTour._id });
+  const user = await getAuthAgentProfile();
   let tour = toursList[0];
 
   tour = {
@@ -118,6 +120,7 @@ export default async function TourPage({ params }: TourPageProps) {
     hot: tourToDate.hot,
     discount: tourToDate.discount,
     crmNumber: tourToDate?.crmNumber,
+    agencyCommission: tourToDate?.agencyCommission,
     images: [
       {
         alt: basicTour.title,
@@ -164,7 +167,7 @@ export default async function TourPage({ params }: TourPageProps) {
         {tour?.excursions && <Excursions tour={tour} />}
         {/*<PricePerMonth />*/}
         <Points tour={tour} />
-        <TourCost tour={tour} />
+        <TourCost isLogin={false} tour={tour} />
         {/*@ts-expect-error */}
         {tour.additionalInfo && <AdditionalInfo text={tour.additionalInfo} />}
         <TourCostDetails tour={tour} />

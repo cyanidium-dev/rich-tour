@@ -42,7 +42,7 @@ export default function TourCard({ tour }: TourCardProps) {
           Раннє бронювання
         </AnimatedWrapper>
         <Image
-          src={image.asset.url}
+          src={image?.asset?.url}
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"

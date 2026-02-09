@@ -97,6 +97,7 @@ dateRange,
 guaranteed,
 hot,
 crmNumber,
+agencyCommission,
 discount,
 availability,
  hotels[]{

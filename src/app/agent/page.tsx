@@ -9,7 +9,7 @@ export default async function DashboardPage() {
     if (!user) {
         return null;
     }
-    console.log(user)
+
     return (
         <>
             <Hero />

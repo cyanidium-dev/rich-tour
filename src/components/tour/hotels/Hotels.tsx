@@ -5,7 +5,7 @@ import {useCallback, useState} from "react";
 
 import Container from "@/components/shared/container/Container";
 import HotelsTitle from "@/components/tour/hotels/HotelsTitle";
-// import MainButton from "@/components/shared/buttons/MainButton";
+import MainButton from "@/components/shared/buttons/MainButton";
 
 import HotelContent from "@/components/tour/hotels/HotelContent";
 import HotelModal from "./HotelModal";
@@ -39,9 +39,9 @@ export default function Hotels({title, stars, price, shortDescription, gallery})
                             </h2>
 
                             <HotelContent value={shortDescription} />
-                            {/*<MainButton onClick={togglePopUp} className="xl:w-[325px] h-12 text-14med">*/}
-                            {/*    Дізнатися більше*/}
-                            {/*</MainButton>*/}
+                            <MainButton onClick={togglePopUp} className="xl:w-[325px] h-12 text-14med">
+                                Дізнатися більше
+                            </MainButton>
                         </div>
                     </div>
 
@@ -50,7 +50,7 @@ export default function Hotels({title, stars, price, shortDescription, gallery})
                         <div
                             className="text-white z-10 absolute top-[-232px] lg:top-[-100px] right-[-150px] lg:right-[-30px] w-[257px] aspect-[1.15/1] bg-main rounded-full"
                         >
-                           <p className="absolute lg:right-[40px] bottom-[50px] text-[22px] font-medium"> від {convert(price)} {currency === "EUR" ? "€" : "₴"} / ніч</p>
+                           <p className="absolute lg:right-[40px] bottom-[50px] text-[22px] font-medium"> від {convert(price)} {currency === "EUR" ? "€" : "₴"}</p>
                         </div>
                     </div>
                 </div>

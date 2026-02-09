@@ -46,6 +46,10 @@ export interface Tour {
   duration: number;
   category: Category;
   earlyBooking: boolean;
+  agencyCommission?: {
+    type: string;
+    value: number;
+  },
   images: {
     url: string;
     alt: string;

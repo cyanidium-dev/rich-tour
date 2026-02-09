@@ -6,7 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="5c14b0d2-de22-4964-801c-dc6c1b8f2a8e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/agent/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/agent/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/cards/tourCard/TourCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/cards/tourCard/TourCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/tour/hotels/Hotels.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/hotels/Hotels.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/TourCost.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/TourCost.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tours/ToursList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tours/ToursList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/sanity/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/sanity/queries.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/tour.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/tour.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +107,12 @@
       <workItem from="1769765187581" duration="396000" />
       <workItem from="1769859157123" duration="593000" />
       <workItem from="1769888720514" duration="43000" />
-      <workItem from="1770018669344" duration="1586000" />
+      <workItem from="1770018669344" duration="3236000" />
+      <workItem from="1770059598871" duration="1922000" />
+      <workItem from="1770216298196" duration="597000" />
+      <workItem from="1770572864164" duration="2726000" />
+      <workItem from="1770655272172" duration="4032000" />
+      <workItem from="1770663677434" duration="2198000" />
     </task>
     <servers />
   </component>

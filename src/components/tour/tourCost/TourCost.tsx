@@ -7,11 +7,12 @@ import Container from "@/components/shared/container/Container";
 import AnimatedArrowDesk from "./AnimatedArrowDesk";
 
 interface TourCostProps {
+  isLogin: boolean;
   tour: Tour;
 }
 
-export default function TourCost({ tour }: TourCostProps) {
-  const { images } = tour;
+export default function TourCost({ isLogin, tour }: TourCostProps) {
+  const { images, agencyCommission } = tour;
 
   return (
     <section className="mb-[148px] xl:mb-[180px]">
@@ -47,8 +48,8 @@ export default function TourCost({ tour }: TourCostProps) {
             </AnimatedWrapper>
           ) : null}
         </div>
-        <Calendar tour={tour} />
-        {images[4] ? (
+        <Calendar isLogin={isLogin} tour={tour} />
+        {(images[4] && !isLogin) ? (
           <div className="hidden lg:block relative xl:w-[calc(33.3%-26.67px)] h-[702px]">
             <AnimatedArrowDesk />
             <AnimatedWrapper

@@ -14,8 +14,26 @@ function getDayData(date: Date, tourDepartures) {
   return monthData.find((item) => item.day === day);
 }
 
-export default function DayButton(props: DayButtonProps) {
-  const { day, modifiers, ...buttonProps } = props;
+type BtnProps = DayButtonProps & {isLogin: boolean, currency: string, agencyCommission?: {
+  type: string;
+  value: number;
+  }};
+
+const priceWithCommission = ({isLogin, agencyCommission, dayData}) => {
+  if (!isLogin || !agencyCommission) return null;
+
+  if (agencyCommission.type === "percent") {
+    return Math.round(
+        dayData.price * (1 - agencyCommission.value / 100)
+    );
+  }
+
+  // fixed
+  return Math.max(0, dayData.price - agencyCommission.value);
+};
+
+export default function DayButton(props: BtnProps) {
+  const { agencyCommission, day, modifiers, isLogin, ...buttonProps } = props;
   const date = day.date;
   //@ts-expect-error
   const dayData = getDayData(date, props.tourDepartures);
@@ -61,10 +79,11 @@ export default function DayButton(props: DayButtonProps) {
   const isDisabled =
     status.includes("noSeats") || status.includes("noDeparture") || !dayData;
 
+
   return (
     <button
       {...buttonProps}
-      className={`w-[44px] h-[49px] rounded-[6px] border-2 relative px-[2px] ${
+      className={`${isLogin ? "w-full" : "w-[44px]"}  h-[49px] rounded-[6px] border-2 relative px-[2px] ${
         hasPrice
           ? "flex flex-col items-center justify-start pt-[2px]"
           : "flex items-center justify-center"
@@ -84,9 +103,18 @@ export default function DayButton(props: DayButtonProps) {
       </span>
 
       {hasPrice && (
-        <span className="text-10semi text-black mt-[1px]">
-          {/*@ts-expect-error*/}
+        <span className={`
+      text-10semi text-black mt-[1px]
+      ${isLogin && agencyCommission ? "xl:text-12semi" : ""}
+    `}>
           {dayData.price}{props.currency === "EUR" ? "€" : "₴"}
+          {(isLogin && agencyCommission) && (
+              <>
+                {" / "}
+                {priceWithCommission({isLogin, agencyCommission, dayData})}
+                {props.currency === "EUR" ? "€" : "₴"}
+              </>
+          )}
         </span>
       )}
 

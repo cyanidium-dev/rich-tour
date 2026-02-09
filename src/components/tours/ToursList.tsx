@@ -53,7 +53,6 @@ export default function ToursList({ activeTab }: ToursListProps) {
         В даній категорії немає турів
       </p>
     );
-
   return (
     <Suspense fallback={<Loader />}>
       <div className="flex flex-col items-center justify-center mt-[50px] xl:mt-10">
