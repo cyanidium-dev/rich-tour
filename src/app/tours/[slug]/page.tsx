@@ -167,7 +167,7 @@ export default async function TourPage({ params }: TourPageProps) {
         {tour?.excursions && <Excursions tour={tour} />}
         {/*<PricePerMonth />*/}
         <Points tour={tour} />
-        <TourCost isLogin={false} tour={tour} />
+        <TourCost isLogin={Boolean(user)} tour={tour} />
         {/*@ts-expect-error */}
         {tour.additionalInfo && <AdditionalInfo text={tour.additionalInfo} />}
         <TourCostDetails tour={tour} />
