@@ -1,10 +1,11 @@
-interface CloseHotelModalIconProps {
-    className?: string;
-}
+import { SVGProps } from "react";
+
+type CloseHotelModalIconProps = SVGProps<SVGSVGElement>;
 
 export default function CloseHotelModalIcon({
-                                              className,
-                                          }: CloseHotelModalIconProps) {
+                                                className,
+                                                ...props
+                                            }: CloseHotelModalIconProps) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -12,6 +13,7 @@ export default function CloseHotelModalIcon({
             height={18}
             fill="none"
             className={className}
+            {...props}
         >
             <path
                 fill="#02170C"

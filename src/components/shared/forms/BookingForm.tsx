@@ -57,6 +57,8 @@ interface BookingFormProps {
   className?: string;
   tourId: string;
   variant?: "red" | "black";
+  setErrorText: Dispatch<SetStateAction<string | null>>;
+  initialDate?: string | null;
 }
 
 export default function BookingForm({
@@ -64,8 +66,10 @@ export default function BookingForm({
   setIsNotificationShown,
   setIsPopUpShown,
   tourDepartures,
+  setErrorText,
   className = "",
   variant = "red",
+                                      initialDate,
     tourId,
 }: BookingFormProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -98,27 +102,67 @@ export default function BookingForm({
   const validationSchema = bookingValidation();
 
   const selectOptions = formatTourDeparturesToOptions(tourDepartures);
-
   const submitForm = async (
-    values: ValuesBookingFormType,
-    formikHelpers: FormikHelpers<ValuesBookingFormType>
+      values: ValuesBookingFormType,
+      formikHelpers: FormikHelpers<ValuesBookingFormType>
   ) => {
-    const payload = {
-      ...values,
-      tourId,
-    };
-    const response = await axios.post('/api/booking', payload);
+    const payload = { ...values, tourId };
 
-    console.log('API RESPONSE:', response.data);
-    await handleSubmitForm(
-        payload,
-        formikHelpers,
-        setIsLoading,
-        setIsError,
-        setIsNotificationShown,
-        setIsPopUpShown
-    );
+    try {
+      // (по желанию) можно включить лоадер ДО запроса
+      setIsLoading(true);
+      setIsError(false);
+      setErrorText(null);
+      console.log("start request")
+      const response = await axios.post("/api/booking", payload);
+      console.log("API RESPONSE:", response.data);
+
+      // успех
+      await handleSubmitForm(
+          payload,
+          formikHelpers,
+          setIsLoading,
+          setIsError,
+          setIsNotificationShown,
+          setIsPopUpShown
+      );
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response?.data);
+      }
+
+      // важно: на ошибке тоже показать NotificationPopUp
+      setIsError(true);
+      //@ts-expect-error
+      setErrorText(error.response?.data.error);
+      setIsNotificationShown(true);
+
+      // если хочешь закрывать форму при ошибке — оставь, если нет — убери
+      setIsPopUpShown(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
+  // const submitForm = async (
+  //   values: ValuesBookingFormType,
+  //   formikHelpers: FormikHelpers<ValuesBookingFormType>
+  // ) => {
+  //   const payload = {
+  //     ...values,
+  //     tourId,
+  //   };
+  //   const response = await axios.post('/api/booking', payload);
+  //
+  //   console.log('API RESPONSE:', response.data);
+  //   await handleSubmitForm(
+  //       payload,
+  //       formikHelpers,
+  //       setIsLoading,
+  //       setIsError,
+  //       setIsNotificationShown,
+  //       setIsPopUpShown
+  //   );
+  // };
 
   return (
     <Formik
@@ -128,10 +172,18 @@ export default function BookingForm({
     >
       {({ errors, setFieldTouched, touched, dirty, isValid, setFieldValue, values }) => {
         useEffect(() => {
+          console.log(values.date)
+          // 1) если пришла initialDate и она есть среди option.key — ставим её
+          if (initialDate && selectOptions.some(o => o.key === initialDate)) {
+            if (values.date !== initialDate) setFieldValue("date", initialDate);
+            return;
+          }
+
+          // 2) иначе — старая логика: первая доступная
           if (!values.date && selectOptions.length > 0) {
             setFieldValue("date", selectOptions[0].key);
           }
-        }, [values.date, selectOptions, setFieldValue]);
+        }, [initialDate, values.date, selectOptions, setFieldValue]);
 
         return (
             <Form className={`${className}`}>

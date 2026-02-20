@@ -11,6 +11,7 @@ import "react-day-picker/style.css";
 import { Tour } from "@/types/tour";
 // import {tourDepartures} from "@/components/tour/tourCost/mockedData";
 import {useCurrency} from "@/context/CurrencyContext";
+import Booking from "@/components/shared/booking/Booking";
 
 interface CalendarProps {
   isLogin: boolean;
@@ -30,7 +31,8 @@ const getTourDepatures = (tourDepartures, convert) => {
 
 export default function Calendar({ isLogin, tour }: CalendarProps) {
   const [selected, setSelected] = useState<Date>();
-
+  const [openBookingFlag, setOpenBookingFlag] = useState(false);
+  const [bookingDate, setBookingDate] = useState<string | null>(null);
   const defaultClassNames = getDefaultClassNames();
 
   const {convert, selected: currency} = useCurrency();
@@ -111,8 +113,10 @@ export default function Calendar({ isLogin, tour }: CalendarProps) {
               components={{
                 DayButton: (props) => (
                     // @ts-expect-error
-                    <DayButton{...props} isLogin={isLogin} agencyCommission={tour.agencyCommission} currency={currency}
-                              tourDepartures={tourDepartures}/>
+                    <DayButton{...props} isLogin={isLogin} agencyCommission={tour.agencyCommission} currency={currency} tourDepartures={tourDepartures} openBooking={(dateStr) => {
+                      setBookingDate(dateStr);
+                      setOpenBookingFlag(true);
+                    }}/>
                 ),
               }}
               className={`pl-3 pr-3 ${
@@ -128,7 +132,8 @@ export default function Calendar({ isLogin, tour }: CalendarProps) {
           {/*<Legend />*/}
         </AnimatedWrapper>
         {(isLogin && tour.agencyCommission) && <p className="font-semibold text-center">*Друга вказана ціна це комісія для агента</p>}
-        <BookingWithButton buttonStyles="w-full h-12 text-14med" tour={tour}/>
+        <BookingWithButton initialDate={bookingDate} buttonStyles="w-full h-12 text-14med" tour={tour} forceOpen={openBookingFlag}
+                           onForceOpenHandled={() => setOpenBookingFlag(false)}/>
       </div>
   );
 }

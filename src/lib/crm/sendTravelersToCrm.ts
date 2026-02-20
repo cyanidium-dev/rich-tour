@@ -6,13 +6,11 @@ import { mapTravelerToCrmPayload } from './mapTravelerToCrmPayload'
 export async function sendTravelersToCrm(
     travelers: TravelerInfo[]
 ): Promise<string[]> {
-    const token = await getCrmToken()
-
     const payload = travelers.map(mapTravelerToCrmPayload)
 
-    const { data } = await postToCrm(token, payload)
+    const data = await postToCrm(payload, "contact/set/")
 
-    const crmIds: string[] | undefined = data?.dataArray
+    const crmIds: string[] | undefined = data?.dataArray;
 
     if (!crmIds || crmIds.length !== travelers.length) {
         throw new Error('CRM did not return correct travelers crmIds')

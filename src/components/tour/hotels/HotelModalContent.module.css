@@ -1,0 +1,47 @@
+.hotelModalSwiper {
+    height: 100%;
+    width: 100%;
+}
+
+/* красный скролл справа */
+.hotelModalScroll {
+    scrollbar-width: thin;               /* Firefox */
+    scrollbar-color: #e53935 transparent;
+}
+
+.hotelModalScroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.hotelModalScroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.hotelModalScroll::-webkit-scrollbar-thumb {
+    background: #e53935;
+    border-radius: 9999px;
+}
+
+.hotelModalSwiper :global(.swiper) {
+    height: 100%;
+}
+.hotelModalSwiper :global(.swiper-button-prev),
+.hotelModalSwiper :global(.swiper-button-next) {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin-top: 0 !important;
+
+    /* перебить глобальные calc(...) если есть */
+    left: auto !important;
+    right: auto !important;
+
+    z-index: 20 !important;
+}
+
+.hotelModalSwiper :global(.swiper-button-prev) {
+    left: 18px !important;
+}
+
+.hotelModalSwiper :global(.swiper-button-next) {
+    right: 18px !important;
+}

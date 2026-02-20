@@ -11,21 +11,27 @@ import HotelContent from "@/components/tour/hotels/HotelContent";
 import HotelModal from "./HotelModal";
 import HotelModalContent from "@/components/tour/hotels/HotelModalContent";
 import Backdrop from "@/components/shared/backdrop/Backdrop";
+import AnimatedSwitch from "@/components/tour/hotels/AnimatedSwitch";
+import { AnimatePresence } from "framer-motion";
 
 import {useCurrency} from "@/context/CurrencyContext";
 
 //@ts-expect-error
-export default function Hotels({title, stars, price, shortDescription, gallery}) {
+export default function Hotels({title, stars, price, fullDescription, shortDescription, gallery}) {
     const {convert, selected: currency} = useCurrency();
     const [isPopUpShown, setIsPopUpShown] = useState(false);
     const togglePopUp = useCallback(()=> setIsPopUpShown(prevState => !prevState), []);
-
+    const [activeIndex, setActiveIndex] = useState(0);
+    console.log(fullDescription)
     return (
         <section className="mb-[125px] xl:mb-[180px]">
             <Container>
                 <HotelsTitle/>
                 <HotelModal isPopUpShown={isPopUpShown} setIsPopUpShown={setIsPopUpShown}>
-                    <HotelModalContent />
+                    <HotelModalContent title={title}
+                                       stars={stars}
+                                       description={fullDescription}
+                                       gallery={gallery} />
                 </HotelModal>
                 <Backdrop
                     isVisible={isPopUpShown}
@@ -45,8 +51,23 @@ export default function Hotels({title, stars, price, shortDescription, gallery})
                         </div>
                     </div>
 
-                    <div className="relative overflow-hidden rounded-3xl">
-                        <Image width={645} height={307} alt={title} className="h-full w-full object-cover" src={gallery[0]} />
+                    <div className="relative overflow-hidden aspect-[645/307] rounded-3xl">
+                        {/*<Image fill alt={title} className="w-full object-cover" src={gallery[0]} />*/}
+                        <AnimatePresence mode="wait">
+                            <AnimatedSwitch
+                                key={gallery[activeIndex]}
+                                className="absolute inset-0"
+                            >
+                                <Image
+                                    fill
+                                    alt={title}
+                                    src={gallery[activeIndex]}
+                                    className="object-cover"
+                                    sizes="(max-width: 1024px) 100vw, 645px"
+                                    priority
+                                />
+                            </AnimatedSwitch>
+                        </AnimatePresence>
                         <div
                             className="text-white z-10 absolute top-[-232px] lg:top-[-100px] right-[-150px] lg:right-[-30px] w-[257px] aspect-[1.15/1] bg-main rounded-full"
                         >
@@ -56,8 +77,29 @@ export default function Hotels({title, stars, price, shortDescription, gallery})
                 </div>
 
                 <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 overflow-hidden max-h-32">
-                    {/*@ts-expect-error */}
-                    {gallery.slice(1, 5).map((url, i) => <Image key={i} width={265} height={161} alt={title}  className="rounded-2xl object-cover w-full h-32" src={url} />)}
+                    {/*{gallery.slice(1, 5).map((url, i) => <Image key={i} width={265} height={161} alt={title}  className="rounded-2xl object-cover w-full h-32" src={url} />)}*/}
+                    {gallery.slice(0, 4).map((url, i) => {
+                        const isActive = i === activeIndex;
+
+                        return (
+                            <button
+                                key={url}
+                                type="button"
+                                onClick={() => setActiveIndex(i)}
+                                className={`relative w-full h-32 rounded-2xl overflow-hidden transition
+          ${isActive ? "ring-2 ring-main scale-[0.97]" : "hover:scale-[0.98]"}
+        `}
+                            >
+                                <Image
+                                    src={url}
+                                    alt={title}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 50vw, 265px"
+                                />
+                            </button>
+                        );
+                    })}
                 </div>
             </Container>
         </section>

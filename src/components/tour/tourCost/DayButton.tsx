@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { DayButtonProps } from "react-day-picker";
+import {useState} from "react";
+
 // import { tourDepartures } from "./mockedData";
 
 //@ts-expect-error
@@ -14,10 +16,17 @@ function getDayData(date: Date, tourDepartures) {
   return monthData.find((item) => item.day === day);
 }
 
-type BtnProps = DayButtonProps & {isLogin: boolean, currency: string, agencyCommission?: {
+type BtnProps = DayButtonProps & {isLogin: boolean, currency: string,     openBooking?: () => void; agencyCommission?: {
   type: string;
   value: number;
   }};
+
+function toDdMmYyyy(date: Date) {
+  const dd = String(date.getDate()).padStart(2, "0");
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const yyyy = date.getFullYear();
+  return `${dd}.${mm}.${yyyy}`;
+}
 
 const priceWithCommission = ({isLogin, agencyCommission, dayData}) => {
   if (!isLogin || !agencyCommission) return null;
@@ -33,7 +42,9 @@ const priceWithCommission = ({isLogin, agencyCommission, dayData}) => {
 };
 
 export default function DayButton(props: BtnProps) {
-  const { agencyCommission, day, modifiers, isLogin, ...buttonProps } = props;
+  const [isPopUpShown, setIsPopUpShown] = useState(false);
+
+  const {  openBooking, agencyCommission, day, modifiers, isLogin, ...buttonProps } = props;
   const date = day.date;
   //@ts-expect-error
   const dayData = getDayData(date, props.tourDepartures);
@@ -83,6 +94,13 @@ export default function DayButton(props: BtnProps) {
   return (
     <button
       {...buttonProps}
+      onClick={(e) => {
+        buttonProps.onClick?.(e); // оставить выбор даты
+
+        if (!isDisabled && hasPrice) {
+          openBooking?.(toDdMmYyyy(date));
+        }
+      }}
       className={`${isLogin ? "w-full" : "w-[44px]"}  h-[49px] rounded-[6px] border-2 relative px-[2px] ${
         hasPrice
           ? "flex flex-col items-center justify-start pt-[2px]"

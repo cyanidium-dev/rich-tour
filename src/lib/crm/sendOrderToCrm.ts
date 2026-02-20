@@ -1,6 +1,6 @@
-// lib/crm/sendOrderToCrm.ts
-import { getCrmToken } from './utils/getCrmToken'
-import { postOrderToCrm } from './postOrderToCrm'
+// import { getCrmToken } from './utils/getCrmToken'
+// import { postOrderToCrm } from './postOrderToCrm'
+import { postToCrm } from './utils/postToCrm'
 import { mapBookingToCrmOrder } from './mapBookingToCrmOrder'
 
 interface SendOrderParams {
@@ -13,11 +13,9 @@ interface SendOrderParams {
 }
 
 export async function sendOrderToCrm(params: SendOrderParams) {
-    const token = await getCrmToken()
-
     const payload = mapBookingToCrmOrder(params)
 
-    const { data } = await postOrderToCrm(token, payload)
+    const data = await postToCrm(payload, "order/set/")
 
     const orderId = data?.dataArray?.[0]
 

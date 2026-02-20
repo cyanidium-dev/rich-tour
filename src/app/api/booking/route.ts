@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
         const cookieStore = await cookies()
         const token = cookieStore.get('auth_token')?.value;
-        console.log("token", token);
+        // console.log("token", token);
 
         if (token) {
             try {
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
                 crmUserId = null
             }
         }
-        console.log("crmUserId", crmUserId);
+        // console.log("crmUserId", crmUserId);
         // ─────────────────────────────────────────────
         // 2️⃣ Создаём / находим туристов в CRM
         // ─────────────────────────────────────────────
@@ -43,12 +43,14 @@ export async function POST(req: Request) {
         // ─────────────────────────────────────────────
         // 3️⃣ Создаём заявку в CRM
         // ─────────────────────────────────────────────
+
         const crmOrderId = await sendOrderToCrm({
             tourId: body.tourId,
             crmTravelerIds,
             date: body.date, // DD.MM.YYYY → будет сконвертировано в маппере
             travelersQty: body.travelersQty,
             message: body.message,
+            //@ts-expect-error
             crmUserId, // 👈 если null — client.userid НЕ добавится
         })
 
@@ -61,9 +63,20 @@ export async function POST(req: Request) {
         })
     } catch (error) {
         console.error('BOOKING ERROR:', error);
-
+        let message = "Щось пішло не так";
+        //@ts-expect-error
+        if(error?.message) {
+            //@ts-expect-error
+            message = error.message;
+        }
+        //@ts-expect-error
+        if(error.response?.data?.errorArray) {
+            //@ts-expect-error
+            message = error.response?.data?.errorArray[0];
+        }
         return NextResponse.json(
-            { error: 'Failed to create booking' },
+            // @ts-expect-error
+            { error: message },
             { status: 500 }
         )
     }

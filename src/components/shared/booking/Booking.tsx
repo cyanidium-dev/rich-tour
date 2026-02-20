@@ -11,14 +11,17 @@ interface BookingProps {
   tour: Tour;
   isPopUpShown: boolean;
   setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
+    initialDate?: string | null;
 }
 
 export default function Booking({
   tour,
   isPopUpShown,
   setIsPopUpShown,
-}: BookingProps) {
+                                    initialDate,
+                                }: BookingProps) {
   const [isError, setIsError] = useState(false);
+    const [errorText, setErrorText] = useState<string | null>(null);
   const [isNotificationShown, setIsNotificationShown] = useState(false);
   const isAuthenticated = false;
 
@@ -51,6 +54,8 @@ export default function Booking({
             setIsPopUpShown={setIsPopUpShown}
             tourDepartures={tourDepartures}
             tourId={crmNumber}
+            setErrorText={setErrorText}
+            initialDate={initialDate}
           />
         )}
       </BookingFormModal>
@@ -59,9 +64,9 @@ export default function Booking({
           isError ? "На жаль, щось пішло не так" : "Дякуємо за бронювання!"
         }
         description={
-          isError
-            ? "Спробуйте відправити форму ще раз або зателефонуйте нам."
-            : "Менеджер скоро зв’яжеться з вами і ми зможемо обговорити деталі"
+            isError
+                ? (errorText ?? "Спробуйте відправити форму ще раз або зателефонуйте нам.")
+                : "Менеджер скоро зв’яжеться з вами і ми зможемо обговорити деталі"
         }
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
