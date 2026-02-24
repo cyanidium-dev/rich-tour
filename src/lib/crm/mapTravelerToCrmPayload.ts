@@ -18,6 +18,7 @@ export function mapTravelerToCrmPayload(traveler: TravelerInfo) {
             Mistseposadki: traveler.boardingCity,
             Strahivka: yesNo(traveler.insurance),
             Platnimistsya: yesNo(traveler.frontSeats),
+            Datanaroya: toCrmDate(traveler.birthDate),
         },
     }
 

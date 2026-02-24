@@ -7,7 +7,10 @@ interface MapBookingParams {
     date: string
     travelersQty: number
     message?: string
-    crmUserId?: number | null
+    crmUserId?: number | null;
+    name: string;
+    email: string;
+    phone: string;
 }
 
 export function mapBookingToCrmOrder({
@@ -17,6 +20,9 @@ export function mapBookingToCrmOrder({
                                          travelersQty,
                                          message,
                                          crmUserId,
+                                         name,
+                                        email,
+                                        phone,
                                      }: MapBookingParams) {
     const order: any = {
         externalid: generateUuid(),
@@ -24,6 +30,12 @@ export function mapBookingToCrmOrder({
         workflowid: '5',
         statusid: '35',
         parentid: Number(tourId),
+        sourceid: crmUserId ? 2 : 1,
+        client: {
+            name,
+            emails: [email],
+            phones: [phone],
+        },
 
         ordercontacts: crmTravelerIds.map((id) => ({
             id: Number(id),
@@ -34,7 +46,7 @@ export function mapBookingToCrmOrder({
             Kilkistturistiv: travelersQty,
             Dodatkovidani: message || '',
         },
-    }
+    };
 
     // ✅ Добавляем только для авторизованного агента
     if (crmUserId) {

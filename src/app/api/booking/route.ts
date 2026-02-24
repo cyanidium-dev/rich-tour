@@ -8,7 +8,6 @@ import { sendOrderToCrm } from '@/lib/crm/sendOrderToCrm'
 export async function POST(req: Request) {
     try {
         const body = await req.json()
-
         // ─────────────────────────────────────────────
         // 1️⃣ Пытаемся получить crmId агента из JWT
         // ─────────────────────────────────────────────
@@ -50,6 +49,9 @@ export async function POST(req: Request) {
             date: body.date, // DD.MM.YYYY → будет сконвертировано в маппере
             travelersQty: body.travelersQty,
             message: body.message,
+            name: `${body.travelers[0].name} ${body.travelers[0].surname}`,
+            email: body.email,
+            phone: body.phone,
             //@ts-expect-error
             crmUserId, // 👈 если null — client.userid НЕ добавится
         })

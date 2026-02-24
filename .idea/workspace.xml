@@ -5,24 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c14b0d2-de22-4964-801c-dc6c1b8f2a8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/AnimatedSwitch.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelModalContent.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelModalContent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/booking/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/booking/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/booking/Booking.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/booking/Booking.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/booking/BookingWithButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/booking/BookingWithButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/hotels/CloseHotelModalIcon.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/hotels/CloseHotelModalIcon.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/hotels/HotelModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/hotels/HotelModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/hotels/HotelModalContent.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/hotels/Hotels.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/hotels/Hotels.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/crm/mapBookingToCrmOrder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/mapBookingToCrmOrder.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/crm/mapTravelerToCrmPayload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/mapTravelerToCrmPayload.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lib/crm/sendOrderToCrm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/sendOrderToCrm.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/sendTravelersToCrm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/sendTravelersToCrm.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/utils/getCrmToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/utils/getCrmToken.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/utils/generateUuid.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/utils/generateUuid.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +107,11 @@
       <workItem from="1770572864164" duration="2726000" />
       <workItem from="1770655272172" duration="4032000" />
       <workItem from="1770663677434" duration="2746000" />
-      <workItem from="1771571815314" duration="21451000" />
+      <workItem from="1771571815314" duration="22830000" />
+      <workItem from="1771668724316" duration="595000" />
+      <workItem from="1771837090554" duration="598000" />
+      <workItem from="1771856369104" duration="736000" />
+      <workItem from="1771940591808" duration="4226000" />
     </task>
     <servers />
   </component>
