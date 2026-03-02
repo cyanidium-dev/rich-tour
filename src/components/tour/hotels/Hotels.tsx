@@ -22,7 +22,7 @@ export default function Hotels({title, stars, price, fullDescription, shortDescr
     const [isPopUpShown, setIsPopUpShown] = useState(false);
     const togglePopUp = useCallback(()=> setIsPopUpShown(prevState => !prevState), []);
     const [activeIndex, setActiveIndex] = useState(0);
-    console.log(fullDescription)
+
     return (
         <section className="mb-[125px] xl:mb-[180px]">
             <Container>

@@ -87,10 +87,10 @@ const getHotels = (data) => {
 }
 
 //@ts-expect-error
-const getTourDepartures = dates => dates.reduce((acum, {dateRange, price})=> {
+const getTourDepartures = dates => dates.reduce((acum, {crmNumber, dateRange, price})=> {
   const [year, month, day] = dateRange.startDate.split("-");
   const date = `${year}-${month}`;
-  const tour =  { day: parseInt(day), price, status: ["available"] };
+  const tour =  { day: parseInt(day), price, status: ["available"], crmNumber };
   if(acum[date]) {
     acum[date].push(tour);
   }
@@ -108,6 +108,7 @@ export default async function TourPage({ params }: TourPageProps) {
 
   const tourToDate = await client.fetch(tourQuery, { tourBasicId: basicTour._id });
   const tourDates = await client.fetch(tourDatesQuery, { tourBasicId: basicTour._id });
+
   const user = await getAuthAgentProfile();
   let tour = toursList[0];
 

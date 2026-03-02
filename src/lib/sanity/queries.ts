@@ -131,6 +131,7 @@ gallery[]{
 }`;
 
 export const tourDatesQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId && dateRange.startDate >= now()] | order(dateRange.startDate asc) {
+    crmNumber,
     dateRange,
     price,
 }`;

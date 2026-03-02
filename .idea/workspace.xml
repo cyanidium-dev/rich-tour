@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="5c14b0d2-de22-4964-801c-dc6c1b8f2a8e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/booking/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/booking/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/mapBookingToCrmOrder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/mapBookingToCrmOrder.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/mapTravelerToCrmPayload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/mapTravelerToCrmPayload.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/crm/sendOrderToCrm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/crm/sendOrderToCrm.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/tours/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/booking/Booking.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/booking/Booking.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tour/hotels/Hotels.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/hotels/Hotels.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/sanity/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/sanity/queries.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +112,12 @@
       <workItem from="1771668724316" duration="595000" />
       <workItem from="1771837090554" duration="598000" />
       <workItem from="1771856369104" duration="736000" />
-      <workItem from="1771940591808" duration="4226000" />
+      <workItem from="1771940591808" duration="4490000" />
+      <workItem from="1772029630933" duration="596000" />
+      <workItem from="1772091257602" duration="1000" />
+      <workItem from="1772093611082" duration="594000" />
+      <workItem from="1772182111154" duration="1894000" />
+      <workItem from="1772439698830" duration="2413000" />
     </task>
     <servers />
   </component>

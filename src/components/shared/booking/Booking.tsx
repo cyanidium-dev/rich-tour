@@ -53,7 +53,7 @@ export default function Booking({
             setIsNotificationShown={setIsNotificationShown}
             setIsPopUpShown={setIsPopUpShown}
             tourDepartures={tourDepartures}
-            tourId={crmNumber}
+            // tourId={crmNumber}
             setErrorText={setErrorText}
             initialDate={initialDate}
           />

@@ -55,10 +55,39 @@ interface BookingFormProps {
   setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
   tourDepartures: TourDepartures;
   className?: string;
-  tourId: string;
+  // tourId: string;
   variant?: "red" | "black";
   setErrorText: Dispatch<SetStateAction<string | null>>;
   initialDate?: string | null;
+}
+
+function findIdByDate(dateStr, calendar) {
+  if (!dateStr || typeof dateStr !== "string") return null;
+
+  // 1. Разбираем дату
+  const parts = dateStr.split(".");
+  if (parts.length !== 3) return null;
+
+  let [day, month, year] = parts;
+
+  // убираем ведущие нули
+  const dayNumber = Number(day);
+  const monthNumber = Number(month);
+
+  if (!dayNumber || !monthNumber || !year) return null;
+
+  // 2. Формируем ключ месяца YYYY-MM
+  const monthKey = `${year}-${String(monthNumber).padStart(2, "0")}`;
+
+  // 3. Получаем массив дней месяца
+  const monthArray = calendar[monthKey];
+  if (!Array.isArray(monthArray)) return null;
+
+  // 4. Ищем нужный день
+  const found = monthArray.find(item => item.day === dayNumber);
+
+  // 5. Возвращаем _id
+  return found ? found.crmNumber : null;
 }
 
 export default function BookingForm({
@@ -70,7 +99,7 @@ export default function BookingForm({
   className = "",
   variant = "red",
                                       initialDate,
-    tourId,
+    // tourId,
 }: BookingFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [focusedTravelerIndex, setFocusedTravelerIndex] = useState<
@@ -106,6 +135,7 @@ export default function BookingForm({
       values: ValuesBookingFormType,
       formikHelpers: FormikHelpers<ValuesBookingFormType>
   ) => {
+    const tourId = findIdByDate(values.date, tourDepartures);
     const payload = { ...values, tourId };
 
     try {
