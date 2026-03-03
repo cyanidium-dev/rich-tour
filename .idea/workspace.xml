@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c14b0d2-de22-4964-801c-dc6c1b8f2a8e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/OrderItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrderItem.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/agent/menu/content/OrdersContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/agent/menu/content/OrdersContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/forms/BookingForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/Calendar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tour/tourCost/DayButton.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,6 +114,7 @@
       <workItem from="1772182111154" duration="1894000" />
       <workItem from="1772439698830" duration="4178000" />
       <workItem from="1772522988937" duration="2156000" />
+      <workItem from="1772531930684" duration="310000" />
     </task>
     <servers />
   </component>

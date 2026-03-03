@@ -117,7 +117,18 @@ function getDaysQuantity(start: string, end: string): number {
     return diffDays + 1;
 }
 const statusList = {
-
+    "36": "Нова заявка",
+    "39": "В роботі",
+    "40": "Дані внесено",
+    "41": "Відправлено на підтвердження",
+    "42": "Відмова від заявки",
+    "43": "Підтверджено. Чекаю оплату завдатку",
+    "44": "Оплачено завдаток",
+    "45": "Оплата залишкової вартості туру",
+    "46": "Відправлено на оплату",
+    "47": "Повна оплата",
+    "48": "Тур завершено",
+    "84": "Кошти повернуто",
 }
 // Нова заявка - 36
 // В роботі - 39
@@ -141,12 +152,12 @@ const transformOrders = result => {
         daysQuantity: item.customfields.Dataturut ? getDaysQuantity(item.customfields.Dataturut.value, item.customfields.Datazakinchennyaturu.value) : "",
         tourists: item.orderproducts.map(item => item.name).join(" "),
         totalCost: item.customfields.zagalsumabezkomisi ? item.customfields.zagalsumabezkomisi.value : "",
-        commission: "",
+        commission: item.customfields.zagalnasumapokomisi.value || "",
         paidAmount: item.customfields.Zalishilosoplatitipozayavtsi ? Number(item.customfields?.zagalsumabezkomisi.value) - Number(item.customfields?.Zalishilosoplatitipozayavtsi.value) : 0,
         remainingAmount: item.customfields.Zalishilosoplatitipozayavtsi ? item.customfields?.Zalishilosoplatitipozayavtsi.value : "",
         startDate: item.customfields.Dataturut ? item.customfields.Dataturut.value : "",
         endDate: item.customfields.Datazakinchennyaturu ? item.customfields.Datazakinchennyaturu.value : "",
-        status: "не почався",
+        status: statusList[item.statusid] || "не почався",
         comment: item.customfields.Dodatkovidani ? item.customfields.Dodatkovidani.value : "",
     }));
     return data;
