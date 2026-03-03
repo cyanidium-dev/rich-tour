@@ -114,9 +114,11 @@ function getDaysQuantity(start: string, end: string): number {
     const diffTime = endDate.getTime() - startDate.getTime();
     const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
-    return diffDays;
+    return diffDays + 1;
 }
+const statusList = {
 
+}
 // Нова заявка - 36
 // В роботі - 39
 // Дані внесено - 40
@@ -150,7 +152,7 @@ const transformOrders = result => {
     return data;
 }
 
-export default function OrdersContent() {
+export default function яOrdersContent() {
     const [tours, setTours] = useState<OrderTableRow[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [filters, setFilters] = useState<OrdersFiltersState>({
@@ -192,7 +194,7 @@ export default function OrdersContent() {
 
 
     if (isLoading) return <Loader />;
-
+    console.log(tours)
     return (
         <div
             className="flex flex-col

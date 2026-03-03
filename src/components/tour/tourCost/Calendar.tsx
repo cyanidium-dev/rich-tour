@@ -86,7 +86,7 @@ export default function Calendar({ isLogin, tour }: CalendarProps) {
     week: "h-[49px]",
     weekday: "mt-[6px] py-2 text-14reg",
   };
-
+console.log(tour)
   return (
       <div className={`${isLogin
           ? "xl:w-[calc(66.3%-26.67px)]"

@@ -5,10 +5,11 @@ interface OrderItemProps {
 }
 
 export default function OrderItem({ order }: OrderItemProps) {
+
     return (
         <tr className="border-b border-gray-200 hover:bg-gray-50 transition-colors text-14semi">
             <td className="px-2 py-[20px]">{order.index}</td>
-            <td className="px-2 py-[20px]">{order.orderNumber}</td>
+            <td className="px-2 py-[20px]">{order.id}</td>
             <td className="px-2 py-[20px]">{order.tourTitle ? order.tourTitle : "—"}</td>
             <td className="px-2 py-[20px]">{order.daysQuantity ? order.daysQuantity : "—"}</td>
             <td className="px-2 py-[20px]">{order.tourists}</td>

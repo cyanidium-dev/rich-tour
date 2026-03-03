@@ -143,7 +143,7 @@ export default function BookingForm({
       setIsLoading(true);
       setIsError(false);
       setErrorText(null);
-      console.log("start request")
+
       const response = await axios.post("/api/booking", payload);
       console.log("API RESPONSE:", response.data);
 
@@ -202,7 +202,6 @@ export default function BookingForm({
     >
       {({ errors, setFieldTouched, touched, dirty, isValid, setFieldValue, values }) => {
         useEffect(() => {
-          console.log(values.date)
           // 1) если пришла initialDate и она есть среди option.key — ставим её
           if (initialDate && selectOptions.some(o => o.key === initialDate)) {
             if (values.date !== initialDate) setFieldValue("date", initialDate);

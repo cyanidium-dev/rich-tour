@@ -28,17 +28,13 @@ function toDdMmYyyy(date: Date) {
   return `${dd}.${mm}.${yyyy}`;
 }
 
-const priceWithCommission = ({isLogin, agencyCommission, dayData}) => {
+const priceWithCommission = ({isLogin, agencyCommission, currency}) => {
   if (!isLogin || !agencyCommission) return null;
 
   if (agencyCommission.type === "percent") {
-    return Math.round(
-        dayData.price * (1 - agencyCommission.value / 100)
-    );
+    return `${agencyCommission.value}%`
   }
-
-  // fixed
-  return Math.max(0, dayData.price - agencyCommission.value);
+  return `${agencyCommission.value} ${currency === "EUR" ? "€" : "₴"}`
 };
 
 export default function DayButton(props: BtnProps) {
@@ -129,8 +125,8 @@ export default function DayButton(props: BtnProps) {
           {(isLogin && agencyCommission) && (
               <>
                 {" / "}
-                {priceWithCommission({isLogin, agencyCommission, dayData})}
-                {props.currency === "EUR" ? "€" : "₴"}
+                {priceWithCommission({isLogin, agencyCommission, currency: props.currency})}
+                {/*{props.currency === "EUR" ? "€" : "₴"}*/}
               </>
           )}
         </span>
