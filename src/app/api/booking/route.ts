@@ -33,12 +33,13 @@ export async function POST(req: Request) {
                 crmUserId = null
             }
         }
+
         // console.log("crmUserId", crmUserId);
         // ─────────────────────────────────────────────
         // 2️⃣ Создаём / находим туристов в CRM
         // ─────────────────────────────────────────────
         const crmTravelerIds = await sendTravelersToCrm(body.travelers)
-
+// return;
         // ─────────────────────────────────────────────
         // 3️⃣ Создаём заявку в CRM
         // ─────────────────────────────────────────────
@@ -46,14 +47,14 @@ export async function POST(req: Request) {
         const crmOrderId = await sendOrderToCrm({
             tourId: body.tourId,
             crmTravelerIds,
-            date: body.date, // DD.MM.YYYY → будет сконвертировано в маппере
+            date: body.date,
             travelersQty: body.travelersQty,
             message: body.message,
             name: `${body.travelers[0].name} ${body.travelers[0].surname}`,
             email: body.email,
             phone: body.phone,
             //@ts-expect-error
-            crmUserId, // 👈 если null — client.userid НЕ добавится
+            crmUserId, //
         })
 
         // ─────────────────────────────────────────────

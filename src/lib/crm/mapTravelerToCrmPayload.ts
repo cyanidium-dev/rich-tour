@@ -28,7 +28,7 @@ export function mapTravelerToCrmPayload(traveler: TravelerInfo) {
         payload.customfields.Pasport = traveler.passport
 
         if (traveler.passportExpiration) {
-            payload.customfields.Datazavershpasp =
+            payload.customfields.DaTazavpasp =
                 toCrmDate(traveler.passportExpiration);
         }
     } else {

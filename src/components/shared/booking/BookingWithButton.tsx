@@ -12,6 +12,9 @@ interface BookingWithButtonProps {
     forceOpen?: boolean;
     onForceOpenHandled?: () => void;
     initialDate?: string | null;
+    companyName: string | undefined;
+    email: string | undefined;
+    phone: string | undefined;
 }
 
 export default function BookingWithButton({
@@ -20,6 +23,7 @@ export default function BookingWithButton({
                                               forceOpen,
                                               onForceOpenHandled,
                                               initialDate,
+    ...userData
 }: BookingWithButtonProps) {
   const [isPopUpShown, setIsPopUpShown] = useState(false);
     useEffect(() => {
@@ -43,6 +47,7 @@ export default function BookingWithButton({
         setIsPopUpShown={setIsPopUpShown}
         tour={tour}
         initialDate={initialDate}
+        {...userData}
       />
     </>
   );

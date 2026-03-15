@@ -32,10 +32,18 @@ export async function GET() {
             "customfields.Dataturut",
             "customfields.Datazakinchennyaturu",
             "customfields.Dodatkovidani",
-            "orderproducts",
+            "customfields.Oplachenopozayavtsi",
+            "orderproducts"
         ],
 
-        orderproductfields: ["name"],
+        orderproductfields: [
+            "name",
+            "customfields.Datanarya",
+            "customfields.Telefon",
+            "customfields.Pasport",
+            "customfields.Mistoposadki",
+            "customfields.Datazavershpasp"
+        ],
     };
 
     const orders = await getAgentOrdersFromCrm(payload);

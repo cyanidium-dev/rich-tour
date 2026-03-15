@@ -8,6 +8,7 @@ export async function postToCrm(
     url: string,
 ) {
     const token = await getCrmToken();
+    console.log(payload)
     try {
         const {data} = await crmInstance.post(url, payload, {
             headers: {

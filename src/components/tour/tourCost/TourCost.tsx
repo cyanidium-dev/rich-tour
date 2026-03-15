@@ -9,9 +9,12 @@ import AnimatedArrowDesk from "./AnimatedArrowDesk";
 interface TourCostProps {
   isLogin: boolean;
   tour: Tour;
+  companyName: string | undefined;
+  email: string | undefined;
+  phone: string | undefined;
 }
 
-export default function TourCost({ isLogin, tour }: TourCostProps) {
+export default function TourCost({ isLogin, tour, ...userData }: TourCostProps) {
   const { images, agencyCommission } = tour;
 
   return (
@@ -48,7 +51,7 @@ export default function TourCost({ isLogin, tour }: TourCostProps) {
             </AnimatedWrapper>
           ) : null}
         </div>
-        <Calendar isLogin={isLogin} tour={tour} />
+        <Calendar isLogin={isLogin} tour={tour} {...userData}  />
         {(images[4] && !isLogin) ? (
           <div className="hidden lg:block relative xl:w-[calc(33.3%-26.67px)] h-[702px]">
             <AnimatedArrowDesk />

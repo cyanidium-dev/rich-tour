@@ -20,7 +20,7 @@ export const bookingValidation = () => {
     passport: yup.string().when("passportInProgress", {
       is: false,
       then: (schema) =>
-          schema.required("Вкажіть номер паспорта"),
+          schema.required("Вкажіть номер паспорта").matches(/^[A-Z]{2}[0-9]{6}$/, "Формат паспорта: AA123456"),
       otherwise: (schema) =>
           schema.notRequired().nullable(),
     }),

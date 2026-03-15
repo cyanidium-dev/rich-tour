@@ -5,9 +5,10 @@ import OrderItem from "./OrderItem";
 
 interface CategoryProps {
     category: { orders: Order[] };
+    showTourDetails: (id: string) => void;
 }
 
-export default function Category({ category }: CategoryProps) {
+export default function Category({ showTourDetails, category }: CategoryProps) {
     const { orders } = category;
 
     return (
@@ -62,7 +63,7 @@ export default function Category({ category }: CategoryProps) {
                     {/* BODY */}
                     <tbody>
                     {orders.map(order => (
-                        <OrderItem key={order.id} order={order} />
+                        <OrderItem showTourDetails={showTourDetails} key={order.id} order={order} />
                     ))}
                     </tbody>
                 </table>

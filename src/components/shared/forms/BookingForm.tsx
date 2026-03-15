@@ -59,6 +59,9 @@ interface BookingFormProps {
   variant?: "red" | "black";
   setErrorText: Dispatch<SetStateAction<string | null>>;
   initialDate?: string | null;
+  companyName: string | undefined;
+  email: string | undefined;
+  phone: string | undefined;
 }
 
 function findIdByDate(dateStr, calendar) {
@@ -90,6 +93,17 @@ function findIdByDate(dateStr, calendar) {
   return found ? found.crmNumber : null;
 }
 
+export const passportMask = [
+  /[A-Za-z]/,
+  /[A-Za-z]/,
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+];
+
 export default function BookingForm({
   setIsError,
   setIsNotificationShown,
@@ -99,6 +113,9 @@ export default function BookingForm({
   className = "",
   variant = "red",
                                       initialDate,
+    companyName,
+    email = "",
+    phone = "",
     // tourId,
 }: BookingFormProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -109,8 +126,8 @@ export default function BookingForm({
   const initialValues: ValuesBookingFormType = {
     date: "",
     travelersQty: null,
-    email: "",
-    phone: "",
+    email: email,
+    phone: phone,
     message: "",
     travelers: [
       {
@@ -127,7 +144,7 @@ export default function BookingForm({
       },
     ],
   };
-
+  console.log(email)
   const validationSchema = bookingValidation();
 
   const selectOptions = formatTourDeparturesToOptions(tourDepartures);
@@ -352,13 +369,22 @@ export default function BookingForm({
                                         />
                                         <CustomizedInput
                                             fieldName={`travelers[${index}].passport`}
-                                            placeholder="Номер закордонного паспорта"
+                                            placeholder="AA123456"
                                             errors={errors}
                                             touched={touched}
+                                            as={MaskedInput}
+                                            mask={passportMask}
                                             onFocus={() => setFocusedTravelerIndex(index)}
                                             labelClassName="lg:w-[276px]"
                                             fieldFontSize="text-10reg lg:text-12reg"
                                             disabled={values.travelers[index].passportInProgress}
+                                            onChange={(e) => {
+                                              const cleaned = e.target.value
+                                                  .replace(/[^a-zA-Z0-9]/g, "")
+                                                  .toUpperCase();
+
+                                              setFieldValue(`travelers[${index}].passport`, cleaned);
+                                            }}
                                         />
                                       </div>
                                       <div className="flex flex-col lg:flex-row gap-y-4 gap-x-3">

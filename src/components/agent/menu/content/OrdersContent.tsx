@@ -8,6 +8,7 @@ import Category from "./Category";
 import OrdersFilters, {
     OrdersFiltersState,
 } from "./OrdersFilters";
+import DetailsModal from "@/components/agent/menu/content/DetailsModal";
 import "./order-filters.css";
 
 type Tour = {
@@ -116,6 +117,7 @@ function getDaysQuantity(start: string, end: string): number {
 
     return diffDays + 1;
 }
+
 const statusList = {
     "36": "Нова заявка",
     "39": "В роботі",
@@ -147,23 +149,33 @@ const transformOrders = result => {
     const data = result.map((item, idx) => ({
         id: item.id,
         index: idx + 1,
-        orderNumber: item.externalid.slice(0, 6),
         tourTitle: item.customfields.Nazvaturu ? item.customfields.Nazvaturu.value : "",
         daysQuantity: item.customfields.Dataturut ? getDaysQuantity(item.customfields.Dataturut.value, item.customfields.Datazakinchennyaturu.value) : "",
         tourists: item.orderproducts.map(item => item.name).join(" "),
         totalCost: item.customfields.zagalsumabezkomisi ? item.customfields.zagalsumabezkomisi.value : "",
-        commission: item.customfields.zagalnasumapokomisi.value || "",
-        paidAmount: item.customfields.Zalishilosoplatitipozayavtsi ? Number(item.customfields?.zagalsumabezkomisi.value) - Number(item.customfields?.Zalishilosoplatitipozayavtsi.value) : 0,
-        remainingAmount: item.customfields.Zalishilosoplatitipozayavtsi ? item.customfields?.Zalishilosoplatitipozayavtsi.value : "",
+        commission: item.customfields.zagalnasumapokomisi?.value ? item.customfields.zagalnasumapokomisi?.value : "",
+        paidAmount: item.customfields.Oplachenopozayavtsi ? Number(item.customfields.Oplachenopozayavtsi.value) : "",
+        remainingAmount: item.customfields.Zalishilosoplatitipozayavtsi ? Number(item.customfields?.Zalishilosoplatitipozayavtsi.value) : "",
         startDate: item.customfields.Dataturut ? item.customfields.Dataturut.value : "",
         endDate: item.customfields.Datazakinchennyaturu ? item.customfields.Datazakinchennyaturu.value : "",
         status: statusList[item.statusid] || "не почався",
         comment: item.customfields.Dodatkovidani ? item.customfields.Dodatkovidani.value : "",
+        details: item.orderproducts.map(item => ({
+            pib: item.name,
+            birthday: item.customfields.Datanarya?.value || "",
+            phone: item.customfields.Telefon?.value || "",
+            passport: item.customfields.Pasport?.value || "",
+            passportFinish: item.customfields.Datazavershpasp?.value || "",
+            city: item.customfields.Mistoposadki?.value || "",
+        })),
     }));
+
     return data;
 }
 
-export default function яOrdersContent() {
+export default function OrdersContent() {
+    const [isPopUpShown, setIsPopUpShown] = useState(false);
+    const [tourDetails, setTourDetails] = useState({});
     const [tours, setTours] = useState<OrderTableRow[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [filters, setFilters] = useState<OrdersFiltersState>({
@@ -180,7 +192,6 @@ export default function яOrdersContent() {
                 const {data} = await axios.get("/api/agent/tours", {
                     withCredentials: true,
                 });
-                console.log(data);
                 const transformData = transformOrders(data.orders) || [];
                 setTours(transformData);
             } catch {
@@ -198,6 +209,12 @@ export default function яOrdersContent() {
         [tours, filters]
     );
 
+    const showTourDetails = id => {
+        setIsPopUpShown(true);
+        //@ts-expect-error
+        setTourDetails(tours.find(tour => tour.id === id)?.details);
+    }
+
 
     if (isLoading) {
         return <Loader />;
@@ -205,26 +222,27 @@ export default function яOrdersContent() {
 
 
     if (isLoading) return <Loader />;
-    console.log(tours)
+
     return (
         <div
             className="flex flex-col
-    gap-y-6
-    pl-4 xs:pl-[25px] xl:pl-[80px]
-    sm:ml-[calc((100vw-640px)/2)]
-    md:ml-[calc((100vw-768px)/2)]
-    lg:ml-[calc((100vw-1024px)/2)]
-    xl:ml-[calc((100vw-1280px)/2)]"
+                    gap-y-6
+                    pl-4 xs:pl-[25px] xl:pl-[80px]
+                    sm:ml-[calc((100vw-640px)/2)]
+                    md:ml-[calc((100vw-768px)/2)]
+                    lg:ml-[calc((100vw-1024px)/2)]
+                    xl:ml-[calc((100vw-1280px)/2)]"
         >
-            {/*{ordersMock.map((tour, idx) => (*/}
-            {/*    //@ts-expect-error*/}
-            {/*    <Category key={idx} category={tour} />*/}
-            {/*))}*/}
+            <DetailsModal isPopUpShown={isPopUpShown} setIsPopUpShown={setIsPopUpShown}>
+                <p>{JSON.stringify(tourDetails, null, 2)}</p>
+            </DetailsModal>
+
             <OrdersFilters filters={filters} onChange={setFilters} />
             {!filteredOrders.length && (<p className="text-center text-16reg">
                 Нічого не знайдено
             </p>)}
             {Boolean(filteredOrders.length) && <Category
+                showTourDetails={showTourDetails}
                 category={{
                     // @ts-expect-error
                     orders: filteredOrders,

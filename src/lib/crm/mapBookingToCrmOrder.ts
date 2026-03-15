@@ -45,6 +45,7 @@ export function mapBookingToCrmOrder({
             Vibranadata: toCrmDate(date),
             Kilkistturistiv: travelersQty,
             Dodatkovidani: message || '',
+        //     Mistoposadki
         },
     };
 

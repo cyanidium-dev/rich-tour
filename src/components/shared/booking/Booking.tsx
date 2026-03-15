@@ -12,6 +12,9 @@ interface BookingProps {
   isPopUpShown: boolean;
   setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
     initialDate?: string | null;
+    companyName: string | undefined;
+    email: string | undefined;
+    phone: string | undefined;
 }
 
 export default function Booking({
@@ -19,6 +22,7 @@ export default function Booking({
   isPopUpShown,
   setIsPopUpShown,
                                     initialDate,
+    ...userData
                                 }: BookingProps) {
   const [isError, setIsError] = useState(false);
     const [errorText, setErrorText] = useState<string | null>(null);
@@ -56,6 +60,7 @@ export default function Booking({
             // tourId={crmNumber}
             setErrorText={setErrorText}
             initialDate={initialDate}
+            {...userData}
           />
         )}
       </BookingFormModal>

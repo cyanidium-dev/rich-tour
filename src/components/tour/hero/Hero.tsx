@@ -9,9 +9,12 @@ import BookingWithButton from "../../shared/booking/BookingWithButton";
 
 interface HeroProps {
   tour: Tour;
+  companyName: string | undefined;
+  email: string | undefined;
+  phone: string | undefined;
 }
 
-export default function Hero({ tour }: HeroProps) {
+export default function Hero({ tour, ...userData }: HeroProps) {
   const { title, duration, images, programUpload } = tour;
 
   return (
@@ -37,6 +40,7 @@ export default function Hero({ tour }: HeroProps) {
             </div>
             <div className="flex flex-col xl:flex-row gap-2 md:mb-6">
               <BookingWithButton
+                  {...userData}
                 tour={tour}
                 buttonStyles="w-full xl:w-[198px] h-12 text-14med"
               />

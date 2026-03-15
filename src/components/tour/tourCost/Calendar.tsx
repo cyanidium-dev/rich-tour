@@ -4,7 +4,7 @@ import { DayPicker, Locale, getDefaultClassNames } from "react-day-picker";
 import { uk } from "react-day-picker/locale";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-// import Legend from "./Legend";
+import Legend from "./Legend";
 import DayButton from "./DayButton";
 import BookingWithButton from "../../shared/booking/BookingWithButton";
 import "react-day-picker/style.css";
@@ -16,6 +16,9 @@ import Booking from "@/components/shared/booking/Booking";
 interface CalendarProps {
   isLogin: boolean;
   tour: Tour;
+  companyName: string | undefined;
+  email: string | undefined;
+  phone: string | undefined;
 }
 
 
@@ -29,7 +32,7 @@ const getTourDepatures = (tourDepartures, convert) => {
   return result;
 }
 
-export default function Calendar({ isLogin, tour }: CalendarProps) {
+export default function Calendar({ isLogin, tour, ...userData }: CalendarProps) {
   const [selected, setSelected] = useState<Date>();
   const [openBookingFlag, setOpenBookingFlag] = useState(false);
   const [bookingDate, setBookingDate] = useState<string | null>(null);
@@ -86,7 +89,7 @@ export default function Calendar({ isLogin, tour }: CalendarProps) {
     week: "h-[49px]",
     weekday: "mt-[6px] py-2 text-14reg",
   };
-console.log(tour)
+
   return (
       <div className={`${isLogin
           ? "xl:w-[calc(66.3%-26.67px)]"
@@ -129,10 +132,10 @@ console.log(tour)
                     : defaultClassNames.months,
               }}
           />
-          {/*<Legend />*/}
+          <Legend />
         </AnimatedWrapper>
         {(isLogin && tour.agencyCommission) && <p className="font-semibold text-center">*Друга вказана ціна це комісія для агента</p>}
-        <BookingWithButton initialDate={bookingDate} buttonStyles="w-full h-12 text-14med" tour={tour} forceOpen={openBookingFlag}
+        <BookingWithButton {...userData} initialDate={bookingDate} buttonStyles="w-full h-12 text-14med" tour={tour} forceOpen={openBookingFlag}
                            onForceOpenHandled={() => setOpenBookingFlag(false)}/>
       </div>
   );

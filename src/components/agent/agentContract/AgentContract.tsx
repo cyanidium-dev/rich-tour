@@ -53,7 +53,7 @@ export default async function AgentContract() {
                 className="block mb-3 mx-auto md:mx-0"
             >
               <MainButton className="w-full max-w-[550px] h-14 mx-auto md:mx-0 text-14med">
-                Переглянути договір агента
+                Завантажити договір агента
               </MainButton>
             </a>
             <a
@@ -66,7 +66,7 @@ export default async function AgentContract() {
                   variant="ghost red"
                   className="w-full max-w-[550px] h-14 mx-auto md:mx-0 text-14med"
               >
-                Переглянути договір з туристом
+                Завантажити договір з туристом
               </MainButton>
             </a>
             <a

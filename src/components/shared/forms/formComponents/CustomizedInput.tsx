@@ -1,6 +1,6 @@
 import { Field, ErrorMessage, FormikErrors, FormikTouched, useFormikContext } from "formik";
 import MaskedInput from "react-text-mask";
-import { ReactNode } from "react";
+import { ReactNode, useState  } from "react";
 
 interface GenericValues {
   [key: string]: any;
@@ -63,18 +63,18 @@ export default function CustomizedInput({
                                           children,
                                         }: CustomizedInputProps) {
   const { handleChange } = useFormikContext<GenericValues>();
-
+    const [showPassword, setShowPassword] = useState(false);
   const isError = Boolean(errors?.[fieldName]);
   const isTouched = Boolean(touched?.[fieldName]);
 
   return (
       <label className={`${labelBaseStyles} ${labelClassName}`}>
-        <div className={wrapperClassName}>
+        <div className={`relative ${wrapperClassName}`}>
           <Field
               name={fieldName}
               as={as}
               mask={mask}
-              type={inputType}
+              type={inputType === "password" && showPassword ? "text" : inputType}
               placeholder={placeholder}
               autoComplete="on"
               disabled={disabled || isLoading}
@@ -92,6 +92,15 @@ export default function CustomizedInput({
           >
             {children}
           </Field>
+            {inputType === "password" && (
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                    {showPassword ? "🗨" : "👁"}
+                </button>
+            )}
         </div>
 
         <ErrorMessage

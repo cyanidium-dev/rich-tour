@@ -103,7 +103,7 @@ export default function LoginForm({
                         />
                         <CustomizedInput
                             fieldName="password"
-                            inputType="password"
+                            inputType="text"
                             placeholder="Ваш пароль"
                             errors={errors}
                             touched={touched}
