@@ -50,7 +50,7 @@ export async function POST(req: Request) {
             date: body.date,
             travelersQty: body.travelersQty,
             message: body.message,
-            name: `${body.travelers[0].name} ${body.travelers[0].surname}`,
+            name: body.companyName || `${body.travelers[0].name} ${body.travelers[0].surname}`,
             email: body.email,
             phone: body.phone,
             //@ts-expect-error

@@ -77,6 +77,7 @@ export async function POST(req: Request) {
         city,
         taxForm,
         site,
+        isApproved: false,
         passwordHash,
     });
 

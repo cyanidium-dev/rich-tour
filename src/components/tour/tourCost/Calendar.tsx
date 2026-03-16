@@ -21,7 +21,6 @@ interface CalendarProps {
   phone: string | undefined;
 }
 
-
 //@ts-expect-error
 const getTourDepatures = (tourDepartures, convert) => {
   const result = {};

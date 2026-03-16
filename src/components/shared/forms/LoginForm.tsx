@@ -7,6 +7,7 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { loginValidation } from "@/schemas/loginFormValidation";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
+import axios from "axios";
 
 export interface ValuesLoginFormType {
     email: string;
@@ -17,6 +18,7 @@ interface LoginFormProps {
     setIsError: Dispatch<SetStateAction<boolean>>;
     setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
     setIsPopUpShown?: Dispatch<SetStateAction<boolean>>;
+    setErrorMessage?: Dispatch<SetStateAction<string>>;
     className?: string;
     variant?: "red" | "black";
 }
@@ -29,6 +31,7 @@ export default function LoginForm({
                                       setIsError,
                                       setIsNotificationShown,
                                       setIsPopUpShown,
+                                      setErrorMessage,
                                       className = "",
                                       variant = "red",
                                   }: LoginFormProps) {
@@ -49,18 +52,13 @@ export default function LoginForm({
             setIsNotificationShown(false);
             setIsLoading(true);
 
-            const res = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify(values),
-            });
-
-            if (!res.ok) {
-                throw new Error("LOGIN_FAILED");
-            }
-
-            const data: LoginApiSuccess = await res.json();
+            const {data} = await axios.post("/api/auth/login", values);
+            //
+            // if (!res.ok) {
+            //     throw new Error("LOGIN_FAILED");
+            // }
+            //
+            // const data: LoginApiSuccess = await res.json();
 
             resetForm();
             setIsPopUpShown?.(false);
@@ -77,9 +75,10 @@ export default function LoginForm({
 
             throw new Error("UNKNOWN_ROLE");
         } catch (error) {
-            console.error(error);
             setIsError(true);
             setIsNotificationShown(true);
+            //@ts-expect-error
+            setErrorMessage(error.response?.data?.error || error.message);
         } finally {
             setIsLoading(false);
         }

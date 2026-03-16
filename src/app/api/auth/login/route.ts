@@ -29,15 +29,21 @@ export async function POST(req: Request) {
         email: string;
         passwordHash: string;
         crmId: number;
+        isApproved: boolean;
     } | null>(
         `*[_type == "agentUser" && email == $email][0]{
       _id,
       email,
       passwordHash,
       crmId,
+      isApproved,
     }`,
         { email }
     );
+
+    if(!agentUser?.isApproved) {
+        return NextResponse.json({ error: "Ваш статус агента має буди схвалений. Зверніться будь ласка до адміністрації сайту" }, { status: 401 });
+    }
 
     if (agentUser) {
         const isValid = await bcrypt.compare(password, agentUser.passwordHash);
@@ -88,7 +94,7 @@ export async function POST(req: Request) {
         const isValid = await bcrypt.compare(password, agencyUser.passwordHash);
 
         if (!isValid) {
-            return NextResponse.json({ error: "INVALID_CREDENTIALS" }, { status: 401 });
+            return NextResponse.json({ error: "Невірний email або пароль." }, { status: 401 });
         }
 
         const token = jwt.sign(

@@ -9,7 +9,7 @@ import Backdrop from "../shared/backdrop/Backdrop";
 export default function LoginFormWithNotifications() {
   const [isError, setIsError] = useState(false);
   const [isNotificationShown, setIsNotificationShown] = useState(false);
-
+    const [errorMessage, setErrorMessage] = useState("");
   return (
     <>
       <AnimatedWrapper
@@ -19,11 +19,12 @@ export default function LoginFormWithNotifications() {
         <LoginForm
           setIsError={setIsError}
           setIsNotificationShown={setIsNotificationShown}
+          setErrorMessage={setErrorMessage}
         />
       </AnimatedWrapper>
       <NotificationPopUp
         title={isError ? "На жаль, щось пішло не так" : ""}
-        description={isError ? "Невірний email або пароль." : ""}
+        description={errorMessage || "Невірний email або пароль."}
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
       />

@@ -39,6 +39,7 @@ export interface TravelerInfo {
 export interface ValuesBookingFormType {
   date: string;
   travelersQty: number | null;
+  companyName: string;
   email: string;
   phone: string;
   message: string;
@@ -113,7 +114,7 @@ export default function BookingForm({
   className = "",
   variant = "red",
                                       initialDate,
-    companyName,
+    companyName = "",
     email = "",
     phone = "",
     // tourId,
@@ -126,6 +127,7 @@ export default function BookingForm({
   const initialValues: ValuesBookingFormType = {
     date: "",
     travelersQty: null,
+    companyName,
     email: email,
     phone: phone,
     message: "",
@@ -144,7 +146,7 @@ export default function BookingForm({
       },
     ],
   };
-  console.log(email)
+
   const validationSchema = bookingValidation();
 
   const selectOptions = formatTourDeparturesToOptions(tourDepartures);
@@ -517,6 +519,15 @@ export default function BookingForm({
                 </span>{" "}
                   у автобусі (місця з 5 по 20) сплачується додатково 10€
                 </p>
+
+                {companyName && <CustomizedInput
+                    fieldName="companyName"
+                    inputType="text"
+                    placeholder="Назва агенції"
+                    errors={errors}
+                    touched={touched}
+                    fieldFontSize="text-10reg lg:text-12reg"
+                />}
 
                 <CustomizedInput
                     fieldName="email"
