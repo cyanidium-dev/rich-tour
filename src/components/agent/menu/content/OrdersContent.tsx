@@ -185,7 +185,6 @@ export default function OrdersContent() {
         period: { from: null, to: null },
     });
 
-
     useEffect(() => {
         const fetchTours = async () => {
             try {
@@ -212,14 +211,9 @@ export default function OrdersContent() {
     const showTourDetails = id => {
         setIsPopUpShown(true);
         //@ts-expect-error
-        setTourDetails(tours.find(tour => tour.id === id)?.details);
+        const {comment, details} = tours.find(tour => tour.id === id);
+        setTourDetails({comment, details});
     }
-
-
-    if (isLoading) {
-        return <Loader />;
-    }
-
 
     if (isLoading) return <Loader />;
 
@@ -233,9 +227,7 @@ export default function OrdersContent() {
                     lg:ml-[calc((100vw-1024px)/2)]
                     xl:ml-[calc((100vw-1280px)/2)]"
         >
-            <DetailsModal isPopUpShown={isPopUpShown} setIsPopUpShown={setIsPopUpShown}>
-                <p>{JSON.stringify(tourDetails, null, 2)}</p>
-            </DetailsModal>
+            <DetailsModal {...tourDetails} isPopUpShown={isPopUpShown} setIsPopUpShown={setIsPopUpShown} />
 
             <OrdersFilters filters={filters} onChange={setFilters} />
             {!filteredOrders.length && (<p className="text-center text-16reg">

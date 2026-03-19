@@ -9,6 +9,15 @@ interface ModalProps {
     setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
     children: ReactNode;
     className?: string;
+    comment: string | undefined;
+    tourDetails: {
+        pib: string,
+        birthday: string,
+        phone: string,
+        passport: string,
+        passportFinish: string,
+        city: string,
+    }
 }
 
 export default function DetailsModal({
@@ -16,6 +25,8 @@ export default function DetailsModal({
                                              setIsPopUpShown,
                                              children,
                                              className = "",
+    comment,
+    tourDetails,
                                          }: ModalProps) {
     return (
         <div
@@ -33,14 +44,18 @@ export default function DetailsModal({
                     <button>
                         {<CloseHotelModalIcon onClick={()=> setIsPopUpShown(true)} className="size-full" />}
                     </button>
-
-
             </div>
             <div
                 className="max-h-[calc(100dvh-80px-62px)] xl:max-h-[calc(100dvh-80px-84px)] px-6 lg:px-9 pt-[33px] lg:pt-7 pb-5 lg:pb-8 overflow-y-auto scrollbar scrollbar-w-[3px] scrollbar-thumb-rounded-full
          scrollbar-track-rounded-full scrollbar-thumb-main scrollbar-track-transparent popup-scroll"
             >
-                {children}
+                {comment && (
+                    <>
+                        <p className="text-24semi xl:text-32semi text-[#18181B]">Коментар</p>
+                        <p>{comment}</p>
+                    </>
+                )}
+
             </div>
         </div>
     );

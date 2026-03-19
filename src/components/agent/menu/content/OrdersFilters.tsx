@@ -103,7 +103,7 @@ const innerAutocomplete = {
 };
 
 const pillDateRange = {
-    base: "w-[280px]",
+    base: "w-[300px] lg:w-[280px]",
     inputWrapper: `
     h-12
     px-5
@@ -182,7 +182,7 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
                 ["--heroui-default-100-opacity" as any]: "1",
                 ["--heroui-default-200-opacity" as any]: "1",
             }}
-            className="flex gap-4 items-center mb-8"
+            className="flex flex-col lg:flex-row gap-4 items-center"
         >
             {/* 🔍 SEARCH */}
             <div className="w-[300px] shrink-0">
@@ -195,7 +195,7 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
             </div>
 
             {/* 📌 STATUS */}
-            <PillWrapper width="w-[245px]">
+            <PillWrapper width="w-[300px] lg:w-[245px]">
                 <Autocomplete
                     inputValue={statusState.inputValue}
                     items={statusState.items}
@@ -246,7 +246,7 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
             </PillWrapper>
 
             {/* 💰 DEBT */}
-            <PillWrapper width="w-[245px]">
+            <PillWrapper width="w-[300px] lg:w-[245px]">
                 <Autocomplete
                     inputValue={debtState.inputValue}
                     items={debtState.items}

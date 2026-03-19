@@ -20,7 +20,7 @@ export default function Category({ showTourDetails, category }: CategoryProps) {
                 <table className="w-[1120px] border-collapse">
                     {/* column sizes */}
                     <colgroup>
-                        <col className="w-[35px]" />
+                        <col className="w-[40px]" />
                         <col />
                         <col />
                         <col className="w-[70px]" />
@@ -36,27 +36,27 @@ export default function Category({ showTourDetails, category }: CategoryProps) {
 
                     {/* HEADER */}
                     <thead>
-                    <tr className="bg-main text-white uppercase text-14semi xl:text-12semi">
-                        <th className="px-2 py-[20px] text-left">П/П</th>
-                        <th className="px-2 py-[20px] text-left">Номер замовлення</th>
-                        <th className="px-2 py-[20px] text-left">
+                    <tr className="bg-main text-white uppercase text-[12px] font-normal">
+                        <th className="px-2 rounded-tl-[8px] rounded-bl-[8px] py-[18px] text-left font-normal">П/П</th>
+                        <th className="px-2 py-[18px] text-left font-normal">Номер замовлення</th>
+                        <th className="px-2 py-[18px] text-left font-normal">
                             Назва <br /> туру
                         </th>
-                        <th className="px-2 py-[20px] text-left">
+                        <th className="px-2 py-[18px] text-left font-normal">
                             Кількість <br /> днів
                         </th>
-                        <th className="px-2 py-[20px] text-left">
+                        <th className="px-2 py-[18px] text-left font-normal">
                             Дані <br /> туристів
                         </th>
-                        <th className="px-2 py-[20px] text-left">Вартість заявки</th>
-                        <th className="px-2 py-[20px] text-left">Комісія</th>
-                        <th className="px-2 py-[20px] text-left">Внесено коштів</th>
-                        <th className="px-2 py-[20px] text-left">Залишок до сплати</th>
-                        <th className="px-2 py-[20px] text-left">
+                        <th className="px-2 py-[18px] text-left font-normal">Вартість заявки</th>
+                        <th className="px-2 py-[18px] text-left font-normal">Комісія</th>
+                        <th className="px-2 py-[18px] text-left font-normal">Внесено коштів</th>
+                        <th className="px-2 py-[18px] text-left font-normal">Залишок до сплати</th>
+                        <th className="px-2 py-[18px] text-left font-normal">
                             Дата початку і завершення
                         </th>
-                        <th className="px-2 py-[20px] text-left">Статус заявки</th>
-                        <th className="px-2 py-[20px] text-left">Коментар</th>
+                        <th className="px-2 py-[18px] text-left font-normal">Статус заявки</th>
+                        <th className="px-2 py-[18px] text-left rounded-tr-[8px] rounded-br-[8px] font-normal">Коментар</th>
                     </tr>
                     </thead>
 

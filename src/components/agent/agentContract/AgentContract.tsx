@@ -21,21 +21,21 @@ export default async function AgentContract() {
   const telegramUrl = data?.telegram;
 
   return (
-    <section className="mb-[148px] xl:mb-[86px]">
-      <Container className="flex flex-col md:flex-row gap-x-5 gap-y-7">
+    <section className="mb-[60px] xl:mb-[86px]">
+      <Container className="flex flex-col md:flex-row gap-x-5">
         <div className="md:flex flex-col justify-between md:w-[calc(60%-10px)] gap-x-5">
           <div>
             <AnimatedWrapper
               animation={fadeInAnimation({ y: 30 })}
               as="h2"
-              className="mb-5 xl:mb-7 text-32med xl:text-48med"
+              className="mb-7 text-32med xl:text-48med"
             >
               Необхідна інформація
             </AnimatedWrapper>
             <AnimatedWrapper
               animation={fadeInAnimation({ y: 30, delay: 0.4 })}
               as="p"
-              className="mb-9 md:mb-0"
+              className="mb-8 md:mb-0 lg:max-w-[560px]"
             >
               Для співпраці потрібно підписати договір. Агентський договір та зразок договору з туристом можна завантажити нижче. Підписати договір також можна через систему  "Вчасно". (для підписання договору через "Вчасно" напишіть запит на пошту richtourfamily@gmail.com для присвоєння номеру договору)
             </AnimatedWrapper>
@@ -50,7 +50,7 @@ export default async function AgentContract() {
                 href={agentUrl}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="block mb-3 mx-auto md:mx-0"
+                className="block mb-3 lg:mb-4 mx-auto md:mx-0"
             >
               <MainButton className="w-full max-w-[550px] h-14 mx-auto md:mx-0 text-14med">
                 Завантажити договір агента
@@ -60,7 +60,7 @@ export default async function AgentContract() {
                 href={touristUrl}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="block mb-3"
+                className="block mb-3 lg:mb-4"
             >
               <MainButton
                   variant="ghost red"
