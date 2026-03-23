@@ -9,6 +9,7 @@ import OrdersFilters, {
     OrdersFiltersState,
 } from "./OrdersFilters";
 import DetailsModal from "@/components/agent/menu/content/DetailsModal";
+import Backdrop from "@/components/shared/backdrop/Backdrop";
 import "./order-filters.css";
 
 type Tour = {
@@ -39,10 +40,72 @@ export interface OrderTableRow {
     comment: string;                // Коментар
 }
 
+function toTimeStart(value: unknown): number | null {
+    if (!value) return null;
+
+    if (value instanceof Date) {
+        const time = value.getTime();
+        return Number.isNaN(time) ? null : time;
+    }
+
+    if (
+        typeof value === "object" &&
+        value !== null &&
+        "year" in value &&
+        "month" in value &&
+        "day" in value
+    ) {
+        const v = value as { year: number; month: number; day: number };
+        const date = new Date(v.year, v.month - 1, v.day, 0, 0, 0, 0);
+        const time = date.getTime();
+        return Number.isNaN(time) ? null : time;
+    }
+
+    return null;
+}
+
+function toTimeEnd(value: unknown): number | null {
+    if (!value) return null;
+
+    if (value instanceof Date) {
+        const time = value.getTime();
+        return Number.isNaN(time) ? null : time;
+    }
+
+    if (
+        typeof value === "object" &&
+        value !== null &&
+        "year" in value &&
+        "month" in value &&
+        "day" in value
+    ) {
+        const v = value as { year: number; month: number; day: number };
+        const date = new Date(v.year, v.month - 1, v.day, 23, 59, 59, 999);
+        const time = date.getTime();
+        return Number.isNaN(time) ? null : time;
+    }
+
+    return null;
+}
+
+function parseOrderDate(value: string | null | undefined, endOfDay = false): number | null {
+    if (!value) return null;
+
+    const date = endOfDay
+        ? new Date(`${value}T23:59:59.999`)
+        : new Date(`${value}T00:00:00.000`);
+
+    const time = date.getTime();
+    return Number.isNaN(time) ? null : time;
+}
+
 function filterOrders(
     orders: OrderTableRow[],
     filters: OrdersFiltersState
 ) {
+    const periodFrom = toTimeStart(filters.period.from);
+    const periodTo = toTimeEnd(filters.period.to);
+
     return orders.filter((order) => {
         /* 🔍 ПОИСК */
         if (filters.search.trim().length >= 2) {
@@ -65,40 +128,34 @@ function filterOrders(
 
         /* 💰 ЗАЛИШОК ДО СПЛАТИ */
         if (filters.hasDebt === "так") {
-            // есть долг ИЛИ значение отсутствует (прочерк)
-            if (
-                order.remainingAmount === 0
-            ) {
+            if (Number(order.remainingAmount) === 0) {
                 return false;
             }
         }
 
         if (filters.hasDebt === "ні") {
-            // нет долга — строго 0
-            if (order.remainingAmount !== 0) {
+            if (Number(order.remainingAmount) !== 0) {
                 return false;
             }
         }
 
-        /* 📅 ПЕРІОД (по startDate) */
-        if (filters.period.from || filters.period.to) {
-            // если даты отсутствуют — исключаем
-            if (!order.startDate || !order.endDate) {
+        /* 📅 ПЕРІОД */
+        if (periodFrom !== null || periodTo !== null) {
+            const orderStart = parseOrderDate(order.startDate, false);
+            const orderEnd = parseOrderDate(order.endDate, true);
+
+            if (orderStart === null || orderEnd === null) {
                 return false;
             }
 
-            const orderStart = new Date(order.startDate);
-            const orderEnd = new Date(order.endDate);
-
-            // защита от Invalid Date
-            if (isNaN(orderStart.getTime()) || isNaN(orderEnd.getTime())) {
+            // пересечение диапазонов:
+            // заказ заканчивается раньше выбранного периода
+            if (periodFrom !== null && orderEnd < periodFrom) {
                 return false;
             }
 
-            if (
-                (filters.period.from && orderEnd < filters.period.from) ||
-                (filters.period.to && orderStart > filters.period.to)
-            ) {
+            // заказ начинается позже выбранного периода
+            if (periodTo !== null && orderStart > periodTo) {
                 return false;
             }
         }
@@ -160,7 +217,8 @@ const transformOrders = result => {
         endDate: item.customfields.Datazakinchennyaturu ? item.customfields.Datazakinchennyaturu.value : "",
         status: statusList[item.statusid] || "не почався",
         comment: item.customfields.Dodatkovidani ? item.customfields.Dodatkovidani.value : "",
-        details: item.orderproducts.map(item => ({
+        details: item.orderproducts.map((item, index) => ({
+            index: index + 1,
             pib: item.name,
             birthday: item.customfields.Datanarya?.value || "",
             phone: item.customfields.Telefon?.value || "",
@@ -228,7 +286,11 @@ export default function OrdersContent() {
                     xl:ml-[calc((100vw-1280px)/2)]"
         >
             <DetailsModal {...tourDetails} isPopUpShown={isPopUpShown} setIsPopUpShown={setIsPopUpShown} />
-
+            <Backdrop
+                isVisible={isPopUpShown}
+                onClick={() => {
+                    setIsPopUpShown(false);
+                }} />
             <OrdersFilters filters={filters} onChange={setFilters} />
             {!filteredOrders.length && (<p className="text-center text-16reg">
                 Нічого не знайдено

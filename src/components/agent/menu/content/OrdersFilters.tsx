@@ -43,15 +43,20 @@ interface OptionItem {
     label: string;
 }
 
-/* =======================
-   OPTIONS
-======================= */
 
 const statusOptions: OptionItem[] = [
-    { key: "не почався", label: "Не почався" },
-    { key: "в процесі", label: "В процесі" },
-    { key: "завершений", label: "Завершений" },
-    { key: "відмінений", label: "Відмінений" },
+    { key: "Нова заявка", label: "Нова заявка" },
+    { key: "В роботі", label: "В роботі" },
+    { key: "Дані внесено", label: "Дані внесено" },
+    { key: "Відправлено на підтвердження", label: "Відправлено на підтвердження" },
+    { key: "Відмова від заявки", label: "Відмова від заявки" },
+    { key: "Підтверджено. Чекаю оплату завдатку", label: "Підтверджено. Чекаю оплату завдатку" },
+    { key: "Оплачено завдаток", label: "Оплачено завдаток" },
+    { key: "Оплата залишкової вартості туру", label: "Оплата залишкової вартості туру" },
+    { key: "Відправлено на оплату", label: "Відправлено на оплату" },
+    { key: "Повна оплата", label: "Повна оплата" },
+    { key: "Тур завершено", label: "ВТур завершено" },
+    { key: "Кошти повернуто", label: "Кошти повернуто" },
 ];
 
 const debtOptions: OptionItem[] = [
@@ -228,8 +233,9 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
                             status: key as StatusFilter,
                         });
                     }}
+
                     placeholder="Статус заявки"
-                    isClearable={false}
+                    isClearable={true}
                     size="sm"
                     selectorIcon={<SelectIcon />}
                     classNames={innerAutocomplete}
@@ -280,7 +286,7 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
                         });
                     }}
                     placeholder="Залишок до сплати"
-                    isClearable={false}
+                    isClearable={true}
                     size="sm"
                     selectorIcon={<SelectIcon />}
                     classNames={innerAutocomplete}
@@ -317,6 +323,40 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
                             to: range?.end ?? null,
                         },
                     })
+                }
+                endContent={
+                    (filters.period.from || filters.period.to) && (
+                        <button
+                            type="button"
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() =>
+                                onChange({
+                                    ...filters,
+                                    period: { from: null, to: null },
+                                })
+                            }
+                            className="
+                w-8 h-8
+                flex items-center justify-center
+                rounded-full
+                text-default-500
+                hover:bg-default/40
+                hover:text-black
+                transition
+            "
+                            aria-label="Очистити період"
+                        >
+                            <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M18 6L6 18M6 6l12 12" />
+                            </svg>
+                        </button>
+                    )
                 }
             />
         </div>
