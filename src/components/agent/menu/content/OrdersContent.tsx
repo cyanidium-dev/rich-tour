@@ -189,18 +189,23 @@ const statusList = {
     "48": "Тур завершено",
     "84": "Кошти повернуто",
 }
-// Нова заявка - 36
-// В роботі - 39
-// Дані внесено - 40
-// Відправлено на підтвердження - 41
-// Підтверджено. Чекаю оплату завдатку - 43
-// Оплачено завдаток - 44
-// Оплата залишкової вартості туру - 45
-// Повна оплата - 47
-// Тур завершено - 48
-// Відправлено на оплату - 46
-// Відмова від заявки - 42
-// Кошти повернуто - 84
+
+const formatDate = (dateStr?: string | null): string => {
+    if (!dateStr) return "—";
+
+    // уже в нужном формате
+    if (dateStr.includes(".")) {
+        return dateStr;
+    }
+
+    // формат YYYY-MM-DD
+    if (dateStr.includes("-")) {
+        const [y, m, d] = dateStr.split("-");
+        return `${d}.${m}.${y}`;
+    }
+
+    return dateStr; // fallback
+};
 
 const transformOrders = result => {
     const data = result.map((item, idx) => ({
@@ -213,14 +218,14 @@ const transformOrders = result => {
         commission: item.customfields.zagalnasumapokomisi?.value ? item.customfields.zagalnasumapokomisi?.value : "",
         paidAmount: item.customfields.Oplachenopozayavtsi ? Number(item.customfields.Oplachenopozayavtsi.value) : "",
         remainingAmount: item.customfields.Zalishilosoplatitipozayavtsi ? Number(item.customfields?.Zalishilosoplatitipozayavtsi.value) : "",
-        startDate: item.customfields.Dataturut ? item.customfields.Dataturut.value : "",
-        endDate: item.customfields.Datazakinchennyaturu ? item.customfields.Datazakinchennyaturu.value : "",
+        startDate: item.customfields.Dataturut ? formatDate(item.customfields.Dataturut.value) : "",
+        endDate: item.customfields.Datazakinchennyaturu ? formatDate(item.customfields.Datazakinchennyaturu.value) : "",
         status: statusList[item.statusid] || "не почався",
         comment: item.customfields.Dodatkovidani ? item.customfields.Dodatkovidani.value : "",
         details: item.orderproducts.map((item, index) => ({
             index: index + 1,
             pib: item.name,
-            birthday: item.customfields.Datanarya?.value || "",
+            birthday: item.customfields.Datanarya?.value ? formatDate(item.customfields.Datanarya?.value) : "",
             phone: item.customfields.Telefon?.value || "",
             passport: item.customfields.Pasport?.value || "",
             passportFinish: item.customfields.Datazavershpasp?.value || "",
@@ -230,6 +235,22 @@ const transformOrders = result => {
 
     return data;
 }
+
+const archiveOrderStatusList = ["42", "48", "84"];
+
+function isTodayOrFuture(dateStr: string): boolean {
+    const today = new Date();
+
+    // обнуляем время (важно!)
+    today.setHours(0, 0, 0, 0);
+
+    const date = new Date(dateStr);
+    date.setHours(0, 0, 0, 0);
+
+    return date >= today;
+}
+
+
 
 export default function OrdersContent() {
     const [isPopUpShown, setIsPopUpShown] = useState(false);
@@ -249,9 +270,21 @@ export default function OrdersContent() {
                 const {data} = await axios.get("/api/agent/tours", {
                     withCredentials: true,
                 });
-                const transformData = transformOrders(data.orders) || [];
+
+                const notArchiveOrders = data.orders.filter(({statusid}) => !archiveOrderStatusList.includes(statusid));
+
+                const filtered = notArchiveOrders.filter((item) => {
+                    const value = item.customfields?.Datazakinchennyaturu?.value;
+
+                    if (!value) return false;
+
+                    return isTodayOrFuture(value);
+                });
+
+                const transformData = transformOrders(filtered) || [];
                 setTours(transformData);
-            } catch {
+            } catch(error) {
+                console.error(error);
                 setTours([]);
             } finally {
                 setIsLoading(false);

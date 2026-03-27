@@ -31,7 +31,6 @@ export default function DetailsModal({
     comment,
                                          details,
                                          }: ModalProps) {
-    console.log(details)
     return (
         <div
             className={`${
@@ -83,7 +82,7 @@ export default function DetailsModal({
                                 <th className="px-2 rounded-tl-[8px] rounded-bl-[8px] py-[18px] text-left font-normal">П/П</th>
                                 <th className="px-2 py-[18px] text-left font-normal">ПІБ</th>
                                 <th className="px-2 py-[18px] text-left font-normal">
-                                    Номер <br/> телефону
+                                    Дата народження
                                 </th>
                                 <th className="px-2 py-[18px] text-left font-normal">
                                     Номер телефону
