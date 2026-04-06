@@ -8,6 +8,47 @@ type LoginBody = {
     password: string;
 };
 
+type AgentUser = {
+    _id: string;
+    email: string;
+    password?: {
+        plain?: string;
+        hash?: string;
+    };
+    crmId?: number | string;
+    isApproved?: boolean;
+};
+
+type AgencyUser = {
+    _id: string;
+    login: string;
+    password?: {
+        plain?: string;
+        hash?: string;
+    };
+};
+
+function createAuthResponse(
+    payload: Record<string, unknown>,
+    body: Record<string, unknown>
+) {
+    const token = jwt.sign(payload, process.env.JWT_SECRET!, {
+        expiresIn: "7d",
+    });
+
+    const response = NextResponse.json(body);
+
+    response.cookies.set("auth_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 7,
+    });
+
+    return response;
+}
+
 export async function POST(req: Request) {
     let body: LoginBody;
 
@@ -17,107 +58,107 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 });
     }
 
-    const { email, password } = body;
+    const email = body.email?.trim().toLowerCase();
+    const password = body.password;
 
     if (!email || !password) {
         return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
     }
 
     // ───────────── AGENT ─────────────
-    const agentUser = await client.fetch<{
-        _id: string;
-        email: string;
-        passwordHash: string;
-        crmId: number;
-        isApproved: boolean;
-    } | null>(
+    const agentUser = await client.fetch<AgentUser | null>(
         `*[_type == "agentUser" && email == $email][0]{
       _id,
       email,
-      passwordHash,
+      password {
+        hash
+      },
       crmId,
-      isApproved,
+      isApproved
     }`,
         { email }
     );
 
-    if(!agentUser?.isApproved) {
-        return NextResponse.json({ error: "Ваш статус агента має буди схвалений. Зверніться будь ласка до адміністрації сайту" }, { status: 401 });
-    }
-
     if (agentUser) {
-        const isValid = await bcrypt.compare(password, agentUser.passwordHash);
-
-        if (!isValid) {
-            return NextResponse.json({ error: "INVALID_CREDENTIALS" }, { status: 401 });
+        if (!agentUser.isApproved) {
+            return NextResponse.json(
+                {
+                    error:
+                        "Ваш статус агента має буди схвалений. Зверніться будь ласка до адміністрації сайту",
+                },
+                { status: 401 }
+            );
         }
 
-        const token = jwt.sign(
+        const passwordHash = agentUser.password?.hash;
+
+        if (!passwordHash) {
+            return NextResponse.json(
+                { error: "PASSWORD_NOT_SET" },
+                { status: 401 }
+            );
+        }
+
+        const isValid = await bcrypt.compare(password, passwordHash);
+
+        if (!isValid) {
+            return NextResponse.json(
+                { error: "INVALID_CREDENTIALS" },
+                { status: 401 }
+            );
+        }
+
+        return createAuthResponse(
             {
                 sub: agentUser._id,
                 role: "agent",
                 email: agentUser.email,
                 crmId: agentUser.crmId,
             },
-            process.env.JWT_SECRET!,
-            { expiresIn: "7d" }
+            { role: "agent" }
         );
-
-        const response = NextResponse.json({ role: "agent" });
-
-        response.cookies.set("auth_token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            path: "/",
-            maxAge: 60 * 60 * 24 * 7,
-        });
-
-        return response;
     }
 
     // ───────────── AGENCY ─────────────
-    const agencyUser = await client.fetch<{
-        _id: string;
-        login: string;
-        passwordHash: string;
-    } | null>(
+    const agencyUser = await client.fetch<AgencyUser | null>(
         `*[_type == "agencyUser" && login == $login][0]{
       _id,
       login,
-      passwordHash
+      password {
+        plain,
+        hash
+      }
     }`,
         { login: email }
     );
 
     if (agencyUser) {
-        const isValid = await bcrypt.compare(password, agencyUser.passwordHash);
+        const passwordHash = agencyUser.password?.hash;
 
-        if (!isValid) {
-            return NextResponse.json({ error: "Невірний email або пароль." }, { status: 401 });
+        if (!passwordHash) {
+            return NextResponse.json(
+                { error: "PASSWORD_NOT_SET" },
+                { status: 401 }
+            );
         }
 
-        const token = jwt.sign(
+        const isValid = await bcrypt.compare(password, passwordHash);
+
+        if (!isValid) {
+            return NextResponse.json(
+                { error: "Невірний email або пароль." },
+                { status: 401 }
+            );
+        }
+
+        return createAuthResponse(
             {
                 sub: agencyUser._id,
                 role: "agency",
                 login: agencyUser.login,
             },
-            process.env.JWT_SECRET!,
-            { expiresIn: "7d" }
+            { role: "agency" }
         );
-
-        const response = NextResponse.json({ role: "agency" });
-
-        response.cookies.set("auth_token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            path: "/",
-            maxAge: 60 * 60 * 24 * 7,
-        });
-
-        return response;
     }
 
     return NextResponse.json({ error: "INVALID_CREDENTIALS" }, { status: 401 });
