@@ -63,6 +63,13 @@ export async function POST(req: NextRequest) {
  * ───────────────────────────── */
 
 async function handleAgent(agent: any) {
+    if (agent.crmId) {
+        console.log('⏭ Agent already linked to CRM, skipping CRM sync', {
+            sanityId: agent._id,
+            crmId: agent.crmId,
+        })
+        return
+    }
     console.log('start add/profile agent', agent._id)
 // 🔒 1️⃣ Сохраняем agencyCrmId, если он изменился
     if (
