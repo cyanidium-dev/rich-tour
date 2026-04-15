@@ -47,7 +47,6 @@ export async function GET() {
     };
 
     const orders = await getAgentOrdersFromCrm(payload);
-    console.log(orders);
 
     return NextResponse.json({ orders });
 }

@@ -274,6 +274,12 @@ function isTodayOrFuture(dateStr: string): boolean {
     return date >= today;
 }
 
+function sortOrdersByIdDesc(orders: OrderTableRow[]): OrderTableRow[] {
+    return [...orders].sort((a, b) => {
+        return Number(b.id) - Number(a.id);
+    });
+}
+
 export default function OrdersContent({
                                           mode = "active",
                                       }: OrdersContentProps) {
@@ -299,9 +305,7 @@ export default function OrdersContent({
                 });
 
                 const orders = Array.isArray(data?.orders) ? data.orders : [];
-
                 let preparedOrders = orders;
-
                 if (mode === "active") {
                     preparedOrders = orders
                         .filter(
@@ -319,10 +323,14 @@ export default function OrdersContent({
                 }
 
                 if (mode === "archive") {
-                    preparedOrders = orders.filter(
-                        ({ statusid }: { statusid: string }) =>
-                            archiveOrderStatusList.includes(statusid)
-                    );
+                    preparedOrders = orders.filter((item: any) => {
+                        const isArchivedByStatus = archiveOrderStatusList.includes(item.statusid);
+
+                        const endDate = item.customfields?.Datazakinchennyaturu?.value;
+                        const isPastTour = endDate ? !isTodayOrFuture(endDate) : false;
+
+                        return isArchivedByStatus || isPastTour;
+                    });
                 }
 
                 if (mode === "all") {
@@ -345,6 +353,15 @@ export default function OrdersContent({
     const filteredOrders = useMemo(
         () => filterOrders(tours, filters),
         [tours, filters]
+    );
+
+    const sortedOrders = useMemo(
+        () =>
+            sortOrdersByIdDesc(filteredOrders).map((order, index) => ({
+                ...order,
+                index: index + 1,
+            })),
+        [filteredOrders]
     );
 
     const showTourDetails = (id: string) => {
@@ -387,7 +404,7 @@ export default function OrdersContent({
 
             <OrdersFilters filters={filters} onChange={setFilters} />
 
-            {!filteredOrders.length && (
+            {!sortedOrders.length && (
                 <p className="text-center text-16reg">
                     Нічого не знайдено
                 </p>
@@ -401,9 +418,9 @@ export default function OrdersContent({
             {/*        }}*/}
             {/*    />*/}
             {/*)}*/}
-            {Boolean(filteredOrders.length) && (
+            {Boolean(sortedOrders.length) && (
                 <Pagination
-                    items={filteredOrders}
+                    items={sortedOrders}
                     scrollTargetId="orders-table"
                     useItemsPerPage={useOrdersPerPage}
                     renderItems={(paginatedOrders) => (
