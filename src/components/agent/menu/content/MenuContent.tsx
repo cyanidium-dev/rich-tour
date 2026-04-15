@@ -11,9 +11,9 @@ export default function MenuContent({ user }: { user: any }) {
 
   switch (menu) {
     case "orders":
-      return <OrdersContent />;
+      return <OrdersContent mode="active" />;
     case "archive":
-      return <OrdersContent />;
+      return <OrdersContent mode="archive" />;
     case "tours":
       return <ToursContent />;
     case "settings":

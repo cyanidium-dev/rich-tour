@@ -12,33 +12,38 @@ import DetailsModal from "@/components/agent/menu/content/DetailsModal";
 import Backdrop from "@/components/shared/backdrop/Backdrop";
 import "./order-filters.css";
 
-type Tour = {
-    id: string;
-    title: string;
-};
+import Pagination from "@/components/shared/pagination/Pagination";
+import useOrdersPerPage from "@/hooks/useOrdersPerPage";
 
 export interface OrderTableRow {
     id: string;
-
-    index: number;                 // П/П
-    orderNumber: string;           // Номер замовлення
-    tourTitle: string;             // Назва туру
-    daysQuantity: number;           // Кількість днів
-
-    tourists: string;              // Дані туристів
-    totalCost: number;              // Вартість заявки
-    commission: number;             // Комісія
-    paidAmount: number;             // Внесено коштів
-    remainingAmount: number;        // Залишок до сплати
-
-    startDate: string;              // Дата початку
-    endDate: string;                // Дата завершення
-    status: | "не почався"
-        | "в процесы"
-        | "завершений"
-        | "відмінений"; // Статус заявки
-    comment: string;                // Коментар
+    index: number;
+    orderNumber: string;
+    tourTitle: string;
+    daysQuantity: number;
+    tourists: string;
+    totalCost: number;
+    commission: number;
+    paidAmount: number;
+    remainingAmount: number;
+    startDate: string;
+    endDate: string;
+    status: string;
+    comment: string;
+    details?: {
+        index: number;
+        pib: string;
+        birthday: string;
+        phone: string;
+        passport: string;
+        passportFinish: string;
+        city: string;
+    }[];
 }
+
+type OrdersContentProps = {
+    mode?: "active" | "archive" | "all";
+};
 
 function toTimeStart(value: unknown): number | null {
     if (!value) return null;
@@ -88,12 +93,22 @@ function toTimeEnd(value: unknown): number | null {
     return null;
 }
 
-function parseOrderDate(value: string | null | undefined, endOfDay = false): number | null {
+function parseOrderDate(
+    value: string | null | undefined,
+    endOfDay = false
+): number | null {
     if (!value) return null;
 
+    let normalized = value;
+
+    if (value.includes(".")) {
+        const [day, month, year] = value.split(".");
+        normalized = `${year}-${month}-${day}`;
+    }
+
     const date = endOfDay
-        ? new Date(`${value}T23:59:59.999`)
-        : new Date(`${value}T00:00:00.000`);
+        ? new Date(`${normalized}T23:59:59.999`)
+        : new Date(`${normalized}T00:00:00.000`);
 
     const time = date.getTime();
     return Number.isNaN(time) ? null : time;
@@ -107,7 +122,6 @@ function filterOrders(
     const periodTo = toTimeEnd(filters.period.to);
 
     return orders.filter((order) => {
-        /* 🔍 ПОИСК */
         if (filters.search.trim().length >= 2) {
             const q = filters.search.trim().toLowerCase();
 
@@ -121,12 +135,10 @@ function filterOrders(
             }
         }
 
-        /* 📌 СТАТУС */
         if (filters.status && order.status !== filters.status) {
             return false;
         }
 
-        /* 💰 ЗАЛИШОК ДО СПЛАТИ */
         if (filters.hasDebt === "так") {
             if (Number(order.remainingAmount) === 0) {
                 return false;
@@ -139,7 +151,6 @@ function filterOrders(
             }
         }
 
-        /* 📅 ПЕРІОД */
         if (periodFrom !== null || periodTo !== null) {
             const orderStart = parseOrderDate(order.startDate, false);
             const orderEnd = parseOrderDate(order.endDate, true);
@@ -148,13 +159,10 @@ function filterOrders(
                 return false;
             }
 
-            // пересечение диапазонов:
-            // заказ заканчивается раньше выбранного периода
             if (periodFrom !== null && orderEnd < periodFrom) {
                 return false;
             }
 
-            // заказ начинается позже выбранного периода
             if (periodTo !== null && orderStart > periodTo) {
                 return false;
             }
@@ -163,7 +171,6 @@ function filterOrders(
         return true;
     });
 }
-
 
 function getDaysQuantity(start: string, end: string): number {
     const startDate = new Date(start);
@@ -175,7 +182,7 @@ function getDaysQuantity(start: string, end: string): number {
     return diffDays + 1;
 }
 
-const statusList = {
+const statusList: Record<string, string> = {
     "36": "Нова заявка",
     "39": "В роботі",
     "40": "Дані внесено",
@@ -188,60 +195,77 @@ const statusList = {
     "47": "Повна оплата",
     "48": "Тур завершено",
     "84": "Кошти повернуто",
-}
+};
+
+const archiveOrderStatusList = ["42", "48", "84"];
 
 const formatDate = (dateStr?: string | null): string => {
     if (!dateStr) return "—";
 
-    // уже в нужном формате
     if (dateStr.includes(".")) {
         return dateStr;
     }
 
-    // формат YYYY-MM-DD
     if (dateStr.includes("-")) {
         const [y, m, d] = dateStr.split("-");
         return `${d}.${m}.${y}`;
     }
 
-    return dateStr; // fallback
+    return dateStr;
 };
 
-const transformOrders = result => {
-    const data = result.map((item, idx) => ({
+const transformOrders = (result: any[]): OrderTableRow[] => {
+    return result.map((item, idx) => ({
         id: item.id,
         index: idx + 1,
-        tourTitle: item.customfields.Nazvaturu ? item.customfields.Nazvaturu.value : "",
-        daysQuantity: item.customfields.Dataturut ? getDaysQuantity(item.customfields.Dataturut.value, item.customfields.Datazakinchennyaturu.value) : "",
-        tourists: item.orderproducts.map(item => item.name).join(" "),
-        totalCost: item.customfields.zagalsumabezkomisi ? item.customfields.zagalsumabezkomisi.value : "",
-        commission: item.customfields.zagalnasumapokomisi?.value ? item.customfields.zagalnasumapokomisi?.value : "",
-        paidAmount: item.customfields.Oplachenopozayavtsi ? Number(item.customfields.Oplachenopozayavtsi.value) : "",
-        remainingAmount: item.customfields.Zalishilosoplatitipozayavtsi ? Number(item.customfields?.Zalishilosoplatitipozayavtsi.value) : "",
-        startDate: item.customfields.Dataturut ? formatDate(item.customfields.Dataturut.value) : "",
-        endDate: item.customfields.Datazakinchennyaturu ? formatDate(item.customfields.Datazakinchennyaturu.value) : "",
-        status: statusList[item.statusid] || "не почався",
-        comment: item.customfields.Dodatkovidani ? item.customfields.Dodatkovidani.value : "",
-        details: item.orderproducts.map((item, index) => ({
+        orderNumber: item.number || item.id || "",
+        tourTitle: item.customfields?.Nazvaturu?.value || "",
+        daysQuantity: item.customfields?.Dataturut?.value &&
+        item.customfields?.Datazakinchennyaturu?.value
+            ? getDaysQuantity(
+                item.customfields.Dataturut.value,
+                item.customfields.Datazakinchennyaturu.value
+            )
+            : 0,
+        tourists: item.orderproducts?.map((product: any) => product.name).join(" ") || "",
+        totalCost: item.customfields?.zagalsumabezkomisi?.value
+            ? Number(item.customfields.zagalsumabezkomisi.value)
+            : 0,
+        commission: item.customfields?.zagalnasumapokomisi?.value
+            ? Number(item.customfields.zagalnasumapokomisi.value)
+            : 0,
+        paidAmount: item.customfields?.Oplachenopozayavtsi?.value
+            ? Number(item.customfields.Oplachenopozayavtsi.value)
+            : 0,
+        remainingAmount: item.customfields?.Zalishilosoplatitipozayavtsi?.value
+            ? Number(item.customfields.Zalishilosoplatitipozayavtsi.value)
+            : 0,
+        startDate: item.customfields?.Dataturut?.value
+            ? formatDate(item.customfields.Dataturut.value)
+            : "",
+        endDate: item.customfields?.Datazakinchennyaturu?.value
+            ? formatDate(item.customfields.Datazakinchennyaturu.value)
+            : "",
+        status: statusList[item.statusid] || "Невідомий статус",
+        comment: item.customfields?.Dodatkovidani?.value || "",
+        details: item.orderproducts?.map((product: any, index: number) => ({
             index: index + 1,
-            pib: item.name,
-            birthday: item.customfields.Datanarya?.value ? formatDate(item.customfields.Datanarya?.value) : "",
-            phone: item.customfields.Telefon?.value || "",
-            passport: item.customfields.Pasport?.value || "",
-            passportFinish: item.customfields.Datazavershpasp?.value || "",
-            city: item.customfields.Mistoposadki?.value || "",
-        })),
+            pib: product.name,
+            birthday: product.customfields?.Datanarya?.value
+                ? formatDate(product.customfields.Datanarya.value)
+                : "",
+            phone: product.customfields?.Telefon?.value || "",
+            passport: product.customfields?.Pasport?.value || "",
+            passportFinish: product.customfields?.Datazavershpasp?.value
+                ? formatDate(product.customfields.Datazavershpasp.value)
+                : "",
+            city: product.customfields?.Mistoposadki?.value || "",
+        })) || [],
     }));
-
-    return data;
-}
-
-const archiveOrderStatusList = ["42", "48", "84"];
+};
 
 function isTodayOrFuture(dateStr: string): boolean {
     const today = new Date();
-
-    // обнуляем время (важно!)
     today.setHours(0, 0, 0, 0);
 
     const date = new Date(dateStr);
@@ -250,11 +274,14 @@ function isTodayOrFuture(dateStr: string): boolean {
     return date >= today;
 }
 
-
-
-export default function OrdersContent() {
+export default function OrdersContent({
+                                          mode = "active",
+                                      }: OrdersContentProps) {
     const [isPopUpShown, setIsPopUpShown] = useState(false);
-    const [tourDetails, setTourDetails] = useState({});
+    const [tourDetails, setTourDetails] = useState<{
+        comment?: string;
+        details?: OrderTableRow["details"];
+    }>({});
     const [tours, setTours] = useState<OrderTableRow[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [filters, setFilters] = useState<OrdersFiltersState>({
@@ -267,23 +294,44 @@ export default function OrdersContent() {
     useEffect(() => {
         const fetchTours = async () => {
             try {
-                const {data} = await axios.get("/api/agent/tours", {
+                const { data } = await axios.get("/api/agent/tours", {
                     withCredentials: true,
                 });
 
-                const notArchiveOrders = data.orders.filter(({statusid}) => !archiveOrderStatusList.includes(statusid));
+                const orders = Array.isArray(data?.orders) ? data.orders : [];
 
-                const filtered = notArchiveOrders.filter((item) => {
-                    const value = item.customfields?.Datazakinchennyaturu?.value;
+                let preparedOrders = orders;
 
-                    if (!value) return false;
+                if (mode === "active") {
+                    preparedOrders = orders
+                        .filter(
+                            ({ statusid }: { statusid: string }) =>
+                                !archiveOrderStatusList.includes(statusid)
+                        )
+                        .filter((item: any) => {
+                            const value =
+                                item.customfields?.Datazakinchennyaturu?.value;
 
-                    return isTodayOrFuture(value);
-                });
+                            if (!value) return false;
 
-                const transformData = transformOrders(filtered) || [];
+                            return isTodayOrFuture(value);
+                        });
+                }
+
+                if (mode === "archive") {
+                    preparedOrders = orders.filter(
+                        ({ statusid }: { statusid: string }) =>
+                            archiveOrderStatusList.includes(statusid)
+                    );
+                }
+
+                if (mode === "all") {
+                    preparedOrders = orders;
+                }
+
+                const transformData = transformOrders(preparedOrders);
                 setTours(transformData);
-            } catch(error) {
+            } catch (error) {
                 console.error(error);
                 setTours([]);
             } finally {
@@ -292,19 +340,25 @@ export default function OrdersContent() {
         };
 
         fetchTours();
-    }, []);
+    }, [mode]);
 
     const filteredOrders = useMemo(
         () => filterOrders(tours, filters),
         [tours, filters]
     );
 
-    const showTourDetails = id => {
+    const showTourDetails = (id: string) => {
         setIsPopUpShown(true);
-        //@ts-expect-error
-        const {comment, details} = tours.find(tour => tour.id === id);
-        setTourDetails({comment, details});
-    }
+
+        const selectedTour = tours.find((tour) => tour.id === id);
+        if (!selectedTour) {
+            setTourDetails({});
+            return;
+        }
+
+        const { comment, details } = selectedTour;
+        setTourDetails({ comment, details });
+    };
 
     if (isLoading) return <Loader />;
 
@@ -318,23 +372,50 @@ export default function OrdersContent() {
                     lg:ml-[calc((100vw-1024px)/2)]
                     xl:ml-[calc((100vw-1280px)/2)]"
         >
-            <DetailsModal {...tourDetails} isPopUpShown={isPopUpShown} setIsPopUpShown={setIsPopUpShown} />
+            <DetailsModal
+                {...tourDetails}
+                isPopUpShown={isPopUpShown}
+                setIsPopUpShown={setIsPopUpShown}
+            />
+
             <Backdrop
                 isVisible={isPopUpShown}
                 onClick={() => {
                     setIsPopUpShown(false);
-                }} />
-            <OrdersFilters filters={filters} onChange={setFilters} />
-            {!filteredOrders.length && (<p className="text-center text-16reg">
-                Нічого не знайдено
-            </p>)}
-            {Boolean(filteredOrders.length) && <Category
-                showTourDetails={showTourDetails}
-                category={{
-                    // @ts-expect-error
-                    orders: filteredOrders,
                 }}
-            />}
+            />
+
+            <OrdersFilters filters={filters} onChange={setFilters} />
+
+            {!filteredOrders.length && (
+                <p className="text-center text-16reg">
+                    Нічого не знайдено
+                </p>
+            )}
+
+            {/*{Boolean(filteredOrders.length) && (*/}
+            {/*    <Category*/}
+            {/*        showTourDetails={showTourDetails}*/}
+            {/*        category={{*/}
+            {/*            orders: filteredOrders,*/}
+            {/*        }}*/}
+            {/*    />*/}
+            {/*)}*/}
+            {Boolean(filteredOrders.length) && (
+                <Pagination
+                    items={filteredOrders}
+                    scrollTargetId="orders-table"
+                    useItemsPerPage={useOrdersPerPage}
+                    renderItems={(paginatedOrders) => (
+                        <Category
+                            showTourDetails={showTourDetails}
+                            category={{
+                                orders: paginatedOrders,
+                            }}
+                        />
+                    )}
+                />
+            )}
         </div>
     );
 }
