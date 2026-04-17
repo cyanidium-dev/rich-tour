@@ -303,7 +303,6 @@ export default function OrdersContent({
                 const { data } = await axios.get("/api/agent/tours", {
                     withCredentials: true,
                 });
-
                 const orders = Array.isArray(data?.orders) ? data.orders : [];
                 let preparedOrders = orders;
                 if (mode === "active") {
