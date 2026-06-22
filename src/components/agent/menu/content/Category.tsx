@@ -1,10 +1,10 @@
-import { Order } from "@/types/order";
+import type { OrderTableRow } from "./OrdersContent";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import OrderItem from "./OrderItem";
 
 interface CategoryProps {
-    category: { orders: Order[] };
+    category: { orders: OrderTableRow[] };
     showTourDetails: (id: string) => void;
 }
 

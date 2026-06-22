@@ -45,6 +45,8 @@ type OrdersContentProps = {
     mode?: "active" | "archive" | "all";
 };
 
+type LoadError = "crm-id-missing" | "fetch-failed";
+
 function toTimeStart(value: unknown): number | null {
     if (!value) return null;
 
@@ -290,6 +292,8 @@ export default function OrdersContent({
     }>({});
     const [tours, setTours] = useState<OrderTableRow[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [loadError, setLoadError] = useState<LoadError | null>(null);
+    const [retryKey, setRetryKey] = useState(0);
     const [filters, setFilters] = useState<OrdersFiltersState>({
         search: "",
         status: null,
@@ -300,6 +304,9 @@ export default function OrdersContent({
     useEffect(() => {
         const fetchTours = async () => {
             try {
+                setIsLoading(true);
+                setLoadError(null);
+
                 const { data } = await axios.get("/api/agent/tours", {
                     withCredentials: true,
                 });
@@ -339,7 +346,12 @@ export default function OrdersContent({
                 const transformData = transformOrders(preparedOrders);
                 setTours(transformData);
             } catch (error) {
-                console.error(error);
+                console.error("Failed to load agent orders:", error);
+                const isCrmIdMissing =
+                    axios.isAxiosError(error) &&
+                    error.response?.data?.error === "CRM_ID_MISSING";
+
+                setLoadError(isCrmIdMissing ? "crm-id-missing" : "fetch-failed");
                 setTours([]);
             } finally {
                 setIsLoading(false);
@@ -347,7 +359,7 @@ export default function OrdersContent({
         };
 
         fetchTours();
-    }, [mode]);
+    }, [mode, retryKey]);
 
     const filteredOrders = useMemo(
         () => filterOrders(tours, filters),
@@ -362,6 +374,7 @@ export default function OrdersContent({
             })),
         [filteredOrders]
     );
+    const hasLoadError = loadError !== null;
 
     const showTourDetails = (id: string) => {
         setIsPopUpShown(true);
@@ -403,7 +416,34 @@ export default function OrdersContent({
 
             <OrdersFilters filters={filters} onChange={setFilters} />
 
-            {!sortedOrders.length && (
+            {loadError === "fetch-failed" && (
+                <div className="flex flex-col items-center gap-4 pr-4 xs:pr-[25px] xl:pr-[80px] text-center">
+                    <p className="text-16reg">
+                        Не вдалося завантажити замовлення. Спробуйте ще раз.
+                    </p>
+                    <button
+                        type="button"
+                        onClick={() => setRetryKey((key) => key + 1)}
+                        className="flex items-center justify-center h-12 px-8 text-14med rounded-full border border-main bg-main text-white
+                        xl:hover:brightness-[135%] focus-visible:brightness-[135%] transition duration-300 ease-in-out"
+                    >
+                        Повторити
+                    </button>
+                </div>
+            )}
+
+            {loadError === "crm-id-missing" && (
+                <div className="flex flex-col items-center gap-2 pr-4 xs:pr-[25px] xl:pr-[80px] text-center">
+                    <p className="text-16reg">
+                        Ваш профіль ще не прив&apos;язаний до OneBox OS.
+                    </p>
+                    <p className="text-14light">
+                        Зверніться до адміністратора, щоб додати CRM ID до профілю агента.
+                    </p>
+                </div>
+            )}
+
+            {!hasLoadError && !sortedOrders.length && (
                 <p className="text-center text-16reg">
                     Нічого не знайдено
                 </p>
@@ -417,7 +457,7 @@ export default function OrdersContent({
             {/*        }}*/}
             {/*    />*/}
             {/*)}*/}
-            {Boolean(sortedOrders.length) && (
+            {!hasLoadError && Boolean(sortedOrders.length) && (
                 <Pagination
                     items={sortedOrders}
                     scrollTargetId="orders-table"

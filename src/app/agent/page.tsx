@@ -2,6 +2,7 @@ import { getAuthAgentProfile } from "@/lib/sanity/users/getAuthUserProfile";
 import AgentContract from "@/components/agent/agentContract/AgentContract";
 import Hero from "@/components/agent/hero/Hero";
 import Menu from "@/components/agent/menu/Menu";
+import { redirect } from "next/navigation";
 
 const getExistProperties = user => {
     const result: string[] = [];
@@ -21,7 +22,7 @@ export default async function DashboardPage() {
     const user = await getAuthAgentProfile();
 
     if (!user) {
-        return null;
+        redirect("/auth/sign-in");
     }
     const existProperties = getExistProperties(user);
     return (

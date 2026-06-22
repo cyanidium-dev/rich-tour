@@ -149,21 +149,8 @@ export default function AgentInfoForm({
                   <option value="tov">ТОВ</option>
                   <option value="other">Інше</option>
                 </CustomizedInput>
-              </div>
 
-              {/* Правая колонка */}
-              <div className="flex flex-col gap-[18px] md:w-[calc(50%-10px)] xl:w-full">
-
-                <CustomizedInput
-                    fieldName="city"
-                    placeholder="Місто"
-                    errors={errors}
-                    touched={touched}
-                />
-
-
-
-                <SubmitButton
+                 <SubmitButton
                     dirty={dirty}
                     isValid={isValid}
                     isLoading={isLoading}

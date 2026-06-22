@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import TabMenu from "./TabMenu";
 import MenuContent from "./content/MenuContent";
@@ -8,7 +8,6 @@ export default function Menu({ user }: { user: any }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const menu = searchParams.get("menu") || "orders";
-  const [activeTab, setActiveTab] = useState(menu);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
@@ -20,7 +19,7 @@ export default function Menu({ user }: { user: any }) {
 
   return (
     <section className="mb-[148px] xl:mb-[180px]">
-      <TabMenu activeTab={activeTab} setActiveTab={setActiveTab} />
+      <TabMenu activeTab={menu} />
       <MenuContent user={user} />
     </section>
   );

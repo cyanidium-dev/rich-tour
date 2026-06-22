@@ -36,6 +36,7 @@ export async function PATCH(req: Request) {
                 companyName: body.companyName,
                 legalCompanyName: body.legalCompanyName,
                 phone: body.phone,
+                edrpou: body.edrpou,
                 city: body.city,
                 site: body.site || null,
                 taxForm: body.taxForm,

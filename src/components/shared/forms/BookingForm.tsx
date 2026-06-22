@@ -72,7 +72,7 @@ function findIdByDate(dateStr, calendar) {
   const parts = dateStr.split(".");
   if (parts.length !== 3) return null;
 
-  let [day, month, year] = parts;
+  const [day, month, year] = parts;
 
   // убираем ведущие нули
   const dayNumber = Number(day);

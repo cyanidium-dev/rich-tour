@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import client from "@/lib/sanity/client";
 
-import { getCrmToken } from '@/lib/crm/utils/getCrmToken'
 import { sendAgencyToCrm } from '@/lib/crm/sendAgencyToCrm'
 import { sendAgentToCrm } from '@/lib/crm/users/sendAgentToCrm'
 import { updateAgencyCrmId } from '@/lib/crm/updateAgencyCrmId'
 import { updateAgentCrmId } from '@/lib/sanity/users/updateAgentCrmId'
 import {updateAgentAgencyCrmId} from "@/lib/crm/updateAgentAgencyCrmId";
+import { findAgentCrmIdByEmail } from "@/lib/crm/users/findAgentCrmIdByEmail";
 
 export async function POST(req: NextRequest) {
     const secret = req.headers.get('x-sanity-secret')
@@ -83,6 +83,18 @@ async function handleAgent(agent: any) {
     }
     try {
         console.log("agency CRM id", agent.agencyCrmId)
+        const existingCrmId = await findAgentCrmIdByEmail(agent.email, agent.phone)
+
+        if (existingCrmId) {
+            await updateAgentCrmId(agent._id, existingCrmId)
+            console.log('✅ Agent linked to existing CRM contact by email', {
+                sanityId: agent._id,
+                crmId: existingCrmId,
+                email: agent.email,
+            })
+            return
+        }
+
         const crmId = await sendAgentToCrm({
             externalId: agent._id,
             fullName: agent.companyName,

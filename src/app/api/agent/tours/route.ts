@@ -19,10 +19,16 @@ export async function GET() {
         );
     }
 
+    if (!user.crmId) {
+        return NextResponse.json(
+            { error: "CRM_ID_MISSING" },
+            { status: 409 }
+        );
+    }
+
     const basePayload = {
         limit: LIMIT,
         filter: {
-            // @ts-expect-error
             clientid: user.crmId,
         },
         fields: [

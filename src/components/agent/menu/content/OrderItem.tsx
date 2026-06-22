@@ -1,7 +1,7 @@
-import { Order } from "@/types/order";
+import type { OrderTableRow } from "./OrdersContent";
 
 interface OrderItemProps {
-    order: Order;
+    order: OrderTableRow;
     showTourDetails: (id: string) => void;
 }
 

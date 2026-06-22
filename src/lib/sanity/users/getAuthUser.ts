@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 type AuthUser = {
     sub: string;
     role: "agent" | "agency";
+    crmId?: number | string | null;
 };
 
 export async function getAuthUser(): Promise<AuthUser | null> {

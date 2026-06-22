@@ -1,18 +1,16 @@
-import { Dispatch, SetStateAction } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import axios from "axios";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import TabMenuItem from "./TabMenuItem";
 
 interface TabMenuProps {
   activeTab: string;
-  setActiveTab: Dispatch<SetStateAction<string>>;
 }
 
-export default function TabMenu({ activeTab, setActiveTab }: TabMenuProps) {
+export default function TabMenu({ activeTab }: TabMenuProps) {
   const router = useRouter();
   const pathName = usePathname();
+  const searchParams = useSearchParams();
 
   const menuList = [
     { title: "Мої замовлення", value: "orders" },
@@ -35,11 +33,10 @@ export default function TabMenu({ activeTab, setActiveTab }: TabMenuProps) {
       return;
     }
 
-    setActiveTab(menu.value);
-
     if (pathName === "/agent") {
-      const params = new URLSearchParams(window.location.search);
+      const params = new URLSearchParams(searchParams.toString());
       params.set("menu", menu.value);
+      params.delete("page");
       router.push(`?${params.toString()}`, { scroll: false });
     }
   };

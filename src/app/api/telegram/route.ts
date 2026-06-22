@@ -13,8 +13,7 @@ export async function POST(request: NextRequest) {
         text: data,
       });
       return NextResponse.json({ message: "Data sent successfully" });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         { error: "Failed to append data to the sheet" },
         { status: 500 }
