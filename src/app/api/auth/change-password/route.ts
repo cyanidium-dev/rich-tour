@@ -38,20 +38,19 @@ export async function POST(req: Request) {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const passwordPatch =
-        user.role === "agent"
-            ? {
-                password: {
-                    plain: password,
-                    hash: passwordHash,
-                },
-            }
-            : { passwordHash };
+    const passwordPatch = {
+        password: {
+            plain: password,
+            hash: passwordHash,
+        },
+    };
+    const patch = client.patch(user.sub).set(passwordPatch);
 
-    await client
-        .patch(user.sub)
-        .set(passwordPatch)
-        .commit();
+    if (user.role === "agency") {
+        patch.unset(["passwordHash"]);
+    }
+
+    await patch.commit();
 
     return NextResponse.json({ success: true });
 }

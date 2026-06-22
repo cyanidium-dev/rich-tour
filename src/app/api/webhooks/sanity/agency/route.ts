@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import client from "@/lib/sanity/client";
 
-import { sendAgencyToCrm } from '@/lib/crm/sendAgencyToCrm'
 import { sendAgentToCrm } from '@/lib/crm/users/sendAgentToCrm'
-import { updateAgencyCrmId } from '@/lib/crm/updateAgencyCrmId'
 import { updateAgentCrmId } from '@/lib/sanity/users/updateAgentCrmId'
 import {updateAgentAgencyCrmId} from "@/lib/crm/updateAgentAgencyCrmId";
 import { findAgentCrmIdByEmail } from "@/lib/crm/users/findAgentCrmIdByEmail";
@@ -48,10 +46,12 @@ export async function POST(req: NextRequest) {
             message: error?.message,
         })
 
-        // на всякий случай — жёстко удаляем документ
-        try {
-            await client.delete(_id)
-        } catch {}
+        if (_type !== 'agencyUser') {
+            // на всякий случай — жёстко удаляем документ
+            try {
+                await client.delete(_id)
+            } catch {}
+        }
     }
 
     // 🔑 ВСЕГДА 200
@@ -138,39 +138,7 @@ async function handleAgent(agent: any) {
  * ───────────────────────────── */
 
 async function handleAgency(agency: any) {
-    console.log('start add/profile agency', agency._id);
-
-    try {
-        const crmId = await sendAgencyToCrm({
-            externalId: agency._id,
-
-            legalAgencyName: agency.legalAgencyName,
-            marketingAgencyName: agency.marketingAgencyName,
-
-            phone: agency.agencyPhone,
-            email: agency.agencyEmail,
-
-            login: agency.login,
-            edrpou: agency.agencyEdrpou,
-            city: agency.agencyCity,
-            legalAddress: agency.agencyLegalAddress,
-            mainOfficeEmail: agency.mainOfficeEmail,
-        })
-
-        if (!agency.crmId) {
-            await updateAgencyCrmId(agency._id, crmId)
-        }
-
-        console.log('✅ Agency synced with CRM', {
-            sanityId: agency._id,
-            crmId,
-        })
-    } catch (error: any) {
-        console.error('❌ CRM error → deleting agency from Sanity', {
-            sanityId: agency._id,
-            error: error?.message,
-        })
-
-        await client.delete(agency._id)
-    }
+    console.log('Agency saved in Sanity, skipping CRM sync', {
+        sanityId: agency._id,
+    })
 }

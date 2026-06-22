@@ -26,6 +26,7 @@ type AgencyUser = {
         plain?: string;
         hash?: string;
     };
+    passwordHash?: string;
 };
 
 function createAuthResponse(
@@ -127,13 +128,14 @@ export async function POST(req: Request) {
       password {
         plain,
         hash
-      }
+      },
+      passwordHash
     }`,
         { login: email }
     );
 
     if (agencyUser) {
-        const passwordHash = agencyUser.password?.hash;
+        const passwordHash = agencyUser.password?.hash ?? agencyUser.passwordHash;
 
         if (!passwordHash) {
             return NextResponse.json(
