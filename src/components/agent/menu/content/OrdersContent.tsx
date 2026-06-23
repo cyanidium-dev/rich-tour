@@ -6,6 +6,7 @@ import axios from "axios";
 import Loader from "@/components/shared/loader/Loader";
 import Category from "./Category";
 import OrdersFilters, {
+    AgentFilterOption,
     OrdersFiltersState,
 } from "./OrdersFilters";
 import DetailsModal from "@/components/agent/menu/content/DetailsModal";
@@ -28,8 +29,12 @@ export interface OrderTableRow {
     remainingAmount: number;
     startDate: string;
     endDate: string;
+    statusId?: string;
     status: string;
     comment: string;
+    agentId?: string;
+    agentName?: string;
+    agentCrmId?: string | number | null;
     details?: {
         index: number;
         pib: string;
@@ -43,9 +48,16 @@ export interface OrderTableRow {
 
 type OrdersContentProps = {
     mode?: "active" | "archive" | "all";
+    variant?: "agent" | "agency";
+    apiUrl?: string;
 };
 
 type LoadError = "crm-id-missing" | "fetch-failed";
+
+type SkippedAgent = {
+    id: string;
+    name: string;
+};
 
 function toTimeStart(value: unknown): number | null {
     if (!value) return null;
@@ -128,13 +140,20 @@ function filterOrders(
             const q = filters.search.trim().toLowerCase();
 
             const haystack = `
+                ${order.orderNumber}
                 ${order.tourTitle}
                 ${order.tourists}
+                ${order.agentName ?? ""}
+                ${order.comment}
             `.toLowerCase();
 
             if (!haystack.includes(q)) {
                 return false;
             }
+        }
+
+        if (filters.agentId && order.agentId !== filters.agentId) {
+            return false;
         }
 
         if (filters.status && order.status !== filters.status) {
@@ -196,6 +215,7 @@ const statusList: Record<string, string> = {
     "46": "Відправлено на оплату",
     "47": "Повна оплата",
     "48": "Тур завершено",
+    "53": "Поставлена задача",
     "84": "Кошти повернуто",
 };
 
@@ -216,11 +236,27 @@ const formatDate = (dateStr?: string | null): string => {
     return dateStr;
 };
 
+function getStatusLabel(item: any): string {
+    if (item.statusname) {
+        return item.statusname;
+    }
+
+    if (item.statusid && statusList[item.statusid]) {
+        return statusList[item.statusid];
+    }
+
+    if (item.statusid) {
+        return `Статус CRM #${item.statusid}`;
+    }
+
+    return "Невідомий статус";
+}
+
 const transformOrders = (result: any[]): OrderTableRow[] => {
     return result.map((item, idx) => ({
         id: item.id,
         index: idx + 1,
-        orderNumber: item.number || item.id || "",
+        orderNumber: item.externalid || item.number || item.id || "",
         tourTitle: item.customfields?.Nazvaturu?.value || "",
         daysQuantity: item.customfields?.Dataturut?.value &&
         item.customfields?.Datazakinchennyaturu?.value
@@ -248,8 +284,12 @@ const transformOrders = (result: any[]): OrderTableRow[] => {
         endDate: item.customfields?.Datazakinchennyaturu?.value
             ? formatDate(item.customfields.Datazakinchennyaturu.value)
             : "",
-        status: statusList[item.statusid] || "Невідомий статус",
+        statusId: item.statusid ? String(item.statusid) : undefined,
+        status: getStatusLabel(item),
         comment: item.customfields?.Dodatkovidani?.value || "",
+        agentId: item.agent?.id,
+        agentName: item.agent?.name,
+        agentCrmId: item.agent?.crmId,
         details: item.orderproducts?.map((product: any, index: number) => ({
             index: index + 1,
             pib: product.name,
@@ -284,6 +324,8 @@ function sortOrdersByIdDesc(orders: OrderTableRow[]): OrderTableRow[] {
 
 export default function OrdersContent({
                                           mode = "active",
+                                          variant = "agent",
+                                          apiUrl = "/api/agent/tours",
                                       }: OrdersContentProps) {
     const [isPopUpShown, setIsPopUpShown] = useState(false);
     const [tourDetails, setTourDetails] = useState<{
@@ -291,11 +333,14 @@ export default function OrdersContent({
         details?: OrderTableRow["details"];
     }>({});
     const [tours, setTours] = useState<OrderTableRow[]>([]);
+    const [agentOptions, setAgentOptions] = useState<AgentFilterOption[]>([]);
+    const [skippedAgents, setSkippedAgents] = useState<SkippedAgent[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [loadError, setLoadError] = useState<LoadError | null>(null);
     const [retryKey, setRetryKey] = useState(0);
     const [filters, setFilters] = useState<OrdersFiltersState>({
         search: "",
+        agentId: null,
         status: null,
         hasDebt: null,
         period: { from: null, to: null },
@@ -307,10 +352,26 @@ export default function OrdersContent({
                 setIsLoading(true);
                 setLoadError(null);
 
-                const { data } = await axios.get("/api/agent/tours", {
+                const { data } = await axios.get(apiUrl, {
                     withCredentials: true,
                 });
                 const orders = Array.isArray(data?.orders) ? data.orders : [];
+                const agents = Array.isArray(data?.agents) ? data.agents : [];
+                const skipped = Array.isArray(data?.skippedAgents)
+                    ? data.skippedAgents
+                    : [];
+                setAgentOptions(
+                    agents.map((agent: any) => ({
+                        id: String(agent.id),
+                        name: String(agent.name),
+                    }))
+                );
+                setSkippedAgents(
+                    skipped.map((agent: any) => ({
+                        id: String(agent.id),
+                        name: String(agent.name),
+                    }))
+                );
                 let preparedOrders = orders;
                 if (mode === "active") {
                     preparedOrders = orders
@@ -353,13 +414,15 @@ export default function OrdersContent({
 
                 setLoadError(isCrmIdMissing ? "crm-id-missing" : "fetch-failed");
                 setTours([]);
+                setAgentOptions([]);
+                setSkippedAgents([]);
             } finally {
                 setIsLoading(false);
             }
         };
 
         fetchTours();
-    }, [mode, retryKey]);
+    }, [apiUrl, mode, retryKey]);
 
     const filteredOrders = useMemo(
         () => filterOrders(tours, filters),
@@ -374,6 +437,19 @@ export default function OrdersContent({
             })),
         [filteredOrders]
     );
+    const statusOptions = useMemo(() => {
+        const map = new Map<string, string>();
+
+        for (const order of tours) {
+            if (order.status) {
+                map.set(order.status, order.status);
+            }
+        }
+
+        return Array.from(map, ([key, label]) => ({ key, label })).sort((a, b) =>
+            a.label.localeCompare(b.label, "uk")
+        );
+    }, [tours]);
     const hasLoadError = loadError !== null;
 
     const showTourDetails = (id: string) => {
@@ -414,7 +490,26 @@ export default function OrdersContent({
                 }}
             />
 
-            <OrdersFilters filters={filters} onChange={setFilters} />
+            <OrdersFilters
+                filters={filters}
+                onChange={setFilters}
+                showAgentFilter={variant === "agency"}
+                showDebtFilter={variant !== "agency"}
+                agentOptions={agentOptions}
+                statusOptions={statusOptions}
+            />
+
+            {variant === "agency" && skippedAgents.length > 0 && (
+                <div className="mr-4 xs:mr-[25px] xl:mr-[80px] rounded-[8px] border border-main/40 bg-main/5 px-4 py-3 text-14reg">
+                    <p className="text-14semi">
+                        Не всі агенти потрапили у вибірку заявок
+                    </p>
+                    <p className="mt-1">
+                        У цих агентів не заповнений CRM ID:{" "}
+                        {skippedAgents.map((agent) => agent.name).join(", ")}.
+                    </p>
+                </div>
+            )}
 
             {loadError === "fetch-failed" && (
                 <div className="flex flex-col items-center gap-4 pr-4 xs:pr-[25px] xl:pr-[80px] text-center">
@@ -464,6 +559,7 @@ export default function OrdersContent({
                     useItemsPerPage={useOrdersPerPage}
                     renderItems={(paginatedOrders) => (
                         <Category
+                            variant={variant}
                             showTourDetails={showTourDetails}
                             category={{
                                 orders: paginatedOrders,

@@ -4,7 +4,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import TabMenu from "./TabMenu";
 import MenuContent from "./content/MenuContent";
 
-export default function Menu({ user }: { user: any }) {
+export default function Menu({
+  user,
+  variant = "agent",
+}: {
+  user: any;
+  variant?: "agent" | "agency";
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const menu = searchParams.get("menu") || "orders";
@@ -19,8 +25,8 @@ export default function Menu({ user }: { user: any }) {
 
   return (
     <section className="mb-[148px] xl:mb-[180px]">
-      <TabMenu activeTab={menu} />
-      <MenuContent user={user} />
+      <TabMenu activeTab={menu} variant={variant} />
+      <MenuContent user={user} variant={variant} />
     </section>
   );
 }

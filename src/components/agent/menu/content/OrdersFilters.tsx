@@ -1,7 +1,7 @@
 "use client";
 
 import { Key } from "@react-types/shared";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useFilter } from "@react-aria/i18n";
 import {
     Autocomplete,
@@ -13,21 +13,12 @@ import {
 import SearchInput from "./SearchInput";
 import SelectIcon from "@/components/shared/icons/SelectIcon";
 
-/* =======================
-   TYPES
-======================= */
-
-export type StatusFilter =
-    | "не почався"
-    | "в процесі"
-    | "завершений"
-    | "відмінений"
-    | null;
-
+export type StatusFilter = string | null;
 export type PaidFilter = "так" | "ні" | null;
 
 export interface OrdersFiltersState {
     search: string;
+    agentId: string | null;
     status: StatusFilter;
     hasDebt: PaidFilter;
     period: { from: Date | null; to: Date | null };
@@ -36,6 +27,10 @@ export interface OrdersFiltersState {
 interface OrdersFiltersProps {
     filters: OrdersFiltersState;
     onChange: (filters: OrdersFiltersState) => void;
+    showAgentFilter?: boolean;
+    showDebtFilter?: boolean;
+    agentOptions?: AgentFilterOption[];
+    statusOptions?: OptionItem[];
 }
 
 interface OptionItem {
@@ -43,8 +38,18 @@ interface OptionItem {
     label: string;
 }
 
+export interface AgentFilterOption {
+    id: string;
+    name: string;
+}
 
-const statusOptions: OptionItem[] = [
+interface AutocompleteState {
+    selectedKey: Key | null;
+    inputValue: string;
+    items: OptionItem[];
+}
+
+const defaultStatusOptions: OptionItem[] = [
     { key: "Нова заявка", label: "Нова заявка" },
     { key: "В роботі", label: "В роботі" },
     { key: "Дані внесено", label: "Дані внесено" },
@@ -55,7 +60,7 @@ const statusOptions: OptionItem[] = [
     { key: "Оплата залишкової вартості туру", label: "Оплата залишкової вартості туру" },
     { key: "Відправлено на оплату", label: "Відправлено на оплату" },
     { key: "Повна оплата", label: "Повна оплата" },
-    { key: "Тур завершено", label: "ВТур завершено" },
+    { key: "Тур завершено", label: "Тур завершено" },
     { key: "Кошти повернуто", label: "Кошти повернуто" },
 ];
 
@@ -63,10 +68,6 @@ const debtOptions: OptionItem[] = [
     { key: "так", label: "Так" },
     { key: "ні", label: "Ні" },
 ];
-
-/* =======================
-   STYLES
-======================= */
 
 const PillWrapper = ({
                          children,
@@ -121,30 +122,65 @@ const pillDateRange = {
   `,
 };
 
-/* =======================
-   COMPONENT
-======================= */
-
-export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps) {
+export default function OrdersFilters({
+                                          filters,
+                                          onChange,
+                                          showAgentFilter = false,
+                                          showDebtFilter = true,
+                                          agentOptions = [],
+                                          statusOptions = defaultStatusOptions,
+                                      }: OrdersFiltersProps) {
     const { startsWith } = useFilter({ sensitivity: "base" });
+    const agentItems = useMemo(
+        () =>
+            agentOptions.map((agent) => ({
+                key: agent.id,
+                label: agent.name,
+            })),
+        [agentOptions]
+    );
 
-    const [statusState, setStatusState] = useState({
-        selectedKey: null as Key | null,
+    const [agentState, setAgentState] = useState<AutocompleteState>({
+        selectedKey: null,
+        inputValue: "",
+        items: agentItems,
+    });
+
+    const [statusState, setStatusState] = useState<AutocompleteState>({
+        selectedKey: null,
         inputValue: "",
         items: statusOptions,
     });
 
-    const [debtState, setDebtState] = useState({
-        selectedKey: null as Key | null,
+    const [debtState, setDebtState] = useState<AutocompleteState>({
+        selectedKey: null,
         inputValue: "",
         items: debtOptions,
     });
 
+    useEffect(() => {
+        setAgentState((state) => ({
+            ...state,
+            items: agentItems.filter((item) =>
+                startsWith(item.label, state.inputValue)
+            ),
+        }));
+    }, [agentItems, startsWith]);
+
+    useEffect(() => {
+        setStatusState((state) => ({
+            ...state,
+            items: statusOptions.filter((item) =>
+                startsWith(item.label, state.inputValue)
+            ),
+        }));
+    }, [startsWith, statusOptions]);
+
     const handleOpenChange = (
         isOpen: boolean,
         menuTrigger: MenuTriggerAction,
-        state: typeof statusState,
-        setState: typeof setStatusState,
+        state: AutocompleteState,
+        setState: Dispatch<SetStateAction<AutocompleteState>>,
         items: OptionItem[]
     ) => {
         if (menuTrigger === "manual" && isOpen) {
@@ -154,8 +190,8 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
 
     const handleInputChange = (
         value: string,
-        state: typeof statusState,
-        setState: typeof setStatusState,
+        state: AutocompleteState,
+        setState: Dispatch<SetStateAction<AutocompleteState>>,
         items: OptionItem[]
     ) => {
         setState({
@@ -167,7 +203,7 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
 
     const handleSelectionChange = (
         key: Key | null,
-        setState: typeof setStatusState,
+        setState: Dispatch<SetStateAction<AutocompleteState>>,
         items: OptionItem[]
     ) => {
         const selectedItem = items.find((i) => i.key === key);
@@ -187,9 +223,8 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
                 ["--heroui-default-100-opacity" as any]: "1",
                 ["--heroui-default-200-opacity" as any]: "1",
             }}
-            className="flex flex-col lg:flex-row gap-4 items-center"
+            className="flex flex-col lg:flex-row lg:flex-wrap gap-4 items-center"
         >
-            {/* 🔍 SEARCH */}
             <div className="w-[300px] shrink-0">
                 <SearchInput
                     value={filters.search}
@@ -199,7 +234,58 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
                 />
             </div>
 
-            {/* 📌 STATUS */}
+            {showAgentFilter && (
+                <PillWrapper width="w-[300px] lg:w-[245px]">
+                    <Autocomplete
+                        inputValue={agentState.inputValue}
+                        items={agentState.items}
+                        selectedKey={agentState.selectedKey}
+                        onOpenChange={(isOpen, trigger) =>
+                            handleOpenChange(
+                                isOpen,
+                                trigger,
+                                agentState,
+                                setAgentState,
+                                agentItems
+                            )
+                        }
+                        onInputChange={(value) =>
+                            handleInputChange(
+                                value,
+                                agentState,
+                                setAgentState,
+                                agentItems
+                            )
+                        }
+                        onSelectionChange={(key) => {
+                            handleSelectionChange(
+                                key,
+                                setAgentState,
+                                agentItems
+                            );
+                            onChange({
+                                ...filters,
+                                agentId: key ? String(key) : null,
+                            });
+                        }}
+                        placeholder="Обрати агента"
+                        isClearable
+                        size="sm"
+                        selectorIcon={<SelectIcon />}
+                        classNames={innerAutocomplete}
+                    >
+                        {(item) => (
+                            <AutocompleteItem
+                                key={item.key}
+                                className="text-14reg"
+                            >
+                                {item.label}
+                            </AutocompleteItem>
+                        )}
+                    </Autocomplete>
+                </PillWrapper>
+            )}
+
             <PillWrapper width="w-[300px] lg:w-[245px]">
                 <Autocomplete
                     inputValue={statusState.inputValue}
@@ -233,9 +319,8 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
                             status: key as StatusFilter,
                         });
                     }}
-
                     placeholder="Статус заявки"
-                    isClearable={true}
+                    isClearable
                     size="sm"
                     selectorIcon={<SelectIcon />}
                     classNames={innerAutocomplete}
@@ -251,58 +336,58 @@ export default function OrdersFilters({ filters, onChange }: OrdersFiltersProps)
                 </Autocomplete>
             </PillWrapper>
 
-            {/* 💰 DEBT */}
-            <PillWrapper width="w-[300px] lg:w-[245px]">
-                <Autocomplete
-                    inputValue={debtState.inputValue}
-                    items={debtState.items}
-                    selectedKey={debtState.selectedKey}
-                    onOpenChange={(isOpen, trigger) =>
-                        handleOpenChange(
-                            isOpen,
-                            trigger,
-                            debtState,
-                            setDebtState,
-                            debtOptions
-                        )
-                    }
-                    onInputChange={(value) =>
-                        handleInputChange(
-                            value,
-                            debtState,
-                            setDebtState,
-                            debtOptions
-                        )
-                    }
-                    onSelectionChange={(key) => {
-                        handleSelectionChange(
-                            key,
-                            setDebtState,
-                            debtOptions
-                        );
-                        onChange({
-                            ...filters,
-                            hasDebt: key as PaidFilter,
-                        });
-                    }}
-                    placeholder="Залишок до сплати"
-                    isClearable={true}
-                    size="sm"
-                    selectorIcon={<SelectIcon />}
-                    classNames={innerAutocomplete}
-                >
-                    {(item) => (
-                        <AutocompleteItem
-                            key={item.key}
-                            className="text-14reg"
-                        >
-                            {item.label}
-                        </AutocompleteItem>
-                    )}
-                </Autocomplete>
-            </PillWrapper>
+            {showDebtFilter && (
+                <PillWrapper width="w-[300px] lg:w-[245px]">
+                    <Autocomplete
+                        inputValue={debtState.inputValue}
+                        items={debtState.items}
+                        selectedKey={debtState.selectedKey}
+                        onOpenChange={(isOpen, trigger) =>
+                            handleOpenChange(
+                                isOpen,
+                                trigger,
+                                debtState,
+                                setDebtState,
+                                debtOptions
+                            )
+                        }
+                        onInputChange={(value) =>
+                            handleInputChange(
+                                value,
+                                debtState,
+                                setDebtState,
+                                debtOptions
+                            )
+                        }
+                        onSelectionChange={(key) => {
+                            handleSelectionChange(
+                                key,
+                                setDebtState,
+                                debtOptions
+                            );
+                            onChange({
+                                ...filters,
+                                hasDebt: key as PaidFilter,
+                            });
+                        }}
+                        placeholder="Залишок до сплати"
+                        isClearable
+                        size="sm"
+                        selectorIcon={<SelectIcon />}
+                        classNames={innerAutocomplete}
+                    >
+                        {(item) => (
+                            <AutocompleteItem
+                                key={item.key}
+                                className="text-14reg"
+                            >
+                                {item.label}
+                            </AutocompleteItem>
+                        )}
+                    </Autocomplete>
+                </PillWrapper>
+            )}
 
-            {/* 📅 PERIOD */}
             <DateRangePicker
                 size="sm"
                 placeholder="Період туру"
