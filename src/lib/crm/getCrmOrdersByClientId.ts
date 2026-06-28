@@ -39,6 +39,7 @@ export async function getCrmOrdersByClientId(clientId: string | number) {
         limit: LIMIT,
         filter: {
             clientid: clientId,
+            workflowid: "5",
         },
         fields: orderFields,
         orderproductfields: orderProductFields,
