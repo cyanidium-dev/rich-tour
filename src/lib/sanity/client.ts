@@ -1,11 +1,10 @@
-import { createClient } from "next-sanity";
+import { createClient } from "@sanity/client";
 
 const client = createClient({
-    projectId: "elggedkx",
-    dataset: "production",
-    apiVersion: "2025-04-26",
-    token: process.env.SANITY_API_TOKEN,
-    useCdn: false,
+    projectId: process.env.SANITY_PROJECT_ID || "elggedkx",
+    dataset: process.env.SANITY_DATASET || "production",
+    apiVersion: process.env.SANITY_API_VERSION || "2025-04-26",
+    useCdn: process.env.NODE_ENV === "production",
 });
 
 export default client;

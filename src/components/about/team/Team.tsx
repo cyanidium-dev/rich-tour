@@ -9,7 +9,6 @@ import {allTeamQuery} from "@/lib/sanity/queries";
 
 export default async function Team() {
     const team = await client.fetch(allTeamQuery);
-    //@ts-expect-error
     const teamMembers = team?.map(({name, role, photo, instagram, telegram, tiktok}) => ({
         name,
         role,

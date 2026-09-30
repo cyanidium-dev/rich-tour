@@ -11,8 +11,6 @@ export const emailRegex =
 
 export const edrpouRegex = /^\d{8,10}$/;
 
-export const edrpouMask = [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d?/, /\d?/];
-
 export const dateFormatRegex =
     /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)\d{2}$/;
 
@@ -48,38 +46,3 @@ export const isValidPassportExpirationDate = (
 
   return expirationDate >= minValidDate;
 };
-
-export const phoneMask = [
-  "+",
-  "3",
-  "8",
-  " ",
-  "(",
-  /[0-9]/,
-  /\d/,
-  /\d/,
-  ")",
-  " ",
-  /\d/,
-  /\d/,
-  /\d/,
-  "-",
-  /\d/,
-  /\d/,
-  "-",
-  /\d/,
-  /\d/,
-];
-
-export const dateMask = [
-  /[0-3]/,
-  /[0-9]/,
-  ".",
-  /[0-1]/,
-  /[0-9]/,
-  ".",
-  /[1-9]/,
-  /\d/,
-  /\d/,
-  /\d/,
-];

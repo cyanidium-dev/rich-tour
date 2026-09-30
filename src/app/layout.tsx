@@ -12,6 +12,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: "Rich Tour – ваш надійний партнер у подорожах!",
   description:
     "Організовуємо комфортні тури по всьому світу! Відпочинок на морі, екскурсії, гарячі тури. Підберемо ідеальний маршрут для вас!",
@@ -25,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="uk" className="scroll-smooth">
       <body
-        className={`${montserrat.variable} relative z-[1] flex min-h-screen flex-col antialiased text-14light lg:text-16light`}
+        className={`${montserrat.variable} isolate flex min-h-screen flex-col antialiased text-14light lg:text-16light`}
       >
         <Providers>
           <Header />

@@ -4,7 +4,6 @@ import Container from "@/components/shared/container/Container";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import {fadeInAnimation} from "@/components/shared/animation/animationVariants";
 
-//@ts-expect-error
 export default function AdditionalInfo ({ text }) {
     return (
         <section className="mb-[148px] xl:mb-[180px] relative">

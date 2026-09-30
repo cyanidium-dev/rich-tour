@@ -11,14 +11,14 @@ export default function TabMenuItem({
   activeTab,
   onClick,
 }: TabMenuItemProps) {
-  const { title, value } = category;
+  const { _id, title } = category;
 
   return (
     <li>
       <button
         onClick={onClick}
         className={`flex items-center justify-center w-full md:w-fit px-4 sm:px-[27px] py-[14px] text-14med rounded-full border  ${
-          activeTab === value
+          activeTab === _id
             ? "border-main bg-main text-white"
             : "border-black bg-white text-black"
         } xl:hover:text-white xl:hover:bg-main xl:hover:brightness-[135%] xl:hover:border-main focus-visible:text-white 

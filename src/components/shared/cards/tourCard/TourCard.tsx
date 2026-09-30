@@ -11,11 +11,10 @@ interface TourCardProps {
 }
 
 export default function TourCard({ tour }: TourCardProps) {
-  const { title, description, image, duration, slug, category } =
+  const { title, description, image, duration, slug, category, isOnPromo, earlyBooking } =
     tour;
 
-  const isOnPromo = category?.value === "promotion";
-  const earlyBooking = false;
+  const showPromotion = isOnPromo || category?.value === "promotion";
 
   return (
     <Link
@@ -26,7 +25,7 @@ export default function TourCard({ tour }: TourCardProps) {
         <AnimatedWrapper
           animation={fadeInAnimation({ scale: 0.9, delay: 0.4 })}
           className={`${
-            isOnPromo ? "block" : "hidden"
+            showPromotion ? "block" : "hidden"
           } absolute top-5 xl:top-[18px] left-4 xl:left-auto xl:right-[18px] z-10 w-[96px] h-9 flex items-center justify-center 
           rounded-full bg-main bg-opacity-[66%] text-12med text-white`}
         >
@@ -35,7 +34,7 @@ export default function TourCard({ tour }: TourCardProps) {
         <AnimatedWrapper
           animation={fadeInAnimation({ scale: 0.9, delay: 0.4 })}
           className={`${
-            earlyBooking && !isOnPromo ? "block" : "hidden"
+            earlyBooking && !showPromotion ? "block" : "hidden"
           } absolute top-5 xl:top-[18px] left-4 xl:left-auto xl:right-[18px] z-10 w-[164px] h-9 flex items-center justify-center 
           rounded-full border-[1.5px] border-main bg-black bg-opacity-[27%] text-12med text-white`}
         >

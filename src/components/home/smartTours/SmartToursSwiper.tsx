@@ -10,14 +10,13 @@ import TourCard from "@/components/shared/cards/tourCard/TourCard";
 import Loader from "@/components/shared/loader/Loader";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 
-//@ts-expect-error
 export default function SmartToursSwiper({toursList}) {
   if (!toursList || !toursList?.length) {
     return null;
   }
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader className="w-full h-[406px] xl:h-[486px]" />}>
       <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.4 })}>
         <Swiper
           slidesPerView={"auto"}
@@ -27,7 +26,6 @@ export default function SmartToursSwiper({toursList}) {
           speed={1000}
           modules={[Navigation]}
         >
-          {/*@ts-expect-error*/}
           {toursList.map((tour, idx) => (
             <SwiperSlide key={idx}>
               <TourCard tour={tour} />

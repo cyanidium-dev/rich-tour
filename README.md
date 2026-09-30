@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rich Tour website
 
-## Getting Started
+Next.js-приложение публичного сайта, кабинетов агента/агентства и серверной интеграции с OneBox CRM.
 
-First, run the development server:
+## Локальный запуск
+
+Нужны Node.js `24.x` (`.nvmrc`, `engines.node`) и npm. Установите зависимости через `npm ci`, заполните `.env.local` по `.env.example`, затем запустите `npm run dev`. В CI также используется Node 24. Версию Node в настройках проекта Vercel нужно сверять отдельно после изменения окружения.
+
+## Данные
+
+- `SANITY_DATASET` (`production`) — публичный контент сайта.
+- `SANITY_USERS_DATASET` (`users-production`) — публичный dataset для зашифрованных записей агентов и агентств.
+- Приложение читает и изменяет пользовательские документы через серверный Sanity-клиент с токеном. Персональные данные, включая обязательную пару пароля `{plain, hash}`, находятся внутри AES-256-GCM payload; поиск по email/login использует HMAC lookup.
+
+Переменные окружения перечислены в `.env.example`. В Vercel обязательно задать `SANITY_USERS_DATASET`, `SANITY_API_TOKEN`, `USER_DATA_MASTER_KEY`, `JWT_SECRET`, `CRON_SECRET` и CRM-переменные. Master key должен храниться только на сервере и в отдельной защищённой резервной копии.
+
+`USER_DATA_MASTER_KEY` — случайный 32-байтовый ключ в base64. Генерируйте его в защищённом окружении и передавайте только доверенным администраторам через защищённый канал. Не добавляйте к имени префикс `NEXT_PUBLIC_`; не записывайте значение в Git, клиентский bundle, Sanity, логи, задачи CI или браузерное хранилище. Держите защищённую резервную копию отдельно от приложения и проверяйте возможность её восстановления без вывода ключа в консоль.
+
+При компрометации ключа: ограничьте доступ к старому ключу, подготовьте новый случайный ключ, сделайте проверенную резервную копию зашифрованных документов, затем в отдельной согласованной операции расшифруйте записи старым ключом, перешифруйте новым с новым IV для каждой записи и пересчитайте HMAC `identityLookup`. Проверьте полноту и читаемость записей, обновите ключ во всех серверных окружениях и у администраторов Studio, выполните `npm run users:audit` и пользовательские smoke-проверки, затем отзовите старый ключ. Простая замена переменной окружения без перешифрования сделает существующие записи нечитаемыми. Скрипта автоматического rekey в репозитории пока нет; такую операцию нельзя запускать как обычное обновление зависимостей.
+
+## Синхронизация агента с CRM
+
+1. Регистрация создаёт агента в Sanity со статусом `crmSync.status = pending`.
+2. Первая попытка запускается сразу.
+3. Повтор проверяет CRM сначала по `externalid` (Sanity ID), затем по email/телефону, поэтому не создаёт повторный контакт при обычном retry.
+4. Временные ошибки повторяются через 1, 2, 4 и далее 7 дней; после шестой попытки статус становится `manualReview`.
+5. Vercel Cron вызывает `/api/cron/crm-sync` ежедневно в 03:00 UTC. Запрос защищён `CRON_SECRET`.
+6. Действие в Sanity Studio «Повторить синхронизацию с CRM» возвращает документ в `pending`; webhook запускает попытку немедленно.
+
+При неоднозначном совпадении нескольких CRM-контактов автоматический выбор не выполняется: документ переходит в `manualReview`.
+
+## Перенос пользователей в зашифрованный dataset
+
+`users-production` создан как публичный dataset из-за ограничений бесплатного плана Sanity. Публичное чтение шифротекста возможно; безопасность данных зависит от сохранности `USER_DATA_MASTER_KEY`.
+
+Команды `users:migrate:plan`, `users:migrate:plan-with-resets`, `users:audit` и `users:cleanup:plan` позволяют проверить перенос без удаления записей. `users:migrate:apply` и `users:cleanup:apply` изменяют рабочие данные и выполняются только после отдельного решения по плану миграции. Исходные документы в `production` пока сохранены как откатная копия.
+
+Аудит 27 сентября 2026 года подтвердил, что в публичном `production` ещё доступны старые записи с открытыми персональными полями и паролями. Это незакрытый риск до отдельно согласованного удаления после production smoke; подробности приведены в baseline.
+
+После проверки нового dataset нужно добавить для него Sanity webhook на `/api/webhooks/sanity/agency` с заголовком `x-sanity-secret`, совпадающим с `SANITY_WEBHOOK_SECRET`.
+
+## Проверки
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm ci
+npm run typecheck
+npm run lint
+npm run build
+npm audit --omit=dev
+npm outdated
+npm run users:crypto:test
+npm run users:audit
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`users:audit` требует доступных Sanity, `SANITY_API_TOKEN` и `USER_DATA_MASTER_KEY`; остальные проверки не должны менять рабочие данные.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Результаты финального аудита и отложенные обновления записаны в [baseline зависимостей](DEPENDENCY_BASELINE.md).

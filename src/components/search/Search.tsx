@@ -4,8 +4,20 @@ import ArrowHeadIcon from "@/components/shared/icons/ArrowHeadIcon";
 import SearchForm from "../shared/search/SearchForm";
 import Container from "../shared/container/Container";
 import SearchList from "./SearchList";
+import type {SearchOption} from "../shared/search/SearchForm";
+import type {TourShortInfo} from "@/types/tour";
 
-export default function Search() {
+export default function Search({
+  countries,
+  tours,
+  country,
+  month,
+}: {
+  countries: SearchOption[];
+  tours: TourShortInfo[];
+  country?: string;
+  month?: string;
+}) {
   return (
     <section className="pt-[34px] xl:pt-[44px] mb-[148px] xl:mb-[180px]">
       <div className="md:flex justify-center items-center md:gap-x-[50px] w-screen">
@@ -15,7 +27,12 @@ export default function Search() {
         >
           <ArrowHeadIcon className="absolute top-[-10px] right-[-4px] rotate-180 text-main" />
         </AnimatedWrapper>
-        <SearchForm variant="red" />
+        <SearchForm
+          variant="red"
+          countries={countries}
+          initialCountry={country}
+          initialMonth={month}
+        />
         <AnimatedWrapper
           animation={fadeInAnimation({ x: 30, delay: 0.8 })}
           className="hidden md:block relative w-[calc(50%-325px)] h-[3px] bg-main"
@@ -24,7 +41,7 @@ export default function Search() {
         </AnimatedWrapper>
       </div>
       <Container>
-        <SearchList />
+        <SearchList tours={tours} />
       </Container>
     </section>
   );

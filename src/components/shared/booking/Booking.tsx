@@ -7,6 +7,17 @@ import NotificationPopUp from "@/components/shared/pop-ups/NotificationPopUp";
 import BookingAgentForm from "../forms/BookingAgentForm";
 import { Tour } from "@/types/tour";
 
+function selectedDepartureOnly(tour: Tour) {
+  return Object.fromEntries(
+    Object.entries(tour.tourDepartures)
+      .map(([month, departures]) => [
+        month,
+        departures.filter((item) => item.departureId === tour.selectedDepartureId),
+      ] as const)
+      .filter(([, departures]) => departures.length > 0)
+  );
+}
+
 interface BookingProps {
   tour: Tour;
   isPopUpShown: boolean;
@@ -29,8 +40,8 @@ export default function Booking({
   const [isNotificationShown, setIsNotificationShown] = useState(false);
   const isAuthenticated = false;
 
-  //@ts-expect-error
   const { title, tourDepartures, crmNumber } = tour;
+  const bookingDepartures = selectedDepartureOnly(tour);
 
   return (
     <>
@@ -53,11 +64,12 @@ export default function Booking({
           />
         ) : (
           <BookingForm
+            key={initialDate ?? tour.selectedDepartureId}
             setIsError={setIsError}
             setIsNotificationShown={setIsNotificationShown}
             setIsPopUpShown={setIsPopUpShown}
-            tourDepartures={tourDepartures}
-            // tourId={crmNumber}
+            tourDepartures={bookingDepartures}
+            selectedCrmNumber={crmNumber}
             setErrorText={setErrorText}
             initialDate={initialDate}
             {...userData}

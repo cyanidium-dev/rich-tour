@@ -3,10 +3,8 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
 import axios from "axios";
-import MaskedInput from "react-text-mask";
 
 import { agencyInfoValidation } from "@/schemas/agencyInfoFormValidation";
-import { phoneMask } from "@/regex/regex";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 
@@ -142,8 +140,7 @@ export default function AgencyInfoForm({
                             placeholder="Телефон агенції"
                             errors={errors}
                             touched={touched}
-                            as={MaskedInput}
-                            mask={phoneMask}
+                            mask="phone"
                         />
 
                         <CustomizedInput

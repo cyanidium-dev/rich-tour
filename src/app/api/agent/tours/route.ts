@@ -23,9 +23,8 @@ export async function GET() {
         const allOrders = await getCrmOrdersByClientId(user.crmId);
 
         return NextResponse.json({ orders: allOrders });
-    } catch (error) {
-        console.error("Failed to fetch agent orders from CRM:", error);
-
+    } catch {
+        console.error("Failed to fetch agent orders from CRM");
         return NextResponse.json(
             { error: "FAILED_TO_FETCH_ORDERS" },
             { status: 500 }

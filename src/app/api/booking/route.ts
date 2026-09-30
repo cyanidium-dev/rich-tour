@@ -1,86 +1,72 @@
-import { NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
-import { jwtVerify } from 'jose'
+import { NextResponse } from "next/server";
+import { ValidationError } from "yup";
 
-import { sendTravelersToCrm } from '@/lib/crm/sendTravelersToCrm'
-import { sendOrderToCrm } from '@/lib/crm/sendOrderToCrm'
+import { BookingRequest } from "@/contracts/booking";
+import { sendOrderToCrm } from "@/lib/crm/sendOrderToCrm";
+import { sendTravelersToCrm } from "@/lib/crm/sendTravelersToCrm";
+import { getAuthUser } from "@/lib/sanity/users/getAuthUser";
+import { bookingValidation } from "@/schemas/bookingFormValidation";
 
 export async function POST(req: Request) {
+    let rawBody: unknown;
     try {
-        const body = await req.json()
-        // ─────────────────────────────────────────────
-        // 1️⃣ Пытаемся получить crmId агента из JWT
-        // ─────────────────────────────────────────────
-        let crmUserId: number | string | null = null
+        rawBody = await req.json();
+    } catch {
+        return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 });
+    }
 
-        const cookieStore = await cookies()
-        const token = cookieStore.get('auth_token')?.value;
-        // console.log("token", token);
+    const candidate = rawBody as Partial<BookingRequest>;
+    if (!candidate.requestId || !candidate.tourId) {
+        return NextResponse.json({ error: "MISSING_BOOKING_IDENTIFIERS" }, { status: 400 });
+    }
 
-        if (token) {
-            try {
-                const { payload } = await jwtVerify(
-                    token,
-                    new TextEncoder().encode(process.env.JWT_SECRET!)
-                )
-
-                if (payload.crmId) {
-                    //@ts-expect-error
-                    crmUserId = payload.crmId
-                }
-            } catch {
-                // если токен невалиден — считаем пользователя гостем
-                crmUserId = null
-            }
+    let body: BookingRequest;
+    try {
+        const validated = await bookingValidation().validate(candidate, {
+            abortEarly: false,
+        });
+        body = {
+            ...candidate,
+            ...validated,
+            requestId: candidate.requestId,
+            tourId: candidate.tourId,
+        } as BookingRequest;
+    } catch (error) {
+        if (error instanceof ValidationError) {
+            return NextResponse.json(
+                { error: "VALIDATION_FAILED", fields: error.errors },
+                { status: 400 }
+            );
         }
+        return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 });
+    }
 
-        // console.log("crmUserId", crmUserId);
-        // ─────────────────────────────────────────────
-        // 2️⃣ Создаём / находим туристов в CRM
-        // ─────────────────────────────────────────────
-        const crmTravelerIds = await sendTravelersToCrm(body.travelers)
-// return;
-        // ─────────────────────────────────────────────
-        // 3️⃣ Создаём заявку в CRM
-        // ─────────────────────────────────────────────
+    const auth = await getAuthUser();
 
+    try {
+        const crmTravelerIds = await sendTravelersToCrm(
+            body.travelers,
+            body.requestId
+        );
+        const firstTraveler = body.travelers[0];
         const crmOrderId = await sendOrderToCrm({
+            requestId: body.requestId,
             tourId: body.tourId,
             crmTravelerIds,
             date: body.date,
             travelersQty: body.travelersQty,
             message: body.message,
-            name: body.companyName || `${body.travelers[0].name} ${body.travelers[0].surname}`,
+            name: body.companyName || `${firstTraveler.name} ${firstTraveler.surname}`,
             email: body.email,
             phone: body.phone,
-            //@ts-expect-error
-            crmUserId, //
-        })
+            crmUserId: auth?.crmId ? Number(auth.crmId) : null,
+        });
 
-        // ─────────────────────────────────────────────
-        // 4️⃣ Ответ фронтенду
-        // ─────────────────────────────────────────────
-        return NextResponse.json({
-            status: 'ok',
-            crmOrderId,
-        })
-    } catch (error) {
-        console.error('BOOKING ERROR:', error);
-        let message = "Щось пішло не так";
-        //@ts-expect-error
-        if(error?.message) {
-            //@ts-expect-error
-            message = error.message;
-        }
-        //@ts-expect-error
-        if(error.response?.data?.errorArray) {
-            //@ts-expect-error
-            message = error.response?.data?.errorArray[0];
-        }
+        return NextResponse.json({ status: "ok", crmOrderId });
+    } catch {
         return NextResponse.json(
-            // @ts-expect-error
-            { error: message },
-            { status: 500 }
-        )
+            { error: "CRM_BOOKING_FAILED" },
+            { status: 502 }
+        );
     }
 }

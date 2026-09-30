@@ -1,5 +1,5 @@
-import client from "@/lib/sanity/client";
 import { getAuthUser } from "./getAuthUser";
+import {getAgencyById} from "./repository";
 
 export type AgencyProfile = {
     _id: string;
@@ -21,19 +21,19 @@ export async function getAuthAgencyProfile(): Promise<AgencyProfile | null> {
         return null;
     }
 
-    return await client.fetch(
-        `*[_type == "agencyUser" && _id == $id][0]{
-            _id,
-            legalAgencyName,
-            marketingAgencyName,
-            login,
-            agencyEdrpou,
-            agencyCity,
-            agencyLegalAddress,
-            agencyEmail,
-            agencyPhone,
-            mainOfficeEmail
-        }`,
-        { id: auth.sub }
-    );
+    const agency = await getAgencyById(auth.sub);
+    if (!agency) return null;
+
+    return {
+        _id: agency._id,
+        legalAgencyName: agency.legalAgencyName,
+        marketingAgencyName: agency.marketingAgencyName ?? undefined,
+        login: agency.login,
+        agencyEdrpou: agency.agencyEdrpou ?? undefined,
+        agencyCity: agency.agencyCity ?? undefined,
+        agencyLegalAddress: agency.agencyLegalAddress ?? undefined,
+        agencyEmail: agency.agencyEmail,
+        agencyPhone: agency.agencyPhone,
+        mainOfficeEmail: agency.mainOfficeEmail,
+    };
 }

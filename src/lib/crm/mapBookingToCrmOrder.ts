@@ -1,7 +1,7 @@
-import { generateUuid } from '@/lib/utils/generateUuid'
 import { toCrmDate } from '@/lib/crm/utils/helpers'
 
 interface MapBookingParams {
+    requestId: string
     tourId: number | string
     crmTravelerIds: string[]
     date: string
@@ -14,6 +14,7 @@ interface MapBookingParams {
 }
 
 export function mapBookingToCrmOrder({
+                                         requestId,
                                          tourId,
                                          crmTravelerIds,
                                          date,
@@ -25,7 +26,8 @@ export function mapBookingToCrmOrder({
                                         phone,
                                      }: MapBookingParams) {
     const order: any = {
-        externalid: generateUuid(),
+        externalid: requestId,
+        findbyArray: ['externalid'],
         witheditevents: true,
         workflowid: '5',
         statusid: '35',

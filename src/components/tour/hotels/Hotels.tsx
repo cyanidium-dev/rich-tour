@@ -15,9 +15,9 @@ import AnimatedSwitch from "@/components/tour/hotels/AnimatedSwitch";
 import { AnimatePresence } from "framer-motion";
 
 import {useCurrency} from "@/context/CurrencyContext";
+import {TourHotel} from "@/types/tour";
 
-//@ts-expect-error
-export default function Hotels({title, stars, price, fullDescription, shortDescription, gallery}) {
+export default function Hotels({title, stars, price, fullDescription, shortDescription, gallery}: TourHotel) {
     const {convert, selected: currency} = useCurrency();
     const [isPopUpShown, setIsPopUpShown] = useState(false);
     const togglePopUp = useCallback(()=> setIsPopUpShown(prevState => !prevState), []);

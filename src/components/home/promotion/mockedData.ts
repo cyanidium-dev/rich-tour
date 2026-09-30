@@ -23,6 +23,8 @@ const getEarlyBookingByIndex = (index: number): boolean => {
 };
 
 const tourTemplate: Tour = {
+  selectedDepartureId: "mock-departure",
+  crmNumber: "",
   id: "1",
   slug: "tour-do-shwejcarii",
   title: "Тур до Швейцарії. Вирушайте у подорож до Швейцарії",

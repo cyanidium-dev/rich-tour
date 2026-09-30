@@ -20,7 +20,7 @@ export default function TeamSwiperMob({ teamMembers }: TeamSwiperMobProps) {
       animation={fadeInAnimation({ y: 30, delay: 0.4 })}
       className="md:hidden"
     >
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader className="w-full h-[524px]" />}>
         <div className="md:hidden mt-[148px]">
           <Swiper
             slidesPerView={"auto"}

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import client from "@/lib/sanity/client";
 import { getAuthUser } from "@/lib/sanity/users/getAuthUser";
+import {updateAgencyUser, updateAgentUser} from "@/lib/sanity/users/repository";
 
 type Body = {
     password: string;
@@ -38,19 +38,20 @@ export async function POST(req: Request) {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const passwordPatch = {
+    const nextPassword = {
         password: {
             plain: password,
             hash: passwordHash,
         },
+        passwordResetRequired: false,
     };
-    const patch = client.patch(user.sub).set(passwordPatch);
+    const updated = user.role === "agency"
+        ? await updateAgencyUser(user.sub, (current) => ({...current, ...nextPassword}))
+        : await updateAgentUser(user.sub, (current) => ({...current, ...nextPassword}));
 
-    if (user.role === "agency") {
-        patch.unset(["passwordHash"]);
+    if (!updated) {
+        return NextResponse.json({error: "NOT_FOUND"}, {status: 404});
     }
-
-    await patch.commit();
 
     return NextResponse.json({ success: true });
 }

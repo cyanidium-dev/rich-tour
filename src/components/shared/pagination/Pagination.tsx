@@ -55,7 +55,7 @@ export default function Pagination<T>({
   );
 
   const generatePageNumbers = () => {
-    const pageNumbers = [];
+    const pageNumbers: number[] = [];
     const halfVisible = Math.floor(maxVisiblePages / 2);
 
     let startPage = Math.max(1, safeCurrentPage - halfVisible);

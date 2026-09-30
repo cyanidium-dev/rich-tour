@@ -3,14 +3,11 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
 import axios from "axios";
-import MaskedInput from "react-text-mask";
 
 import { agentInfoValidation } from "@/schemas/agentInfoFormValidation";
-import { phoneMask } from "@/regex/regex";
 
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
-import {ValuesSignUpFormType} from "@/components/shared/forms/SignUpForm";
 
 export interface ValuesAgentInfoFormType {
   email: string;
@@ -20,6 +17,7 @@ export interface ValuesAgentInfoFormType {
   phone: string;
   edrpou?: string;
   city: string;
+  taxForm?: string;
 }
 
 interface AgentInfoFormProps {
@@ -56,7 +54,7 @@ export default function AgentInfoForm({
 
       const payload = {
         ...values,
-        edrpou: normalizeMaskedValue(values.edrpou),
+        edrpou: normalizeMaskedValue(values.edrpou ?? ""),
         phone: normalizeMaskedValue(values.phone),
       };
 
@@ -119,8 +117,7 @@ export default function AgentInfoForm({
                     placeholder="Телефон"
                     errors={errors}
                     touched={touched}
-                    as={MaskedInput}
-                    mask={phoneMask}
+                    mask="phone"
                 />
 
                 <CustomizedInput

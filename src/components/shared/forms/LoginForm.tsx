@@ -77,8 +77,12 @@ export default function LoginForm({
         } catch (error) {
             setIsError(true);
             setIsNotificationShown(true);
-            //@ts-expect-error
-            setErrorMessage(error.response?.data?.error || error.message);
+            const message = axios.isAxiosError(error) && typeof error.response?.data?.error === "string"
+                ? error.response.data.error
+                : error instanceof Error
+                    ? error.message
+                    : "LOGIN_FAILED";
+            setErrorMessage?.(message);
         } finally {
             setIsLoading(false);
         }
@@ -95,7 +99,7 @@ export default function LoginForm({
                     <div className="flex flex-col w-full gap-y-5 mb-[18px]">
                         <CustomizedInput
                             fieldName="email"
-                            inputType="text"
+                            inputType="password"
                             placeholder="Вкажіть email або login"
                             errors={errors}
                             touched={touched}

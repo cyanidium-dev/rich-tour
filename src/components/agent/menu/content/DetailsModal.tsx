@@ -20,8 +20,8 @@ interface ModalProps {
     isPopUpShown: boolean;
     setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
     className?: string;
-    comment: string | undefined;
-    details: DetailsItem[]
+    comment?: string;
+    details?: DetailsItem[];
 }
 
 export default function DetailsModal({

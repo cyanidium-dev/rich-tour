@@ -2,7 +2,6 @@
 
 import { useSearchParams } from "next/navigation";
 import OrdersContent from "./OrdersContent";
-import ToursContent from "./ToursContent";
 import SettingsContent from "./SettingsContent";
 import ChangePasswordContent from "./ChangePasswordContent";
 import AgencySettingsContent from "@/components/agency/menu/content/AgencySettingsContent";
@@ -36,8 +35,6 @@ export default function MenuContent({
           apiUrl={ordersApiUrl}
         />
       );
-    case "tours":
-      return <ToursContent />;
     case "settings":
       return isAgency ? (
         <AgencySettingsContent user={user} />

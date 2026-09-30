@@ -1,7 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@heroui/styles";
+@config "../../tailwind.config.ts";
+@plugin "tailwind-scrollbar" {
+  nocompatible: true;
+  preferredStrategy: "pseudoelements";
+}
 
+@utility container {
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (min-width: 375px) {
+    padding-inline: 25px;
+  }
+  @media (min-width: 1280px) {
+    padding-inline: 80px;
+  }
+}
+
+@layer base {
+  *, ::before, ::after, ::backdrop, ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer base {
 :root {
   --white: #ffffff;
   --black: #18181b;
@@ -45,6 +67,7 @@ ul {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
 }
 
 .popup-scroll::-webkit-scrollbar-track {
@@ -124,22 +147,22 @@ ul {
   }
 
   .swiper-slide {
-    @apply w-[210px] h-[332px] xl:w-[265px] xl:h-[408px] rounded-[12px] overflow-hidden shadow-card !important;
+    @apply w-[210px]! h-[332px]! xl:w-[265px]! xl:h-[408px]! rounded-[12px]! overflow-hidden! shadow-card!;
   }
 
   .reviews .swiper-slide {
-    @apply w-[325px] h-[185px] rounded-[12px] overflow-hidden shadow-card !important;
+    @apply w-[325px]! h-[185px]! rounded-[12px]! overflow-hidden! shadow-card!;
   }
   .team .swiper-slide {
-    @apply w-[325px] h-[450px] rounded-[12px] overflow-hidden shadow-card !important;
+    @apply w-[325px]! h-[450px]! rounded-[12px]! overflow-hidden! shadow-card!;
   }
   .documents .swiper-slide {
-    @apply w-[265px] h-[377px] rounded-none overflow-hidden !important;
+    @apply w-[265px]! h-[377px]! rounded-none! overflow-hidden!;
   }
 
   .swiper-button-next,
   .swiper-button-prev {
-    @apply w-[42px] h-[42px] rounded-[7.64px] bg-main transition hover:brightness-125 focus-visible:brightness-125 active:scale-95 duration-300 ease-in-out  !important;
+    @apply w-[42px]! h-[42px]! rounded-[7.64px]! bg-main! transition! hover:brightness-125! focus-visible:brightness-125! active:scale-95! duration-300! ease-in-out!;
     top: calc(100% - 32px) !important;
   }
 

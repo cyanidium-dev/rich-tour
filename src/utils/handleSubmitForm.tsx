@@ -1,17 +1,9 @@
 // utils/handleSubmitForm.ts
 import { FormikHelpers } from "formik";
 import { Dispatch, SetStateAction } from "react";
-import axios from "axios";
-
-import { ValuesBookingFormType } from "@/components/shared/forms/BookingForm";
-
-type BookingSubmitValues = ValuesBookingFormType & {
-  tourId: string;
-};
-
-export const handleSubmitForm = async (
-    values: BookingSubmitValues,
-    { resetForm }: FormikHelpers<ValuesBookingFormType>,
+export const handleSubmitForm = async <TValues,>(
+    _values: TValues,
+    { resetForm }: FormikHelpers<TValues>,
     setIsLoading: Dispatch<SetStateAction<boolean>>,
     setIsError: Dispatch<SetStateAction<boolean>>,
     setIsNotificationShown: Dispatch<SetStateAction<boolean>>,
@@ -28,13 +20,7 @@ export const handleSubmitForm = async (
     }
 
     setIsNotificationShown(true);
-  } catch (error) {
-    console.error(error);
-
-    if (axios.isAxiosError(error)) {
-      console.error("Axios error:", error.response?.data);
-    }
-
+  } catch {
     setIsError(true);
     setIsNotificationShown(true);
   } finally {

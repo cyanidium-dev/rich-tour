@@ -12,7 +12,7 @@ export default function AgentInfoSection({ user }: { user: any }) {
                 edrpou: user.edrpou,
                 city: user.city,
                 site: user.site ?? "",
-                taxForm: user.taxForm,
+                taxForm: user.taxForm ?? "",
             }}
         />
     );

@@ -1,6 +1,5 @@
 import { PortableText } from "@portabletext/react";
 
-//@ts-expect-error
 export default function HotelContent({ value }) {
     return (
         <PortableText
@@ -22,6 +21,7 @@ export default function HotelContent({ value }) {
                 },
                 listItem: {
                     bullet: ({ children }) => <li>{children}</li>,
+                    number: ({ children }) => <li>{children}</li>,
                 },
             }}
         />

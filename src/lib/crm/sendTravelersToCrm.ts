@@ -1,12 +1,15 @@
 import { getCrmToken } from './utils/getCrmToken'
 import { postToCrm } from './utils/postToCrm'
-import {TravelerInfo} from "@/components/shared/forms/BookingForm";
+import {TravelerInfo} from "@/contracts/booking";
 import { mapTravelerToCrmPayload } from './mapTravelerToCrmPayload'
 
 export async function sendTravelersToCrm(
-    travelers: TravelerInfo[]
+    travelers: TravelerInfo[],
+    requestId: string,
 ): Promise<string[]> {
-    const payload = travelers.map(mapTravelerToCrmPayload)
+    const payload = travelers.map((traveler, index) =>
+        mapTravelerToCrmPayload(traveler, requestId, index)
+    )
 
     const data = await postToCrm(payload, "contact/set/")
 

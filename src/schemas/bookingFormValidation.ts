@@ -48,6 +48,7 @@ export const bookingValidation = () => {
   });
 
   const bookingFormValidationSchema = yup.object().shape({
+    date: yup.string().required("Оберіть дату виїзду"),
     travelersQty: yup
         .number()
         .nullable()

@@ -1,32 +1,10 @@
 import type { Config } from "tailwindcss";
-import { heroui } from "@heroui/react";
-import tailwindScrollbar from "tailwind-scrollbar";
 
 export default {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
-  ],
-  safelist: [
-    "swiper",
-    "swiper-slide",
-    "swiper-button-next",
-    "swiper-button-prev",
-  ],
   theme: {
     extend: {
       screens: { xs: "375px" },
       fontFamily: { montserrat: ["var(--font-montserrat)"] },
-      container: {
-        center: true,
-        padding: {
-          DEFAULT: "16px",
-          xs: "25px",
-          xl: "80px",
-        },
-      },
       fontSize: {
         "9reg": ["9px", { fontWeight: "400", lineHeight: "1.23" }],
         "10reg": ["10px", { fontWeight: "400", lineHeight: "1.23" }],
@@ -104,11 +82,4 @@ export default {
       },
     },
   },
-  plugins: [
-    heroui(),
-    tailwindScrollbar({
-      nocompatible: true,
-      preferredStrategy: "pseudoelements",
-    }),
-  ],
 } satisfies Config;

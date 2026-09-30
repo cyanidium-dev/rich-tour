@@ -4,6 +4,8 @@ interface SubmitButtonProps {
     text: string;
     variant?: "red" | "black";
     className?: string;
+    dirty?: boolean;
+    isValid?: boolean;
 }
 
 export default function SubmitButton({

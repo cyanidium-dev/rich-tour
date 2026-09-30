@@ -5,7 +5,6 @@ import { listVariants } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import AnimatedListItem from "@/components/shared/animation/AnimatedListItem";
 
-//@ts-expect-error
 export default function ToursListMob({categories}) {
   return (
     <AnimatedWrapper

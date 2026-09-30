@@ -1,12 +1,8 @@
 "use client";
 import { Form, Formik, FormikHelpers, FieldArray } from "formik";
-import { Dispatch, SetStateAction, useState, useEffect } from "react";
-import { Select, SelectItem } from "@heroui/react";
-import MaskedInput from "react-text-mask";
-import dynamic from "next/dynamic";
-import { Checkbox } from "@heroui/react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { BookingCheckbox, BookingDateSelect, BookingTravelerCount } from "./formComponents/BookingFields";
 import { bookingValidation } from "@/schemas/bookingFormValidation";
-import { dateMask, phoneMask } from "@/regex/regex";
 import { handleSubmitForm } from "@/utils/handleSubmitForm";
 import { formatTourDeparturesToOptions } from "@/utils/formatTourDeparturesOptions";
 import CustomizedInput from "./formComponents/CustomizedInput";
@@ -15,26 +11,9 @@ import IconButton from "../buttons/IconButton";
 import TrashIcon from "../icons/TrashIcon";
 import { TourDepartures } from "@/types/tour";
 import axios from 'axios'
+import {TravelerInfo} from "@/contracts/booking";
 
-const ClientNumberInput = dynamic(
-  () => import("@heroui/react").then((mod) => mod.NumberInput),
-  {
-    ssr: false,
-  }
-);
-
-export interface TravelerInfo {
-  name: string;
-  surname: string;
-  phone?: string;
-  passport: string;
-  birthDate: string;
-  passportExpiration: string;
-  boardingCity: string;
-  insurance: boolean;
-  frontSeats: boolean;
-  passportInProgress: boolean;
-}
+export type {TravelerInfo} from "@/contracts/booking";
 
 export interface ValuesBookingFormType {
   date: string;
@@ -60,50 +39,11 @@ interface BookingFormProps {
   variant?: "red" | "black";
   setErrorText: Dispatch<SetStateAction<string | null>>;
   initialDate?: string | null;
+  selectedCrmNumber: string;
   companyName: string | undefined;
   email: string | undefined;
   phone: string | undefined;
 }
-
-function findIdByDate(dateStr, calendar) {
-  if (!dateStr || typeof dateStr !== "string") return null;
-
-  // 1. Разбираем дату
-  const parts = dateStr.split(".");
-  if (parts.length !== 3) return null;
-
-  const [day, month, year] = parts;
-
-  // убираем ведущие нули
-  const dayNumber = Number(day);
-  const monthNumber = Number(month);
-
-  if (!dayNumber || !monthNumber || !year) return null;
-
-  // 2. Формируем ключ месяца YYYY-MM
-  const monthKey = `${year}-${String(monthNumber).padStart(2, "0")}`;
-
-  // 3. Получаем массив дней месяца
-  const monthArray = calendar[monthKey];
-  if (!Array.isArray(monthArray)) return null;
-
-  // 4. Ищем нужный день
-  const found = monthArray.find(item => item.day === dayNumber);
-
-  // 5. Возвращаем _id
-  return found ? found.crmNumber : null;
-}
-
-export const passportMask = [
-  /[A-Za-z]/,
-  /[A-Za-z]/,
-  /\d/,
-  /\d/,
-  /\d/,
-  /\d/,
-  /\d/,
-  /\d/,
-];
 
 export default function BookingForm({
   setIsError,
@@ -114,18 +54,24 @@ export default function BookingForm({
   className = "",
   variant = "red",
                                       initialDate,
+    selectedCrmNumber,
     companyName = "",
     email = "",
     phone = "",
     // tourId,
 }: BookingFormProps) {
+  const requestIdRef = useRef(crypto.randomUUID());
   const [isLoading, setIsLoading] = useState(false);
   const [focusedTravelerIndex, setFocusedTravelerIndex] = useState<
     number | null
   >(null);
 
+  const selectOptions = formatTourDeparturesToOptions(tourDepartures);
+  const defaultDate = initialDate && selectOptions.some((option) => option.key === initialDate)
+    ? initialDate
+    : selectOptions[0]?.key ?? "";
   const initialValues: ValuesBookingFormType = {
-    date: "",
+    date: defaultDate,
     travelersQty: null,
     companyName,
     email: email,
@@ -149,13 +95,15 @@ export default function BookingForm({
 
   const validationSchema = bookingValidation();
 
-  const selectOptions = formatTourDeparturesToOptions(tourDepartures);
   const submitForm = async (
       values: ValuesBookingFormType,
       formikHelpers: FormikHelpers<ValuesBookingFormType>
   ) => {
-    const tourId = findIdByDate(values.date, tourDepartures);
-    const payload = { ...values, tourId };
+    const payload = {
+      ...values,
+      requestId: requestIdRef.current,
+      tourId: selectedCrmNumber,
+    };
 
     try {
       // (по желанию) можно включить лоадер ДО запроса
@@ -163,8 +111,7 @@ export default function BookingForm({
       setIsError(false);
       setErrorText(null);
 
-      const response = await axios.post("/api/booking", payload);
-      console.log("API RESPONSE:", response.data);
+      await axios.post("/api/booking", payload);
 
       // успех
       await handleSubmitForm(
@@ -175,15 +122,14 @@ export default function BookingForm({
           setIsNotificationShown,
           setIsPopUpShown
       );
+      requestIdRef.current = crypto.randomUUID();
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Axios error:", error.response?.data);
-      }
-
       // важно: на ошибке тоже показать NotificationPopUp
       setIsError(true);
-      //@ts-expect-error
-      setErrorText(error.response?.data.error);
+      const errorCode = axios.isAxiosError(error) && typeof error.response?.data?.error === "string"
+        ? error.response.data.error
+        : "BOOKING_FAILED";
+      setErrorText(errorCode);
       setIsNotificationShown(true);
 
       // если хочешь закрывать форму при ошибке — оставь, если нет — убери
@@ -202,7 +148,6 @@ export default function BookingForm({
   //   };
   //   const response = await axios.post('/api/booking', payload);
   //
-  //   console.log('API RESPONSE:', response.data);
   //   await handleSubmitForm(
   //       payload,
   //       formikHelpers,
@@ -220,50 +165,13 @@ export default function BookingForm({
       validationSchema={validationSchema}
     >
       {({ errors, setFieldTouched, touched, dirty, isValid, setFieldValue, values }) => {
-        useEffect(() => {
-          // 1) если пришла initialDate и она есть среди option.key — ставим её
-          if (initialDate && selectOptions.some(o => o.key === initialDate)) {
-            if (values.date !== initialDate) setFieldValue("date", initialDate);
-            return;
-          }
-
-          // 2) иначе — старая логика: первая доступная
-          if (!values.date && selectOptions.length > 0) {
-            setFieldValue("date", selectOptions[0].key);
-          }
-        }, [initialDate, values.date, selectOptions, setFieldValue]);
-
         return (
             <Form className={`${className}`}>
               <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
-                <Select
-                    placeholder="Виберіть дату"
-                    size="sm"
-                    selectedKeys={new Set([values.date])}
-                    classNames={{
-                      selectorIcon: "right-[18px]",
-                      trigger:
-                          "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4 hover:bg-white focus:bg-white",
-                      value: "!text-10reg lg:!text-12reg text-black",
-                      popoverContent:
-                          "bg-white shadow-none border border-black rounded-[6px]",
-                      listbox:
-                          "!font-normal !text-[10px] lg:!text-12reg !text-black",
-                    }}
-                    onSelectionChange={(selected) => {
-                      const selectedValue = Array.from(selected)[0];
-                      setFieldValue("date", selectedValue);
-                    }}
-                >
-                  {selectOptions.map((option) => (
-                      <SelectItem key={option.key}>{option.label}</SelectItem>
-                  ))}
-                </Select>
-                <ClientNumberInput
-                    aria-label="travelers"
-                    minValue={1}
-                    value={values.travelersQty}
-                    onValueChange={(value) => {
+                <BookingDateSelect options={selectOptions} value={values.date} onChange={(value) => setFieldValue("date", value)} />
+                <BookingTravelerCount
+                    value={values.travelersQty ?? undefined}
+                    onChange={(value) => {
                       setFieldTouched("travelersQty", true);
                       if (typeof value !== "number" || Number.isNaN(value)) {
                         setFieldValue("travelersQty", null);
@@ -293,12 +201,6 @@ export default function BookingForm({
                       } else if (value < values.travelers.length) {
                         setFieldValue("travelers", values.travelers.slice(0, value));
                       }
-                    }}
-                    placeholder="Кількість туристів"
-                    classNames={{
-                      inputWrapper:
-                          "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4",
-                      input: "!text-10reg lg:!text-12reg",
                     }}
                 />
                 {touched.travelersQty && errors.travelersQty && (
@@ -362,8 +264,7 @@ export default function BookingForm({
                                             placeholder="Номер телефону"
                                             errors={errors}
                                             touched={touched}
-                                            as={MaskedInput}
-                                            mask={phoneMask}
+                                            mask="phone"
                                             inputType="tel"
                                             onFocus={() => setFocusedTravelerIndex(index)}
                                             labelClassName="lg:w-[296px]"
@@ -374,8 +275,7 @@ export default function BookingForm({
                                             placeholder="AA123456"
                                             errors={errors}
                                             touched={touched}
-                                            as={MaskedInput}
-                                            mask={passportMask}
+                                            mask="passport"
                                             onFocus={() => setFocusedTravelerIndex(index)}
                                             labelClassName="lg:w-[276px]"
                                             fieldFontSize="text-10reg lg:text-12reg"
@@ -393,8 +293,7 @@ export default function BookingForm({
                                         <CustomizedInput
                                             fieldName={`travelers[${index}].birthDate`}
                                             placeholder="Дата народження"
-                                            as={MaskedInput}
-                                            mask={dateMask}
+                                            mask="date"
                                             errors={errors}
                                             touched={touched}
                                             onFocus={() => setFocusedTravelerIndex(index)}
@@ -404,8 +303,7 @@ export default function BookingForm({
                                         <CustomizedInput
                                             fieldName={`travelers[${index}].passportExpiration`}
                                             placeholder="Закінчення дії паспорта"
-                                            as={MaskedInput}
-                                            mask={dateMask}
+                                            mask="date"
                                             errors={errors}
                                             touched={touched}
                                             onFocus={() => setFocusedTravelerIndex(index)}
@@ -424,17 +322,9 @@ export default function BookingForm({
                                         />
                                       </div>
                                       <div className="flex flex-col lg:flex-row gap-y-4 gap-x-6">
-                                        <Checkbox
-                                            radius="sm"
-                                            size="sm"
-                                            classNames={{
-                                              label:
-                                                  "text-[12px] leading-[120%] font-normal text-black",
-                                              wrapper:
-                                                  "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
-                                            }}
+                                        <BookingCheckbox
                                             isSelected={values.travelers[index].insurance}
-                                            onValueChange={(value) => {
+                                            onChange={(value) => {
                                               setFieldValue(
                                                   `travelers[${index}].insurance`,
                                                   value
@@ -442,20 +332,12 @@ export default function BookingForm({
                                             }}
                                         >
                                           Страховка
-                                        </Checkbox>
-                                        <Checkbox
-                                            radius="sm"
-                                            size="sm"
-                                            classNames={{
-                                              label:
-                                                  "text-[12px] leading-[120%] font-normal text-black",
-                                              wrapper:
-                                                  "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
-                                            }}
+                                        </BookingCheckbox>
+                                        <BookingCheckbox
                                             isSelected={
                                               values.travelers[index].frontSeats
                                             }
-                                            onValueChange={(value) => {
+                                            onChange={(value) => {
                                               setFieldValue(
                                                   `travelers[${index}].frontSeats`,
                                                   value
@@ -463,20 +345,13 @@ export default function BookingForm({
                                             }}
                                         >
                                           Передні місця
-                                        </Checkbox>
-                                        <Checkbox
-                                            radius="sm"
-                                            size="sm"
-                                            classNames={{
-                                              label:
-                                                  "text-[12px] leading-[120%] font-semibold text-black",
-                                              wrapper:
-                                                  "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
-                                            }}
+                                        </BookingCheckbox>
+                                        <BookingCheckbox
+                                            emphasized
                                             isSelected={
                                               values.travelers[index].passportInProgress
                                             }
-                                            onValueChange={(value) => {
+                                            onChange={(value) => {
                                               setFieldValue(`travelers[${index}].passportInProgress`, value);
 
                                               if (value) {
@@ -486,7 +361,7 @@ export default function BookingForm({
                                             }}
                                         >
                                           Паспорт виготовляється
-                                        </Checkbox>
+                                        </BookingCheckbox>
                                       </div>
                                     </>
                                 )}
@@ -543,8 +418,7 @@ export default function BookingForm({
                     placeholder="Номер телефону"
                     errors={errors}
                     touched={touched}
-                    as={MaskedInput}
-                    mask={phoneMask}
+                    mask="phone"
                     fieldFontSize="text-10reg lg:text-12reg"
                 />
                 <CustomizedInput

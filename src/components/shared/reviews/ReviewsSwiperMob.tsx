@@ -10,7 +10,6 @@ import Loader from "@/components/shared/loader/Loader";
 import ReviewCard from "@/components/shared/cards/reviewCard/ReviewCard";
 import AnimatedWrapper from "../animation/AnimatedWrapper";
 
-//@ts-expect-error
 export default function ReviewsSwiperMob({items}) {
   // if (!reviewsList || !reviewsList.length) {
   //   return null;
@@ -21,7 +20,7 @@ export default function ReviewsSwiperMob({items}) {
       animation={fadeInAnimation({ y: 30, delay: 0.4 })}
       className="lg:hidden mt-9"
     >
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader className="w-full h-[275px]" />}>
         <Swiper
           slidesPerView={"auto"}
           centeredSlides={true}
@@ -32,7 +31,6 @@ export default function ReviewsSwiperMob({items}) {
           modules={[Navigation]}
           className="reviews"
         >
-          {/*@ts-expect-error*/}
           {items.map((review, idx) => (
             <SwiperSlide key={idx}>
               <ReviewCard review={review} />

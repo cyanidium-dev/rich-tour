@@ -1,34 +1,36 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+
+import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "../shared/container/Container";
-import TabMenu from "./TabMenu";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import Container from "@/components/shared/container/Container";
+import { TourShortInfo } from "@/types/tour";
+import TabMenu, { TourCategory } from "./TabMenu";
 import ToursList from "./ToursList";
 
-//@ts-expect-error
-export default function Tours({categories}) {
-  const router = useRouter();
+export default function Tours({
+  categories,
+  tours,
+}: {
+  categories: TourCategory[];
+  tours: TourShortInfo[];
+}) {
   const searchParams = useSearchParams();
-  const category = searchParams.get("category") || "all";
-  const [activeTab, setActiveTab] = useState(() => {
-    if(category === "all") return "all";
-    //@ts-expect-error
-    const result = categories.find(item => item.title === category);
-    return result._id;
-  });
+  const requestedCategory = searchParams.get("category") ?? "all";
+  const initialCategoryId =
+    categories.find((item) => item.title === requestedCategory)?._id ?? "all";
+  const [activeCategoryId, setActiveCategoryId] = useState(initialCategoryId);
 
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (!params.get("category")) {
-      params.set("category", "all");
-    }
-    if (!params.get("page")) {
-      params.set("page", "1");
-    }
-    router.replace(`?${params.toString()}`, { scroll: false });
-  }, [router, searchParams]);
+  const filteredTours = useMemo(
+    () => activeCategoryId === "all"
+      ? tours
+      : tours.filter((tour) =>
+          tour.categories?.some((category) => category._ref === activeCategoryId)
+        ),
+    [activeCategoryId, tours]
+  );
 
   return (
     <section className="pt-[33px] mb-[148px] xl:mb-[180px]">
@@ -40,9 +42,12 @@ export default function Tours({categories}) {
         >
           Тури
         </AnimatedWrapper>
-        {/*@ts-expect-error*/}
-        <TabMenu categories={categories} activeTab={category} setActiveTab={setActiveTab} />
-        <ToursList activeTab={activeTab} />
+        <TabMenu
+          categories={categories}
+          activeCategoryId={activeCategoryId}
+          onChange={setActiveCategoryId}
+        />
+        <ToursList tours={filteredTours} />
       </Container>
     </section>
   );

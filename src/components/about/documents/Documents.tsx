@@ -17,7 +17,6 @@ export default async function Documents() {
   if (!documents || !documents.length) {
     return null;
   }
-  // @ts-expect-error
   const items = documents.map(({name, doc}) => ({image: {
     url: doc.asset.url,
       alt: name,

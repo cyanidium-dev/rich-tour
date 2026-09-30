@@ -1,31 +1,25 @@
-import {isAxiosError} from "axios";
+import { isAxiosError } from "axios";
 
 import crmInstance from "@/lib/crm/utils/crmInstance";
-import {getCrmToken} from "@/lib/crm/utils/getCrmToken";
+import { getCrmToken } from "@/lib/crm/utils/getCrmToken";
 
-export async function postToCrm(
-    payload: any,
-    url: string,
-) {
+export async function postToCrm(payload: unknown, url: string) {
     const token = await getCrmToken();
-    console.log(payload)
+
     try {
-        const {data} = await crmInstance.post(url, payload, {
-            headers: {
-                token,
-            },
+        const { data } = await crmInstance.post(url, payload, {
+            headers: { token },
         });
         return data;
     } catch (error) {
         if (isAxiosError(error)) {
-            console.error('❌ CRM ERROR STATUS:', error.response?.status)
-            console.error('❌ CRM ERROR DATA:', error.response?.data)
-            console.error('❌ CRM ERROR HEADERS:', error.response?.headers)
-            console.error('❌ CRM REQUEST PAYLOAD:', JSON.stringify(payload, null, 2))
+            console.error("CRM request failed", {
+                status: error.response?.status,
+                endpoint: url,
+            });
         } else {
-            console.error('❌ UNKNOWN ERROR:', error)
+            console.error("Unknown CRM request error", { endpoint: url });
         }
-
-        throw error
+        throw error;
     }
 }

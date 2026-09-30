@@ -1,6 +1,6 @@
-export default function Loader() {
+export default function Loader({ className = "w-dvw h-[700px]" }: { className?: string }) {
   return (
-    <div className="w-dvw h-[700px] flex items-center justify-center">
+    <div className={`${className} flex items-center justify-center`}>
       <div className="loader"></div>
     </div>
   );

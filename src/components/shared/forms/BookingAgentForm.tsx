@@ -1,26 +1,15 @@
 "use client";
 import { Form, Formik, FormikHelpers, FieldArray } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Select, SelectItem } from "@heroui/react";
-import MaskedInput from "react-text-mask";
-import dynamic from "next/dynamic";
-import { Checkbox } from "@heroui/react";
+import { BookingCheckbox, BookingDateSelect, BookingTravelerCount } from "./formComponents/BookingFields";
 import { bookingAgentValidation } from "@/schemas/bookingAgentFormValidation";
 import { formatTourDeparturesToOptions } from "@/utils/formatTourDeparturesOptions";
-import { dateMask, phoneMask } from "@/regex/regex";
 import { handleSubmitForm } from "@/utils/handleSubmitForm";
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
 import IconButton from "../buttons/IconButton";
 import TrashIcon from "../icons/TrashIcon";
 import { TourDepartures } from "@/types/tour";
-
-const ClientNumberInput = dynamic(
-  () => import("@heroui/react").then((mod) => mod.NumberInput),
-  {
-    ssr: false,
-  }
-);
 
 export interface TravelerInfo {
   name: string;
@@ -101,6 +90,7 @@ export default function BookingAgentForm({
     formikHelpers: FormikHelpers<ValuesBookingAgentFormType>
   ) => {
     await handleSubmitForm<ValuesBookingAgentFormType>(
+      values,
       formikHelpers,
       setIsLoading,
       setIsError,
@@ -119,40 +109,20 @@ export default function BookingAgentForm({
         return (
           <Form className={`${className}`}>
             <div className="flex flex-col w-full h-full gap-y-4 mb-[18px]">
-              <Select
-                placeholder="Виберіть дату"
-                size="sm"
-                selectedKeys={new Set([values.date])}
-                classNames={{
-                  selectorIcon: "right-[18px]",
-                  trigger:
-                    "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4 hover:bg-white focus:bg-white",
-                  value: "!text-10reg lg:!text-12reg text-black",
-                  popoverContent:
-                    "bg-white shadow-none border border-black rounded-[6px]",
-                  listbox:
-                    "!font-normal !text-[10px] lg:!text-12reg !text-black",
-                }}
-                onSelectionChange={(selected) => {
-                  const selectedValue = Array.from(selected)[0];
-                  setFieldValue("date", selectedValue);
-                }}
-              >
-                {selectOptions.map((option) => (
-                  <SelectItem key={option.key}>{option.label}</SelectItem>
-                ))}
-              </Select>
-              <ClientNumberInput
-                aria-label="travelers"
-                minValue={1}
-                value={values.travelersQty}
+              <BookingDateSelect options={selectOptions} value={values.date} onChange={(value) => setFieldValue("date", value)} />
+              <BookingTravelerCount
+                value={values.travelersQty ?? undefined}
                 onChange={(value) => {
+                  if (typeof value !== "number" || Number.isNaN(value)) {
+                    setFieldValue("travelersQty", null);
+                    return;
+                  }
                   setFieldValue("travelersQty", value);
-                  if (Number(value) > values.travelers.length) {
+                  if (value > values.travelers.length) {
                     const newTravelers = [...values.travelers];
                     for (
                       let i = values.travelers.length;
-                      i < Number(value);
+                      i < value;
                       i++
                     ) {
                       newTravelers.push({
@@ -169,20 +139,13 @@ export default function BookingAgentForm({
                       });
                     }
                     setFieldValue("travelers", newTravelers);
-                  } else if (Number(value) < values.travelers.length) {
+                  } else if (value < values.travelers.length) {
                     const newTravelers = values.travelers.slice(
                       0,
-                      Number(value)
+                      value
                     );
                     setFieldValue("travelers", newTravelers);
                   }
-                }}
-                placeholder="Кількість туристів"
-                classNames={{
-                  inputWrapper:
-                    "bg-white shadow-none border border-black rounded-[6px] h-10 py-[10px] px-4 hover:bg-white focus:bg-white",
-                  innerWrapper: "p-0  focus:bg-white",
-                  input: "!text-10reg lg:!text-12reg placeholder:text-black",
                 }}
               />
               <FieldArray name="travelers">
@@ -241,8 +204,7 @@ export default function BookingAgentForm({
                                   placeholder="Номер телефону"
                                   errors={errors}
                                   touched={touched}
-                                  as={MaskedInput}
-                                  mask={phoneMask}
+                                  mask="phone"
                                   inputType="tel"
                                   onFocus={() => setFocusedTravelerIndex(index)}
                                   labelClassName="lg:w-[296px]"
@@ -262,8 +224,7 @@ export default function BookingAgentForm({
                                 <CustomizedInput
                                   fieldName={`travelers[${index}].birthDate`}
                                   placeholder="Дата народження"
-                                  as={MaskedInput}
-                                  mask={dateMask}
+                                  mask="date"
                                   errors={errors}
                                   touched={touched}
                                   onFocus={() => setFocusedTravelerIndex(index)}
@@ -273,8 +234,7 @@ export default function BookingAgentForm({
                                 <CustomizedInput
                                   fieldName={`travelers[${index}].passportExpiration`}
                                   placeholder="Закінчення дії паспорта"
-                                  as={MaskedInput}
-                                  mask={dateMask}
+                                  mask="date"
                                   errors={errors}
                                   touched={touched}
                                   onFocus={() => setFocusedTravelerIndex(index)}
@@ -292,17 +252,9 @@ export default function BookingAgentForm({
                                 />
                               </div>
                               <div className="flex flex-col lg:flex-row gap-y-4 gap-x-6">
-                                <Checkbox
-                                  radius="sm"
-                                  size="sm"
-                                  classNames={{
-                                    label:
-                                      "text-[12px] leading-[120%] font-normal text-black",
-                                    wrapper:
-                                      "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
-                                  }}
+                                <BookingCheckbox
                                   isSelected={values.travelers[index].insurance}
-                                  onValueChange={(value) => {
+                                  onChange={(value) => {
                                     setFieldValue(
                                       `travelers[${index}].insurance`,
                                       value
@@ -310,20 +262,12 @@ export default function BookingAgentForm({
                                   }}
                                 >
                                   Страховка
-                                </Checkbox>
-                                <Checkbox
-                                  radius="sm"
-                                  size="sm"
-                                  classNames={{
-                                    label:
-                                      "text-[12px] leading-[120%] font-normal text-black",
-                                    wrapper:
-                                      "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
-                                  }}
+                                </BookingCheckbox>
+                                <BookingCheckbox
                                   isSelected={
                                     values.travelers[index].frontSeats
                                   }
-                                  onValueChange={(value) => {
+                                  onChange={(value) => {
                                     setFieldValue(
                                       `travelers[${index}].frontSeats`,
                                       value
@@ -331,20 +275,13 @@ export default function BookingAgentForm({
                                   }}
                                 >
                                   Передні місця
-                                </Checkbox>
-                                <Checkbox
-                                  radius="sm"
-                                  size="sm"
-                                  classNames={{
-                                    label:
-                                      "text-[12px] leading-[120%] font-semibold text-black",
-                                    wrapper:
-                                      "before:border before:border-black group-data-[selected=true]:after:bg-main data-[selected=true]:after:border-main",
-                                  }}
+                                </BookingCheckbox>
+                                <BookingCheckbox
+                                  emphasized
                                   isSelected={
                                     values.travelers[index].passportInProgress
                                   }
-                                  onValueChange={(value) => {
+                                  onChange={(value) => {
                                     setFieldValue(
                                       `travelers[${index}].passportInProgress`,
                                       value
@@ -352,7 +289,7 @@ export default function BookingAgentForm({
                                   }}
                                 >
                                   Паспорт виготовляється
-                                </Checkbox>
+                                </BookingCheckbox>
                               </div>
                             </>
                           )}
@@ -414,8 +351,7 @@ export default function BookingAgentForm({
                 placeholder="Номер телефону"
                 errors={errors}
                 touched={touched}
-                as={MaskedInput}
-                mask={phoneMask}
+                mask="phone"
                 fieldFontSize="text-10reg lg:text-12reg"
               />
               <CustomizedInput

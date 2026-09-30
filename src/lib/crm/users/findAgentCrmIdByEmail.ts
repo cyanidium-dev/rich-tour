@@ -11,6 +11,13 @@ type CrmContactResponse = {
     dataArray?: CrmContact[];
 };
 
+export class CrmIdentityConflictError extends Error {
+    constructor() {
+        super("Multiple active CRM contacts match the agent identity");
+        this.name = "CrmIdentityConflictError";
+    }
+}
+
 function normalizeEmail(email: unknown): string {
     return String(email ?? "").trim().toLowerCase();
 }
@@ -102,13 +109,49 @@ export async function findAgentCrmIdByEmail(
     }
 
     const normalizedPhone = normalizePhone(phone);
-    const phoneMatchedContact = normalizedPhone
-        ? activeContacts.find((contact) =>
+    const phoneMatchedContacts = normalizedPhone
+        ? activeContacts.filter((contact) =>
             contact.phones?.some((contactPhone) => normalizePhone(contactPhone) === normalizedPhone)
         )
-        : undefined;
+        : [];
 
-    const selectedContact = phoneMatchedContact ?? activeContacts[0];
+    if (phoneMatchedContacts.length === 1) {
+        return String(phoneMatchedContacts[0].id);
+    }
+
+    if (phoneMatchedContacts.length > 1 || activeContacts.length > 1) {
+        throw new CrmIdentityConflictError();
+    }
+
+    const selectedContact = activeContacts[0];
 
     return selectedContact.id ? String(selectedContact.id) : null;
+}
+
+export async function findAgentCrmId({
+    externalId,
+    email,
+    phone,
+}: {
+    externalId: string;
+    email: string;
+    phone?: string;
+}): Promise<string | null> {
+    const token = await getCrmToken();
+    const { data } = await crmInstance.post<CrmContactResponse>(
+        "contact/get/",
+        {
+            fields: ["id"],
+            limit: 1,
+            filter: { externalid: externalId },
+        },
+        { headers: { token, "Content-Type": "application/json" } }
+    );
+
+    const byExternalId = data?.dataArray?.[0]?.id;
+    if (byExternalId !== undefined && byExternalId !== null) {
+        return String(byExternalId);
+    }
+
+    return findAgentCrmIdByEmail(email, phone);
 }

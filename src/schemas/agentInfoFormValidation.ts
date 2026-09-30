@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { emailRegex, phoneRegex } from "@/regex/regex";
+import { edrpouRegex, emailRegex, phoneRegex } from "@/regex/regex";
 
 export const agentInfoValidation = () =>
     yup.object({
@@ -21,6 +21,12 @@ export const agentInfoValidation = () =>
           phone: yup
               .string()
               .matches(phoneRegex, "Вкажіть правильний номер телефону")
+              .required("Дане поле обов'язкове до заповнення"),
+
+          edrpou: yup
+              .string()
+              .transform((value) => (value ?? "").replace(/\D/g, ""))
+              .matches(edrpouRegex, "ЄДРПОУ має містити 8–10 цифр")
               .required("Дане поле обов'язкове до заповнення"),
 
           city: yup

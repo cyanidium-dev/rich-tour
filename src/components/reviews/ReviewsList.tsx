@@ -11,7 +11,6 @@ import AnimatedListItem from "../shared/animation/AnimatedListItem";
 
 const SECTION_ID = "review-page-reviews";
 
-//@ts-expect-error
 export default function ReviewsList({items}) {
   if (!items || !items.length) {
     return null;

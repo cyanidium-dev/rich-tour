@@ -5,10 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Form, Formik, FormikHelpers } from "formik";
 import axios from "axios";
-import MaskedInput from "react-text-mask";
 
 import { signUpValidation } from "@/schemas/signUpFormValidation";
-import { phoneMask, edrpouMask } from "@/regex/regex";
 
 import CustomizedInput from "./formComponents/CustomizedInput";
 import SubmitButton from "./formComponents/SubmitButton";
@@ -84,8 +82,7 @@ export default function SignUpForm({
                 setIsPopUpShown?.(false);
                 router.push("/auth/sign-in");
             }, 1500);
-        } catch(error) {
-            console.log(error);
+        } catch {
             setIsError(true);
             setIsNotificationShown(true);
         } finally {
@@ -108,8 +105,8 @@ export default function SignUpForm({
                         <CustomizedInput fieldName="companyName" placeholder="Повна назва компанії*" errors={errors} touched={touched} />
                         <CustomizedInput fieldName="legalCompanyName" placeholder="Юридична назва компанії*" errors={errors} touched={touched} />
 
-                        <CustomizedInput fieldName="phone" inputType="tel" as={MaskedInput} mask={phoneMask} placeholder="Телефон*" errors={errors} touched={touched} />
-                        <CustomizedInput fieldName="edrpou" as={MaskedInput} mask={edrpouMask} placeholder="ЄДРПОУ*" errors={errors} touched={touched}  />
+                        <CustomizedInput fieldName="phone" inputType="tel" mask="phone" placeholder="Телефон*" errors={errors} touched={touched} />
+                        <CustomizedInput fieldName="edrpou" mask="edrpou" placeholder="ЄДРПОУ*" errors={errors} touched={touched}  />
 
                         <CustomizedInput fieldName="city" placeholder="Місто*" errors={errors} touched={touched} />
                         <CustomizedInput fieldName="site" placeholder="Сайт" errors={errors} touched={touched} />

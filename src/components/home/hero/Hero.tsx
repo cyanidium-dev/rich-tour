@@ -4,8 +4,9 @@ import Container from "@/components/shared/container/Container";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import AnimatedArrow from "./AnimatedArrow";
 import SearchForm from "../../shared/search/SearchForm";
+import type {SearchOption} from "../../shared/search/SearchForm";
 
-export default function Hero() {
+export default function Hero({countries}: {countries: SearchOption[]}) {
   return (
     <section className="relative mb-[148px] xl:mb-[180px] overflow-hidden">
       <Image
@@ -35,7 +36,7 @@ export default function Hero() {
           Відпочинок вашої мрії ближче, ніж здається
         </AnimatedWrapper>
 
-        <SearchForm />
+        <SearchForm countries={countries} />
       </Container>
     </section>
   );

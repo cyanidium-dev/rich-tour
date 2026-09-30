@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import "swiper/css";
+import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import HotelContent from "@/components/tour/hotels/HotelContent";

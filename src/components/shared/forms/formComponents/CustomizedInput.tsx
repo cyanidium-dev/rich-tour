@@ -1,6 +1,6 @@
 import { Field, ErrorMessage, FormikErrors, FormikTouched, useFormikContext } from "formik";
-import MaskedInput from "react-text-mask";
 import { ReactNode, useState  } from "react";
+import MaskedInput, { InputMask } from "./MaskedInput";
 
 interface GenericValues {
   [key: string]: any;
@@ -13,8 +13,8 @@ interface CustomizedInputProps {
   errors: FormikErrors<GenericValues>;
   touched: FormikTouched<GenericValues>;
 
-  as?: string | typeof MaskedInput;
-  mask?: string | RegExp | (string | RegExp)[];
+  as?: "select" | "textarea";
+  mask?: InputMask;
 
   inputType?: string;
 
@@ -66,14 +66,16 @@ export default function CustomizedInput({
     const [showPassword, setShowPassword] = useState(false);
   const isError = Boolean(errors?.[fieldName]);
   const isTouched = Boolean(touched?.[fieldName]);
+  const fieldComponent = mask ? MaskedInput : as;
+  const maskProps = mask ? { maskType: mask } : {};
 
   return (
       <label className={`${labelBaseStyles} ${labelClassName}`}>
         <div className={`relative ${wrapperClassName}`}>
           <Field
               name={fieldName}
-              as={as}
-              mask={mask}
+              as={fieldComponent}
+              {...maskProps}
               type={inputType === "password" && showPassword ? "text" : inputType}
               placeholder={placeholder}
               autoComplete="on"

@@ -16,7 +16,6 @@ export default function ProgramListItem({
   programItem,
   // idx,
 }: ProgramListItemProps) {
-  //@ts-expect-error
   const { title, content } = programItem;
 
   return (

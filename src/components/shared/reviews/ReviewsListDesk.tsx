@@ -9,7 +9,6 @@ import AnimatedListItem from "../animation/AnimatedListItem";
 // import client from "../../../lib/sanity";
 // import {lastReviewsQuery} from "@/lib/queries";
 
-//@ts-expect-error
 export default async function ReviewsListDesk({items}) {
     // const reviews = await client.fetch(lastReviewsQuery);
 
@@ -26,7 +25,6 @@ export default async function ReviewsListDesk({items}) {
         animation={listVariants({ staggerChildren: 0.5, delayChildren: 0.4 })}
         className="hidden lg:flex gap-x-5 mt-10"
       >
-        {/*  @ts-expect-error */}
         {items.map((review, idx) => (
           <AnimatedListItem
             key={idx}

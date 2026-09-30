@@ -1,6 +1,6 @@
 // lib/getAuthAgentProfile.ts
-import client from "@/lib/sanity/client";
 import { getAuthUser } from "./getAuthUser";
+import {getAgentById} from "./repository";
 
 export type AgentProfile = {
     _id: string;
@@ -21,18 +21,18 @@ export async function getAuthAgentProfile(): Promise<AgentProfile | null> {
         return null;
     }
 
-    return await client.fetch(
-        `*[_type == "agentUser" && _id == $id][0]{
-      _id,
-      email,
-      companyName,
-      legalCompanyName,
-      phone,
-      edrpou,
-      city,
-      site,
-      taxForm
-    }`,
-        { id: auth.sub }
-    );
+    const agent = await getAgentById(auth.sub);
+    if (!agent) return null;
+
+    return {
+        _id: agent._id,
+        email: agent.email,
+        companyName: agent.companyName,
+        legalCompanyName: agent.legalCompanyName,
+        phone: agent.phone,
+        edrpou: agent.edrpou,
+        city: agent.city,
+        site: agent.site ?? undefined,
+        taxForm: agent.taxForm,
+    };
 }

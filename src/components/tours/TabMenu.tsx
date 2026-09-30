@@ -1,33 +1,34 @@
 "use client";
-import { Dispatch, SetStateAction } from "react";
+
 import { usePathname, useRouter } from "next/navigation";
-// import { categories } from "../home/promotion/mockedData";
-import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
+import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import TabMenuItem from "./TabMenuItem";
-import { Category } from "@/types/category";
 
-interface TabMenuProps {
-  activeTab: string;
-  setActiveTab: Dispatch<SetStateAction<string>>;
-}
+export type TourCategory = { _id: string; title: string };
 
-//@ts-expect-error
-export default function TabMenu({ categories, activeTab, setActiveTab }: TabMenuProps) {
+export default function TabMenu({
+  categories,
+  activeCategoryId,
+  onChange,
+}: {
+  categories: TourCategory[];
+  activeCategoryId: string;
+  onChange: (categoryId: string) => void;
+}) {
   const router = useRouter();
-  const pathName = usePathname();
+  const pathname = usePathname();
+  const items = [
+    { _id: "all", title: "Всі тури", value: "all" },
+    ...categories.map((category) => ({ ...category, value: category.title })),
+  ];
 
-  if (!categories || !categories?.length) return null;
-
-  //@ts-expect-error
-  const categoriesList = [{ title: "Всі тури", value: "all" }, ...categories.map(item => ({...item, value: item.title}))];
-
-  const handleTabClick = (category: Category) => {
-    //@ts-expect-error
-    setActiveTab(category?._id);
-    if (pathName === "/tours") {
+  const handleClick = (item: (typeof items)[number]) => {
+    onChange(item._id);
+    if (pathname === "/tours") {
       const params = new URLSearchParams(window.location.search);
-      params.set("category", category?.value);
+      params.set("category", item.value);
       params.set("page", "1");
       router.push(`?${params.toString()}`, { scroll: false });
     }
@@ -39,12 +40,12 @@ export default function TabMenu({ categories, activeTab, setActiveTab }: TabMenu
       animation={fadeInAnimation({ y: 30, delay: 0.4 })}
       className="flex flex-col md:flex-row md:flex-wrap gap-y-[15px] gap-x-[14px] max-w-[325px] sm:max-w-[440px] md:max-w-full mx-auto md:mx-0"
     >
-      {categoriesList.map((category, idx) => (
+      {items.map((item) => (
         <TabMenuItem
-          key={idx}
-          category={category}
-          activeTab={activeTab}
-          onClick={() => handleTabClick(category)}
+          key={item._id}
+          category={item}
+          activeTab={activeCategoryId}
+          onClick={() => handleClick(item)}
         />
       ))}
     </AnimatedWrapper>

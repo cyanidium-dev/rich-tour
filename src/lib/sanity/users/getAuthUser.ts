@@ -1,11 +1,5 @@
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
-
-type AuthUser = {
-    sub: string;
-    role: "agent" | "agency";
-    crmId?: number | string | null;
-};
+import {AuthUser, verifySessionToken} from "@/lib/auth/session";
 
 export async function getAuthUser(): Promise<AuthUser | null> {
     const cookieStore = await cookies();
@@ -13,9 +7,5 @@ export async function getAuthUser(): Promise<AuthUser | null> {
     const token = cookieStore.get("auth_token")?.value;
     if (!token) return null;
 
-    try {
-        return jwt.verify(token, process.env.JWT_SECRET!) as AuthUser;
-    } catch {
-        return null;
-    }
+    return verifySessionToken(token);
 }

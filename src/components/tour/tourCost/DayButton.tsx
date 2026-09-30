@@ -1,32 +1,12 @@
 import Image from "next/image";
-import { DayButtonProps } from "react-day-picker";
-import {useState} from "react";
+import { DayButton as DefaultDayButton, type DayButtonProps } from "react-day-picker";
+import type { TourDepartures } from "@/types/tour";
+import { formatBookingDate, getDayData } from "./calendarDates";
 
-// import { tourDepartures } from "./mockedData";
-
-//@ts-expect-error
-function getDayData(date: Date, tourDepartures) {
-  const year = date.getFullYear();
-  const month = `${year}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-  const day = date.getDate();
-
-  const monthData = tourDepartures[month];
-  if (!monthData) return null;
-//@ts-expect-error
-  return monthData.find((item) => item.day === day);
-}
-
-type BtnProps = DayButtonProps & {isLogin: boolean, currency: string,     openBooking?: () => void; agencyCommission?: {
+type BtnProps = DayButtonProps & {isLogin: boolean, currency: string, tourDepartures: TourDepartures, openBooking?: (date: string, departureId: string) => void; agencyCommission?: {
   type: string;
   value: number;
   }};
-
-function toDdMmYyyy(date: Date) {
-  const dd = String(date.getDate()).padStart(2, "0");
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const yyyy = date.getFullYear();
-  return `${dd}.${mm}.${yyyy}`;
-}
 
 const priceWithCommission = ({isLogin, agencyCommission, currency}) => {
   if (!isLogin || !agencyCommission) return null;
@@ -38,14 +18,12 @@ const priceWithCommission = ({isLogin, agencyCommission, currency}) => {
 };
 
 export default function DayButton(props: BtnProps) {
-  const [isPopUpShown, setIsPopUpShown] = useState(false);
-
-  const {  openBooking, agencyCommission, day, modifiers, isLogin, ...buttonProps } = props;
+  const { openBooking, agencyCommission, day, modifiers, isLogin, currency, tourDepartures, ...buttonProps } = props;
   const date = day.date;
-  //@ts-expect-error
-  const dayData = getDayData(date, props.tourDepartures);
+  const dayData = getDayData(date, tourDepartures);
 
   const status = dayData?.status || [];
+  const hasPrice = dayData?.price !== undefined;
 
   const iconStatuses = ["guaranteed", "hot", "discount"];
   const borderStatuses = {
@@ -56,20 +34,18 @@ export default function DayButton(props: BtnProps) {
     noDeparture: "transparent",
   };
 
-  //@ts-expect-error
   const showIcons = status.filter((s) => iconStatuses.includes(s));
-  //@ts-expect-error
   const borderStatus = status.find((s) => !iconStatuses.includes(s));
 
   const borderColor =
-    borderStatus === "noDeparture"
+    !hasPrice || borderStatus === "noDeparture"
       ? "transparent"
       : borderStatus
       ? borderStatuses[borderStatus as keyof typeof borderStatuses]
       : "transparent";
 
   const textColor =
-    borderStatus === "noDeparture"
+    !hasPrice || borderStatus === "noDeparture"
       ? "black"
       : borderStatus
       ? borderStatuses[borderStatus as keyof typeof borderStatuses]
@@ -80,36 +56,51 @@ export default function DayButton(props: BtnProps) {
     hot: "/images/icons/calendar/hot.svg",
     discount: "/images/icons/calendar/discount.svg",
   };
+  const statusLabels: Record<string, string> = {
+    available: "місця є",
+    fewSeats: "мало місць",
+    onRequest: "виїзд під запит",
+    noSeats: "місць немає",
+    noDeparture: "немає виїзду",
+    guaranteed: "гарантований виїзд",
+    hot: "гарячий тур",
+    discount: "діє знижка",
+  };
 
-  const hasPrice = !!dayData?.price;
   const isSelected = modifiers.selected;
-  const isDisabled =
-    status.includes("noSeats") || status.includes("noDeparture") || !dayData;
+  const isDisabled = modifiers.disabled || modifiers.outside || !dayData ||
+    status.includes("noSeats") || status.includes("noDeparture") || !hasPrice;
 
 
   return (
-    <button
+    <DefaultDayButton
       {...buttonProps}
+      day={day}
+      modifiers={modifiers}
+      aria-label={`${buttonProps["aria-label"]}${hasPrice ? `, ${dayData.price} ${currency}` : ""}${status.length ? `, ${status.map((item) => statusLabels[item] ?? item).join(", ")}` : ""}`}
       onClick={(e) => {
-        buttonProps.onClick?.(e); // оставить выбор даты
-
-        if (!isDisabled && hasPrice) {
-          openBooking?.(toDdMmYyyy(date));
+        if (!isDisabled && dayData) {
+          buttonProps.onClick?.(e);
+          openBooking?.(formatBookingDate(date), dayData.departureId);
         }
       }}
-      className={`${isLogin ? "w-full" : "w-[44px]"}  h-[49px] rounded-[6px] border-2 relative px-[2px] ${
+      className={`${buttonProps.className ?? ""} ${isLogin ? "w-full" : "w-[44px]"} h-[49px] rounded-[6px] border-2 relative px-[2px] ${
         hasPrice
           ? "flex flex-col items-center justify-start pt-[2px]"
           : "flex items-center justify-center"
       }`}
       style={{
+        ...buttonProps.style,
+        width: isLogin ? "100%" : "44px",
+        height: "49px",
+        borderRadius: "6px",
         borderColor,
         color: textColor,
       }}
-      disabled={isDisabled}
+      disabled={buttonProps.disabled || modifiers.outside}
     >
       <span
-        className={`${hasPrice ? "text-12med" : "text-16reg"} ${
+        className={`${hasPrice ? "text-12med" : "text-16reg"} leading-[14px] ${
           isSelected ? "font-bold" : ""
         }`}
       >
@@ -118,14 +109,14 @@ export default function DayButton(props: BtnProps) {
 
       {hasPrice && (
         <span className={`
-      text-10semi text-black mt-[1px]
+      text-10semi text-black mt-[1px] leading-[12px]
       ${isLogin && agencyCommission ? "xl:text-12semi" : ""}
     `}>
-          {dayData.price}{props.currency === "EUR" ? "€" : "₴"}
+          {dayData.price}{currency === "EUR" ? "€" : "₴"}
           {(isLogin && agencyCommission) && (
               <>
                 {" / "}
-                {priceWithCommission({isLogin, agencyCommission, currency: props.currency})}
+                {priceWithCommission({isLogin, agencyCommission, currency})}
                 {/*{props.currency === "EUR" ? "€" : "₴"}*/}
               </>
           )}
@@ -133,15 +124,14 @@ export default function DayButton(props: BtnProps) {
       )}
 
       {showIcons.length > 0 && (
-        <div className="absolute bottom-[2px] left-1 flex gap-[6px]">
-          {/*//@ts-expect-error*/}
+        <div className="absolute bottom-0 left-1 flex gap-[2px]">
           {showIcons.map((s) => {
             const icon = statusIcons[s];
             if (!icon) return null;
-            return <Image key={s} src={icon} alt={s} width={13} height={13} />;
+            return <Image key={s} src={icon} alt="" width={10} height={10} />;
           })}
         </div>
       )}
-    </button>
+    </DefaultDayButton>
   );
 }

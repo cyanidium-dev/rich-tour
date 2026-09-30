@@ -1,9 +1,7 @@
 "use client";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
-import MaskedInput from "react-text-mask";
 
-import { phoneMask } from "@/regex/regex";
 import { callBackValidation } from "@/schemas/callBackFormValidation";
 import { handleSubmitForm } from "@/utils/handleSubmitForm";
 
@@ -46,6 +44,7 @@ export default function CallBackForm({
     formikHelpers: FormikHelpers<ValuesCallBackFormType>
   ) => {
     await handleSubmitForm<ValuesCallBackFormType>(
+      values,
       formikHelpers,
       setIsLoading,
       setIsError,
@@ -75,8 +74,7 @@ export default function CallBackForm({
               placeholder="Номер телефону"
               errors={errors}
               touched={touched}
-              as={MaskedInput}
-              mask={phoneMask}
+              mask="phone"
             />
             <CustomizedInput
               fieldName="message"

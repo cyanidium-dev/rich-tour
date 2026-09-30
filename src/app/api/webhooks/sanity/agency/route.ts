@@ -1,144 +1,40 @@
-import { NextRequest, NextResponse } from 'next/server'
-import client from "@/lib/sanity/client";
+import { NextRequest, NextResponse } from "next/server";
 
-import { sendAgentToCrm } from '@/lib/crm/users/sendAgentToCrm'
-import { updateAgentCrmId } from '@/lib/sanity/users/updateAgentCrmId'
-import {updateAgentAgencyCrmId} from "@/lib/crm/updateAgentAgencyCrmId";
-import { findAgentCrmIdByEmail } from "@/lib/crm/users/findAgentCrmIdByEmail";
+import { syncAgentToCrm } from "@/lib/crm/agentSync";
+
+type SanityUserWebhookPayload = {
+    _id?: string;
+    _type?: string;
+    crmLinked?: boolean;
+    crmSync?: { status?: string; manualRetryRequestedAt?: string };
+};
 
 export async function POST(req: NextRequest) {
-    const secret = req.headers.get('x-sanity-secret')
-    if (secret !== process.env.SANITY_WEBHOOK_SECRET) {
-        return NextResponse.json({ ok: true })
+    const secret = req.headers.get("x-sanity-secret");
+    if (!process.env.SANITY_WEBHOOK_SECRET || secret !== process.env.SANITY_WEBHOOK_SECRET) {
+        return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
     }
 
-    let payload: any
+    let payload: SanityUserWebhookPayload;
     try {
-        payload = await req.json()
+        payload = await req.json();
     } catch {
-        return NextResponse.json({ ok: true })
+        return NextResponse.json({ error: "INVALID_JSON" }, { status: 400 });
     }
 
-    const { _id, _type } = payload
-    if (!_id || !_type) {
-        return NextResponse.json({ ok: true })
+    if (!payload._id || !payload._type) {
+        return NextResponse.json({ error: "INVALID_PAYLOAD" }, { status: 400 });
     }
 
-    try {
-        switch (_type) {
-            case 'agentUser':
-                await handleAgent(payload)
-                break
-
-            case 'agencyUser':
-                // защита от пустого payload (delete / system events)
-                if (Object.keys(payload).length <= 2) {
-                    return NextResponse.json({ ok: true })
-                }
-
-                await handleAgency(payload)
-                break
-        }
-    } catch (error: any) {
-        console.error('❌ Unhandled webhook error', {
-            sanityId: _id,
-            type: _type,
-            message: error?.message,
-        })
-
-        if (_type !== 'agencyUser') {
-            // на всякий случай — жёстко удаляем документ
-            try {
-                await client.delete(_id)
-            } catch {}
-        }
+    if (payload._type !== "agentUser" || payload.crmLinked) {
+        return NextResponse.json({ ok: true, skipped: true });
     }
 
-    // 🔑 ВСЕГДА 200
-    return NextResponse.json({ ok: true })
-}
-
-/* ─────────────────────────────
- * 🧑 AGENT
- * ───────────────────────────── */
-
-async function handleAgent(agent: any) {
-    if (agent.crmId) {
-        console.log('⏭ Agent already linked to CRM, skipping CRM sync', {
-            sanityId: agent._id,
-            crmId: agent.crmId,
-        })
-        return
+    const status = payload.crmSync?.status;
+    if (status && status !== "pending") {
+        return NextResponse.json({ ok: true, skipped: true });
     }
-    console.log('start add/profile agent', agent._id)
-// 🔒 1️⃣ Сохраняем agencyCrmId, если он изменился
-    if (
-        agent.agencyCrmId &&
-        agent.agencyCrmId !== agent._storedAgencyCrmId // см. ниже
-    ) {
-        await updateAgentAgencyCrmId(
-            agent._id,
-            String(agent.agencyCrmId)
-        )
-    }
-    try {
-        console.log("agency CRM id", agent.agencyCrmId)
-        const existingCrmId = await findAgentCrmIdByEmail(agent.email, agent.phone)
 
-        if (existingCrmId) {
-            await updateAgentCrmId(agent._id, existingCrmId)
-            console.log('✅ Agent linked to existing CRM contact by email', {
-                sanityId: agent._id,
-                crmId: existingCrmId,
-                email: agent.email,
-            })
-            return
-        }
-
-        const crmId = await sendAgentToCrm({
-            externalId: agent._id,
-            fullName: agent.companyName,
-
-            // агент МОЖЕТ быть без агенции
-            agencyCrmId: agent.agencyCrmId
-                ? Number(agent.agencyCrmId)
-                : undefined,
-
-            phone: agent.phone,
-            email: agent.email,
-            website: agent.site,
-            license: agent.edrpou,
-            city: agent.city,
-            taxForm: agent.taxForm,
-            legalCompanyName: agent.legalCompanyName,
-        })
-
-        // записываем crmId ТОЛЬКО один раз
-        if (!agent.crmId) {
-            await updateAgentCrmId(agent._id, crmId)
-        }
-
-        console.log('✅ Agent synced with CRM', {
-            sanityId: agent._id,
-            crmId,
-            agencyCrmId: agent.agencyCrmId ?? null,
-        })
-    } catch (error: any) {
-        console.error('❌ CRM error → deleting agent from Sanity', {
-            sanityId: agent._id,
-            error: error?.message,
-        })
-
-        await client.delete(agent._id)
-    }
-}
-
-/* ─────────────────────────────
- * 🏢 AGENCY
- * ───────────────────────────── */
-
-async function handleAgency(agency: any) {
-    console.log('Agency saved in Sanity, skipping CRM sync', {
-        sanityId: agency._id,
-    })
+    const result = await syncAgentToCrm(payload._id);
+    return NextResponse.json({ ok: true, result });
 }

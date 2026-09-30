@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import client from "@/lib/sanity/client";
+import { randomUUID } from "node:crypto";
+import { ValidationError } from "yup";
 
-import { sendAgentToCrm } from "@/lib/crm/users/sendAgentToCrm";
-// import { updateAgentCrmId } from "@/lib/sanity/users/updateAgentCrmId";
+import { syncAgentToCrm } from "@/lib/crm/agentSync";
+import {createAgentUser, identityExists} from "@/lib/sanity/users/repository";
+import { signUpValidation } from "@/schemas/signUpFormValidation";
 
 type SignUpBody = {
     email: string;
@@ -27,7 +29,16 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 });
     }
 
-    const email = body.email?.trim();
+    try {
+        await signUpValidation().validate(body, { abortEarly: false });
+    } catch (error) {
+        if (error instanceof ValidationError) {
+            return NextResponse.json({ error: "VALIDATION_FAILED" }, { status: 400 });
+        }
+        return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 });
+    }
+
+    const email = body.email?.trim().toLowerCase();
     const companyName = body.companyName?.trim();
     const legalCompanyName = body.legalCompanyName?.trim();
     const phone = body.phone?.trim();
@@ -51,10 +62,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
     }
 
-    const existingUser = await client.fetch<{ _id: string } | null>(
-        `*[_type == "agentUser" && email == $email][0]{ _id }`,
-        { email }
-    );
+    const existingUser = await identityExists("agentUser", email);
 
     if (existingUser) {
         return NextResponse.json(
@@ -65,60 +73,55 @@ export async function POST(req: Request) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const sanityAgent = await client.create({
-        _type: "agentUser",
-        email,
-        companyName,
-        legalCompanyName,
-        phone,
-        edrpou,
-        city,
-        taxForm,
-        site,
-        agencyCrmId,
-        isApproved: false,
-        password: {
-            plain: password,
-            hash: passwordHash,
-        },
-    });
+    const documentId = `agent.${randomUUID()}`;
+    let sanityAgent;
 
     try {
-        const crmId = await sendAgentToCrm({
-            externalId: sanityAgent._id,
-            fullName: companyName,
-            agencyCrmId: agencyCrmId ? Number(agencyCrmId) : undefined,
-            phone,
-            email,
-            website: site,
-            license: edrpou,
-            city,
-            taxForm,
-            legalCompanyName,
-        });
-
-        await client.patch(sanityAgent._id).set({ crmId }).commit();
-
-        return NextResponse.json(
+        sanityAgent = await createAgentUser(
+            documentId,
             {
-                success: true,
-                sanityId: sanityAgent._id,
-                crmId,
+                email,
+                companyName,
+                legalCompanyName,
+                phone,
+                edrpou,
+                city,
+                taxForm,
+                site,
+                agencyCrmId,
+                password: {
+                    plain: password,
+                    hash: passwordHash,
+                },
             },
-            { status: 201 }
-        );
-    } catch (error: any) {
-        console.error("❌ CRM error during signup → rollback", {
-            error: error?.message,
-        });
-
-        await client.delete(sanityAgent._id);
-
-        return NextResponse.json(
             {
-                error: "CRM_REGISTRATION_FAILED",
-            },
-            { status: 502 }
+                isApproved: false,
+                crmSync: {
+                    status: "pending",
+                    attempts: 0,
+                    nextRetryAt: new Date().toISOString(),
+                },
+            }
         );
+    } catch (error) {
+        if (
+            typeof error === "object" &&
+            error !== null &&
+            "statusCode" in error &&
+            error.statusCode === 409
+        ) {
+            return NextResponse.json({ error: "USER_ALREADY_EXISTS" }, { status: 409 });
+        }
+        throw error;
     }
+
+    const syncResult = await syncAgentToCrm(sanityAgent._id);
+
+    return NextResponse.json(
+        {
+            success: true,
+            crmSync: syncResult.status,
+        },
+        { status: syncResult.status === "synced" ? 201 : 202 }
+    );
 }

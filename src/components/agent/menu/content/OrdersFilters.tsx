@@ -1,14 +1,9 @@
 "use client";
 
-import { Key } from "@react-types/shared";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useFilter } from "@react-aria/i18n";
-import {
-    Autocomplete,
-    AutocompleteItem,
-    DateRangePicker,
-    MenuTriggerAction,
-} from "@heroui/react";
+import { CalendarDate } from "@internationalized/date";
+import { ComboBox, DateField, DateRangePicker, Input, Label, ListBox, RangeCalendar } from "@heroui/react";
 
 import SearchInput from "./SearchInput";
 import SelectIcon from "@/components/shared/icons/SelectIcon";
@@ -17,433 +12,193 @@ export type StatusFilter = string | null;
 export type PaidFilter = "так" | "ні" | null;
 
 export interface OrdersFiltersState {
-    search: string;
-    agentId: string | null;
-    status: StatusFilter;
-    hasDebt: PaidFilter;
-    period: { from: Date | null; to: Date | null };
-}
-
-interface OrdersFiltersProps {
-    filters: OrdersFiltersState;
-    onChange: (filters: OrdersFiltersState) => void;
-    showAgentFilter?: boolean;
-    showDebtFilter?: boolean;
-    agentOptions?: AgentFilterOption[];
-    statusOptions?: OptionItem[];
+  search: string;
+  agentId: string | null;
+  status: StatusFilter;
+  hasDebt: PaidFilter;
+  period: { from: Date | null; to: Date | null };
 }
 
 interface OptionItem {
-    key: string;
-    label: string;
+  key: string;
+  label: string;
 }
 
 export interface AgentFilterOption {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }
 
-interface AutocompleteState {
-    selectedKey: Key | null;
-    inputValue: string;
-    items: OptionItem[];
+interface OrdersFiltersProps {
+  filters: OrdersFiltersState;
+  onChange: (filters: OrdersFiltersState) => void;
+  showAgentFilter?: boolean;
+  showDebtFilter?: boolean;
+  agentOptions?: AgentFilterOption[];
+  statusOptions?: OptionItem[];
 }
 
 const defaultStatusOptions: OptionItem[] = [
-    { key: "Нова заявка", label: "Нова заявка" },
-    { key: "В роботі", label: "В роботі" },
-    { key: "Дані внесено", label: "Дані внесено" },
-    { key: "Відправлено на підтвердження", label: "Відправлено на підтвердження" },
-    { key: "Відмова від заявки", label: "Відмова від заявки" },
-    { key: "Підтверджено. Чекаю оплату завдатку", label: "Підтверджено. Чекаю оплату завдатку" },
-    { key: "Оплачено завдаток", label: "Оплачено завдаток" },
-    { key: "Оплата залишкової вартості туру", label: "Оплата залишкової вартості туру" },
-    { key: "Відправлено на оплату", label: "Відправлено на оплату" },
-    { key: "Повна оплата", label: "Повна оплата" },
-    { key: "Тур завершено", label: "Тур завершено" },
-    { key: "Кошти повернуто", label: "Кошти повернуто" },
+  { key: "Нова заявка", label: "Нова заявка" },
+  { key: "В роботі", label: "В роботі" },
+  { key: "Дані внесено", label: "Дані внесено" },
+  { key: "Відправлено на підтвердження", label: "Відправлено на підтвердження" },
+  { key: "Відмова від заявки", label: "Відмова від заявки" },
+  { key: "Підтверджено. Чекаю оплату завдатку", label: "Підтверджено. Чекаю оплату завдатку" },
+  { key: "Оплачено завдаток", label: "Оплачено завдаток" },
+  { key: "Оплата залишкової вартості туру", label: "Оплата залишкової вартості туру" },
+  { key: "Відправлено на оплату", label: "Відправлено на оплату" },
+  { key: "Повна оплата", label: "Повна оплата" },
+  { key: "Тур завершено", label: "Тур завершено" },
+  { key: "Кошти повернуто", label: "Кошти повернуто" },
 ];
 
 const debtOptions: OptionItem[] = [
-    { key: "так", label: "Так" },
-    { key: "ні", label: "Ні" },
+  { key: "так", label: "Так" },
+  { key: "ні", label: "Ні" },
 ];
 
-const PillWrapper = ({
-                         children,
-                         width,
-                     }: {
-    children: React.ReactNode;
-    width: string;
-}) => (
-    <div
-        className={`
-      ${width}
-      h-12
-      rounded-full
-      border border-black
-      bg-white
-      flex items-center
-    `}
+function FilterComboBox({
+  options,
+  selectedKey,
+  onChange,
+  placeholder,
+}: {
+  options: OptionItem[];
+  selectedKey: string | null;
+  onChange: (value: string | null) => void;
+  placeholder: string;
+}) {
+  const { startsWith } = useFilter({ sensitivity: "base" });
+  const [inputValue, setInputValue] = useState(
+    options.find((item) => item.key === selectedKey)?.label ?? ""
+  );
+
+  useEffect(() => {
+    setInputValue(options.find((item) => item.key === selectedKey)?.label ?? "");
+  }, [options, selectedKey]);
+
+  return (
+    <ComboBox
+      aria-label={placeholder}
+      className="w-[300px] shrink-0 lg:w-[245px]"
+      defaultFilter={startsWith}
+      selectedKey={selectedKey}
+      inputValue={inputValue}
+      onInputChange={(value) => {
+        setInputValue(value);
+        if (!value) onChange(null);
+      }}
+      onSelectionChange={(key) => {
+        const next = key === null ? null : String(key);
+        setInputValue(options.find((item) => item.key === next)?.label ?? "");
+        onChange(next);
+      }}
     >
-        {children}
-    </div>
-);
+      <ComboBox.InputGroup className="h-12 rounded-full border border-black bg-white px-5 shadow-none focus-within:outline-2 focus-within:outline-main">
+        <Input placeholder={placeholder} className="min-w-0 flex-1 border-0 bg-transparent text-14reg text-black shadow-none outline-none placeholder:text-black/60" />
+        {selectedKey && (
+          <button
+            type="button"
+            aria-label={`Очистити ${placeholder.toLowerCase()}`}
+            className="px-1 text-black/60 hover:text-black focus-visible:outline-2 focus-visible:outline-main"
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => { setInputValue(""); onChange(null); }}
+          >
+            ×
+          </button>
+        )}
+        <ComboBox.Trigger className="shrink-0 bg-transparent text-black" aria-label={`Відкрити ${placeholder.toLowerCase()}`}>
+          <SelectIcon />
+        </ComboBox.Trigger>
+      </ComboBox.InputGroup>
+      <ComboBox.Popover className="rounded-[20px] border border-black bg-white shadow-none">
+        <ListBox>
+          {options.map((item) => (
+            <ListBox.Item key={item.key} id={item.key} textValue={item.label} className="text-14reg">
+              <Label>{item.label}</Label>
+              <ListBox.ItemIndicator />
+            </ListBox.Item>
+          ))}
+        </ListBox>
+      </ComboBox.Popover>
+    </ComboBox>
+  );
+}
 
-const innerAutocomplete = {
-    base: "w-full",
-    inputWrapper: `
-    h-12
-    bg-transparent
-    border-none
-    shadow-none
-    ring-0
-    outline-none
-    rounded-full
-    data-[hover=true]:bg-transparent
-    group-data-[focus=true]:bg-transparent
-  `,
-    input: "text-black text-14reg placeholder:text-black/60",
-    selectorButton: "mr-3",
-    popoverContent: "bg-white border border-black rounded-[20px] shadow-none",
-};
+const toCalendarDate = (date: Date) =>
+  new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
 
-const pillDateRange = {
-    base: "w-[300px] lg:w-[280px]",
-    inputWrapper: `
-    h-12
-    px-5
-    rounded-full
-    bg-white
-    border border-black
-    shadow-none
-    ring-0
-    outline-none
-  `,
-};
+const toDate = (value: { year: number; month: number; day: number }) =>
+  new Date(value.year, value.month - 1, value.day);
 
 export default function OrdersFilters({
-                                          filters,
-                                          onChange,
-                                          showAgentFilter = false,
-                                          showDebtFilter = true,
-                                          agentOptions = [],
-                                          statusOptions = defaultStatusOptions,
-                                      }: OrdersFiltersProps) {
-    const { startsWith } = useFilter({ sensitivity: "base" });
-    const agentItems = useMemo(
-        () =>
-            agentOptions.map((agent) => ({
-                key: agent.id,
-                label: agent.name,
-            })),
-        [agentOptions]
-    );
+  filters,
+  onChange,
+  showAgentFilter = false,
+  showDebtFilter = true,
+  agentOptions = [],
+  statusOptions = defaultStatusOptions,
+}: OrdersFiltersProps) {
+  const agentItems = useMemo(
+    () => agentOptions.map((agent) => ({ key: agent.id, label: agent.name })),
+    [agentOptions]
+  );
 
-    const [agentState, setAgentState] = useState<AutocompleteState>({
-        selectedKey: null,
-        inputValue: "",
-        items: agentItems,
-    });
-
-    const [statusState, setStatusState] = useState<AutocompleteState>({
-        selectedKey: null,
-        inputValue: "",
-        items: statusOptions,
-    });
-
-    const [debtState, setDebtState] = useState<AutocompleteState>({
-        selectedKey: null,
-        inputValue: "",
-        items: debtOptions,
-    });
-
-    useEffect(() => {
-        setAgentState((state) => ({
-            ...state,
-            items: agentItems.filter((item) =>
-                startsWith(item.label, state.inputValue)
-            ),
-        }));
-    }, [agentItems, startsWith]);
-
-    useEffect(() => {
-        setStatusState((state) => ({
-            ...state,
-            items: statusOptions.filter((item) =>
-                startsWith(item.label, state.inputValue)
-            ),
-        }));
-    }, [startsWith, statusOptions]);
-
-    const handleOpenChange = (
-        isOpen: boolean,
-        menuTrigger: MenuTriggerAction,
-        state: AutocompleteState,
-        setState: Dispatch<SetStateAction<AutocompleteState>>,
-        items: OptionItem[]
-    ) => {
-        if (menuTrigger === "manual" && isOpen) {
-            setState({ ...state, items });
-        }
-    };
-
-    const handleInputChange = (
-        value: string,
-        state: AutocompleteState,
-        setState: Dispatch<SetStateAction<AutocompleteState>>,
-        items: OptionItem[]
-    ) => {
-        setState({
-            inputValue: value,
-            selectedKey: value === "" ? null : state.selectedKey,
-            items: items.filter((item) => startsWith(item.label, value)),
-        });
-    };
-
-    const handleSelectionChange = (
-        key: Key | null,
-        setState: Dispatch<SetStateAction<AutocompleteState>>,
-        items: OptionItem[]
-    ) => {
-        const selectedItem = items.find((i) => i.key === key);
-        setState({
-            inputValue: selectedItem?.label || "",
-            selectedKey: key,
-            items,
-        });
-    };
-
-    return (
-        <div
-            id="orders-filters"
-            style={{
-                ["--heroui-default-100" as any]: "0 0% 100%",
-                ["--heroui-default-200" as any]: "0 0% 100%",
-                ["--heroui-default-100-opacity" as any]: "1",
-                ["--heroui-default-200-opacity" as any]: "1",
-            }}
-            className="flex flex-col lg:flex-row lg:flex-wrap gap-4 items-center"
-        >
-            <div className="w-[300px] shrink-0">
-                <SearchInput
-                    value={filters.search}
-                    onChange={(value) =>
-                        onChange({ ...filters, search: value })
-                    }
-                />
-            </div>
-
-            {showAgentFilter && (
-                <PillWrapper width="w-[300px] lg:w-[245px]">
-                    <Autocomplete
-                        inputValue={agentState.inputValue}
-                        items={agentState.items}
-                        selectedKey={agentState.selectedKey}
-                        onOpenChange={(isOpen, trigger) =>
-                            handleOpenChange(
-                                isOpen,
-                                trigger,
-                                agentState,
-                                setAgentState,
-                                agentItems
-                            )
-                        }
-                        onInputChange={(value) =>
-                            handleInputChange(
-                                value,
-                                agentState,
-                                setAgentState,
-                                agentItems
-                            )
-                        }
-                        onSelectionChange={(key) => {
-                            handleSelectionChange(
-                                key,
-                                setAgentState,
-                                agentItems
-                            );
-                            onChange({
-                                ...filters,
-                                agentId: key ? String(key) : null,
-                            });
-                        }}
-                        placeholder="Обрати агента"
-                        isClearable
-                        size="sm"
-                        selectorIcon={<SelectIcon />}
-                        classNames={innerAutocomplete}
-                    >
-                        {(item) => (
-                            <AutocompleteItem
-                                key={item.key}
-                                className="text-14reg"
-                            >
-                                {item.label}
-                            </AutocompleteItem>
-                        )}
-                    </Autocomplete>
-                </PillWrapper>
+  return (
+    <div id="orders-filters" className="flex flex-col items-center gap-4 lg:flex-row lg:flex-wrap">
+      <div className="w-[300px] shrink-0">
+        <SearchInput value={filters.search} onChange={(search) => onChange({ ...filters, search })} />
+      </div>
+      {showAgentFilter && (
+        <FilterComboBox options={agentItems} selectedKey={filters.agentId} onChange={(agentId) => onChange({ ...filters, agentId })} placeholder="Обрати агента" />
+      )}
+      <FilterComboBox options={statusOptions} selectedKey={filters.status} onChange={(status) => onChange({ ...filters, status })} placeholder="Статус заявки" />
+      {showDebtFilter && (
+        <FilterComboBox options={debtOptions} selectedKey={filters.hasDebt} onChange={(hasDebt) => onChange({ ...filters, hasDebt: hasDebt as PaidFilter })} placeholder="Залишок до сплати" />
+      )}
+      <DateRangePicker
+        aria-label="Період туру"
+        className="w-[300px] lg:w-[280px]"
+        value={filters.period.from && filters.period.to ? {
+          start: toCalendarDate(filters.period.from),
+          end: toCalendarDate(filters.period.to),
+        } : null}
+        onChange={(range) => onChange({
+          ...filters,
+          period: {
+            from: range?.start ? toDate(range.start) : null,
+            to: range?.end ? toDate(range.end) : null,
+          },
+        })}
+      >
+        <DateField.Group className="h-12 rounded-full border border-black bg-white px-3 shadow-none focus-within:outline-2 focus-within:outline-main">
+          <DateField.InputContainer className="min-w-0 flex-1 text-12reg">
+            <DateField.Input slot="start">{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+            <DateRangePicker.RangeSeparator />
+            <DateField.Input slot="end">{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+          </DateField.InputContainer>
+          <DateField.Suffix className="shrink-0">
+            {(filters.period.from || filters.period.to) && (
+              <button type="button" aria-label="Очистити період" className="px-1 text-black/60 hover:text-black focus-visible:outline-2 focus-visible:outline-main" onClick={() => onChange({ ...filters, period: { from: null, to: null } })}>×</button>
             )}
-
-            <PillWrapper width="w-[300px] lg:w-[245px]">
-                <Autocomplete
-                    inputValue={statusState.inputValue}
-                    items={statusState.items}
-                    selectedKey={statusState.selectedKey}
-                    onOpenChange={(isOpen, trigger) =>
-                        handleOpenChange(
-                            isOpen,
-                            trigger,
-                            statusState,
-                            setStatusState,
-                            statusOptions
-                        )
-                    }
-                    onInputChange={(value) =>
-                        handleInputChange(
-                            value,
-                            statusState,
-                            setStatusState,
-                            statusOptions
-                        )
-                    }
-                    onSelectionChange={(key) => {
-                        handleSelectionChange(
-                            key,
-                            setStatusState,
-                            statusOptions
-                        );
-                        onChange({
-                            ...filters,
-                            status: key as StatusFilter,
-                        });
-                    }}
-                    placeholder="Статус заявки"
-                    isClearable
-                    size="sm"
-                    selectorIcon={<SelectIcon />}
-                    classNames={innerAutocomplete}
-                >
-                    {(item) => (
-                        <AutocompleteItem
-                            key={item.key}
-                            className="text-14reg"
-                        >
-                            {item.label}
-                        </AutocompleteItem>
-                    )}
-                </Autocomplete>
-            </PillWrapper>
-
-            {showDebtFilter && (
-                <PillWrapper width="w-[300px] lg:w-[245px]">
-                    <Autocomplete
-                        inputValue={debtState.inputValue}
-                        items={debtState.items}
-                        selectedKey={debtState.selectedKey}
-                        onOpenChange={(isOpen, trigger) =>
-                            handleOpenChange(
-                                isOpen,
-                                trigger,
-                                debtState,
-                                setDebtState,
-                                debtOptions
-                            )
-                        }
-                        onInputChange={(value) =>
-                            handleInputChange(
-                                value,
-                                debtState,
-                                setDebtState,
-                                debtOptions
-                            )
-                        }
-                        onSelectionChange={(key) => {
-                            handleSelectionChange(
-                                key,
-                                setDebtState,
-                                debtOptions
-                            );
-                            onChange({
-                                ...filters,
-                                hasDebt: key as PaidFilter,
-                            });
-                        }}
-                        placeholder="Залишок до сплати"
-                        isClearable
-                        size="sm"
-                        selectorIcon={<SelectIcon />}
-                        classNames={innerAutocomplete}
-                    >
-                        {(item) => (
-                            <AutocompleteItem
-                                key={item.key}
-                                className="text-14reg"
-                            >
-                                {item.label}
-                            </AutocompleteItem>
-                        )}
-                    </Autocomplete>
-                </PillWrapper>
-            )}
-
-            <DateRangePicker
-                size="sm"
-                placeholder="Період туру"
-                classNames={pillDateRange}
-                value={
-                    filters.period.from && filters.period.to
-                        ? {
-                            start: filters.period.from,
-                            end: filters.period.to,
-                        }
-                        : null
-                }
-                onChange={(range) =>
-                    onChange({
-                        ...filters,
-                        period: {
-                            from: range?.start ?? null,
-                            to: range?.end ?? null,
-                        },
-                    })
-                }
-                endContent={
-                    (filters.period.from || filters.period.to) && (
-                        <button
-                            type="button"
-                            onMouseDown={(e) => e.preventDefault()}
-                            onClick={() =>
-                                onChange({
-                                    ...filters,
-                                    period: { from: null, to: null },
-                                })
-                            }
-                            className="
-                w-8 h-8
-                flex items-center justify-center
-                rounded-full
-                text-default-500
-                hover:bg-default/40
-                hover:text-black
-                transition
-            "
-                            aria-label="Очистити період"
-                        >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                viewBox="0 0 24 24"
-                            >
-                                <path d="M18 6L6 18M6 6l12 12" />
-                            </svg>
-                        </button>
-                    )
-                }
-            />
-        </div>
-    );
+            <DateRangePicker.Trigger><DateRangePicker.TriggerIndicator /></DateRangePicker.Trigger>
+          </DateField.Suffix>
+        </DateField.Group>
+        <DateRangePicker.Popover>
+          <RangeCalendar aria-label="Період туру">
+            <RangeCalendar.Header>
+              <RangeCalendar.NavButton slot="previous" />
+              <RangeCalendar.Heading />
+              <RangeCalendar.NavButton slot="next" />
+            </RangeCalendar.Header>
+            <RangeCalendar.Grid>
+              <RangeCalendar.GridHeader>{(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}</RangeCalendar.GridHeader>
+              <RangeCalendar.GridBody>{(date) => <RangeCalendar.Cell date={date} />}</RangeCalendar.GridBody>
+            </RangeCalendar.Grid>
+          </RangeCalendar>
+        </DateRangePicker.Popover>
+      </DateRangePicker>
+    </div>
+  );
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import client from "@/lib/sanity/client";
 import { getAuthUser } from "@/lib/sanity/users/getAuthUser";
+import {getAgentsByAgency} from "@/lib/sanity/users/repository";
 import { getCrmOrdersByClientId } from "@/lib/crm/getCrmOrdersByClientId";
 
 type AgencyAgent = {
@@ -31,15 +31,8 @@ export async function GET() {
     }
 
     try {
-        const agents = await client.fetch<AgencyAgent[]>(
-            `*[_type == "agentUser" && references($agencyId)]{
-                _id,
-                companyName,
-                legalCompanyName,
-                email,
-                crmId
-            } | order(companyName asc)`,
-            { agencyId: user.sub }
+        const agents: AgencyAgent[] = (await getAgentsByAgency(user.sub)).sort((left, right) =>
+            getAgentLabel(left).localeCompare(getAgentLabel(right))
         );
 
         const agentsWithCrmId = agents.filter((agent) => agent.crmId);
@@ -75,9 +68,8 @@ export async function GET() {
             skippedAgents,
             orders: orderGroups.flat(),
         });
-    } catch (error) {
-        console.error("Failed to fetch agency orders from CRM:", error);
-
+    } catch {
+        console.error("Failed to fetch agency orders from CRM");
         return NextResponse.json(
             { error: "FAILED_TO_FETCH_ORDERS" },
             { status: 500 }

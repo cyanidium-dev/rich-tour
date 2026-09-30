@@ -1,20 +1,33 @@
 import crmInstance from "@/lib/crm/utils/crmInstance";
 
-export async function getCrmToken(): Promise<string> {
+let cachedToken: { value: string; expiresAt: number } | null = null;
+let pendingToken: Promise<string> | null = null;
 
-    const { data } = await crmInstance.post(
+export async function getCrmToken(): Promise<string> {
+    if (cachedToken && cachedToken.expiresAt > Date.now()) {
+        return cachedToken.value;
+    }
+
+    if (pendingToken) return pendingToken;
+
+    pendingToken = crmInstance.post(
         "token/get/",
         {
             login: process.env.CRM_LOGIN,
             restapipassword: process.env.CRM_REST_API_PASSWORD,
-        },
-    )
-    // console.log(data)
-    const token = data?.dataArray?.token
+        }
+    ).then(({ data }) => {
+        const token = data?.dataArray?.token;
+        if (!token) throw new Error("CRM token not received");
 
-    if (!token) {
-        throw new Error('CRM token not received')
-    }
-    // console.log({token})
-    return token
+        cachedToken = {
+            value: token,
+            expiresAt: Date.now() + 10 * 60 * 1000,
+        };
+        return token;
+    }).finally(() => {
+        pendingToken = null;
+    });
+
+    return pendingToken;
 }

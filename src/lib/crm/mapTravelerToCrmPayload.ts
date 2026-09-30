@@ -1,7 +1,7 @@
-import {TravelerInfo} from "@/components/shared/forms/BookingForm";
+import {TravelerInfo} from "@/contracts/booking";
 import { yesNo } from './utils/helpers'
 
-export function mapTravelerToCrmPayload(traveler: TravelerInfo) {
+export function mapTravelerToCrmPayload(traveler: TravelerInfo, requestId: string, index: number) {
     const hasPassport = Boolean(traveler.passport)
 
     const payload: any = {
@@ -9,6 +9,7 @@ export function mapTravelerToCrmPayload(traveler: TravelerInfo) {
         name: traveler.name,
         namelast: traveler.surname,
 
+        externalid: traveler.passport || `${requestId}:traveler:${index}`,
         findbyArray: ['externalid'],
 
         bdate: toCrmDate(traveler.birthDate),
@@ -24,7 +25,6 @@ export function mapTravelerToCrmPayload(traveler: TravelerInfo) {
 
     // Паспорт есть
     if (hasPassport) {
-        payload.externalid = traveler.passport
         payload.customfields.Pasport = traveler.passport
 
         if (traveler.passportExpiration) {

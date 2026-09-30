@@ -1,6 +1,6 @@
 "use client";
 
-import Lottie from "lottie-react";
+import { Lottie } from "lottie-react";
 import animationData from "./lottieLogoAnimation.json";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,7 +24,7 @@ export default function LottieSplashScreen({
           className="fixed inset-0 z-50 flex items-center justify-center bg-white no-doc-scroll"
         >
           <Lottie
-            animationData={animationData}
+            src={animationData}
             loop={false}
             autoplay
             style={{

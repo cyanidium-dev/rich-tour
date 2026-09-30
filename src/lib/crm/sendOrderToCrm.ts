@@ -1,9 +1,8 @@
-// import { getCrmToken } from './utils/getCrmToken'
-// import { postOrderToCrm } from './postOrderToCrm'
 import { postToCrm } from './utils/postToCrm'
 import { mapBookingToCrmOrder } from './mapBookingToCrmOrder'
 
 interface SendOrderParams {
+    requestId: string
     tourId: string | number
     crmTravelerIds: string[]
     date: string
@@ -17,7 +16,6 @@ interface SendOrderParams {
 
 export async function sendOrderToCrm(params: SendOrderParams) {
     const payload = mapBookingToCrmOrder(params)
-    // console.log("order to CRM", JSON.stringify(payload, null, 2));
     const data = await postToCrm(payload, "order/set/")
 
     const orderId = data?.dataArray?.[0]

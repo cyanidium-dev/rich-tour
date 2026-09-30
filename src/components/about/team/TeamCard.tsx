@@ -7,15 +7,14 @@ import { TeamMember } from "@/types/team";
 interface TeamCardProps {
   teamMember: TeamMember;
 }
-//@ts-expect-error
-const getSocialList = socials => {
-  const socialList = [];
+const getSocialList = (socials: TeamMember["socials"]) => {
+  const socialList: Array<{link: string; icon: React.ReactNode}> = [];
   const { instagram, telegram, tiktok } = socials;
   if(instagram) {
     socialList.push({ link: instagram, icon: <InstagramIcon className="size-7" /> });
   }
   if(telegram) {
-    socialList.push({ link: instagram, icon: <TelegramIcon /> });
+    socialList.push({ link: telegram, icon: <TelegramIcon /> });
   }
   if(tiktok) {
     socialList.push({ link: tiktok, icon: <TiktokIcon /> });

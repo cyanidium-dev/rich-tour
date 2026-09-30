@@ -1,41 +1,18 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import client from "@/lib/sanity/client";
+import {AuthUser, createSessionToken} from "@/lib/auth/session";
+import {getAgencyByLogin, getAgentByEmail} from "@/lib/sanity/users/repository";
 
 type LoginBody = {
     email: string;
     password: string;
 };
 
-type AgentUser = {
-    _id: string;
-    email: string;
-    password?: {
-        plain?: string;
-        hash?: string;
-    };
-    crmId?: number | string;
-    isApproved?: boolean;
-};
-
-type AgencyUser = {
-    _id: string;
-    login: string;
-    password?: {
-        plain?: string;
-        hash?: string;
-    };
-    passwordHash?: string;
-};
-
-function createAuthResponse(
-    payload: Record<string, unknown>,
+async function createAuthResponse(
+    payload: AuthUser,
     body: Record<string, unknown>
 ) {
-    const token = jwt.sign(payload, process.env.JWT_SECRET!, {
-        expiresIn: "7d",
-    });
+    const token = await createSessionToken(payload);
 
     const response = NextResponse.json(body);
 
@@ -67,18 +44,7 @@ export async function POST(req: Request) {
     }
 
     // ───────────── AGENT ─────────────
-    const agentUser = await client.fetch<AgentUser | null>(
-        `*[_type == "agentUser" && email == $email][0]{
-      _id,
-      email,
-      password {
-        hash
-      },
-      crmId,
-      isApproved
-    }`,
-        { email }
-    );
+    const agentUser = await getAgentByEmail(email);
 
     if (agentUser) {
         if (!agentUser.isApproved) {
@@ -121,21 +87,10 @@ export async function POST(req: Request) {
     }
 
     // ───────────── AGENCY ─────────────
-    const agencyUser = await client.fetch<AgencyUser | null>(
-        `*[_type == "agencyUser" && login == $login][0]{
-      _id,
-      login,
-      password {
-        plain,
-        hash
-      },
-      passwordHash
-    }`,
-        { login: email }
-    );
+    const agencyUser = await getAgencyByLogin(email);
 
     if (agencyUser) {
-        const passwordHash = agencyUser.password?.hash ?? agencyUser.passwordHash;
+        const passwordHash = agencyUser.password?.hash;
 
         if (!passwordHash) {
             return NextResponse.json(

@@ -10,11 +10,10 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Loader from "@/components/shared/loader/Loader";
 import DocumentCard from "./DocumentCard";
 
-// @ts-expect-error
 export default function DocumentsSwiper({items}) {
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader className="w-full h-[451px] xl:h-[455px]" />}>
       <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.8 })}>
         <Swiper
           slidesPerView={"auto"}
@@ -32,7 +31,7 @@ export default function DocumentsSwiper({items}) {
               spaceBetween: 20,
               centeredSlides: false,
             },
-            1024: { spaceBetween: 55 },
+            1024: { spaceBetween: 55, centeredSlides: false },
             1280: {
               spaceBetween: 20,
               centeredSlides: false,
@@ -44,7 +43,6 @@ export default function DocumentsSwiper({items}) {
           modules={[Navigation]}
           className="documents"
         >
-          {/*  @ts-expect-error */}
           {items.map((document, idx) => (
             <SwiperSlide key={idx}>
               <DocumentCard document={document} />

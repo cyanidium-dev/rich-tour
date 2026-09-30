@@ -25,7 +25,7 @@ export default function BurgerMenuButton({
             top: "2px",
             left: "0",
             opacity: 1,
-            backgroundColor: "currentColor",
+            backgroundColor: "var(--black)",
           }}
           animate={
             isHeaderMenuOpened
@@ -33,13 +33,13 @@ export default function BurgerMenuButton({
                   top: "9px", // Переміщаємо в центр
                   left: "0",
                   opacity: 0,
-                  backgroundColor: "var(--black)", // Чорний, коли меню відкрите
+                  backgroundColor: "var(--black)",
                 }
               : {
                   top: "2px", // Повертаємо на початкове місце
                   left: "0",
                   opacity: 1,
-                  backgroundColor: "currentColor", // Білий, коли меню закрите
+                  backgroundColor: "var(--black)",
                 }
           }
           transition={{ duration: 0.7, ease: "easeOut" }} // Плавний перехід
@@ -51,12 +51,12 @@ export default function BurgerMenuButton({
           initial={{
             top: "9px",
             left: "0",
-            backgroundColor: "currentColor",
+            backgroundColor: "var(--black)",
           }}
           animate={
             isHeaderMenuOpened
               ? { rotate: "45deg", backgroundColor: "var(--black)" } // Обертання при відкритому меню
-              : { rotate: "0deg", backgroundColor: "currentColor" } // Повертаємо назад
+              : { rotate: "0deg", backgroundColor: "var(--black)" } // Повертаємо назад
           }
           transition={{ duration: 0.7, ease: "easeOut" }}
         />
@@ -67,7 +67,7 @@ export default function BurgerMenuButton({
           initial={{
             top: "16px",
             left: "0",
-            backgroundColor: "currentColor",
+            backgroundColor: "var(--black)",
           }}
           animate={
             isHeaderMenuOpened
@@ -79,7 +79,7 @@ export default function BurgerMenuButton({
               : {
                   rotate: "0deg",
                   top: "16px",
-                  backgroundColor: "currentColor",
+                  backgroundColor: "var(--black)",
                 } // Повертаємо назад
           }
           transition={{ duration: 0.7, ease: "easeOut" }}

@@ -11,7 +11,6 @@ import OrdersFilters, {
 } from "./OrdersFilters";
 import DetailsModal from "@/components/agent/menu/content/DetailsModal";
 import Backdrop from "@/components/shared/backdrop/Backdrop";
-import "./order-filters.css";
 
 import Pagination from "@/components/shared/pagination/Pagination";
 import useOrdersPerPage from "@/hooks/useOrdersPerPage";

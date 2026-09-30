@@ -16,6 +16,11 @@ export default function SplashGate({
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setShowContent(true);
+      return;
+    }
+
     const alreadyPlayed = sessionStorage.getItem("splashPlayed");
 
     if (alreadyPlayed) {

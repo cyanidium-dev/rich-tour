@@ -16,7 +16,6 @@ export default function ExcursionsListItem({
   programItem,
   // idx,
 }: ProgramListItemProps) {
-  //@ts-expect-error
   const { title, content } = programItem;
 
   return (
