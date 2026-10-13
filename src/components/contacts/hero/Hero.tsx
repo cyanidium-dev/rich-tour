@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "@/components/shared/container/Container";
+import { Container } from "@/shared/ui";
 
 export default function Hero() {
   return (
@@ -27,9 +27,8 @@ export default function Hero() {
           animation={fadeInAnimation({ y: 30, delay: 0.4 })}
           className="max-w-[283px] md:max-w-[428px] mx-auto text-14reg xl:text-16reg text-center"
         >
-          Ми завжди раді вам допомогти! Зв’яжіться з нами будь-яким зручним для
-          вас способом, щоб отримати консультацію, забронювати подорож або
-          організувати захід вашої мрії.
+          Ми завжди раді вам допомогти! Зв’яжіться з нами будь-яким зручним для вас способом, щоб
+          отримати консультацію, забронювати подорож або організувати захід вашої мрії.
         </AnimatedWrapper>
       </Container>
     </section>

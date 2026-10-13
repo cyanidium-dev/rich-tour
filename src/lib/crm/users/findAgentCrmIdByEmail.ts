@@ -1,157 +1,148 @@
-import crmInstance from "@/lib/crm/utils/crmInstance";
-import { getCrmToken } from "@/lib/crm/utils/getCrmToken";
+import { crmInstance, getCrmToken } from "@/shared/api/crm-server";
 
 type CrmContact = {
-    id?: string | number;
-    phones?: string[];
-    emails?: string[];
+  id?: string | number;
+  phones?: string[];
+  emails?: string[];
 };
 
 type CrmContactResponse = {
-    dataArray?: CrmContact[];
+  dataArray?: CrmContact[];
 };
 
 export class CrmIdentityConflictError extends Error {
-    constructor() {
-        super("Multiple active CRM contacts match the agent identity");
-        this.name = "CrmIdentityConflictError";
-    }
+  constructor() {
+    super("Multiple active CRM contacts match the agent identity");
+    this.name = "CrmIdentityConflictError";
+  }
 }
 
 function normalizeEmail(email: unknown): string {
-    return String(email ?? "").trim().toLowerCase();
+  return String(email ?? "")
+    .trim()
+    .toLowerCase();
 }
 
 function normalizePhone(phone: unknown): string {
-    const digits = String(phone ?? "").replace(/\D/g, "");
+  const digits = String(phone ?? "").replace(/\D/g, "");
 
-    if (digits.length === 10 && digits.startsWith("0")) {
-        return `38${digits}`;
-    }
+  if (digits.length === 10 && digits.startsWith("0")) {
+    return `38${digits}`;
+  }
 
-    return digits;
+  return digits;
 }
 
-async function isDeletedCrmContact(
-    contactId: string | number,
-    token: string
-): Promise<boolean> {
-    const { data } = await crmInstance.post<CrmContactResponse>(
-        "contact/get/",
-        {
-            limit: 1,
-            filter: {
-                deleted: "1",
-                id: contactId,
-            },
-        },
-        {
-            headers: {
-                token,
-                "Content-Type": "application/json",
-            },
-        }
-    );
+async function isDeletedCrmContact(contactId: string | number, token: string): Promise<boolean> {
+  const { data } = await crmInstance.post<CrmContactResponse>(
+    "contact/get/",
+    {
+      limit: 1,
+      filter: {
+        deleted: "1",
+        id: contactId,
+      },
+    },
+    {
+      headers: {
+        token,
+        "Content-Type": "application/json",
+      },
+    },
+  );
 
-    return Array.isArray(data?.dataArray) && data.dataArray.length > 0;
+  return Array.isArray(data?.dataArray) && data.dataArray.length > 0;
 }
 
-export async function findAgentCrmIdByEmail(
-    email: string,
-    phone?: string
-): Promise<string | null> {
-    const normalizedEmail = normalizeEmail(email);
+export async function findAgentCrmIdByEmail(email: string, phone?: string): Promise<string | null> {
+  const normalizedEmail = normalizeEmail(email);
 
-    if (!normalizedEmail) {
-        return null;
-    }
+  if (!normalizedEmail) {
+    return null;
+  }
 
-    const token = await getCrmToken();
-    const { data } = await crmInstance.post<CrmContactResponse>(
-        "contact/get/",
-        {
-            fields: [
-                "id",
-                "phones",
-                "emails",
-            ],
-            limit: 50,
-            filter: {
-                emails: [normalizedEmail],
-            },
-        },
-        {
-            headers: {
-                token,
-                "Content-Type": "application/json",
-            },
-        }
-    );
+  const token = await getCrmToken();
+  const { data } = await crmInstance.post<CrmContactResponse>(
+    "contact/get/",
+    {
+      fields: ["id", "phones", "emails"],
+      limit: 50,
+      filter: {
+        emails: [normalizedEmail],
+      },
+    },
+    {
+      headers: {
+        token,
+        "Content-Type": "application/json",
+      },
+    },
+  );
 
-    const contacts = Array.isArray(data?.dataArray) ? data.dataArray : [];
-    const contactsWithIds = contacts.filter(
-        (contact): contact is CrmContact & { id: string | number } =>
-            contact.id !== undefined && contact.id !== null
-    );
+  const contacts = Array.isArray(data?.dataArray) ? data.dataArray : [];
+  const contactsWithIds = contacts.filter(
+    (contact): contact is CrmContact & { id: string | number } =>
+      contact.id !== undefined && contact.id !== null,
+  );
 
-    const contactsWithDeletedState = await Promise.all(
-        contactsWithIds.map(async (contact) => ({
-            contact,
-            isDeleted: await isDeletedCrmContact(contact.id, token),
-        }))
-    );
-    const activeContacts = contactsWithDeletedState
-        .filter(({ isDeleted }) => !isDeleted)
-        .map(({ contact }) => contact);
+  const contactsWithDeletedState = await Promise.all(
+    contactsWithIds.map(async (contact) => ({
+      contact,
+      isDeleted: await isDeletedCrmContact(contact.id, token),
+    })),
+  );
+  const activeContacts = contactsWithDeletedState
+    .filter(({ isDeleted }) => !isDeleted)
+    .map(({ contact }) => contact);
 
-    if (!activeContacts.length) {
-        return null;
-    }
+  if (!activeContacts.length) {
+    return null;
+  }
 
-    const normalizedPhone = normalizePhone(phone);
-    const phoneMatchedContacts = normalizedPhone
-        ? activeContacts.filter((contact) =>
-            contact.phones?.some((contactPhone) => normalizePhone(contactPhone) === normalizedPhone)
-        )
-        : [];
+  const normalizedPhone = normalizePhone(phone);
+  const phoneMatchedContacts = normalizedPhone
+    ? activeContacts.filter((contact) =>
+        contact.phones?.some((contactPhone) => normalizePhone(contactPhone) === normalizedPhone),
+      )
+    : [];
 
-    if (phoneMatchedContacts.length === 1) {
-        return String(phoneMatchedContacts[0].id);
-    }
+  if (phoneMatchedContacts.length === 1) {
+    return String(phoneMatchedContacts[0].id);
+  }
 
-    if (phoneMatchedContacts.length > 1 || activeContacts.length > 1) {
-        throw new CrmIdentityConflictError();
-    }
+  if (phoneMatchedContacts.length > 1 || activeContacts.length > 1) {
+    throw new CrmIdentityConflictError();
+  }
 
-    const selectedContact = activeContacts[0];
+  const selectedContact = activeContacts[0];
 
-    return selectedContact.id ? String(selectedContact.id) : null;
+  return selectedContact.id ? String(selectedContact.id) : null;
 }
 
 export async function findAgentCrmId({
-    externalId,
-    email,
-    phone,
+  externalId,
+  email,
+  phone,
 }: {
-    externalId: string;
-    email: string;
-    phone?: string;
+  externalId: string;
+  email: string;
+  phone?: string;
 }): Promise<string | null> {
-    const token = await getCrmToken();
-    const { data } = await crmInstance.post<CrmContactResponse>(
-        "contact/get/",
-        {
-            fields: ["id"],
-            limit: 1,
-            filter: { externalid: externalId },
-        },
-        { headers: { token, "Content-Type": "application/json" } }
-    );
+  const token = await getCrmToken();
+  const { data } = await crmInstance.post<CrmContactResponse>(
+    "contact/get/",
+    {
+      fields: ["id"],
+      limit: 1,
+      filter: { externalid: externalId },
+    },
+    { headers: { token, "Content-Type": "application/json" } },
+  );
 
-    const byExternalId = data?.dataArray?.[0]?.id;
-    if (byExternalId !== undefined && byExternalId !== null) {
-        return String(byExternalId);
-    }
+  const byExternalId = data?.dataArray?.[0]?.id;
+  if (byExternalId !== undefined && byExternalId !== null) {
+    return String(byExternalId);
+  }
 
-    return findAgentCrmIdByEmail(email, phone);
+  return findAgentCrmIdByEmail(email, phone);
 }

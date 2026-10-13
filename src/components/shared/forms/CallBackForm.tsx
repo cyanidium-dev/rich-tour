@@ -1,18 +1,11 @@
 "use client";
-import { Form, Formik, FormikHelpers } from "formik";
-import { Dispatch, SetStateAction, useState } from "react";
 
-import { callBackValidation } from "@/schemas/callBackFormValidation";
-import { handleSubmitForm } from "@/utils/handleSubmitForm";
-
-import CustomizedInput from "./formComponents/CustomizedInput";
-import SubmitButton from "./formComponents/SubmitButton";
-
-export interface ValuesCallBackFormType {
-  name: string;
-  phone: string;
-  message: string;
-}
+import { type Dispatch, type SetStateAction, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CustomizedInput, SubmitButton } from "@/shared/ui";
+import { callBackValidation, type ValuesCallBackFormType } from "@/schemas/callBackFormValidation";
+export type { ValuesCallBackFormType } from "@/schemas/callBackFormValidation";
 
 interface CallBackFormProps {
   setIsError: Dispatch<SetStateAction<boolean>>;
@@ -20,6 +13,7 @@ interface CallBackFormProps {
   setIsPopUpShown?: Dispatch<SetStateAction<boolean>>;
   className?: string;
   variant?: "red" | "black";
+  fieldsClassName?: string;
 }
 
 export default function CallBackForm({
@@ -28,71 +22,46 @@ export default function CallBackForm({
   setIsPopUpShown,
   className = "",
   variant = "red",
+  fieldsClassName = "flex flex-col w-full h-full gap-y-5 mb-[18px]",
 }: CallBackFormProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const methods = useForm<ValuesCallBackFormType>({
+    resolver: zodResolver(callBackValidation()),
+    defaultValues: { name: "", phone: "", message: "" },
+    mode: "onChange",
+  });
 
-  const initialValues = {
-    name: "",
-    phone: "",
-    message: "",
-  };
-
-  const validationSchema = callBackValidation();
-
-  const submitForm = async (
-    values: ValuesCallBackFormType,
-    formikHelpers: FormikHelpers<ValuesCallBackFormType>
-  ) => {
-    await handleSubmitForm<ValuesCallBackFormType>(
-      values,
-      formikHelpers,
-      setIsLoading,
-      setIsError,
-      setIsNotificationShown,
-      setIsPopUpShown
-    );
+  const submitForm = async (_values: ValuesCallBackFormType) => {
+    try {
+      setIsLoading(true);
+      setIsError(false);
+      // The existing callback flow only acknowledges and clears the form.
+      methods.reset();
+      setIsPopUpShown?.(false);
+      setIsNotificationShown(true);
+    } catch {
+      setIsError(true);
+      setIsNotificationShown(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={submitForm}
-      validationSchema={validationSchema}
-    >
-      {({ errors, touched, dirty, isValid }) => (
-        <Form className={`${className}`}>
-          <div className="flex flex-col w-full h-full gap-y-5 mb-[18px]">
-            <CustomizedInput
-              fieldName="name"
-              placeholder="Ім’я"
-              errors={errors}
-              touched={touched}
-            />
-            <CustomizedInput
-              fieldName="phone"
-              inputType="tel"
-              placeholder="Номер телефону"
-              errors={errors}
-              touched={touched}
-              mask="phone"
-            />
-            <CustomizedInput
-              fieldName="message"
-              as="textarea"
-              placeholder="Повідомлення"
-              errors={errors}
-              touched={touched}
-            />
-          </div>
-          <SubmitButton
-            dirty={dirty}
-            isValid={isValid}
-            isLoading={isLoading}
-            text="Відправити"
-            variant={variant}
+    <FormProvider {...methods}>
+      <form className={className} onSubmit={methods.handleSubmit(submitForm)}>
+        <div className={fieldsClassName}>
+          <CustomizedInput fieldName="name" placeholder="Ім’я" />
+          <CustomizedInput
+            fieldName="phone"
+            inputType="tel"
+            placeholder="Номер телефону"
+            mask="phone"
           />
-        </Form>
-      )}
-    </Formik>
+          <CustomizedInput fieldName="message" as="textarea" placeholder="Повідомлення" />
+        </div>
+        <SubmitButton isLoading={isLoading} text="Відправити" variant={variant} />
+      </form>
+    </FormProvider>
   );
 }

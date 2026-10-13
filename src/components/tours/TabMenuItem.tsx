@@ -1,4 +1,4 @@
-import { Category } from "@/types/category";
+import { Category } from "@/entities/tour";
 
 interface TabMenuItemProps {
   category: Category;
@@ -6,11 +6,7 @@ interface TabMenuItemProps {
   onClick: () => void;
 }
 
-export default function TabMenuItem({
-  category,
-  activeTab,
-  onClick,
-}: TabMenuItemProps) {
+export default function TabMenuItem({ category, activeTab, onClick }: TabMenuItemProps) {
   const { _id, title } = category;
 
   return (
@@ -18,9 +14,7 @@ export default function TabMenuItem({
       <button
         onClick={onClick}
         className={`flex items-center justify-center w-full md:w-fit px-4 sm:px-[27px] py-[14px] text-14med rounded-full border  ${
-          activeTab === _id
-            ? "border-main bg-main text-white"
-            : "border-black bg-white text-black"
+          activeTab === _id ? "border-main bg-main text-white" : "border-black bg-white text-black"
         } xl:hover:text-white xl:hover:bg-main xl:hover:brightness-[135%] xl:hover:border-main focus-visible:text-white 
         focus-visible:bg-main focus-visible:brightness-[135%] focus-visible:border-main transition duration-300 ease-in-out`}
       >

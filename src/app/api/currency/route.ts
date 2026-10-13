@@ -1,82 +1,48 @@
-import axios from "axios";
 import { NextResponse } from "next/server";
 
-import client from "@/lib/sanity/client";
-import { currencyQuery } from "@/lib/sanity/queries";
+import { sanityClient } from "@/shared/api/server";
+import { currencySettingsQuery } from "@/lib/sanity/queries";
+import { CURRENCY_REFRESH_MS, resolveEurRate } from "@/lib/currency/rate";
 
-// ================= helpers =================
-
-const getUsd = (currency: any, data: any) => {
-    const { usd_currency, usd_percent = 0 } = currency ?? {};
-
-    if (usd_currency) {
-        return usd_currency * (1 + usd_percent / 100);
-    }
-
-    const rate = data.exchangeRate.find(
-        (item: any) => item.currency === "USD"
-    );
-
-    if (!rate) {
-        throw new Error("USD rate not found");
-    }
-
-    return rate.saleRateNB;
+type CurrencyDocuments = {
+  settings: { eurMarkupUah?: number } | null;
+  cache: { rate?: number } | null;
 };
 
-const getEuro = (currency: any, data: any) => {
-    const { euro_currency, euro_percent = 0 } = currency ?? {};
-
-    if (euro_currency) {
-        return euro_currency * (1 + euro_percent / 100);
-    }
-
-    const rate = data.exchangeRate.find(
-        (item: any) => item.currency === "EUR"
-    );
-
-    if (!rate) {
-        throw new Error("EUR rate not found");
-    }
-
-    return rate.saleRateNB;
-};
-
-// ================= route =================
+const PRIVAT_EUR_URL = "https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11";
 
 export async function GET() {
-    try {
-        // 1️⃣ Курсы из Sanity
-        const currency = await client.fetch(currencyQuery);
+  try {
+    const token = process.env.SANITY_API_TOKEN;
+    if (!token) throw new Error("SANITY_API_TOKEN is required for currency rate caching");
 
-        // 2️⃣ Правильная дата для PrivatBank
-        const date = new Date();
-        const day = String(date.getDate()).padStart(2, "0");
-        const month = String(date.getMonth() + 1).padStart(2, "0"); // ⚠️ +1
-        const year = date.getFullYear();
-
-        const formattedDate = `${day}.${month}.${year}`;
-
-        // 3️⃣ PrivatBank API
-        const { data } = await axios.get(
-            `https://api.privatbank.ua/p24api/exchange_rates?date=${formattedDate}`
-        );
-
-        // 4️⃣ Расчёт курсов
-        const usd = getUsd(currency, data);
-        const eur = getEuro(currency, data);
-
-        // 5️⃣ Ответ
-        return NextResponse.json({
-            usd,
-            eur,
+    const client = sanityClient.withConfig({ token, useCdn: false });
+    const documents = await client.fetch<CurrencyDocuments>(currencySettingsQuery);
+    const eur = await resolveEurRate(
+      documents.settings?.eurMarkupUah,
+      documents.cache?.rate,
+      async () => {
+        const response = await fetch(PRIVAT_EUR_URL, {
+          next: { revalidate: CURRENCY_REFRESH_MS / 1000 },
         });
-    } catch (error) {
-        console.error("Currency API error:", error);
+        if (!response.ok) throw new Error(`PrivatBank returned ${response.status}`);
+        return response.json();
+      },
+      (rate) =>
+        client.createOrReplace({
+          _id: "privatEurRateCache",
+          _type: "currencyRateCache",
+          rate,
+          fetchedAt: new Date().toISOString(),
+        }),
+    );
 
-        return NextResponse.json(
-            { error: "Failed to fetch currency rates" },
-            { status: 500 }
-        );
-    }
+    return NextResponse.json({ eur }, { headers: { "Cache-Control": "no-store" } });
+  } catch (error) {
+    console.error("Currency API error:", error);
+    return NextResponse.json(
+      { error: "EUR/UAH rate is unavailable" },
+      { status: 503, headers: { "Cache-Control": "no-store" } },
+    );
+  }
 }

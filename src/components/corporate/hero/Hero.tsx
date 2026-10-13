@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "@/components/shared/container/Container";
+import { Container } from "@/shared/ui";
 import AnimatedArrow from "./AnimatedArrow";
 
 export default function Hero() {
@@ -28,10 +28,10 @@ export default function Hero() {
           as="p"
           className="max-w-[303px] md:max-w-[476px] mx-auto text-14reg xl:text-16reg text-center"
         >
-          Ваш бізнес заслуговує найкращих рішень, коли йдеться про подорожі.
-          Наша команда професіоналів готова забезпечити повний спектр послуг для
-          корпоративних клієнтів, створюючи комфорт і зручність на кожному етапі
-          організації ваших ділових та мотиваційних поїздок.
+          Ваш бізнес заслуговує найкращих рішень, коли йдеться про подорожі. Наша команда
+          професіоналів готова забезпечити повний спектр послуг для корпоративних клієнтів,
+          створюючи комфорт і зручність на кожному етапі організації ваших ділових та мотиваційних
+          поїздок.
         </AnimatedWrapper>
         <AnimatedArrow />
       </Container>

@@ -5,8 +5,8 @@ import { useSearchParams } from "next/navigation";
 
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
-import Container from "@/components/shared/container/Container";
-import { TourShortInfo } from "@/types/tour";
+import { Container } from "@/shared/ui";
+import { TourShortInfo } from "@/entities/tour";
 import TabMenu, { TourCategory } from "./TabMenu";
 import ToursList from "./ToursList";
 
@@ -24,12 +24,13 @@ export default function Tours({
   const [activeCategoryId, setActiveCategoryId] = useState(initialCategoryId);
 
   const filteredTours = useMemo(
-    () => activeCategoryId === "all"
-      ? tours
-      : tours.filter((tour) =>
-          tour.categories?.some((category) => category._ref === activeCategoryId)
-        ),
-    [activeCategoryId, tours]
+    () =>
+      activeCategoryId === "all"
+        ? tours
+        : tours.filter((tour) =>
+            tour.categories?.some((category) => category._ref === activeCategoryId),
+          ),
+    [activeCategoryId, tours],
   );
 
   return (
@@ -47,7 +48,7 @@ export default function Tours({
           activeCategoryId={activeCategoryId}
           onChange={setActiveCategoryId}
         />
-        <ToursList tours={filteredTours} />
+        <ToursList key={activeCategoryId} tours={filteredTours} />
       </Container>
     </section>
   );

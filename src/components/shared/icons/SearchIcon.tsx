@@ -1,8 +1,6 @@
-interface SearchIconProps {
-  className?: string;
-}
+import type { IconProps } from "@/shared/ui";
 
-export default function SearchIcon({ className }: SearchIconProps) {
+export default function SearchIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

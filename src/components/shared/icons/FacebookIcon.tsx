@@ -1,8 +1,6 @@
-interface FacebookIconProps {
-  className?: string;
-}
+import type { IconProps } from "@/shared/ui";
 
-export default function FacebookIcon({ className = "" }: FacebookIconProps) {
+export default function FacebookIcon({ className = "" }: IconProps) {
   return (
     <svg
       width="34"

@@ -1,51 +1,69 @@
-import {TravelerInfo} from "@/contracts/booking";
-import { yesNo } from './utils/helpers'
+import { TravelerInfo } from "@/contracts/booking";
+import { yesNo } from "./utils/helpers";
+
+type CrmTraveler = {
+  typesex: string;
+  name: string;
+  namelast: string;
+  externalid: string;
+  findbyArray: string[];
+  bdate: string;
+  customfields: {
+    Telefon: TravelerInfo["phone"];
+    Mistseposadki: string;
+    Strahivka: string;
+    Platnimistsya: string;
+    Datanaroya: string;
+    Pasport?: string;
+    DaTazavpasp?: string;
+    Pasportvigotovlyatsya?: string;
+  };
+};
 
 export function mapTravelerToCrmPayload(traveler: TravelerInfo, requestId: string, index: number) {
-    const hasPassport = Boolean(traveler.passport)
+  const hasPassport = Boolean(traveler.passport);
 
-    const payload: any = {
-        typesex: 'man',
-        name: traveler.name,
-        namelast: traveler.surname,
+  const payload: CrmTraveler = {
+    typesex: "man",
+    name: traveler.name,
+    namelast: traveler.surname,
 
-        externalid: traveler.passport || `${requestId}:traveler:${index}`,
-        findbyArray: ['externalid'],
+    externalid: traveler.passport || `${requestId}:traveler:${index}`,
+    findbyArray: ["externalid"],
 
-        bdate: toCrmDate(traveler.birthDate),
+    bdate: toCrmDate(traveler.birthDate),
 
-        customfields: {
-            Telefon: traveler.phone,
-            Mistseposadki: traveler.boardingCity,
-            Strahivka: yesNo(traveler.insurance),
-            Platnimistsya: yesNo(traveler.frontSeats),
-            Datanaroya: toCrmDate(traveler.birthDate),
-        },
+    customfields: {
+      Telefon: traveler.phone,
+      Mistseposadki: traveler.boardingCity,
+      Strahivka: yesNo(traveler.insurance),
+      Platnimistsya: yesNo(traveler.frontSeats),
+      Datanaroya: toCrmDate(traveler.birthDate),
+    },
+  };
+
+  // Паспорт есть
+  if (hasPassport) {
+    payload.customfields.Pasport = traveler.passport;
+
+    if (traveler.passportExpiration) {
+      payload.customfields.DaTazavpasp = toCrmDate(traveler.passportExpiration);
     }
+  } else {
+    // Паспорт изготавливается
+    payload.customfields.Pasportvigotovlyatsya = "Так";
+  }
 
-    // Паспорт есть
-    if (hasPassport) {
-        payload.customfields.Pasport = traveler.passport
-
-        if (traveler.passportExpiration) {
-            payload.customfields.DaTazavpasp =
-                toCrmDate(traveler.passportExpiration);
-        }
-    } else {
-        // Паспорт изготавливается
-        payload.customfields.Pasportvigotovlyatsya = 'Так'
-    }
-
-    return payload
+  return payload;
 }
 
 function toCrmDate(date: string) {
-    // ожидаем DD.MM.YYYY
-    const [day, month, year] = date.split('.')
+  // ожидаем DD.MM.YYYY
+  const [day, month, year] = date.split(".");
 
-    if (!day || !month || !year) {
-        throw new Error(`Invalid date format: ${date}`)
-    }
+  if (!day || !month || !year) {
+    throw new Error(`Invalid date format: ${date}`);
+  }
 
-    return `${year}-${month}-${day}`
+  return `${year}-${month}-${day}`;
 }

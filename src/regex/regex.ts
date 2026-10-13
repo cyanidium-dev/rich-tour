@@ -11,8 +11,7 @@ export const emailRegex =
 
 export const edrpouRegex = /^\d{8,10}$/;
 
-export const dateFormatRegex =
-    /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)\d{2}$/;
+export const dateFormatRegex = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)\d{2}$/;
 
 export const isValidBirthDate = (value?: string): boolean => {
   if (!value || !dateFormatRegex.test(value)) return false;
@@ -24,18 +23,14 @@ export const isValidBirthDate = (value?: string): boolean => {
   if (birthDate > today) return false;
 
   let age = today.getFullYear() - year;
-  const hasBirthdayPassed =
-      today >= new Date(today.getFullYear(), month - 1, day);
+  const hasBirthdayPassed = today >= new Date(today.getFullYear(), month - 1, day);
 
   if (!hasBirthdayPassed) age--;
 
   return age >= 0 && age <= 120;
 };
 
-export const isValidPassportExpirationDate = (
-    value?: string,
-    minMonths = 6
-): boolean => {
+export const isValidPassportExpirationDate = (value?: string, minMonths = 6): boolean => {
   if (!value || !dateFormatRegex.test(value)) return false;
 
   const [day, month, year] = value.split(".").map(Number);

@@ -6,6 +6,7 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import CallBackForm from "../shared/forms/CallBackForm";
 import NotificationPopUp from "../shared/pop-ups/NotificationPopUp";
 import Backdrop from "../shared/backdrop/Backdrop";
+import styles from "./ReviewForm.module.css";
 
 interface ReviewFormProps {
   className?: string;
@@ -24,7 +25,7 @@ export default function ReviewForm({ className }: ReviewFormProps) {
       <CallBackForm
         setIsError={setIsError}
         setIsNotificationShown={setIsNotificationShown}
-        className={className}
+        className={`${styles.form} ${className ?? ""}`}
         variant="black"
       />
       <NotificationPopUp
@@ -37,10 +38,7 @@ export default function ReviewForm({ className }: ReviewFormProps) {
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
       />
-      <Backdrop
-        isVisible={isNotificationShown}
-        onClick={() => setIsNotificationShown(false)}
-      />
+      <Backdrop isVisible={isNotificationShown} onClick={() => setIsNotificationShown(false)} />
     </AnimatedWrapper>
   );
 }

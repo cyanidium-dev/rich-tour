@@ -1,8 +1,6 @@
-interface TrashIconProps {
-  className?: string;
-}
+import type { IconProps } from "@/shared/ui";
 
-export default function TrashIcon({ className = "" }: TrashIconProps) {
+export default function TrashIcon({ className = "" }: IconProps) {
   return (
     <svg
       width="24"

@@ -5,10 +5,7 @@ interface BackdropProps {
   onClick: () => void;
 }
 
-export default function Backdrop({
-  isVisible = false,
-  onClick,
-}: BackdropProps) {
+export default function Backdrop({ isVisible = false, onClick }: BackdropProps) {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isVisible) {
@@ -26,9 +23,7 @@ export default function Backdrop({
   return (
     <div
       className={`fixed z-[50] inset-0 w-dvw h-dvh bg-black bg-opacity-40 transition duration-[1000ms] ease-in-out ${
-        isVisible
-          ? "opacity-100 no-doc-scroll"
-          : "opacity-0 pointer-events-none"
+        isVisible ? "opacity-100 no-doc-scroll" : "opacity-0 pointer-events-none"
       }`}
       onClick={onClick}
     />

@@ -16,25 +16,15 @@ export default function SignUpFormWithNotifications() {
         animation={fadeInAnimation({ y: 30, delay: 0.4 })}
         className="max-w-[489px] md:max-w-[569px] mx-auto"
       >
-        <SignUpForm
-          setIsError={setIsError}
-          setIsNotificationShown={setIsNotificationShown}
-        />
+        <SignUpForm setIsError={setIsError} setIsNotificationShown={setIsNotificationShown} />
       </AnimatedWrapper>
       <NotificationPopUp
         title={isError ? "На жаль, щось пішло не так" : "Успішно!"}
-        description={
-          isError
-            ? "Спробуйте відправити форму ще раз"
-            : "Дякуємо за реєстрацію!"
-        }
+        description={isError ? "Спробуйте відправити форму ще раз" : "Дякуємо за реєстрацію!"}
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
       />
-      <Backdrop
-        isVisible={isNotificationShown}
-        onClick={() => setIsNotificationShown(false)}
-      />
+      <Backdrop isVisible={isNotificationShown} onClick={() => setIsNotificationShown(false)} />
     </>
   );
 }

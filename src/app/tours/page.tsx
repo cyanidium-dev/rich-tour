@@ -3,18 +3,24 @@ import { Suspense } from "react";
 import Tours from "@/components/tours/Tours";
 import Loader from "@/components/shared/loader/Loader";
 
-import client from "@/lib/sanity/client";
-import {allActiveTourCategoriesQuery, basicToursQuery} from "@/lib/sanity/queries";
-import {TourShortInfo} from "@/types/tour";
-import {TourCategory} from "@/components/tours/TabMenu";
+import { sanityClient as client, sanityFetchOptions } from "@/shared/api/server";
+import { allActiveTourCategoriesQuery, basicToursQuery } from "@/entities/tour/server";
+import { TourShortInfo } from "@/entities/tour";
+import { TourCategory } from "@/components/tours/TabMenu";
 
 // export const revalidate = 60;
 
 export default async function ToursPage() {
-    const [tourCategories, tours] = await Promise.all([
-      client.fetch<TourCategory[]>(allActiveTourCategoriesQuery, {}, {next: {revalidate: 300, tags: ["tour-categories"]}}),
-      client.fetch<TourShortInfo[]>(basicToursQuery, {categoryId: null}, {next: {revalidate: 300, tags: ["tours"]}}),
-    ]);
+  const [tourCategories, tours] = await Promise.all([
+    client
+      .withConfig({ useCdn: false })
+      .fetch<TourCategory[]>(allActiveTourCategoriesQuery, {}, { cache: "no-store" }),
+    client.fetch<TourShortInfo[]>(
+      basicToursQuery,
+      { categoryId: null },
+      sanityFetchOptions(300, ["tours"]),
+    ),
+  ]);
 
   return (
     <Suspense fallback={<Loader />}>

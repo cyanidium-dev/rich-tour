@@ -1,0 +1,8 @@
+.form input,
+.form textarea {
+  background-color: var(--white);
+}
+
+.form textarea {
+  height: 188px;
+}

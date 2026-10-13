@@ -7,11 +7,7 @@ const LottieSplashScreen = dynamic(() => import("./LottieSpalshScreen"), {
   ssr: false,
 });
 
-export default function SplashGate({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function SplashGate({ children }: { children: React.ReactNode }) {
   const [showSplash, setShowSplash] = useState(false);
   const [showContent, setShowContent] = useState(false);
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "@/components/shared/container/Container";
+import { Container } from "@/shared/ui";
 import AnimatedArrowMob from "./AnimatedArrowMob";
 import AnimatedArrowDesk from "./AnimatedArrowDesk";
 
@@ -29,9 +29,9 @@ export default function Hero() {
           animation={fadeInAnimation({ x: 30, delay: 0.4 })}
           className="max-w-[283px] sm:max-w-[430px] mx-auto text-14reg xl:text-16reg text-center"
         >
-          Ласкаво просимо до нашого туристичного оператора! Ми спеціалізуємося
-          на розробці та реалізації автобусних турів, створюючи унікальні
-          подорожі, які запам&apos;ятаються вам на все життя.
+          Ласкаво просимо до нашого туристичного оператора! Ми спеціалізуємося на розробці та
+          реалізації автобусних турів, створюючи унікальні подорожі, які запам&apos;ятаються вам на
+          все життя.
         </AnimatedWrapper>
         <AnimatedArrowMob />
         <AnimatedArrowDesk />

@@ -27,10 +27,7 @@ export default function NotificationModal({
       scrollbar-track-rounded-full scrollbar-thumb-transparent scrollbar-track-main popup-scroll ${className}`}
     >
       <div className="absolute z-[70] top-[18px] xl:top-[22px] right-[18px] xl:right-[22px]">
-        <IconButton
-          handleClick={() => setIsPopUpShown(false)}
-          className="size-6 xl:size-8"
-        >
+        <IconButton handleClick={() => setIsPopUpShown(false)} className="size-6 xl:size-8">
           {<IconCross className="size-full" />}
         </IconButton>
       </div>

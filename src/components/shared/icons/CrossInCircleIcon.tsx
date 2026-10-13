@@ -1,10 +1,6 @@
-interface CrossInCircleIconProps {
-  className?: string;
-}
+import type { IconProps } from "@/shared/ui";
 
-export default function CrossInCircleIcon({
-  className,
-}: CrossInCircleIconProps) {
+export default function CrossInCircleIcon({ className }: IconProps) {
   return (
     <svg
       width="46"

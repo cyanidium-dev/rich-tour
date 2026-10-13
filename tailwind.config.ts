@@ -46,13 +46,13 @@ export default {
         "64semi": ["64px", { fontWeight: "600", lineHeight: "1.23" }],
       },
       colors: {
-        white: "#ffffff",
-        black: "#18181b",
-        main: "#e43a3a",
-        red: "#FD0000",
-        grey: "#EDEDED",
-        lightGrey: "#D4D4D8",
-        semiGray: "#A1A1AA",
+        white: "var(--white)",
+        black: "var(--black)",
+        main: "var(--main)",
+        red: "var(--red)",
+        grey: "var(--grey)",
+        lightGrey: "var(--light-grey)",
+        semiGray: "var(--semi-gray)",
       },
       backgroundImage: {
         hero: "linear-gradient(359deg, rgba(0, 0, 0, 0.80) -17.45%, rgba(0, 0, 0, 0.00) 16.94%, rgba(0, 0, 0, 0.80) 78.79%)",
@@ -64,8 +64,7 @@ export default {
         benefits: "0px 0px 28px 1px rgba(27, 27, 27, 0.12)",
         card: "0px 0px 19.3px 1px rgba(92, 92, 92, 0.08)",
         pagination: "0px 10px 56px 2px rgba(121, 121, 121, 0.12)",
-        category:
-          "0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -2px rgba(0, 0, 0, 0.10)",
+        category: "0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -2px rgba(0, 0, 0, 0.10)",
       },
       keyframes: {
         rotate: {

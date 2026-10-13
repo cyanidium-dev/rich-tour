@@ -1,8 +1,6 @@
-interface SelectIconProps {
-  className?: string;
-}
+import type { IconProps } from "@/shared/ui";
 
-export default function SelectIcon({ className }: SelectIconProps) {
+export default function SelectIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

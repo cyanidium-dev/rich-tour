@@ -1,0 +1,46 @@
+import { Dispatch, SetStateAction } from "react";
+import { listVariants } from "@/components/shared/animation/animationVariants";
+import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
+import NavMenuItem from "@/widgets/site-header/ui/navMenu/NavMenuItem";
+
+interface NavMenuProps {
+  setIsHeaderMenuOpened?: Dispatch<SetStateAction<boolean>>;
+  isAnimated?: boolean;
+  showSmartTours: boolean;
+}
+
+const navMenuList = [
+  { title: "Тури", link: "/tours" },
+  { title: "Про нас", link: "/about" },
+  { title: "SMART-тури", link: "/#smart-tours" },
+  { title: "Корпоративне обслуговування", link: "/corporate" },
+  { title: "STEP", link: "/step" },
+  { title: "Контакти", link: "/contacts" },
+];
+
+export default function NavMenu({
+  setIsHeaderMenuOpened,
+  isAnimated = false,
+  showSmartTours,
+}: NavMenuProps) {
+  return (
+    <AnimatedWrapper
+      as="ul"
+      animation={
+        isAnimated ? listVariants({ staggerChildren: 0.2, delayChildren: 0.15 }) : undefined
+      }
+      className="flex flex-col lg:flex-row gap-x-4"
+    >
+      {navMenuList
+        .filter((item) => showSmartTours || item.link !== "/#smart-tours")
+        .map((menuItem) => (
+          <NavMenuItem
+            key={menuItem.link}
+            menuItem={menuItem}
+            isAnimated={isAnimated}
+            setIsHeaderMenuOpened={setIsHeaderMenuOpened}
+          />
+        ))}
+    </AnimatedWrapper>
+  );
+}

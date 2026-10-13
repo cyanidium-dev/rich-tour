@@ -1,8 +1,6 @@
-interface InstagramIconProps {
-  className?: string;
-}
+import type { IconProps } from "@/shared/ui";
 
-export default function InstagramIcon({ className = "" }: InstagramIconProps) {
+export default function InstagramIcon({ className = "" }: IconProps) {
   return (
     <svg
       width="34"

@@ -1,26 +1,29 @@
-import { connection } from 'next/server';
+import { connection } from "next/server";
 
 import { allDocumentsUrl } from "./mockedData";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "@/components/shared/container/Container";
+import { Container } from "@/shared/ui";
 import DocumentsTitle from "./DocumentsTitle";
-import MainButton from "@/components/shared/buttons/MainButton";
+import { MainButton } from "@/shared/ui";
 import DocumentsSwiper from "./DocumentsSwiper";
 
-import client from "@/lib/sanity/client";
-import {allDocQuery} from "@/lib/sanity/queries";
+import { sanityClient as client } from "@/shared/api/server";
+import type { RawDocument } from "./types";
+import { allDocQuery } from "@/lib/sanity/queries";
 
 export default async function Documents() {
   await connection();
-  const documents = await client.fetch(allDocQuery);
+  const documents = await client.fetch<RawDocument[] | null>(allDocQuery);
   if (!documents || !documents.length) {
     return null;
   }
-  const items = documents.map(({name, doc}) => ({image: {
-    url: doc.asset.url,
+  const items = documents.map(({ name, doc }) => ({
+    image: {
+      url: doc.asset.url,
       alt: name,
-    }}));
+    },
+  }));
 
   return (
     <section className="mb-[148px] xl:mb-[180px]">

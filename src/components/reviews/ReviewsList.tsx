@@ -5,13 +5,13 @@ import { useReviewsItemsPerPage } from "@/hooks/useReviewsItemsPerPage";
 import { listVariants } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Loader from "@/components/shared/loader/Loader";
-import ReviewCard from "@/components/shared/cards/reviewCard/ReviewCard";
+import { ReviewCard, type Review } from "@/entities/review";
 import Pagination from "../shared/pagination/Pagination";
 import AnimatedListItem from "../shared/animation/AnimatedListItem";
 
 const SECTION_ID = "review-page-reviews";
 
-export default function ReviewsList({items}) {
+export default function ReviewsList({ items }: { items: Review[] }) {
   if (!items || !items.length) {
     return null;
   }
@@ -25,6 +25,7 @@ export default function ReviewsList({items}) {
           useItemsPerPage={useReviewsItemsPerPage}
           renderItems={(currentItems) => (
             <AnimatedWrapper
+              key={currentItems.map((review) => review.id).join(":")}
               as="ul"
               animation={listVariants({
                 staggerChildren: 0.5,
@@ -32,9 +33,8 @@ export default function ReviewsList({items}) {
               })}
               className="flex flex-col gap-y-5"
             >
-              {currentItems.map((review, idx) => (
-                <AnimatedListItem key={idx}>
-                  {/*  @ts-expect-error */}
+              {currentItems.map((review) => (
+                <AnimatedListItem key={review.id}>
                   <ReviewCard review={review} />
                 </AnimatedListItem>
               ))}

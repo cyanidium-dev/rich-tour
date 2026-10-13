@@ -1,4 +1,4 @@
-import Socials from "@/components/shared/footer/Socials";
+import { Socials } from "@/widgets/site-footer";
 
 export default function SocialList() {
   return (

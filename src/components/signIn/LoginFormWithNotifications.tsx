@@ -9,7 +9,7 @@ import Backdrop from "../shared/backdrop/Backdrop";
 export default function LoginFormWithNotifications() {
   const [isError, setIsError] = useState(false);
   const [isNotificationShown, setIsNotificationShown] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   return (
     <>
       <AnimatedWrapper
@@ -28,10 +28,7 @@ export default function LoginFormWithNotifications() {
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
       />
-      <Backdrop
-        isVisible={isNotificationShown}
-        onClick={() => setIsNotificationShown(false)}
-      />
+      <Backdrop isVisible={isNotificationShown} onClick={() => setIsNotificationShown(false)} />
     </>
   );
 }

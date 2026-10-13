@@ -1,4 +1,4 @@
-import { address } from "@/components/shared/footer/mockedData";
+import { address } from "@/shared/config";
 
 export default function Address() {
   if (!address) {

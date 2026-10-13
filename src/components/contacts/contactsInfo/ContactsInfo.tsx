@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "@/components/shared/container/Container";
+import { Container } from "@/shared/ui";
 import Address from "./Address";
 import Phones from "./Phones";
 import Email from "./Email";

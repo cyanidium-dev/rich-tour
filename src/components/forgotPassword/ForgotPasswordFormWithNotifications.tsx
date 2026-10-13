@@ -32,10 +32,7 @@ export default function ForgotPasswordFormWithNotifications() {
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
       />
-      <Backdrop
-        isVisible={isNotificationShown}
-        onClick={() => setIsNotificationShown(false)}
-      />
+      <Backdrop isVisible={isNotificationShown} onClick={() => setIsNotificationShown(false)} />
     </>
   );
 }

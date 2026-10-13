@@ -1,13 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  animate,
-  useInView,
-} from "framer-motion";
+import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
 import Image from "next/image";
 import { listItemVariants } from "@/components/shared/animation/animationVariants";
 

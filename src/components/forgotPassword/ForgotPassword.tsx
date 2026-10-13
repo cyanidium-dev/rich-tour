@@ -1,6 +1,6 @@
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "../shared/container/Container";
+import { Container } from "@/shared/ui";
 import ForgotPasswordFormWithNotifications from "./ForgotPasswordFormWithNotifications";
 
 export default function ForgotPassword() {
@@ -20,8 +20,8 @@ export default function ForgotPassword() {
             animation={fadeInAnimation({ y: 30, delay: 0.4 })}
             className="max-w-[348px] mb-6 mx-auto text-14reg text-center"
           >
-            Введіть електронну пошту вашого облікового запису, щоб отримати
-            електронний лист з посиланням для зміни паролю.
+            Введіть електронну пошту вашого облікового запису, щоб отримати електронний лист з
+            посиланням для зміни паролю.
           </AnimatedWrapper>
           <ForgotPasswordFormWithNotifications />
         </div>

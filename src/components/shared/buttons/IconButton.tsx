@@ -6,11 +6,7 @@ interface IconButtonProps {
   className?: string;
 }
 
-export default function IconButton({
-  handleClick,
-  children,
-  className = "",
-}: IconButtonProps) {
+export default function IconButton({ handleClick, children, className = "" }: IconButtonProps) {
   return (
     <button
       type="button"

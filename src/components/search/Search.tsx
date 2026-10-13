@@ -2,10 +2,10 @@ import { fadeInAnimation } from "@/components/shared/animation/animationVariants
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import ArrowHeadIcon from "@/components/shared/icons/ArrowHeadIcon";
 import SearchForm from "../shared/search/SearchForm";
-import Container from "../shared/container/Container";
+import { Container } from "@/shared/ui";
 import SearchList from "./SearchList";
-import type {SearchOption} from "../shared/search/SearchForm";
-import type {TourShortInfo} from "@/types/tour";
+import type { SearchOption } from "../shared/search/SearchForm";
+import type { TourShortInfo } from "@/entities/tour";
 
 export default function Search({
   countries,

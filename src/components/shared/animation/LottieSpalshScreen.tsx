@@ -8,9 +8,7 @@ interface LottieSplashScreenProps {
   visible: boolean;
 }
 
-export default function LottieSplashScreen({
-  visible,
-}: LottieSplashScreenProps) {
+export default function LottieSplashScreen({ visible }: LottieSplashScreenProps) {
   return (
     <AnimatePresence>
       {visible && (

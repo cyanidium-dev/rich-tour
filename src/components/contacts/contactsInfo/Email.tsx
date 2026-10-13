@@ -1,4 +1,4 @@
-import { email } from "@/components/shared/footer/mockedData";
+import { email } from "@/shared/config";
 
 export default function Email() {
   if (!email) {

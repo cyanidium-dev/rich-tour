@@ -1,62 +1,71 @@
-import { postToCrm } from '../utils/postToCrm'
+import { postToCrm } from "@/shared/api/crm-server";
 
 interface SendAgentToCrmParams {
-    externalId: string
-    fullName: string
+  externalId: string;
+  fullName: string;
 
-    agencyCrmId?: number
+  agencyCrmId?: number;
 
-    phone: string
-    email: string
+  phone: string;
+  email: string;
 
-    website?: string
-    license?: string
-    city?: string
-    taxForm?: string
-    legalCompanyName?: string
+  website?: string;
+  license?: string;
+  city?: string;
+  taxForm?: string;
+  legalCompanyName?: string;
 }
 
 export async function sendAgentToCrm({
-                                         externalId,
-                                         fullName,
-                                         agencyCrmId,
-                                         phone,
-                                         email,
-                                         website,
-                                         license,
-                                         city,
-                                         taxForm,
-                                         legalCompanyName,
-                                     }: SendAgentToCrmParams): Promise<string> {
-    const payloadItem: any = {
-        externalid: externalId,
-        typesex: 'man',
-        name: fullName,
+  externalId,
+  fullName,
+  agencyCrmId,
+  phone,
+  email,
+  website,
+  license,
+  city,
+  taxForm,
+  legalCompanyName,
+}: SendAgentToCrmParams): Promise<string> {
+  const payloadItem: {
+    externalid: string;
+    typesex: string;
+    name: string;
+    findbyArray: string[];
+    emails: string[];
+    phones: string[];
+    customfields: Record<string, string | undefined>;
+    companys?: number[];
+  } = {
+    externalid: externalId,
+    typesex: "man",
+    name: fullName,
 
-        findbyArray: ['externalid'],
+    findbyArray: ["externalid"],
 
-        emails: [email],
-        phones: [phone],
+    emails: [email],
+    phones: [phone],
 
-        customfields: {
-            Vebsait: website,
-            Litsenziya: license,
-            Misto: city,
-            taxForm,
-            legalCompanyName,
-        },
-    }
+    customfields: {
+      Vebsait: website,
+      Litsenziya: license,
+      Misto: city,
+      taxForm,
+      legalCompanyName,
+    },
+  };
 
-    if (agencyCrmId) {
-        payloadItem.companys = [agencyCrmId]
-    }
+  if (agencyCrmId) {
+    payloadItem.companys = [agencyCrmId];
+  }
 
-    const  data = await postToCrm([payloadItem], "contact/set/")
+  const data = await postToCrm([payloadItem], "contact/set/");
 
-    const crmId = data?.dataArray?.[0];
-    if (!crmId) {
-        throw new Error('CRM did not return agent crmId')
-    }
+  const crmId = data?.dataArray?.[0];
+  if (!crmId) {
+    throw new Error("CRM did not return agent crmId");
+  }
 
-    return String(crmId)
+  return String(crmId);
 }

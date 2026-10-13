@@ -3,7 +3,7 @@
 @config "../../tailwind.config.ts";
 @plugin "tailwind-scrollbar" {
   nocompatible: true;
-  preferredStrategy: "pseudoelements";
+  preferredstrategy: "pseudoelements";
 }
 
 @utility container {
@@ -18,56 +18,62 @@
 }
 
 @layer base {
-  *, ::before, ::after, ::backdrop, ::file-selector-button {
+  *,
+  ::before,
+  ::after,
+  ::backdrop,
+  ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
-}
 
-@layer base {
-:root {
-  --white: #ffffff;
-  --black: #18181b;
-  --main: #e43a3a;
-}
+  :root {
+    --white: #ffffff;
+    --black: #18181b;
+    --main: #e43a3a;
+    --red: #fd0000;
+    --grey: #ededed;
+    --light-grey: #d4d4d8;
+    --semi-gray: #a1a1aa;
+  }
 
-:root:has(.no-doc-scroll) {
-  overflow: hidden;
-  scrollbar-gutter: stable;
-}
+  :root:has(.no-doc-scroll) {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+  }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
 
-body {
-  background: var(--white);
-  color: var(--black);
-  font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
-}
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
+  }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 
-img {
-  display: block;
-  max-width: 100%;
-}
+  img {
+    display: block;
+    max-width: 100%;
+  }
 
-ul {
-  list-style: none;
-}
+  ul {
+    list-style: none;
+  }
 
-*,
-*::after,
-*::before {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .popup-scroll::-webkit-scrollbar-track {
@@ -114,25 +120,25 @@ ul {
   }
 
   /* Swiper */
-  .swiper {
+  .swiper:where(:not(.hotel-modal-gallery)) {
     padding-left: 16px !important;
     padding-bottom: 74px !important;
   }
 
   @media screen and (min-width: 375px) {
-    .swiper {
+    .swiper:where(:not(.hotel-modal-gallery)) {
       padding-left: 25px !important;
     }
   }
 
   @media screen and (min-width: 768px) {
-    .swiper {
+    .swiper:where(:not(.hotel-modal-gallery)) {
       padding-left: 0px !important;
     }
   }
 
   @media screen and (min-width: 1280px) {
-    .swiper {
+    .swiper:where(:not(.hotel-modal-gallery)) {
       padding-bottom: 78px !important;
     }
   }
@@ -140,13 +146,11 @@ ul {
     padding-top: 16px !important;
   }
 
-  .reviews.swiper,
-  .team.swiper,
-  .documents.swiper {
+  :is(.reviews, .team, .documents).swiper {
     padding-left: 0px !important;
   }
 
-  .swiper-slide {
+  :where(.swiper:not(.hotel-modal-gallery)) .swiper-slide {
     @apply w-[210px]! h-[332px]! xl:w-[265px]! xl:h-[408px]! rounded-[12px]! overflow-hidden! shadow-card!;
   }
 
@@ -154,21 +158,19 @@ ul {
     @apply w-[325px]! h-[185px]! rounded-[12px]! overflow-hidden! shadow-card!;
   }
   .team .swiper-slide {
-    @apply w-[325px]! h-[450px]! rounded-[12px]! overflow-hidden! shadow-card!;
+    @apply w-[325px]! h-auto! rounded-[12px]! overflow-hidden! shadow-card!;
   }
   .documents .swiper-slide {
     @apply w-[265px]! h-[377px]! rounded-none! overflow-hidden!;
   }
 
-  .swiper-button-next,
-  .swiper-button-prev {
+  :is(.swiper-button-next, .swiper-button-prev) {
     @apply w-[42px]! h-[42px]! rounded-[7.64px]! bg-main! transition! hover:brightness-125! focus-visible:brightness-125! active:scale-95! duration-300! ease-in-out!;
     top: calc(100% - 32px) !important;
   }
 
   @media screen and (min-width: 1280px) {
-    .swiper-button-next,
-    .swiper-button-prev {
+    :is(.swiper-button-next, .swiper-button-prev) {
       top: calc(100% - 20px) !important;
     }
   }

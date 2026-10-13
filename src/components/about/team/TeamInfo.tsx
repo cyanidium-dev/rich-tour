@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "@/components/shared/container/Container";
+import { Container } from "@/shared/ui";
 
 export default function TeamInfo() {
   return (
@@ -35,10 +35,9 @@ export default function TeamInfo() {
           animation={fadeInAnimation({ y: 30, delay: 1.2 })}
           className="max-w-[327px] xl:max-w-[516px] mx-auto text-16reg text-center text-white"
         >
-          Наша команда складається з професіоналів з багаторічним досвідом у
-          сфері туризму, які щиро закохані у свою справу. Ми ретельно підбираємо
-          маршрути, щоб ви могли насолоджуватися красою природи, культурною
-          спадщиною та незабутніми моментами в кожній поїздці.
+          Наша команда складається з професіоналів з багаторічним досвідом у сфері туризму, які щиро
+          закохані у свою справу. Ми ретельно підбираємо маршрути, щоб ви могли насолоджуватися
+          красою природи, культурною спадщиною та незабутніми моментами в кожній поїздці.
         </AnimatedWrapper>
       </Container>
     </AnimatedWrapper>

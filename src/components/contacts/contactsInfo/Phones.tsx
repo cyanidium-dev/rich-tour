@@ -1,4 +1,4 @@
-import { phoneNumbers } from "@/components/shared/footer/mockedData";
+import { phoneNumbers } from "@/shared/config";
 import { footerPhoneRegex } from "@/regex/regex";
 
 export default function Phones() {

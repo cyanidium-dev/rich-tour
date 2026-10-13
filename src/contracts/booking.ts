@@ -1,15 +1,5 @@
-export interface TravelerInfo {
-  name: string;
-  surname: string;
-  phone?: string;
-  passport: string;
-  birthDate: string;
-  passportExpiration: string;
-  boardingCity: string;
-  insurance: boolean;
-  frontSeats: boolean;
-  passportInProgress: boolean;
-}
+import type { TravelerInfo } from "@/features/booking";
+export type { TravelerInfo } from "@/features/booking";
 
 export interface BookingRequest {
   requestId: string;

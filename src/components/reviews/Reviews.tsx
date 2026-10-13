@@ -1,18 +1,17 @@
-import { connection } from 'next/server';
+import { connection } from "next/server";
 
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "../shared/container/Container";
+import { Container } from "@/shared/ui";
 import ReviewForm from "./ReviewForm";
 import ReviewsList from "./ReviewsList";
 import AnimatedArrow from "./AnimatedArrow";
 
-import client from "@/lib/sanity/client";
-import {allReviewsQuery} from "@/lib/sanity/queries";
+import { getReviews } from "@/entities/review/server";
 
 export default async function Reviews() {
   await connection();
-  const reviews = await client.fetch(allReviewsQuery);
+  const reviews = await getReviews();
 
   return (
     <section className="pt-9 md:pt-16 mb-[148px] xl:mb-[180px]">

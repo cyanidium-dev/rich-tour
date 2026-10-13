@@ -1,8 +1,6 @@
-interface TiktokIconProps {
-  className?: string;
-}
+import type { IconProps } from "@/shared/ui";
 
-export default function TiktokIcon({ className = "" }: TiktokIconProps) {
+export default function TiktokIcon({ className = "" }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

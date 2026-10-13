@@ -1,8 +1,6 @@
-interface TelegramIconProps {
-  className?: string;
-}
+import type { IconProps } from "@/shared/ui";
 
-export default function TelegramIcon({ className = "" }: TelegramIconProps) {
+export default function TelegramIcon({ className = "" }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

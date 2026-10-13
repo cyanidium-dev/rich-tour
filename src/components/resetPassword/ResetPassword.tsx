@@ -1,6 +1,6 @@
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "../shared/container/Container";
+import { Container } from "@/shared/ui";
 import ResetPasswordFormWithNotifications from "./ResetPasswordFormWithNotifications";
 
 export default function ResetPassword() {

@@ -23,16 +23,11 @@ export default function ForgotPasswordFormWithNotifications() {
       </AnimatedWrapper>
       <NotificationPopUp
         title={isError ? "На жаль, щось пішло не так" : "Успішно!"}
-        description={
-          isError ? "Спробуйте відправити ще раз" : "Ваш пароль змінено"
-        }
+        description={isError ? "Спробуйте відправити ще раз" : "Ваш пароль змінено"}
         isPopUpShown={isNotificationShown}
         setIsPopUpShown={setIsNotificationShown}
       />
-      <Backdrop
-        isVisible={isNotificationShown}
-        onClick={() => setIsNotificationShown(false)}
-      />
+      <Backdrop isVisible={isNotificationShown} onClick={() => setIsNotificationShown(false)} />
     </>
   );
 }

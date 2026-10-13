@@ -3,10 +3,7 @@ interface ArrowInCircleIconProps {
   isShownMore?: boolean;
 }
 
-export default function ArrowInCircleIcon({
-  className,
-  isShownMore,
-}: ArrowInCircleIconProps) {
+export default function ArrowInCircleIcon({ className, isShownMore }: ArrowInCircleIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

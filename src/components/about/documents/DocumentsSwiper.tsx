@@ -1,4 +1,5 @@
 "use client";
+import type { Document } from "./types";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Suspense } from "react";
@@ -10,8 +11,7 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import Loader from "@/components/shared/loader/Loader";
 import DocumentCard from "./DocumentCard";
 
-export default function DocumentsSwiper({items}) {
-
+export default function DocumentsSwiper({ items }: { items: Document[] }) {
   return (
     <Suspense fallback={<Loader className="w-full h-[451px] xl:h-[455px]" />}>
       <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.8 })}>

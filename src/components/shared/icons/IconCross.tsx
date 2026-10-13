@@ -1,8 +1,6 @@
-interface IconCrossProps {
-  className?: string;
-}
+import type { IconProps } from "@/shared/ui";
 
-export default function IconCross({ className }: IconCrossProps) {
+export default function IconCross({ className }: IconProps) {
   return (
     <svg
       width="32"

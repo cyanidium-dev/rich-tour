@@ -2,17 +2,21 @@
 import { Suspense } from "react";
 import { useToursItemsPerPage } from "@/hooks/useToursItemsPerPage";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
-import TourCard from "@/components/shared/cards/tourCard/TourCard";
+import { TourCard } from "@/entities/tour";
 import Loader from "@/components/shared/loader/Loader";
 import Pagination from "@/components/shared/pagination/Pagination";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import {TourShortInfo} from "@/types/tour";
+import { TourShortInfo } from "@/entities/tour";
 
 const SECTION_ID = "search-page-search-list";
 
-export default function SearchList({tours}: {tours: TourShortInfo[]}) {
+export default function SearchList({ tours }: { tours: TourShortInfo[] }) {
   if (tours.length === 0) {
-    return <p className="mt-[70px] text-center text-16reg">Турів за вибраними параметрами не знайдено.</p>;
+    return (
+      <p className="mt-[70px] text-center text-16reg">
+        Турів за вибраними параметрами не знайдено.
+      </p>
+    );
   }
 
   return (
@@ -24,10 +28,7 @@ export default function SearchList({tours}: {tours: TourShortInfo[]}) {
           useItemsPerPage={useToursItemsPerPage}
           className="w-full max-w-[325px] sm:max-w-[440px] md:max-w-[718px] lg:max-w-[974px] xl:max-w-[1120px]"
           renderItems={(currentItems) => (
-            <ul
-              id={SECTION_ID}
-              className="flex flex-col sm:flex-row sm:flex-wrap flex-wrap gap-5"
-            >
+            <ul id={SECTION_ID} className="flex flex-col sm:flex-row sm:flex-wrap flex-wrap gap-5">
               {currentItems.map((tour) => (
                 <AnimatedWrapper
                   as="li"

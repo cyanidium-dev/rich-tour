@@ -29,7 +29,7 @@ export default function TabMenu({
     if (pathname === "/tours") {
       const params = new URLSearchParams(window.location.search);
       params.set("category", item.value);
-      params.set("page", "1");
+      params.delete("page");
       router.push(`?${params.toString()}`, { scroll: false });
     }
   };

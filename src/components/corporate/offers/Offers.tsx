@@ -1,4 +1,4 @@
-import Container from "@/components/shared/container/Container";
+import { Container } from "@/shared/ui";
 import OffersListMob from "./OffersListMob";
 import OffersTitle from "./OffersTitle";
 import OffersListDesk from "./OffersListDesk";

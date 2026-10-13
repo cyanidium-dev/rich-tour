@@ -1,6 +1,6 @@
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "../shared/container/Container";
+import { Container } from "@/shared/ui";
 import SignUpFormWithNotifications from "./SignUpFormWithNotifications";
 
 export default function SignUp() {

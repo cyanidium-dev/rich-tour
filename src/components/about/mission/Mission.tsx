@@ -2,7 +2,7 @@ import Image from "next/image";
 import { mission } from "./mockedData";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
-import Container from "@/components/shared/container/Container";
+import { Container } from "@/shared/ui";
 import AnimatedArrowMob from "./AnimatedArrowMob";
 import AnimatedArrowDesk from "./AnimatedArrowDesk";
 

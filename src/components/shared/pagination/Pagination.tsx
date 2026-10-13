@@ -16,13 +16,13 @@ interface PaginationProps<T> {
 }
 
 export default function Pagination<T>({
-                                        items,
-                                        renderItems,
-                                        scrollTargetId,
-                                        useItemsPerPage,
-                                        maxVisiblePages = 4,
-                                        className = "",
-                                      }: PaginationProps<T>) {
+  items,
+  renderItems,
+  scrollTargetId,
+  useItemsPerPage,
+  maxVisiblePages = 4,
+  className = "",
+}: PaginationProps<T>) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -31,7 +31,12 @@ export default function Pagination<T>({
   const [currentPage, setCurrentPage] = useState(pageFromQuery);
 
   const itemsPerPage = useItemsPerPage();
+  const [hasMeasuredPageSize, setHasMeasuredPageSize] = useState(false);
   const totalPages = Math.max(1, Math.ceil(items.length / itemsPerPage));
+
+  useEffect(() => {
+    setHasMeasuredPageSize(true);
+  }, []);
 
   useEffect(() => {
     const nextPage = Number(searchParams.get("page")) || 1;
@@ -39,19 +44,19 @@ export default function Pagination<T>({
   }, [searchParams]);
 
   useEffect(() => {
-    if (currentPage > totalPages) {
+    if (hasMeasuredPageSize && currentPage > totalPages) {
       const params = new URLSearchParams(searchParams.toString());
       params.set("page", totalPages.toString());
       setCurrentPage(totalPages);
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
-  }, [currentPage, totalPages, pathname, router, searchParams]);
+  }, [currentPage, hasMeasuredPageSize, totalPages, pathname, router, searchParams]);
 
   const safeCurrentPage = Math.min(currentPage, totalPages);
 
   const currentItems = items.slice(
-      (safeCurrentPage - 1) * itemsPerPage,
-      safeCurrentPage * itemsPerPage
+    (safeCurrentPage - 1) * itemsPerPage,
+    safeCurrentPage * itemsPerPage,
   );
 
   const generatePageNumbers = () => {
@@ -87,10 +92,7 @@ export default function Pagination<T>({
     const targetElement = document.getElementById(scrollTargetId);
     if (targetElement) {
       const yOffset = -120;
-      const yPosition =
-          targetElement.getBoundingClientRect().top +
-          window.pageYOffset +
-          yOffset;
+      const yPosition = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
       window.scrollTo({
         top: yPosition,
@@ -99,52 +101,54 @@ export default function Pagination<T>({
   };
 
   return (
-      <>
-        <div className={className}>{renderItems(currentItems)}</div>
+    <>
+      <div key={safeCurrentPage} className={className}>
+        {renderItems(currentItems)}
+      </div>
 
-        {items.length > itemsPerPage && (
-            <AnimatedWrapper
-                animation={fadeInAnimation({ y: 30 })}
-                className="flex justify-center items-center gap-[33px] mt-9 mx-auto"
-            >
-              <button
-                  aria-label="left"
-                  className={`flex justify-center items-center p-[10.5] size-[42px] rounded-[7.6px] 
+      {items.length > itemsPerPage && (
+        <AnimatedWrapper
+          animation={fadeInAnimation({ y: 30 })}
+          className="flex justify-center items-center gap-[33px] mt-9 mx-auto"
+        >
+          <button
+            aria-label="left"
+            className={`flex justify-center items-center cursor-pointer p-[10.5] size-[42px] rounded-[7.6px]
                         shadow-pagination transition duration-300 ease-in-out
                         enabled:hover:brightness-125 enabled:active:scale-95 enabled:focus-visible:brightness-125
                         ${safeCurrentPage === 1 ? "bg-white text-black" : "bg-main text-white"}`}
-                  onClick={() => handlePageChange(safeCurrentPage - 1)}
-                  disabled={safeCurrentPage === 1}
-              >
-                <ArrowInCircleIcon className="size-[21px] rotate-180" />
-              </button>
+            onClick={() => handlePageChange(safeCurrentPage - 1)}
+            disabled={safeCurrentPage === 1}
+          >
+            <ArrowInCircleIcon className="size-[21px] rotate-180" />
+          </button>
 
-              <div>
-                {pageNumbers.map((page) => (
-                    <button
-                        key={page}
-                        aria-label={page.toString()}
-                        className={`px-[8px] py-2 text-16med transition duration-300 ease-in-out
-                                ${page === safeCurrentPage ? "text-main" : "xl:hover:text-main"}`}
-                        onClick={() => handlePageChange(page)}
-                    >
-                      {page}
-                    </button>
-                ))}
-              </div>
-
+          <div>
+            {pageNumbers.map((page) => (
               <button
-                  aria-label="right"
-                  className={`flex justify-center items-center p-[10.5px] size-[42px] rounded-[7.6px] transition duration-300 ease-in-out
+                key={page}
+                aria-label={page.toString()}
+                className={`cursor-pointer px-[8px] py-2 text-16med transition duration-300 ease-in-out
+                                ${page === safeCurrentPage ? "text-main" : "xl:hover:text-main"}`}
+                onClick={() => handlePageChange(page)}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+
+          <button
+            aria-label="right"
+            className={`flex justify-center items-center cursor-pointer p-[10.5px] size-[42px] rounded-[7.6px] transition duration-300 ease-in-out
                         shadow-pagination enabled:hover:brightness-125 enabled:active:scale-95 enabled:focus-visible:brightness-125
                         ${safeCurrentPage === totalPages ? "text-black bg-white" : "bg-main text-white"}`}
-                  onClick={() => handlePageChange(safeCurrentPage + 1)}
-                  disabled={safeCurrentPage === totalPages}
-              >
-                <ArrowInCircleIcon className="size-[21px]" />
-              </button>
-            </AnimatedWrapper>
-        )}
-      </>
+            onClick={() => handlePageChange(safeCurrentPage + 1)}
+            disabled={safeCurrentPage === totalPages}
+          >
+            <ArrowInCircleIcon className="size-[21px]" />
+          </button>
+        </AnimatedWrapper>
+      )}
+    </>
   );
 }
