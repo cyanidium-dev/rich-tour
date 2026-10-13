@@ -3,16 +3,23 @@ const optional = z
   .string()
   .nullish()
   .transform((value) => value ?? undefined);
+const emptyWhenMissing = z
+  .string()
+  .nullish()
+  .transform((value) => value ?? "");
 export const agentProfileDataSchema = z.object({
   _id: z.string(),
   email: z.string(),
   companyName: z.string(),
-  legalCompanyName: z.string(),
+  legalCompanyName: emptyWhenMissing,
   phone: z.string(),
-  edrpou: z.string(),
+  edrpou: emptyWhenMissing,
   city: z.string(),
   site: optional,
-  taxForm: z.enum(["fop", "tov", "other"]),
+  taxForm: z
+    .enum(["fop", "tov", "other"])
+    .nullish()
+    .transform((value) => value ?? ""),
 });
 export const agencyProfileDataSchema = z.object({
   _id: z.string(),

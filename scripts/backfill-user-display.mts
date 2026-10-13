@@ -47,6 +47,7 @@ for (const document of documents) {
       invalid += 1;
       continue;
     }
+    if (document._type === "agentUser") continue;
     const payload = decryptPayload(document._id, document._type, document.encryptedPayload);
     const fields = getUserDisplayFields(document._type, payload);
     if (

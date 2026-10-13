@@ -73,6 +73,8 @@ it.each(["synced", "failed"] as const)(
       _createdAt: "2026-01-01",
       _updatedAt: "2026-01-01",
       identityLookup: "fixture",
+      ...agentValues,
+      site: undefined,
       displayName: "Company",
       displayIdentity: "agent@example.com",
       encryptedPayload: {

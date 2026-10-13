@@ -28,17 +28,9 @@ try {
   );
 }
 const forbiddenOpenFields = [
-  "email",
   "login",
   "password",
   "passwordHash",
-  "phone",
-  "companyName",
-  "legalCompanyName",
-  "edrpou",
-  "city",
-  "site",
-  "taxForm",
   "agencyCrmId",
   "crmId",
   "legalAgencyName",
@@ -49,6 +41,16 @@ const forbiddenOpenFields = [
   "agencyEmail",
   "agencyPhone",
   "mainOfficeEmail",
+];
+const agentOpenFields = [
+  "email",
+  "companyName",
+  "legalCompanyName",
+  "phone",
+  "edrpou",
+  "city",
+  "site",
+  "taxForm",
 ];
 
 const report = {
@@ -67,14 +69,29 @@ const report = {
   mismatchedDisplayFields: 0,
   invalidDisplaySources: 0,
   documentsWithOpenSensitiveFields: 0,
+  agentsMissingOpenEmail: 0,
+  agentsMissingOpenCompanyName: 0,
+  agentsWithLegacyDisplayFields: 0,
   documentsWithOpenCrmErrorMessage: 0,
 };
 
 for (const document of documents) {
   if (document._type === "agentUser") report.agentDocuments += 1;
   if (document._type === "agencyUser") report.agencyDocuments += 1;
-  if (forbiddenOpenFields.some((field) => document[field] !== undefined)) {
+  if (
+    forbiddenOpenFields.some((field) => document[field] !== undefined) ||
+    (document._type !== "agentUser" &&
+      agentOpenFields.some((field) => document[field] !== undefined))
+  ) {
     report.documentsWithOpenSensitiveFields += 1;
+  }
+  if (document._type === "agentUser") {
+    if (typeof document.email !== "string" || !document.email.trim())
+      report.agentsMissingOpenEmail += 1;
+    if (typeof document.companyName !== "string" || !document.companyName.trim())
+      report.agentsMissingOpenCompanyName += 1;
+    if (document.displayName !== undefined || document.displayIdentity !== undefined)
+      report.agentsWithLegacyDisplayFields += 1;
   }
   if (document.crmSync?.lastErrorMessage !== undefined) {
     report.documentsWithOpenCrmErrorMessage += 1;
@@ -83,17 +100,39 @@ for (const document of documents) {
   try {
     const payload = decryptPayload(document._id, document._type, document.encryptedPayload);
     report.readableEncryptedPayloads += 1;
-    const identity = document._type === "agentUser" ? payload.email : payload.login;
-    if (typeof identity !== "string" || document.identityLookup !== getIdentityLookup(identity)) {
+    const identity =
+      document._type === "agentUser" && typeof document.email === "string"
+        ? document.email
+        : document._type === "agentUser"
+          ? payload.email
+          : payload.login;
+    if (
+      typeof identity !== "string" ||
+      ((document._type !== "agentUser" || !document.email) &&
+        document.identityLookup !== getIdentityLookup(identity))
+    ) {
       report.invalidIdentityLookups += 1;
     }
     try {
-      const expected = getUserDisplayFields(document._type as "agentUser" | "agencyUser", payload);
-      if (!document.displayName || !document.displayIdentity) {
+      const expected = getUserDisplayFields(
+        document._type as "agentUser" | "agencyUser",
+        document._type === "agentUser"
+          ? {
+              ...payload,
+              ...Object.fromEntries(
+                agentOpenFields
+                  .filter((field) => document[field] !== undefined)
+                  .map((field) => [field, document[field]]),
+              ),
+            }
+          : payload,
+      );
+      if (document._type !== "agentUser" && (!document.displayName || !document.displayIdentity)) {
         report.missingDisplayFields += 1;
       } else if (
-        document.displayName !== expected.displayName ||
-        document.displayIdentity !== expected.displayIdentity
+        document._type !== "agentUser" &&
+        (document.displayName !== expected.displayName ||
+          document.displayIdentity !== expected.displayIdentity)
       ) {
         report.mismatchedDisplayFields += 1;
       }
@@ -129,6 +168,8 @@ const failed =
   report.mismatchedDisplayFields > 0 ||
   report.invalidDisplaySources > 0 ||
   report.documentsWithOpenSensitiveFields > 0 ||
+  report.agentsMissingOpenEmail > 0 ||
+  report.agentsMissingOpenCompanyName > 0 ||
   report.documentsWithOpenCrmErrorMessage > 0;
 
 if (failed) throw new Error("Encrypted user dataset audit failed");

@@ -19,7 +19,7 @@ vi.mock("./crypto", () => ({
 
 import { sanityUsersClient } from "@/shared/api/users-server";
 import { decryptUserPayload } from "./crypto";
-import { createAgentUser, updateAgencyUser, updateAgentUser } from "./repository";
+import { createAgentUser, getAgentByEmail, updateAgencyUser, updateAgentUser } from "./repository";
 
 const agentPayload = {
   email: "Agent@Example.COM",
@@ -43,15 +43,18 @@ const agencyPayload = {
 
 beforeEach(() => vi.resetAllMocks());
 
-it("writes the visible label on agent creation", async () => {
+it("writes open agent profile fields on creation", async () => {
   vi.mocked(sanityUsersClient.create).mockResolvedValue({} as never);
   await createAgentUser("agent.test", agentPayload);
   expect(sanityUsersClient.create).toHaveBeenCalledWith(
     expect.objectContaining({
+      email: "agent@example.com",
+      companyName: "Old Company",
       displayName: "Old Company",
       displayIdentity: "agent@example.com",
     }),
   );
+  expect(vi.mocked(sanityUsersClient.create).mock.calls[0][0]).not.toHaveProperty("site");
 });
 
 it.each([
@@ -64,7 +67,12 @@ it.each([
         companyName: "New Company",
         email: "NEW@EXAMPLE.COM",
       })),
-    expected: { displayName: "New Company", displayIdentity: "new@example.com" },
+    expected: {
+      email: "new@example.com",
+      companyName: "New Company",
+      displayName: "New Company",
+      displayIdentity: "new@example.com",
+    },
   },
   {
     type: "agencyUser" as const,
@@ -97,3 +105,28 @@ it.each([
     expect(set).toHaveBeenCalledWith(expect.objectContaining(expected));
   },
 );
+
+it("uses Studio edits to open agent fields instead of stale encrypted values", async () => {
+  vi.mocked(sanityUsersClient.fetch).mockResolvedValue({
+    _id: "agent.test",
+    _rev: "revision-2",
+    encryptedPayload: {},
+    email: "edited@example.com",
+    companyName: "Edited Company",
+    site: null,
+  } as never);
+  vi.mocked(decryptUserPayload).mockReturnValue(agentPayload);
+
+  const result = await getAgentByEmail("EDITED@example.com");
+
+  expect(result).toMatchObject({
+    email: "edited@example.com",
+    companyName: "Edited Company",
+    site: null,
+    password: agentPayload.password,
+  });
+  expect(sanityUsersClient.fetch).toHaveBeenCalledWith(
+    expect.stringContaining("!defined(email) && identityLookup"),
+    { email: "edited@example.com", identityLookup: "lookup" },
+  );
+});

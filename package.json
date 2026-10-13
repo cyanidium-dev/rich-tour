@@ -23,6 +23,8 @@
     "users:audit": "node --env-file=.env.local scripts/audit-users-dataset.mts",
     "users:display:plan": "node --env-file=.env.local scripts/backfill-user-display.mts",
     "users:display:apply": "node --env-file=.env.local scripts/backfill-user-display.mts --apply --confirm-public-labels",
+    "users:agent-profile:plan": "node --env-file=.env.local scripts/backfill-agent-open-profile.mts",
+    "users:agent-profile:apply": "node --env-file=.env.local scripts/backfill-agent-open-profile.mts --apply --confirm-public-agent-profile",
     "users:crypto:test": "node scripts/test-user-crypto-compat.mts",
     "typecheck:scripts": "tsc --project tsconfig.scripts.json",
     "test:calendar": "node scripts/test-calendar-dates.mts"

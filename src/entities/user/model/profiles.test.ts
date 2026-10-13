@@ -43,3 +43,27 @@ it("projects agency profiles without changing display values", () => {
   expect(profile).not.toHaveProperty("password");
   expect(() => mapAgencyProfile({ ...profile, agencyPhone: 42 })).toThrow();
 });
+
+it("opens legacy agent profiles with missing legal details and tax form", () => {
+  const profile = mapAgentProfile({
+    _id: "agent",
+    email: "a@test",
+    companyName: "Company",
+    legalCompanyName: null,
+    phone: "123",
+    edrpou: null,
+    city: "Київ",
+    taxForm: null,
+  });
+  expect(profile).toMatchObject({ legalCompanyName: "", edrpou: "", taxForm: "" });
+  expect(
+    mapAgentProfile({
+      ...profile,
+      legalCompanyName: undefined,
+      edrpou: undefined,
+      taxForm: undefined,
+    }),
+  ).toMatchObject({ legalCompanyName: "", edrpou: "", taxForm: "" });
+  expect(() => mapAgentProfile({ ...profile, legalCompanyName: 123 })).toThrow();
+  expect(() => mapAgentProfile({ ...profile, taxForm: "invalid" })).toThrow();
+});

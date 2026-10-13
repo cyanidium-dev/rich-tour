@@ -31,6 +31,30 @@ export type AgentUserPayload = {
   passwordResetRequired?: boolean;
 };
 
+type AgentOpenFields = Pick<
+  AgentUserPayload,
+  "email" | "companyName" | "legalCompanyName" | "phone" | "edrpou" | "city" | "site" | "taxForm"
+>;
+
+const agentOpenFieldNames = [
+  "email",
+  "companyName",
+  "legalCompanyName",
+  "phone",
+  "edrpou",
+  "city",
+  "site",
+  "taxForm",
+] as const;
+
+function getAgentOpenFields(payload: AgentUserPayload): Partial<AgentOpenFields> {
+  return Object.fromEntries(
+    agentOpenFieldNames
+      .filter((name) => payload[name] !== undefined)
+      .map((name) => [name, payload[name]]),
+  ) as Partial<AgentOpenFields>;
+}
+
 export type AgencyUserPayload = {
   legalAgencyName: string;
   marketingAgencyName?: string | null;
@@ -60,7 +84,7 @@ export type CrmSyncValue = {
 
 type SanityReference = { _type: "reference"; _ref: string; _key?: string };
 
-type EncryptedAgentDocument = {
+type EncryptedAgentDocument = Partial<AgentOpenFields> & {
   _id: string;
   _rev: string;
   _type: "agentUser";
@@ -88,8 +112,19 @@ export type AgentUser = AgentUserPayload &
 export type AgencyUser = AgencyUserPayload & Pick<EncryptedAgencyDocument, "_id" | "_rev">;
 
 function decryptAgent(document: EncryptedAgentDocument): AgentUser {
+  const decrypted = decryptUserPayload<AgentUserPayload>(
+    document._id,
+    "agentUser",
+    document.encryptedPayload,
+  );
+  const openFields = Object.fromEntries(
+    agentOpenFieldNames
+      .filter((name) => document[name] !== undefined)
+      .map((name) => [name, document[name]]),
+  );
   return {
-    ...decryptUserPayload<AgentUserPayload>(document._id, "agentUser", document.encryptedPayload),
+    ...decrypted,
+    ...openFields,
     _id: document._id,
     _rev: document._rev,
     isApproved: document.isApproved,
@@ -108,10 +143,11 @@ function decryptAgency(document: EncryptedAgencyDocument): AgencyUser {
 
 export async function getAgentByEmail(email: string) {
   const document = await usersClient.fetch<EncryptedAgentDocument | null>(
-    `*[_type == "agentUser" && identityLookup == $identityLookup][0]{
-            _id, _rev, _type, encryptedPayload, isApproved, agency, crmSync
+    `*[_type == "agentUser" && (email == $email || (!defined(email) && identityLookup == $identityLookup))][0]{
+            _id, _rev, _type, encryptedPayload, isApproved, agency, crmSync,
+            email, companyName, legalCompanyName, phone, edrpou, city, site, taxForm
         }`,
-    { identityLookup: getUserIdentityLookup(email) },
+    { email: normalizeUserIdentity(email), identityLookup: getUserIdentityLookup(email) },
   );
 
   return document ? decryptAgent(document) : null;
@@ -131,7 +167,8 @@ export async function getAgencyByLogin(login: string) {
 export async function getAgentById(id: string) {
   const document = await usersClient.fetch<EncryptedAgentDocument | null>(
     `*[_type == "agentUser" && _id == $id][0]{
-            _id, _rev, _type, encryptedPayload, isApproved, agency, crmSync
+            _id, _rev, _type, encryptedPayload, isApproved, agency, crmSync,
+            email, companyName, legalCompanyName, phone, edrpou, city, site, taxForm
         }`,
     { id },
   );
@@ -159,11 +196,13 @@ export async function identityExists(
     await usersClient.fetch<string | null>(
       `*[
                 _type == $type &&
-                identityLookup == $identityLookup &&
+                (identityLookup == $identityLookup && ($type != "agentUser" || !defined(email)) ||
+                  $type == "agentUser" && email == $identity) &&
                 (!defined($excludingId) || _id != $excludingId)
             ][0]._id`,
       {
         type,
+        identity: normalizeUserIdentity(identity),
         identityLookup: getUserIdentityLookup(identity),
         excludingId: excludingId ?? null,
       },
@@ -186,6 +225,7 @@ export async function createAgentUser(
     _type: "agentUser",
     identityLookup: getUserIdentityLookup(normalizedPayload.email),
     encryptedPayload: encryptUserPayload(id, "agentUser", normalizedPayload),
+    ...getAgentOpenFields(normalizedPayload),
     ...getUserDisplayFields("agentUser", normalizedPayload),
     isApproved: publicFields?.isApproved ?? false,
     agency: publicFields?.agency,
@@ -233,6 +273,7 @@ export async function updateAgentUser(
   const normalized = { ...next, email: normalizeUserIdentity(next.email) };
 
   await updatePayload(id, "agentUser", normalized.email, _rev, normalized, {
+    ...getAgentOpenFields(normalized),
     crmLinked: Boolean(normalized.crmId),
   });
   return normalized;
@@ -256,7 +297,8 @@ export async function updateAgencyUser(
 export async function getAgentsByAgency(agencyId: string) {
   const documents = await usersClient.fetch<EncryptedAgentDocument[]>(
     `*[_type == "agentUser" && references($agencyId)]{
-            _id, _rev, _type, encryptedPayload, isApproved, agency, crmSync
+            _id, _rev, _type, encryptedPayload, isApproved, agency, crmSync,
+            email, companyName, legalCompanyName, phone, edrpou, city, site, taxForm
         }`,
     { agencyId },
   );

@@ -124,6 +124,7 @@ export default function AgentInfoForm({
           <CustomizedInput fieldName="site" placeholder="Сайт" errors={errors} touched={touched} />
 
           <CustomizedInput fieldName="taxForm" as="select" errors={errors} touched={touched}>
+            <option value="">Оберіть форму оподаткування</option>
             <option value="fop">ФОП</option>
             <option value="tov">ТОВ</option>
             <option value="other">Інше</option>

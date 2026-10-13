@@ -128,6 +128,19 @@ function toEncryptedDocument(document: UserDocument, payload: UserPayload) {
   };
 
   if (document._type === "agentUser") {
+    for (const field of [
+      "email",
+      "companyName",
+      "legalCompanyName",
+      "phone",
+      "edrpou",
+      "city",
+      "site",
+      "taxForm",
+    ]) {
+      if (payload[field] !== undefined && payload[field] !== null)
+        encrypted[field] = payload[field];
+    }
     encrypted.isApproved = document.isApproved ?? false;
     if (document.agency) encrypted.agency = document.agency;
     encrypted.crmLinked = Boolean(payload.crmId);
