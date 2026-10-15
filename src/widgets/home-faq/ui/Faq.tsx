@@ -5,14 +5,18 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import { Container } from "@/shared/ui/index";
 import FaqList from "./FaqList";
 
-import { sanityClient as client } from "@/shared/api/server";
+import { sanityClient as client, sanityFetchOptions, SANITY_CACHE_TAGS } from "@/shared/api/server";
 import { allFaqQuery } from "@/lib/sanity/queries";
 
 const SECTION_ID = "faq";
 
 export default async function Faq() {
   await connection();
-  const faqItems = await client.fetch(allFaqQuery);
+  const faqItems = await client.fetch(
+    allFaqQuery,
+    {},
+    sanityFetchOptions(300, [SANITY_CACHE_TAGS.faq]),
+  );
 
   return (
     <section id={SECTION_ID} className="mb-[148px] xl:mb-[180px]">

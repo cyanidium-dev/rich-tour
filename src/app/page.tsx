@@ -6,14 +6,14 @@ import { SmartTours } from "@/widgets/smart-tours/server";
 import { Reviews } from "@/widgets/review-highlights/server";
 import { Faq } from "@/widgets/home-faq/server";
 import { CorporateService } from "@/widgets/corporate-service";
-import { sanityClient as client, sanityFetchOptions } from "@/shared/api/server";
+import { sanityClient as client, sanityFetchOptions, SANITY_CACHE_TAGS } from "@/shared/api/server";
 import { allCountriesQuery } from "@/lib/sanity/queries";
 
 export default async function Home() {
   const countries = await client.fetch<Array<{ _id: string; title: string }>>(
     allCountriesQuery,
     {},
-    sanityFetchOptions(3600, ["countries"]),
+    sanityFetchOptions(3600, [SANITY_CACHE_TAGS.countries]),
   );
   const countryOptions = countries.map((country) => ({
     key: country._id,

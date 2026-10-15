@@ -1,5 +1,35 @@
 # Rich Tour website
 
+## Обновление публичного контента из Sanity
+
+Сайт принимает подписанный webhook `POST /api/webhooks/sanity/revalidate` и сбрасывает кэш
+затронутых страниц после публикации, обновления или удаления документа. Следующий запрос
+ждёт свежие данные; уже открытая вкладка обновится после перезагрузки. Если webhook не
+доставлен, данные обновятся по запасному интервалу: 5 минут для контента и 1 час для стран.
+
+Для каждого окружения задайте `SANITY_REVALIDATE_SECRET` (отдельно от
+`SANITY_WEBHOOK_SECRET`, который используется для синхронизации агентов с CRM) в переменных
+сайта и укажите тот же секрет в настройках webhook Sanity. Секрет должен быть случайной
+строкой длиной не менее 32 символов; не добавляйте его в репозиторий.
+
+В [Sanity Manage](https://www.sanity.io/manage) создайте webhook для dataset, указанного в
+`SANITY_DATASET`, со следующими параметрами:
+
+| Параметр | Значение |
+| --- | --- |
+| URL | `https://<домен-сайта>/api/webhooks/sanity/revalidate` |
+| Method | `POST` |
+| Events | `Create`, `Update`, `Delete` |
+| Filter | `_type in ["tour-basic", "tour-to-date", "tour-category", "country", "faq", "doc", "team", "review", "siteSettings"]` |
+| Projection | `{_type}` |
+| Secret | То же значение, что `SANITY_REVALIDATE_SECRET` |
+| Drafts / Versions | Выключены |
+
+Sanity отправляет заголовки `sanity-webhook-signature`, `sanity-project-id` и
+`sanity-dataset`; обработчик проверяет подпись и соответствие проекту и dataset. После
+настройки проверьте доставку в истории webhook и изменение на сайте при следующем запросе.
+Служебный документ `currencyRateCache` и профили пользователей в этот webhook не входят.
+
 Next.js-приложение публичного сайта, кабинетов агента/агентства и серверной интеграции с OneBox CRM.
 
 ## Архитектура исходников

@@ -4,7 +4,7 @@ import { fadeInAnimation } from "@/components/shared/animation/animationVariants
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import { Container } from "@/shared/ui/index";
 import { MainButton } from "@/shared/ui/index";
-import { sanityClient as client } from "@/shared/api/server";
+import { sanityClient as client, sanityFetchOptions, SANITY_CACHE_TAGS } from "@/shared/api/server";
 import { siteSettingsQuery } from "@/lib/sanity/queries";
 
 type SiteSettings = {
@@ -14,7 +14,11 @@ type SiteSettings = {
 };
 
 export default async function AgentContract() {
-  const data: SiteSettings = await client.fetch(siteSettingsQuery);
+  const data: SiteSettings = await client.fetch(
+    siteSettingsQuery,
+    {},
+    sanityFetchOptions(300, [SANITY_CACHE_TAGS.siteSettings]),
+  );
 
   const agentUrl = data?.agentContract?.asset?.url;
   const touristUrl = data?.touristContract?.asset?.url;

@@ -11,14 +11,18 @@ import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import AnimatedArrowMob from "./AnimatedArrowMob";
 import AnimatedArrowDesk from "./AnimatedArrowDesk";
 
-import { sanityClient as client } from "@/shared/api/server";
+import { sanityClient as client, sanityFetchOptions, SANITY_CACHE_TAGS } from "@/shared/api/server";
 import { mainTourCategoriesQuery } from "@/entities/tour/server";
 import { tourImageUrl } from "@/entities/tour";
 
 export default async function Tours() {
   await connection();
   // noStore();
-  const mainTourCategories = await client.fetch<HomeTourCategory[] | null>(mainTourCategoriesQuery);
+  const mainTourCategories = await client.fetch<HomeTourCategory[] | null>(
+    mainTourCategoriesQuery,
+    {},
+    sanityFetchOptions(300, [SANITY_CACHE_TAGS.tourCategories]),
+  );
   if (!mainTourCategories || !mainTourCategories?.length) {
     return null;
   }

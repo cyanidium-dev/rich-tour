@@ -8,13 +8,17 @@ import DocumentsTitle from "./DocumentsTitle";
 import { MainButton } from "@/shared/ui";
 import DocumentsSwiper from "./DocumentsSwiper";
 
-import { sanityClient as client } from "@/shared/api/server";
+import { sanityClient as client, sanityFetchOptions, SANITY_CACHE_TAGS } from "@/shared/api/server";
 import type { RawDocument } from "./types";
 import { allDocQuery } from "@/lib/sanity/queries";
 
 export default async function Documents() {
   await connection();
-  const documents = await client.fetch<RawDocument[] | null>(allDocQuery);
+  const documents = await client.fetch<RawDocument[] | null>(
+    allDocQuery,
+    {},
+    sanityFetchOptions(300, [SANITY_CACHE_TAGS.documents]),
+  );
   if (!documents || !documents.length) {
     return null;
   }

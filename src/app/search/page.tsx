@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import Search from "@/components/search/Search";
 import Loader from "@/components/shared/loader/Loader";
 
-import { sanityClient as client, sanityFetchOptions } from "@/shared/api/server";
+import { sanityClient as client, sanityFetchOptions, SANITY_CACHE_TAGS } from "@/shared/api/server";
 import { searchToursQuery } from "@/entities/tour/server";
 import { allCountriesQuery } from "@/lib/sanity/queries";
 import { TourShortInfo } from "@/entities/tour";
@@ -19,7 +19,7 @@ export default async function SearchPage({
     client.fetch<Array<{ _id: string; title: string }>>(
       allCountriesQuery,
       {},
-      sanityFetchOptions(3600, ["countries"]),
+      sanityFetchOptions(3600, [SANITY_CACHE_TAGS.countries]),
     ),
     client.fetch<TourShortInfo[]>(
       searchToursQuery,
@@ -27,7 +27,7 @@ export default async function SearchPage({
         countryId: country || null,
         monthPattern: validMonth ? `*-${validMonth}-*` : null,
       },
-      sanityFetchOptions(300, ["tours"]),
+      sanityFetchOptions(300, [SANITY_CACHE_TAGS.tours]),
     ),
   ]);
   const countryOptions = countries.map((item) => ({ key: item._id, label: item.title }));

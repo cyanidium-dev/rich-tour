@@ -3,7 +3,7 @@ import PromotionTitle from "./PromotionTitle";
 import PromotionSwiperMob from "./PromotionSwiperMob";
 import PromotionListDesk from "./PromotionListDesk";
 
-import { sanityClient as client, sanityFetchOptions } from "@/shared/api/server";
+import { sanityClient as client, sanityFetchOptions, SANITY_CACHE_TAGS } from "@/shared/api/server";
 import { allBasicToursWithPromotionQuery } from "@/entities/tour/server";
 import { TourShortInfo } from "@/entities/tour/index";
 
@@ -13,7 +13,7 @@ export default async function Promotion() {
   const tours = await client.fetch<TourShortInfo[]>(
     allBasicToursWithPromotionQuery,
     {},
-    sanityFetchOptions(300, ["tours"]),
+    sanityFetchOptions(300, [SANITY_CACHE_TAGS.tours]),
   );
 
   if (!tours || !tours.length) return null;

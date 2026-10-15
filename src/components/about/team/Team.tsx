@@ -4,12 +4,16 @@ import TeamInfo from "./TeamInfo";
 import TeamListDesk from "./TeamListDesk";
 import TeamSwiperMob from "./TeamSwiperMob";
 
-import { sanityClient as client } from "@/shared/api/server";
+import { sanityClient as client, sanityFetchOptions, SANITY_CACHE_TAGS } from "@/shared/api/server";
 import type { RawTeamMember } from "./types";
 import { allTeamQuery } from "@/lib/sanity/queries";
 
 export default async function Team() {
-  const team = await client.fetch<RawTeamMember[] | null>(allTeamQuery);
+  const team = await client.fetch<RawTeamMember[] | null>(
+    allTeamQuery,
+    {},
+    sanityFetchOptions(300, [SANITY_CACHE_TAGS.team]),
+  );
   const teamMembers = team?.map(({ name, role, photo, instagram, telegram, tiktok }) => ({
     name,
     role,

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import AdditionalInfo from "./_components/AdditionalInfo";
 import { TourDetails } from "@/widgets/tour-details";
-import { sanityClient as client, sanityFetchOptions } from "@/shared/api/server";
+import { sanityClient as client, sanityFetchOptions, SANITY_CACHE_TAGS } from "@/shared/api/server";
 import { tourPageQuery } from "@/entities/tour/server";
 import { getAuthAgentProfile } from "@/lib/sanity/users/getAuthUserProfile";
 import { mapTourPage, RawTourPage } from "@/entities/tour/server";
@@ -19,7 +19,7 @@ export default async function TourPage({ params, searchParams }: TourPageProps) 
     client.fetch<RawTourPage | null>(
       tourPageQuery,
       { slug, departureId: departureId || null },
-      sanityFetchOptions(300, [`tour:${slug}`, "tours"]),
+      sanityFetchOptions(300, [SANITY_CACHE_TAGS.tours]),
     ),
     getAuthAgentProfile(),
   ]);
