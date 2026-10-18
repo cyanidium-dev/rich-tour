@@ -86,9 +86,12 @@ availability,
     }
   },
 additionalConditions,
-gallery[]{
-    "url": asset->url, displayCrops
-  },
+heroMainImage { "url": asset->url, displayCrops },
+heroLeftImage { "url": asset->url, displayCrops },
+heroRightImage { "url": asset->url, displayCrops },
+benefitsImage { "url": asset->url, displayCrops },
+costShortImage { "url": asset->url, displayCrops },
+costTallImage { "url": asset->url, displayCrops },
   programUpload {
     "url": asset->url,
     originalFilename,
@@ -159,7 +162,12 @@ export const tourPageQuery = `*[_type == "tour-basic" && slug.current == $slug][
       gallery[]{ "url": asset->url, displayCrops }
     },
     additionalConditions,
-    gallery[]{ "url": asset->url, displayCrops },
+    heroMainImage { "url": asset->url, displayCrops },
+    heroLeftImage { "url": asset->url, displayCrops },
+    heroRightImage { "url": asset->url, displayCrops },
+    benefitsImage { "url": asset->url, displayCrops },
+    costShortImage { "url": asset->url, displayCrops },
+    costTallImage { "url": asset->url, displayCrops },
     programUpload { "url": asset->url, originalFilename, mimeType },
     benefits,
     sections,

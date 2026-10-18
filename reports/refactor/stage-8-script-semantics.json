@@ -1,0 +1,22 @@
+[
+  {
+    "script": "audit-users-dataset",
+    "runtimeUnchanged": true
+  },
+  {
+    "script": "cleanup-source-users",
+    "runtimeUnchanged": true
+  },
+  {
+    "script": "migrate-users-dataset",
+    "runtimeUnchanged": true
+  },
+  {
+    "script": "lib/user-crypto",
+    "runtimeUnchanged": true
+  },
+  {
+    "script": "test-user-crypto-compat",
+    "runtimeUnchanged": true
+  }
+]

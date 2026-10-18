@@ -56,6 +56,12 @@ export interface TourHotel {
   galleryVariants?: { feature: string; thumb: string; card: string; modal: string }[];
 }
 
+export interface TourPageImage {
+  url: string;
+  mobileUrl?: string;
+  alt: string;
+}
+
 export interface Tour {
   id: string;
   selectedDepartureId: string;
@@ -67,9 +73,17 @@ export interface Tour {
   category?: Category;
   earlyBooking: boolean;
   agencyCommission?: { type: string; value: number };
-  images: { url: string; mobileUrl?: string; alt: string }[];
+  heroImages: {
+    main?: TourPageImage;
+    left?: TourPageImage;
+    right?: TourPageImage;
+  };
+  costImages: {
+    short?: TourPageImage;
+    tall?: TourPageImage;
+  };
   benefits: {
-    image?: { url: string; alt: string };
+    image?: TourPageImage;
     list: TourBenefitListItem[];
   };
   program: { url: string; list: TourProgramListItem[] };

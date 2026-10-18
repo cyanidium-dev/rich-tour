@@ -31,7 +31,7 @@ export default function TourDetails({
   return (
     <>
       <Hero {...userData} tour={tour} />
-      {tour.benefits.image && tour.benefits.list.length > 0 && <Benefits tour={tour} />}
+      {tour.benefits.list.length > 0 && <Benefits tour={tour} />}
       {hotels.length === 1 && <Hotels {...hotels[0]} />}
       {hotels.length > 1 && <HotelsList key={tour.selectedDepartureId} hotels={hotels} />}
       {tour.program.list.length > 0 && <Program tour={tour} />}

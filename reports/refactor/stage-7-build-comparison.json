@@ -1,0 +1,72 @@
+{
+  "allStaticJs": {
+    "before": {
+      "files": 40,
+      "bytes": 2666845,
+      "gzipBytes": 779351
+    },
+    "after": {
+      "files": 40,
+      "bytes": 2689787,
+      "gzipBytes": 786551
+    }
+  },
+  "routes": {
+    "/page": {
+      "before": {
+        "clientReferences": 33,
+        "files": 13,
+        "bytes": 1188482,
+        "gzipBytes": 346227
+      },
+      "after": {
+        "clientReferences": 33,
+        "files": 13,
+        "bytes": 1188992,
+        "gzipBytes": 346389
+      }
+    },
+    "/tours/[slug]/page": {
+      "before": {
+        "clientReferences": 33,
+        "files": 12,
+        "bytes": 1300205,
+        "gzipBytes": 379684
+      },
+      "after": {
+        "clientReferences": 33,
+        "files": 12,
+        "bytes": 1300262,
+        "gzipBytes": 379675
+      }
+    },
+    "/agent/page": {
+      "before": {
+        "clientReferences": 21,
+        "files": 13,
+        "bytes": 1293707,
+        "gzipBytes": 376770
+      },
+      "after": {
+        "clientReferences": 21,
+        "files": 12,
+        "bytes": 1293827,
+        "gzipBytes": 376486
+      }
+    },
+    "/agency/page": {
+      "before": {
+        "clientReferences": 21,
+        "files": 12,
+        "bytes": 1292066,
+        "gzipBytes": 375797
+      },
+      "after": {
+        "clientReferences": 21,
+        "files": 12,
+        "bytes": 1292301,
+        "gzipBytes": 375872
+      }
+    }
+  }
+}

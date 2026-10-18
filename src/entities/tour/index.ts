@@ -4,6 +4,7 @@ export type {
   TourDepartures,
   TourDepartureDay,
   TourHotel,
+  TourPageImage,
   TourProgramListItem,
   TourBenefitListItem,
   InspirationItem,

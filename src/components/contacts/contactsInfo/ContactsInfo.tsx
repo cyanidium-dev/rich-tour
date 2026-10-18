@@ -7,8 +7,9 @@ import Phones from "./Phones";
 import Email from "./Email";
 import SocialList from "./SocialList";
 import AnimatedArrow from "./AnimatedArrow";
+import type { SiteContacts } from "@/shared/config";
 
-export default function ContactsInfo() {
+export default function ContactsInfo({ contacts }: { contacts: SiteContacts | null }) {
   return (
     <section className="mb-[148px] xl:mb-[180px]">
       <Container className="relative">
@@ -25,8 +26,8 @@ export default function ContactsInfo() {
             animation={fadeInAnimation({ x: -30, delay: 0.4 })}
             className="flex flex-col gap-y-5 lg:w-[calc(25%-15px)]"
           >
-            <Address />
-            <Phones />
+            <Address contacts={contacts} />
+            <Phones contacts={contacts} />
           </AnimatedWrapper>
           <AnimatedWrapper
             animation={fadeInAnimation({ scale: 0.95, delay: 0.4 })}
@@ -53,13 +54,13 @@ export default function ContactsInfo() {
                 className="object-cover"
               />
             </div>
-            <Email />
+            <Email contacts={contacts} />
           </AnimatedWrapper>
           <AnimatedWrapper
             animation={fadeInAnimation({ x: 30, delay: 0.4 })}
             className="relative flex flex-col justify-end gap-y-5 lg:w-[calc(16.5%-15px)]"
           >
-            <SocialList />
+            <SocialList contacts={contacts} />
             <div className="relative w-full h-[229px] lg:h-[209px] rounded-[12px] overflow-hidden">
               <Image
                 src="/images/contacts/contactsInfo/imageTwo.webp"

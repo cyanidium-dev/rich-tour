@@ -1,11 +1,11 @@
-import { schedule } from "@/shared/config";
+import type { SiteContacts } from "@/shared/config";
 
-export default function Schedule() {
-  if (!schedule) {
+export default function Schedule({ contacts }: { contacts: SiteContacts | null }) {
+  if (!contacts?.working && !contacts?.weekend) {
     return null;
   }
 
-  const { working, weekend } = schedule;
+  const { working, weekend } = contacts;
 
   return (
     <div className="max-w-[246px] md:max-w-full mx-auto md:mx-0 mb-8 text-white">

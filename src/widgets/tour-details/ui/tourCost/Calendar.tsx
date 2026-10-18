@@ -117,11 +117,7 @@ export default function Calendar({ isLogin, tour, ...userData }: CalendarProps) 
   } satisfies Partial<ClassNames>;
 
   return (
-    <div
-      className={`${
-        isLogin ? "xl:w-[calc(66.3%-26.67px)]" : "xl:w-[calc(33.3%-26.67px)]"
-      } mx-auto flex flex-col gap-y-7`}
-    >
+    <div className="w-full min-w-0 mx-auto flex flex-col gap-y-7">
       <AnimatedWrapper
         animation={fadeInAnimation({ y: 30, delay: 0.4 })}
         className="rounded-[28px] border border-black"

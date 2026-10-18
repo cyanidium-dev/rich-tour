@@ -33,7 +33,12 @@ type RawHotel = {
 type RawSelectedDeparture = RawDeparture & {
   title?: string;
   agencyCommission?: { type: string; value: number };
-  gallery?: ImageUrl[];
+  heroMainImage?: ImageUrl;
+  heroLeftImage?: ImageUrl;
+  heroRightImage?: ImageUrl;
+  benefitsImage?: ImageUrl;
+  costShortImage?: ImageUrl;
+  costTallImage?: ImageUrl;
   programUpload?: { url?: string };
   benefits?: RawTextBlock[];
   sections?: TourProgramListItem[];
@@ -168,38 +173,16 @@ export function mapTourPage(raw: RawTourPage): Tour | null {
   const departure = raw.selectedDeparture;
   if (!departure?.crmNumber) return null;
 
-  const baseImage = tourImageUrl(raw.image, "heroDesktop");
-  const gallery = (departure.gallery ?? []).flatMap((image) => (image.url ? [image] : []));
-  const imageUrls = [
-    ...(baseImage
-      ? [
-          {
-            url: baseImage,
-            mobileUrl: tourImageUrl(raw.image, "heroMobile") ?? baseImage,
-            alt: raw.title,
-          },
-        ]
-      : []),
-    ...gallery.map((image, index) => ({
-      url:
-        tourImageUrl(
-          image,
-          index === 0
-            ? "heroLeft"
-            : index === 1
-              ? "heroRight"
-              : index === 3
-                ? "costShort"
-                : index === 4
-                  ? "costTall"
-                  : "benefits",
-        ) ?? image.url!,
-      mobileUrl: tourImageUrl(image, "mobile") ?? image.url!,
-      alt: raw.title,
-    })),
-  ];
-  const benefitSource = gallery[3] ?? gallery[0] ?? raw.image;
-  const benefitImage = tourImageUrl(benefitSource, "benefits");
+  const pageImage = (image: ImageUrl | undefined, desktop: string, mobile?: string) => {
+    const url = tourImageUrl(image, desktop);
+    return url
+      ? {
+          url,
+          mobileUrl: mobile ? (tourImageUrl(image, mobile) ?? url) : undefined,
+          alt: raw.title,
+        }
+      : undefined;
+  };
 
   return {
     id: departure._id,
@@ -211,9 +194,17 @@ export function mapTourPage(raw: RawTourPage): Tour | null {
     duration: raw.duration,
     earlyBooking: Boolean(raw.earlyBooking),
     agencyCommission: departure.agencyCommission,
-    images: imageUrls,
+    heroImages: {
+      main: pageImage(departure.heroMainImage, "heroDesktop", "heroMobile"),
+      left: pageImage(departure.heroLeftImage, "heroLeft", "mobile"),
+      right: pageImage(departure.heroRightImage, "heroRight", "mobile"),
+    },
+    costImages: {
+      short: pageImage(departure.costShortImage, "costShort"),
+      tall: pageImage(departure.costTallImage, "costTall"),
+    },
     benefits: {
-      image: benefitImage ? { url: benefitImage, alt: raw.title } : undefined,
+      image: pageImage(departure.benefitsImage, "benefits", "benefitsMobile"),
       list: mapBenefits(departure.benefits),
     },
     program: {

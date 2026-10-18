@@ -51,3 +51,16 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0]{
   },
   telegram
 }`;
+
+export const siteContactsQuery = `*[_id == "siteSettings" && _type == "siteSettings"][0].contacts{
+  address,
+  map,
+  phone_1,
+  phone_2,
+  phone_3,
+  email,
+  working,
+  weekend,
+  instagram,
+  facebook
+}`;

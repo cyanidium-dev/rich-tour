@@ -6,8 +6,10 @@ import Map from "@/widgets/site-footer/ui/Map";
 import Schedule from "@/widgets/site-footer/ui/Schedule";
 import Socials from "./Socials";
 import FooterAnimation from "@/widgets/site-footer/ui/FooterAnimation";
+import { getSiteContacts } from "@/shared/api/server";
 
-export default function Footer() {
+export default async function Footer() {
+  const contacts = await getSiteContacts();
   return (
     <footer className="w-dvw bg-black overflow-hidden">
       <FooterAnimation>
@@ -17,15 +19,15 @@ export default function Footer() {
           </div>
           <div className="w-full md:flex gap-x-5 xl:gap-x-[68px] justify-between">
             <div className="md:w-[calc(33.3%-13.3px)] xl:w-[calc(33.3%-35.3px)]">
-              <Contacts />
-              <Socials className="text-white max-w-[246px] mx-auto my-8" />
+              <Contacts contacts={contacts} />
+              <Socials contacts={contacts} className="text-white max-w-[246px] mx-auto my-8" />
             </div>
             <div className="md:w-[calc(33.3%-13.3px)] xl:w-[calc(33.3%-63.3px)]">
-              <Schedule />
+              <Schedule contacts={contacts} />
               <CallBack className="max-w-[246px] mx-auto md:mx-0" />
             </div>
             <div className="md:w-[calc(33.3%-13.3px)] xl:w-[calc(33.3%-17.3px)]">
-              <Map />
+              <Map contacts={contacts} />
             </div>
           </div>
         </Container>

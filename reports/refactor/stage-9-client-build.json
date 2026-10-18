@@ -1,0 +1,195 @@
+{
+  "allStaticJs": {
+    "files": 39,
+    "bytes": 2687744,
+    "gzipBytes": 785208
+  },
+  "routes": {
+    "/about/page": {
+      "clientReferences": 27,
+      "files": 9,
+      "bytes": 1091623,
+      "gzipBytes": 314606
+    },
+    "/agency/page": {
+      "clientReferences": 21,
+      "files": 11,
+      "bytes": 1291831,
+      "gzipBytes": 374866
+    },
+    "/agent/page": {
+      "clientReferences": 21,
+      "files": 11,
+      "bytes": 1293357,
+      "gzipBytes": 375477
+    },
+    "/api/agency/profile/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/agency/tours/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/agent/me/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/agent/profile/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/agent/tours/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/auth/change-password/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/auth/login/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/auth/logout/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/auth/sign-up/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/booking/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/cron/crm-sync/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/currency/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/webhooks/sanity/agency/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/api/webhooks/sanity/user/route": {
+      "clientReferences": 0,
+      "files": 0,
+      "bytes": 0,
+      "gzipBytes": 0
+    },
+    "/auth/forgot-password/page": {
+      "clientReferences": 20,
+      "files": 8,
+      "bytes": 1002936,
+      "gzipBytes": 287313
+    },
+    "/auth/reset-password/page": {
+      "clientReferences": 20,
+      "files": 8,
+      "bytes": 1002872,
+      "gzipBytes": 287282
+    },
+    "/auth/sign-in/page": {
+      "clientReferences": 20,
+      "files": 8,
+      "bytes": 1002856,
+      "gzipBytes": 287252
+    },
+    "/auth/sign-up/page": {
+      "clientReferences": 20,
+      "files": 8,
+      "bytes": 1002890,
+      "gzipBytes": 287303
+    },
+    "/contacts/page": {
+      "clientReferences": 20,
+      "files": 8,
+      "bytes": 993688,
+      "gzipBytes": 284925
+    },
+    "/corporate/page": {
+      "clientReferences": 21,
+      "files": 8,
+      "bytes": 994534,
+      "gzipBytes": 285305
+    },
+    "/page": {
+      "clientReferences": 33,
+      "files": 12,
+      "bytes": 1188914,
+      "gzipBytes": 345436
+    },
+    "/reviews/page": {
+      "clientReferences": 22,
+      "files": 8,
+      "bytes": 1000693,
+      "gzipBytes": 287642
+    },
+    "/search/page": {
+      "clientReferences": 21,
+      "files": 10,
+      "bytes": 1078140,
+      "gzipBytes": 309991
+    },
+    "/step/page": {
+      "clientReferences": 20,
+      "files": 8,
+      "bytes": 993898,
+      "gzipBytes": 285046
+    },
+    "/tours/page": {
+      "clientReferences": 20,
+      "files": 8,
+      "bytes": 1000960,
+      "gzipBytes": 287398
+    },
+    "/tours/[slug]/page": {
+      "clientReferences": 33,
+      "files": 11,
+      "bytes": 1300155,
+      "gzipBytes": 378716
+    },
+    "/_global-error/page": {
+      "clientReferences": 8,
+      "files": 1,
+      "bytes": 14434,
+      "gzipBytes": 3689
+    },
+    "/_not-found/page": {
+      "clientReferences": 19,
+      "files": 7,
+      "bytes": 992211,
+      "gzipBytes": 284092
+    }
+  }
+}

@@ -1,0 +1,150 @@
+[
+  {
+    "method": "GET",
+    "url": "/",
+    "status": 200,
+    "location": null
+  },
+  {
+    "method": "GET",
+    "url": "/step",
+    "status": 200,
+    "location": null
+  },
+  {
+    "method": "GET",
+    "url": "/about",
+    "status": 200,
+    "location": null
+  },
+  {
+    "method": "GET",
+    "url": "/contacts",
+    "status": 200,
+    "location": null
+  },
+  {
+    "method": "GET",
+    "url": "/tours",
+    "status": 200,
+    "location": null
+  },
+  {
+    "method": "GET",
+    "url": "/search",
+    "status": 200,
+    "location": null
+  },
+  {
+    "method": "GET",
+    "url": "/agent",
+    "status": 307,
+    "location": "/auth/sign-in"
+  },
+  {
+    "method": "GET",
+    "url": "/agency",
+    "status": 307,
+    "location": "/auth/sign-in"
+  },
+  {
+    "method": "GET",
+    "url": "/tours/stage7-missing-tour",
+    "status": 404,
+    "location": null
+  },
+  {
+    "method": "GET",
+    "url": "/api/agent/tours",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  },
+  {
+    "method": "GET",
+    "url": "/api/agency/tours",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  },
+  {
+    "method": "GET",
+    "url": "/api/agent/me",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  },
+  {
+    "method": "PATCH",
+    "url": "/api/agent/profile",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  },
+  {
+    "method": "PATCH",
+    "url": "/api/agency/profile",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  },
+  {
+    "method": "POST",
+    "url": "/api/auth/change-password",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  },
+  {
+    "method": "GET",
+    "url": "/api/agent/profile",
+    "status": 405
+  },
+  {
+    "method": "GET",
+    "url": "/api/agency/profile",
+    "status": 405
+  },
+  {
+    "method": "POST",
+    "url": "/api/auth/login",
+    "input": "{}",
+    "status": 400,
+    "body": {
+      "error": "MISSING_FIELDS"
+    }
+  },
+  {
+    "method": "POST",
+    "url": "/api/auth/login",
+    "input": "{",
+    "status": 400,
+    "body": {
+      "error": "INVALID_BODY"
+    }
+  },
+  {
+    "method": "POST",
+    "url": "/api/auth/sign-up",
+    "input": "{}",
+    "status": 400,
+    "body": {
+      "error": "VALIDATION_FAILED"
+    }
+  },
+  {
+    "method": "POST",
+    "url": "/api/auth/sign-up",
+    "input": "{",
+    "status": 400,
+    "body": {
+      "error": "INVALID_BODY"
+    }
+  }
+]

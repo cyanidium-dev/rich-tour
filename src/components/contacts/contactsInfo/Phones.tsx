@@ -1,8 +1,11 @@
-import { phoneNumbers } from "@/shared/config";
+import type { SiteContacts } from "@/shared/config";
 import { footerPhoneRegex } from "@/regex/regex";
 
-export default function Phones() {
-  if (!phoneNumbers || !phoneNumbers.length) {
+export default function Phones({ contacts }: { contacts: SiteContacts | null }) {
+  const phoneNumbers = [contacts?.phone_1, contacts?.phone_2, contacts?.phone_3].filter(
+    (number): number is string => Boolean(number),
+  );
+  if (!phoneNumbers.length) {
     return null;
   }
 

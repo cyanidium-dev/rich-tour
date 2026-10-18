@@ -15,12 +15,14 @@ interface TourCostProps {
 }
 
 export default function TourCost({ isLogin, tour, ...userData }: TourCostProps) {
-  const { images, agencyCommission } = tour;
+  const { costImages } = tour;
 
   return (
     <section className="mb-[148px] xl:mb-[180px]">
-      <Container className="md:flex items-stretch gap-x-5 xl:gap-x-10">
-        <div className="hidden md:flex flex-col flex-1 justify-between xl:w-[calc(33.3%-26.67px)]">
+      <Container
+        className={`md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] ${costImages.tall ? "lg:grid-cols-3" : ""} items-stretch gap-x-5 xl:gap-x-10`}
+      >
+        <div className="hidden md:flex flex-col justify-between min-w-0">
           <AnimatedWrapper
             as="h2"
             animation={fadeInAnimation({ y: 30 })}
@@ -35,24 +37,24 @@ export default function TourCost({ isLogin, tour, ...userData }: TourCostProps) 
           >
             Можете переглянути вільні дати для цього тура та обрати підходящий формат для себе
           </AnimatedWrapper>
-          {images[3] ? (
+          {costImages.short && (
             <AnimatedWrapper
               animation={fadeInAnimation({ y: 30, delay: 0.8 })}
               className="relative h-[544px] rounded-[12px] overflow-hidden"
             >
               <Image
-                src={images[4].url}
-                alt={images[4].alt}
+                src={costImages.short.url}
+                alt={costImages.short.alt}
                 fill
                 sizes="30vw"
                 className="object-cover"
               />
             </AnimatedWrapper>
-          ) : null}
+          )}
         </div>
         <Calendar isLogin={isLogin} tour={tour} {...userData} />
-        {images[4] && !isLogin ? (
-          <div className="hidden lg:block relative xl:w-[calc(33.3%-26.67px)] h-[702px]">
+        {costImages.tall && (
+          <div className="hidden lg:block relative min-w-0 h-[702px]">
             <AnimatedArrowDesk />
             <AnimatedWrapper
               animation={fadeInAnimation({ y: 30, delay: 0.4 })}
@@ -60,15 +62,15 @@ export default function TourCost({ isLogin, tour, ...userData }: TourCostProps) 
               className="relative h-[702px] rounded-[12px] overflow-hidden"
             >
               <Image
-                src={images[5].url}
-                alt={images[5].alt}
+                src={costImages.tall.url}
+                alt={costImages.tall.alt}
                 fill
                 sizes="30vw"
                 className="object-cover"
               />
             </AnimatedWrapper>
           </div>
-        ) : null}
+        )}
       </Container>
     </section>
   );

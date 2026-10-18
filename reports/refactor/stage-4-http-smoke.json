@@ -1,0 +1,57 @@
+[
+  {
+    "path": "/auth/sign-in",
+    "status": 200,
+    "form": true
+  },
+  {
+    "path": "/auth/sign-up",
+    "status": 200,
+    "form": true
+  },
+  {
+    "path": "/auth/forgot-password",
+    "status": 200,
+    "form": true
+  },
+  {
+    "path": "/auth/reset-password",
+    "status": 200,
+    "form": true
+  },
+  {
+    "path": "/api/auth/login",
+    "status": 400,
+    "body": {
+      "error": "MISSING_FIELDS"
+    }
+  },
+  {
+    "path": "/api/auth/sign-up",
+    "status": 400,
+    "body": {
+      "error": "VALIDATION_FAILED"
+    }
+  },
+  {
+    "path": "/api/auth/change-password",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  },
+  {
+    "path": "/api/agent/profile",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  },
+  {
+    "path": "/api/agency/profile",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  }
+]

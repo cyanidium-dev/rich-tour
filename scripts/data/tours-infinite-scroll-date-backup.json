@@ -1,0 +1,330 @@
+{
+  "purpose": "Temporary future dates for /tours infinite scroll manual check; restore originalDateRange on user command",
+  "projectId": "elggedkx",
+  "dataset": "production",
+  "preparedAt": "2026-10-05T08:18:11.670Z",
+  "items": [
+    {
+      "id": "ff755697-430a-4fde-a4dc-65f64d6f6799",
+      "basicId": "1f551841-b53d-4845-bcc9-2dd1e43436f4",
+      "basicTitle": "Лазурне побережжя і не тільки...",
+      "title": "Лазурне побережжя і не тільки...07/09",
+      "originalRev": "UsRyjkPFit3Wn5iT00nf6p",
+      "originalDateRange": {
+        "endDate": "2026-09-13",
+        "startDate": "2026-09-07"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-11-20",
+        "endDate": "2026-11-26"
+      },
+      "temporaryTitle": "Лазурне побережжя і не тільки...20/11"
+    },
+    {
+      "id": "3b8b8aa7-9938-47d0-b323-e05bf792acb2",
+      "basicId": "22f45512-2af0-4232-b188-01814f9be0f7",
+      "basicTitle": "Південь Італії - Тірренське море",
+      "title": "Південь Італії - Тірренське море  02.06",
+      "originalRev": "lFixG7mwl284qOIQDNvWm8",
+      "originalDateRange": {
+        "endDate": "2026-06-11",
+        "startDate": "2026-06-02"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-11-21",
+        "endDate": "2026-11-30"
+      },
+      "temporaryTitle": "Південь Італії - Тірренське море  21.11"
+    },
+    {
+      "id": "d1edafcd-b826-47c6-8f9f-d64f6ccfabcb",
+      "basicId": "6a4b72a3-8457-450b-b86d-2547c6db4c9d",
+      "basicTitle": "МОЄ ВЕЛИКЕ ГРЕЦЬКЕ ЛІТО 2026",
+      "title": "Моє велике Грецьке літо ...\r 18.09",
+      "originalRev": "n8jMRYyARNKivP0hoDGspU",
+      "originalDateRange": {
+        "endDate": "2026-09-27",
+        "startDate": "2026-09-18"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-11-22",
+        "endDate": "2026-12-01"
+      },
+      "temporaryTitle": "Моє велике Грецьке літо ...\r 22.11"
+    },
+    {
+      "id": "8105b764-c05d-4131-81af-bb87f435660f",
+      "basicId": "9861412f-36f4-4d06-9c80-cb95c8a58235",
+      "basicTitle": "Дивовижна Хорватія",
+      "title": "Дивовижна Хорватія 10.06",
+      "originalRev": "KgfljLQRCNpfW5Lddcb5iB",
+      "originalDateRange": {
+        "endDate": "2026-06-19",
+        "startDate": "2026-06-10"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-11-23",
+        "endDate": "2026-12-02"
+      },
+      "temporaryTitle": "Дивовижна Хорватія 23.11"
+    },
+    {
+      "id": "7b6882a4-cab8-49a0-9497-775a7cbab993",
+      "basicId": "bdcbe09c-7161-44a1-8db4-c82c99630bbb",
+      "basicTitle": "Море Греції - Олімпійська Рив’єра 2026",
+      "title": "МОРЕ ГРЕЦІЇ 2026 18.09",
+      "originalRev": "VEl58o4OrEfkH3clqjex2n",
+      "originalDateRange": {
+        "endDate": "2026-09-27",
+        "startDate": "2026-09-18"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-11-24",
+        "endDate": "2026-12-03"
+      },
+      "temporaryTitle": "МОРЕ ГРЕЦІЇ 2026 24.11"
+    },
+    {
+      "id": "a4605a13-67ad-4c44-91f7-fbf568d6a8d1",
+      "basicId": "ce5d5b4c-1cdb-47fc-884b-bea37eaba389",
+      "basicTitle": "Kоста Брава - морський тур Іспанія",
+      "title": "Коста Брава - морський тур Іспанія 13.09",
+      "originalRev": "HginxMZMQq8hSdtqsX1FF3",
+      "originalDateRange": {
+        "endDate": "2026-09-22",
+        "startDate": "2026-09-13"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-11-25",
+        "endDate": "2026-12-04"
+      },
+      "temporaryTitle": "Коста Брава - морський тур Іспанія 25.11"
+    },
+    {
+      "id": "1bb0dd8f-9c82-4746-8d75-0c1b727775af",
+      "basicId": "e3074d54-16e9-4c32-b079-3528f52e8f22",
+      "basicTitle": "Сонячні пляжі Ріміні - Італія",
+      "title": "Сонячні пляжі Ріміні - Італія 12.09",
+      "originalRev": "abDHz2fAvwwOn7ufixHj55",
+      "originalDateRange": {
+        "endDate": "2026-09-19",
+        "startDate": "2026-09-12"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-11-26",
+        "endDate": "2026-12-03"
+      },
+      "temporaryTitle": "Сонячні пляжі Ріміні - Італія 26.11"
+    },
+    {
+      "id": "380bc051-e5c4-4cfc-ba29-a176c5caa3e9",
+      "basicId": "ed5b5ffc-e167-4698-918a-7c5283ba3c46",
+      "basicTitle": "ВИПУСКНИЙ ITALIA 2026",
+      "title": "ВИПУСКНИЙ ITALIA 2026",
+      "originalRev": "irs6hHPkICUoeORNCiK6Wt",
+      "originalDateRange": {
+        "endDate": "2026-07-05",
+        "startDate": "2026-06-30"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-11-27",
+        "endDate": "2026-12-02"
+      },
+      "temporaryTitle": "ВИПУСКНИЙ ITALIA 2026"
+    },
+    {
+      "id": "7afa87af-bea5-456c-b750-6f362532b409",
+      "basicId": "1f551841-b53d-4845-bcc9-2dd1e43436f4",
+      "basicTitle": "Лазурне побережжя і не тільки...",
+      "title": "Лазурне побережжя і не тільки...07/08",
+      "originalRev": "UsRyjkPFit3Wn5iT00nTpj",
+      "originalDateRange": {
+        "endDate": "2026-08-13",
+        "startDate": "2026-08-07"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-05",
+        "endDate": "2026-12-11"
+      },
+      "temporaryTitle": "Лазурне побережжя і не тільки...05/12"
+    },
+    {
+      "id": "732e1e29-4493-40e7-8024-bccc78f06785",
+      "basicId": "6121cbdc-685a-456f-aa1f-9f3096ff63b5",
+      "basicTitle": "Шість днів насолоди",
+      "title": "Шість днів насолоди 26.09",
+      "originalRev": "9O0GZAQj3Ty41qVInF1aQP",
+      "originalDateRange": {
+        "endDate": "2026-10-01",
+        "startDate": "2026-09-26"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-06",
+        "endDate": "2026-12-11"
+      },
+      "temporaryTitle": "Шість днів насолоди 06.12"
+    },
+    {
+      "id": "47b2c3dd-8e9d-466b-b76c-665e284dfa9b",
+      "basicId": "6a4b72a3-8457-450b-b86d-2547c6db4c9d",
+      "basicTitle": "МОЄ ВЕЛИКЕ ГРЕЦЬКЕ ЛІТО 2026",
+      "title": "Моє велике Грецьке літо ...\r 11.09",
+      "originalRev": "IfMzlbl0NbJh2BDSac8VIi",
+      "originalDateRange": {
+        "endDate": "2026-09-20",
+        "startDate": "2026-09-11"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-07",
+        "endDate": "2026-12-16"
+      },
+      "temporaryTitle": "Моє велике Грецьке літо ...\r 07.12"
+    },
+    {
+      "id": "74deec1f-2b63-4db2-a56d-a78027a628bb",
+      "basicId": "79926f03-65ac-4416-86f2-a16336eafdf7",
+      "basicTitle": "Стамбул - східна казка Туреччини",
+      "title": "Стамбул - східна казка Туреччини 27.09",
+      "originalRev": "Ai13b2sDJHCq4lxde8VyoA",
+      "originalDateRange": {
+        "endDate": "2026-10-01",
+        "startDate": "2026-09-27"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-08",
+        "endDate": "2026-12-12"
+      },
+      "temporaryTitle": "Стамбул - східна казка Туреччини 08.12"
+    },
+    {
+      "id": "2437cd37-96eb-4a62-a467-06ba947abdee",
+      "basicId": "9861412f-36f4-4d06-9c80-cb95c8a58235",
+      "basicTitle": "Дивовижна Хорватія",
+      "title": "Дивовижна Хорватія 06.06",
+      "originalRev": "n8jMRYyARNKivP0hoChtxG",
+      "originalDateRange": {
+        "endDate": "2026-06-15",
+        "startDate": "2026-06-06"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-09",
+        "endDate": "2026-12-18"
+      },
+      "temporaryTitle": "Дивовижна Хорватія 09.12"
+    },
+    {
+      "id": "19c5ffc4-2d51-45c9-9f4e-17936264c93d",
+      "basicId": "bdcbe09c-7161-44a1-8db4-c82c99630bbb",
+      "basicTitle": "Море Греції - Олімпійська Рив’єра 2026",
+      "title": "МОРЕ ГРЕЦІЇ 2026 11.09",
+      "originalRev": "n8jMRYyARNKivP0hoDLDr1",
+      "originalDateRange": {
+        "endDate": "2026-09-20",
+        "startDate": "2026-09-11"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-10",
+        "endDate": "2026-12-19"
+      },
+      "temporaryTitle": "МОРЕ ГРЕЦІЇ 2026 10.12"
+    },
+    {
+      "id": "2c4bfeb5-a55a-49d5-9bcb-25fdff24316e",
+      "basicId": "ce5d5b4c-1cdb-47fc-884b-bea37eaba389",
+      "basicTitle": "Kоста Брава - морський тур Іспанія",
+      "title": "Коста Брава - морський тур Іспанія 06.09",
+      "originalRev": "HginxMZMQq8hSdtqsX0GwN",
+      "originalDateRange": {
+        "endDate": "2026-09-15",
+        "startDate": "2026-09-06"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-11",
+        "endDate": "2026-12-20"
+      },
+      "temporaryTitle": "Коста Брава - морський тур Іспанія 11.12"
+    },
+    {
+      "id": "5aad5820-9e81-457d-8464-38c99c24ebad",
+      "basicId": "e3074d54-16e9-4c32-b079-3528f52e8f22",
+      "basicTitle": "Сонячні пляжі Ріміні - Італія",
+      "title": "Сонячні пляжі Ріміні - Італія 05.09",
+      "originalRev": "QEVRm1pZNxFN4JPIcZY3B8",
+      "originalDateRange": {
+        "endDate": "2026-09-12",
+        "startDate": "2026-09-05"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-12",
+        "endDate": "2026-12-19"
+      },
+      "temporaryTitle": "Сонячні пляжі Ріміні - Італія 12.12"
+    },
+    {
+      "id": "fe1b855c-dea2-49e4-a91f-2b7ffc1c0833",
+      "basicId": "ffcf78d8-4ff7-4f9d-9ae8-f63bf07171d6",
+      "basicTitle": "Амстердам і не тільки ...",
+      "title": "Амстердам і не тільки 27.09",
+      "originalRev": "lKYO5rIojFcMJuyBEJjjAT",
+      "originalDateRange": {
+        "endDate": "2026-10-01",
+        "startDate": "2026-09-27"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-13",
+        "endDate": "2026-12-17"
+      },
+      "temporaryTitle": "Амстердам і не тільки 13.12"
+    },
+    {
+      "id": "fd036c53-7d4b-47eb-b9ce-6c2d4083940d",
+      "basicId": "6a4b72a3-8457-450b-b86d-2547c6db4c9d",
+      "basicTitle": "МОЄ ВЕЛИКЕ ГРЕЦЬКЕ ЛІТО 2026",
+      "title": "Моє велике Грецьке літо ...\r 04.09",
+      "originalRev": "IfMzlbl0NbJh2BDSac8e4g",
+      "originalDateRange": {
+        "endDate": "2026-09-13",
+        "startDate": "2026-09-04"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-21",
+        "endDate": "2026-12-30"
+      },
+      "temporaryTitle": "Моє велике Грецьке літо ...\r 21.12"
+    },
+    {
+      "id": "9834443e-698d-4944-8d2d-2490f29bc57b",
+      "basicId": "bdcbe09c-7161-44a1-8db4-c82c99630bbb",
+      "basicTitle": "Море Греції - Олімпійська Рив’єра 2026",
+      "title": "МОРЕ ГРЕЦІЇ 2026 04.09",
+      "originalRev": "IfMzlbl0NbJh2BDSacMCa5",
+      "originalDateRange": {
+        "endDate": "2026-09-13",
+        "startDate": "2026-09-04"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-22",
+        "endDate": "2026-12-31"
+      },
+      "temporaryTitle": "МОРЕ ГРЕЦІЇ 2026 22.12"
+    },
+    {
+      "id": "b68b0908-8f5c-4adc-9e62-d24469894ea5",
+      "basicId": "ce5d5b4c-1cdb-47fc-884b-bea37eaba389",
+      "basicTitle": "Kоста Брава - морський тур Іспанія",
+      "title": "Коста Брава - морський тур Іспанія 17.08",
+      "originalRev": "wHli5ONuNy1b3F6gqydZ4S",
+      "originalDateRange": {
+        "endDate": "2026-08-26",
+        "startDate": "2026-08-17"
+      },
+      "temporaryDateRange": {
+        "startDate": "2026-12-23",
+        "endDate": "2027-01-01"
+      },
+      "temporaryTitle": "Коста Брава - морський тур Іспанія 23.12"
+    }
+  ],
+  "extendedAt": "2026-10-05T08:33:18.457Z",
+  "restoredAt": "2026-10-05T08:48:16.018Z"
+}

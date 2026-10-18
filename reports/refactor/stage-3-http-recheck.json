@@ -1,0 +1,22 @@
+[
+  {
+    "route": "/reviews",
+    "status": 200,
+    "cards": 6,
+    "streamError": false
+  },
+  {
+    "route": "/api/agent/tours",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  },
+  {
+    "route": "/api/agency/tours",
+    "status": 401,
+    "body": {
+      "error": "UNAUTHORIZED"
+    }
+  }
+]

@@ -55,7 +55,11 @@ it("maps every public document type to its cached data and routes", () => {
   expect(getInvalidationForType("doc")?.paths).toEqual([{ path: "/about" }]);
   expect(getInvalidationForType("team")?.paths).toEqual([{ path: "/about" }]);
   expect(getInvalidationForType("review")?.paths).toContainEqual({ path: "/reviews" });
-  expect(getInvalidationForType("siteSettings")?.paths).toEqual([{ path: "/agent" }]);
+  expect(getInvalidationForType("siteSettings")?.paths).toEqual([
+    { path: "/" },
+    { path: "/contacts" },
+    { path: "/agent" },
+  ]);
   expect(getInvalidationForType("agentUser")).toBeUndefined();
   expect(getInvalidationForType("currencyRateCache")).toBeUndefined();
 });

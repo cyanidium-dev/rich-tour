@@ -31,13 +31,15 @@ const tourTemplate: Tour = {
   description:
     "Вирушайте у подорож до Швейцарії – країни неймовірних пейзажів, бездоганного сервісу та справжнього затишку!",
   duration: 10,
-  images: [
-    { url: "/images/mockedPhoto/nightCity.webp", alt: "night city" },
-    { url: "/images/mockedPhoto/tourTwo.webp", alt: "night city" },
-    { url: "/images/mockedPhoto/tourThree.webp", alt: "night city" },
-    { url: "/images/mockedPhoto/tourFour.webp", alt: "night city" },
-    { url: "/images/mockedPhoto/tourFive.webp", alt: "night city" },
-  ],
+  heroImages: {
+    main: { url: "/images/mockedPhoto/nightCity.webp", alt: "night city" },
+    left: { url: "/images/mockedPhoto/tourTwo.webp", alt: "night city" },
+    right: { url: "/images/mockedPhoto/tourThree.webp", alt: "night city" },
+  },
+  costImages: {
+    short: { url: "/images/mockedPhoto/tourFour.webp", alt: "night city" },
+    tall: { url: "/images/mockedPhoto/tourFive.webp", alt: "night city" },
+  },
   category: categories[0],
   earlyBooking: false,
   benefits: {

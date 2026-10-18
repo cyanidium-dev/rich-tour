@@ -1,0 +1,105 @@
+[
+  {
+    "entry": "src/components/shared/forms/CallBackForm.tsx",
+    "sourceFiles": 9,
+    "files": [
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/forms/CallBackForm.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/regex/regex.ts",
+      "src/schemas/callBackFormValidation.ts",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts"
+    ],
+    "packages": [
+      "@hookform/resolvers/zod",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/search/SearchForm.tsx",
+    "sourceFiles": 6,
+    "files": [
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/icons/SearchIcon.tsx",
+      "src/components/shared/icons/SelectIcon.tsx",
+      "src/components/shared/search/SearchForm.tsx",
+      "src/components/shared/search/searchModel.ts"
+    ],
+    "packages": [
+      "@heroui/react",
+      "@react-aria/i18n",
+      "framer-motion",
+      "next/link",
+      "react",
+      "react-hook-form",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/menu/content/OrdersFilters.tsx",
+    "sourceFiles": 5,
+    "files": [
+      "src/components/agent/menu/content/OrdersFilters.tsx",
+      "src/components/agent/menu/content/SearchInput.tsx",
+      "src/components/agent/menu/content/ordersFiltersModel.ts",
+      "src/components/shared/icons/SearchIcon.tsx",
+      "src/components/shared/icons/SelectIcon.tsx"
+    ],
+    "packages": [
+      "@heroui/react",
+      "@internationalized/date",
+      "@react-aria/i18n",
+      "react",
+      "react-hook-form",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/menu/content/OrdersContent.tsx",
+    "sourceFiles": 20,
+    "files": [
+      "src/components/agent/menu/content/Category.tsx",
+      "src/components/agent/menu/content/DetailsModal.tsx",
+      "src/components/agent/menu/content/OrderItem.tsx",
+      "src/components/agent/menu/content/OrdersContent.tsx",
+      "src/components/agent/menu/content/OrdersFilters.tsx",
+      "src/components/agent/menu/content/SearchInput.tsx",
+      "src/components/agent/menu/content/ordersFiltersModel.ts",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/icons/ArrowInCircleIcon.tsx",
+      "src/components/shared/icons/SearchIcon.tsx",
+      "src/components/shared/icons/SelectIcon.tsx",
+      "src/components/shared/loader/Loader.tsx",
+      "src/components/shared/pagination/Pagination.tsx",
+      "src/components/tour/hotels/CloseHotelModalIcon.tsx",
+      "src/entities/order/index.ts",
+      "src/entities/order/model/mapOrders.ts",
+      "src/entities/order/model/schema.ts",
+      "src/hooks/useOrdersPerPage.ts"
+    ],
+    "packages": [
+      "@heroui/react",
+      "@internationalized/date",
+      "@react-aria/i18n",
+      "axios",
+      "framer-motion",
+      "next/navigation",
+      "react",
+      "react-hook-form",
+      "zod"
+    ],
+    "unresolved": []
+  }
+]

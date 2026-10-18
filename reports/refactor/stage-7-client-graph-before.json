@@ -1,0 +1,1076 @@
+[
+  {
+    "entry": "src/components/home/benefits/AnimatedArrow.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/home/benefits/AnimatedArrow.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/benefits/BenefitItem.tsx",
+    "sourceFiles": 2,
+    "files": [
+      "src/components/home/benefits/BenefitItem.tsx",
+      "src/components/shared/animation/animationVariants.ts"
+    ],
+    "packages": [
+      "framer-motion",
+      "react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/corporateService/AnimatedArrow.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/home/corporateService/AnimatedArrow.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/faq/FaqItem.tsx",
+    "sourceFiles": 4,
+    "files": [
+      "src/components/home/faq/FaqItem.tsx",
+      "src/components/shared/animation/AnimatedListItem.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/icons/ArrowInCircleIcon.tsx"
+    ],
+    "packages": [
+      "framer-motion",
+      "react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/hero/AnimatedArrow.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/home/hero/AnimatedArrow.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/promotion/PromotionListDesk.tsx",
+    "sourceFiles": 25,
+    "files": [
+      "src/components/home/promotion/PromotionListDesk.tsx",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/icons/ArrowInCircleIcon.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/loader/Loader.tsx",
+      "src/components/shared/pagination/Pagination.tsx",
+      "src/entities/tour/index.ts",
+      "src/entities/tour/lib/formatTourDeparturesOptions.ts",
+      "src/entities/tour/model/category.ts",
+      "src/entities/tour/model/types.ts",
+      "src/entities/tour/ui/TourCard.tsx",
+      "src/hooks/usePromotionItemsPerPage.ts",
+      "src/shared/lib/formatDate.ts",
+      "src/shared/lib/getDayWord.ts",
+      "src/shared/lib/index.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "framer-motion",
+      "next/image",
+      "next/link",
+      "next/navigation",
+      "react",
+      "react-hook-form",
+      "react-imask"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/promotion/PromotionSwiperMob.tsx",
+    "sourceFiles": 22,
+    "files": [
+      "src/components/home/promotion/PromotionSwiperMob.tsx",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/loader/Loader.tsx",
+      "src/entities/tour/index.ts",
+      "src/entities/tour/lib/formatTourDeparturesOptions.ts",
+      "src/entities/tour/model/category.ts",
+      "src/entities/tour/model/types.ts",
+      "src/entities/tour/ui/TourCard.tsx",
+      "src/shared/lib/formatDate.ts",
+      "src/shared/lib/getDayWord.ts",
+      "src/shared/lib/index.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "framer-motion",
+      "next/image",
+      "next/link",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "swiper/css",
+      "swiper/css/navigation",
+      "swiper/modules",
+      "swiper/react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/smartTours/AnimatedArrow.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/home/smartTours/AnimatedArrow.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/smartTours/SmartToursSwiper.tsx",
+    "sourceFiles": 22,
+    "files": [
+      "src/components/home/smartTours/SmartToursSwiper.tsx",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/loader/Loader.tsx",
+      "src/entities/tour/index.ts",
+      "src/entities/tour/lib/formatTourDeparturesOptions.ts",
+      "src/entities/tour/model/category.ts",
+      "src/entities/tour/model/types.ts",
+      "src/entities/tour/ui/TourCard.tsx",
+      "src/shared/lib/formatDate.ts",
+      "src/shared/lib/getDayWord.ts",
+      "src/shared/lib/index.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "framer-motion",
+      "next/image",
+      "next/link",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "swiper/css",
+      "swiper/css/navigation",
+      "swiper/modules",
+      "swiper/react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/step/AnimatedArrowBottom.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/home/step/AnimatedArrowBottom.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/step/AnimatedArrowTop.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/home/step/AnimatedArrowTop.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/tours/AnimatedArrowDesk.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/home/tours/AnimatedArrowDesk.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/home/tours/AnimatedArrowMob.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/home/tours/AnimatedArrowMob.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/benefits/AnimatedArrowDesk.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/benefits/AnimatedArrowDesk.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/benefits/AnimatedArrowMob.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/benefits/AnimatedArrowMob.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/hotels/AnimatedSwitch.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/hotels/AnimatedSwitch.tsx"
+    ],
+    "packages": [
+      "framer-motion",
+      "react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/hotels/HotelModalContent.tsx",
+    "sourceFiles": 2,
+    "files": [
+      "src/components/tour/hotels/HotelContent.tsx",
+      "src/components/tour/hotels/HotelModalContent.tsx"
+    ],
+    "packages": [
+      "@portabletext/react",
+      "next/image",
+      "swiper/css",
+      "swiper/css/navigation",
+      "swiper/modules",
+      "swiper/react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/hotels/Hotels.tsx",
+    "sourceFiles": 30,
+    "files": [
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/icons/ArrowHeadIcon.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/tour/hotels/AnimatedSwitch.tsx",
+      "src/components/tour/hotels/CloseHotelModalIcon.tsx",
+      "src/components/tour/hotels/HotelContent.tsx",
+      "src/components/tour/hotels/HotelModal.tsx",
+      "src/components/tour/hotels/HotelModalContent.tsx",
+      "src/components/tour/hotels/Hotels.tsx",
+      "src/components/tour/hotels/HotelsTitle.tsx",
+      "src/context/CurrencyContext.tsx",
+      "src/entities/tour/index.ts",
+      "src/entities/tour/lib/formatTourDeparturesOptions.ts",
+      "src/entities/tour/model/category.ts",
+      "src/entities/tour/model/types.ts",
+      "src/entities/tour/ui/TourCard.tsx",
+      "src/shared/lib/formatDate.ts",
+      "src/shared/lib/getDayWord.ts",
+      "src/shared/lib/index.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "@portabletext/react",
+      "axios",
+      "framer-motion",
+      "next/image",
+      "next/link",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "swiper/css",
+      "swiper/css/navigation",
+      "swiper/modules",
+      "swiper/react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/inspiration/AnimatedArrow.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/inspiration/AnimatedArrow.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/inspiration/inspirationDesk/AnimatedArrowOneDesk.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/inspiration/inspirationDesk/AnimatedArrowOneDesk.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/inspiration/inspirationDesk/AnimatedArrowThreeDesk.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/inspiration/inspirationDesk/AnimatedArrowThreeDesk.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/inspiration/inspirationDesk/AnimatedArrowTwoDesk.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/inspiration/inspirationDesk/AnimatedArrowTwoDesk.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/inspiration/inspirationMob/AnimatedArrowOneMob.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/inspiration/inspirationMob/AnimatedArrowOneMob.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/inspiration/inspirationMob/AnimatedArrowThreeMob.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/inspiration/inspirationMob/AnimatedArrowThreeMob.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/inspiration/inspirationMob/AnimatedArrowTwoMob.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/inspiration/inspirationMob/AnimatedArrowTwoMob.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/tourCost/AnimatedArrowDesk.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/tour/tourCost/AnimatedArrowDesk.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/tour/tourCost/Calendar.tsx",
+    "sourceFiles": 45,
+    "files": [
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/booking/Booking.tsx",
+      "src/components/shared/booking/BookingWithButton.tsx",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/buttons/IconButton.tsx",
+      "src/components/shared/icons/CrossInCircleIcon.tsx",
+      "src/components/shared/icons/IconCross.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/icons/TrashIcon.tsx",
+      "src/components/shared/modals/BookingFormModal.tsx",
+      "src/components/shared/modals/NotificationModal.tsx",
+      "src/components/shared/pop-ups/NotificationPopUp.tsx",
+      "src/components/tour/tourCost/Calendar.tsx",
+      "src/components/tour/tourCost/DayButton.tsx",
+      "src/components/tour/tourCost/Legend.tsx",
+      "src/components/tour/tourCost/calendarDates.ts",
+      "src/context/CurrencyContext.tsx",
+      "src/entities/tour/index.ts",
+      "src/entities/tour/lib/formatTourDeparturesOptions.ts",
+      "src/entities/tour/model/category.ts",
+      "src/entities/tour/model/types.ts",
+      "src/entities/tour/ui/TourCard.tsx",
+      "src/features/booking/api/useBookingSubmission.ts",
+      "src/features/booking/index.ts",
+      "src/features/booking/model/schemas.ts",
+      "src/features/booking/model/useTravelers.ts",
+      "src/features/booking/ui/BookingAgentForm.tsx",
+      "src/features/booking/ui/BookingFields.tsx",
+      "src/features/booking/ui/BookingForm.tsx",
+      "src/features/booking/ui/BookingInput.tsx",
+      "src/features/booking/ui/PassengerSection.tsx",
+      "src/regex/regex.ts",
+      "src/shared/lib/formatDate.ts",
+      "src/shared/lib/getDayWord.ts",
+      "src/shared/lib/index.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "@heroui/react",
+      "@hookform/resolvers/zod",
+      "axios",
+      "framer-motion",
+      "next/image",
+      "next/link",
+      "next/navigation",
+      "react",
+      "react-day-picker",
+      "react-day-picker/locale",
+      "react-day-picker/style.css",
+      "react-hook-form",
+      "react-imask",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/hero/AnimatedArrow.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/agent/hero/AnimatedArrow.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/hero/Hero.tsx",
+    "sourceFiles": 19,
+    "files": [
+      "src/components/agent/hero/Hero.tsx",
+      "src/components/agent/menu/content/AnimatedScribbleArrow.tsx",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/buttons/IconButton.tsx",
+      "src/components/shared/icons/IconCross.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/modals/NotificationModal.tsx",
+      "src/components/shared/pop-ups/NotificationPopUp.tsx",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "framer-motion",
+      "next/image",
+      "react",
+      "react-hook-form",
+      "react-imask"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/menu/content/AgentInfoFormWithNotifications.tsx",
+    "sourceFiles": 24,
+    "files": [
+      "src/components/agent/menu/content/AgentInfoFormWithNotifications.tsx",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/buttons/IconButton.tsx",
+      "src/components/shared/forms/AgentInfoForm.tsx",
+      "src/components/shared/icons/IconCross.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/modals/NotificationModal.tsx",
+      "src/components/shared/pop-ups/NotificationPopUp.tsx",
+      "src/features/profile-edit/index.ts",
+      "src/features/profile-edit/model/schemas.ts",
+      "src/features/profile-edit/ui/AgencyInfoForm.tsx",
+      "src/features/profile-edit/ui/AgentInfoForm.tsx",
+      "src/regex/regex.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "@hookform/resolvers/zod",
+      "axios",
+      "framer-motion",
+      "next/image",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/menu/content/AnimatedScribbleArrow.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/agent/menu/content/AnimatedScribbleArrow.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/menu/content/ChangePasswordFormWithNotifications.tsx",
+    "sourceFiles": 27,
+    "files": [
+      "src/components/agent/menu/content/ChangePasswordFormWithNotifications.tsx",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/buttons/IconButton.tsx",
+      "src/components/shared/forms/ChangePassword.tsx",
+      "src/components/shared/icons/IconCross.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/modals/NotificationModal.tsx",
+      "src/components/shared/pop-ups/NotificationPopUp.tsx",
+      "src/features/auth/index.ts",
+      "src/features/auth/model/schemas.ts",
+      "src/features/auth/ui/ChangePassword.tsx",
+      "src/features/auth/ui/ForgotPasswordForm.tsx",
+      "src/features/auth/ui/LoginForm.tsx",
+      "src/features/auth/ui/ResetPasswordForm.tsx",
+      "src/features/auth/ui/SignUpForm.tsx",
+      "src/regex/regex.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "@hookform/resolvers/zod",
+      "axios",
+      "framer-motion",
+      "next/image",
+      "next/link",
+      "next/navigation",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/menu/content/MenuContent.tsx",
+    "sourceFiles": 58,
+    "files": [
+      "src/components/agency/menu/content/AgencyInfoFormWithNotifications.tsx",
+      "src/components/agency/menu/content/AgencyInfoSection.tsx",
+      "src/components/agency/menu/content/AgencySettingsContent.tsx",
+      "src/components/agent/menu/content/AgentInfoFormWithNotifications.tsx",
+      "src/components/agent/menu/content/AgentInfoSection.tsx",
+      "src/components/agent/menu/content/Category.tsx",
+      "src/components/agent/menu/content/ChangePasswordContent.tsx",
+      "src/components/agent/menu/content/ChangePasswordFormWithNotifications.tsx",
+      "src/components/agent/menu/content/DetailsModal.tsx",
+      "src/components/agent/menu/content/MenuContent.tsx",
+      "src/components/agent/menu/content/OrderItem.tsx",
+      "src/components/agent/menu/content/OrdersContent.tsx",
+      "src/components/agent/menu/content/OrdersFilters.tsx",
+      "src/components/agent/menu/content/SearchInput.tsx",
+      "src/components/agent/menu/content/SettingsContent.tsx",
+      "src/components/agent/menu/content/ordersFiltersModel.ts",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/buttons/IconButton.tsx",
+      "src/components/shared/forms/AgencyInfoForm.tsx",
+      "src/components/shared/forms/AgentInfoForm.tsx",
+      "src/components/shared/forms/ChangePassword.tsx",
+      "src/components/shared/icons/ArrowInCircleIcon.tsx",
+      "src/components/shared/icons/IconCross.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/icons/SearchIcon.tsx",
+      "src/components/shared/icons/SelectIcon.tsx",
+      "src/components/shared/loader/Loader.tsx",
+      "src/components/shared/modals/NotificationModal.tsx",
+      "src/components/shared/pagination/Pagination.tsx",
+      "src/components/shared/pop-ups/NotificationPopUp.tsx",
+      "src/components/tour/hotels/CloseHotelModalIcon.tsx",
+      "src/entities/order/index.ts",
+      "src/entities/order/model/mapOrders.ts",
+      "src/entities/order/model/schema.ts",
+      "src/features/auth/index.ts",
+      "src/features/auth/model/schemas.ts",
+      "src/features/auth/ui/ChangePassword.tsx",
+      "src/features/auth/ui/ForgotPasswordForm.tsx",
+      "src/features/auth/ui/LoginForm.tsx",
+      "src/features/auth/ui/ResetPasswordForm.tsx",
+      "src/features/auth/ui/SignUpForm.tsx",
+      "src/features/profile-edit/index.ts",
+      "src/features/profile-edit/model/schemas.ts",
+      "src/features/profile-edit/ui/AgencyInfoForm.tsx",
+      "src/features/profile-edit/ui/AgentInfoForm.tsx",
+      "src/hooks/useOrdersPerPage.ts",
+      "src/regex/regex.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "@heroui/react",
+      "@hookform/resolvers/zod",
+      "@internationalized/date",
+      "@react-aria/i18n",
+      "axios",
+      "framer-motion",
+      "next/image",
+      "next/link",
+      "next/navigation",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/menu/content/OrdersContent.tsx",
+    "sourceFiles": 20,
+    "files": [
+      "src/components/agent/menu/content/Category.tsx",
+      "src/components/agent/menu/content/DetailsModal.tsx",
+      "src/components/agent/menu/content/OrderItem.tsx",
+      "src/components/agent/menu/content/OrdersContent.tsx",
+      "src/components/agent/menu/content/OrdersFilters.tsx",
+      "src/components/agent/menu/content/SearchInput.tsx",
+      "src/components/agent/menu/content/ordersFiltersModel.ts",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/icons/ArrowInCircleIcon.tsx",
+      "src/components/shared/icons/SearchIcon.tsx",
+      "src/components/shared/icons/SelectIcon.tsx",
+      "src/components/shared/loader/Loader.tsx",
+      "src/components/shared/pagination/Pagination.tsx",
+      "src/components/tour/hotels/CloseHotelModalIcon.tsx",
+      "src/entities/order/index.ts",
+      "src/entities/order/model/mapOrders.ts",
+      "src/entities/order/model/schema.ts",
+      "src/hooks/useOrdersPerPage.ts"
+    ],
+    "packages": [
+      "@heroui/react",
+      "@internationalized/date",
+      "@react-aria/i18n",
+      "axios",
+      "framer-motion",
+      "next/navigation",
+      "react",
+      "react-hook-form",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/menu/content/OrdersFilters.tsx",
+    "sourceFiles": 5,
+    "files": [
+      "src/components/agent/menu/content/OrdersFilters.tsx",
+      "src/components/agent/menu/content/SearchInput.tsx",
+      "src/components/agent/menu/content/ordersFiltersModel.ts",
+      "src/components/shared/icons/SearchIcon.tsx",
+      "src/components/shared/icons/SelectIcon.tsx"
+    ],
+    "packages": [
+      "@heroui/react",
+      "@internationalized/date",
+      "@react-aria/i18n",
+      "react",
+      "react-hook-form",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/menu/Menu.tsx",
+    "sourceFiles": 61,
+    "files": [
+      "src/components/agency/menu/content/AgencyInfoFormWithNotifications.tsx",
+      "src/components/agency/menu/content/AgencyInfoSection.tsx",
+      "src/components/agency/menu/content/AgencySettingsContent.tsx",
+      "src/components/agent/menu/Menu.tsx",
+      "src/components/agent/menu/TabMenu.tsx",
+      "src/components/agent/menu/TabMenuItem.tsx",
+      "src/components/agent/menu/content/AgentInfoFormWithNotifications.tsx",
+      "src/components/agent/menu/content/AgentInfoSection.tsx",
+      "src/components/agent/menu/content/Category.tsx",
+      "src/components/agent/menu/content/ChangePasswordContent.tsx",
+      "src/components/agent/menu/content/ChangePasswordFormWithNotifications.tsx",
+      "src/components/agent/menu/content/DetailsModal.tsx",
+      "src/components/agent/menu/content/MenuContent.tsx",
+      "src/components/agent/menu/content/OrderItem.tsx",
+      "src/components/agent/menu/content/OrdersContent.tsx",
+      "src/components/agent/menu/content/OrdersFilters.tsx",
+      "src/components/agent/menu/content/SearchInput.tsx",
+      "src/components/agent/menu/content/SettingsContent.tsx",
+      "src/components/agent/menu/content/ordersFiltersModel.ts",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/buttons/IconButton.tsx",
+      "src/components/shared/forms/AgencyInfoForm.tsx",
+      "src/components/shared/forms/AgentInfoForm.tsx",
+      "src/components/shared/forms/ChangePassword.tsx",
+      "src/components/shared/icons/ArrowInCircleIcon.tsx",
+      "src/components/shared/icons/IconCross.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/icons/SearchIcon.tsx",
+      "src/components/shared/icons/SelectIcon.tsx",
+      "src/components/shared/loader/Loader.tsx",
+      "src/components/shared/modals/NotificationModal.tsx",
+      "src/components/shared/pagination/Pagination.tsx",
+      "src/components/shared/pop-ups/NotificationPopUp.tsx",
+      "src/components/tour/hotels/CloseHotelModalIcon.tsx",
+      "src/entities/order/index.ts",
+      "src/entities/order/model/mapOrders.ts",
+      "src/entities/order/model/schema.ts",
+      "src/features/auth/index.ts",
+      "src/features/auth/model/schemas.ts",
+      "src/features/auth/ui/ChangePassword.tsx",
+      "src/features/auth/ui/ForgotPasswordForm.tsx",
+      "src/features/auth/ui/LoginForm.tsx",
+      "src/features/auth/ui/ResetPasswordForm.tsx",
+      "src/features/auth/ui/SignUpForm.tsx",
+      "src/features/profile-edit/index.ts",
+      "src/features/profile-edit/model/schemas.ts",
+      "src/features/profile-edit/ui/AgencyInfoForm.tsx",
+      "src/features/profile-edit/ui/AgentInfoForm.tsx",
+      "src/hooks/useOrdersPerPage.ts",
+      "src/regex/regex.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "@heroui/react",
+      "@hookform/resolvers/zod",
+      "@internationalized/date",
+      "@react-aria/i18n",
+      "axios",
+      "framer-motion",
+      "next/image",
+      "next/link",
+      "next/navigation",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agent/telegram/BenefitItem.tsx",
+    "sourceFiles": 2,
+    "files": [
+      "src/components/agent/telegram/BenefitItem.tsx",
+      "src/components/shared/animation/animationVariants.ts"
+    ],
+    "packages": [
+      "framer-motion",
+      "next/image",
+      "react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/agency/menu/content/AgencyInfoFormWithNotifications.tsx",
+    "sourceFiles": 24,
+    "files": [
+      "src/components/agency/menu/content/AgencyInfoFormWithNotifications.tsx",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/buttons/IconButton.tsx",
+      "src/components/shared/forms/AgencyInfoForm.tsx",
+      "src/components/shared/icons/IconCross.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/modals/NotificationModal.tsx",
+      "src/components/shared/pop-ups/NotificationPopUp.tsx",
+      "src/features/profile-edit/index.ts",
+      "src/features/profile-edit/model/schemas.ts",
+      "src/features/profile-edit/ui/AgencyInfoForm.tsx",
+      "src/features/profile-edit/ui/AgentInfoForm.tsx",
+      "src/regex/regex.ts",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "@hookform/resolvers/zod",
+      "axios",
+      "framer-motion",
+      "next/image",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/header/AnimatedArrow.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/shared/header/AnimatedArrow.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/header/BurgerMenuButton.tsx",
+    "sourceFiles": 1,
+    "files": [
+      "src/components/shared/header/BurgerMenuButton.tsx"
+    ],
+    "packages": [
+      "framer-motion"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/header/currencyRate/CurrencyRate.tsx",
+    "sourceFiles": 2,
+    "files": [
+      "src/components/shared/header/currencyRate/CurrencyRate.tsx",
+      "src/context/CurrencyContext.tsx"
+    ],
+    "packages": [
+      "@heroui/react",
+      "axios",
+      "next/image",
+      "react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/header/HeaderMob.tsx",
+    "sourceFiles": 21,
+    "files": [
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/header/AnimatedArrow.tsx",
+      "src/components/shared/header/BurgerMenu.tsx",
+      "src/components/shared/header/BurgerMenuButton.tsx",
+      "src/components/shared/header/HeaderMob.tsx",
+      "src/components/shared/header/currencyRate/CurrencyRate.tsx",
+      "src/components/shared/header/navMenu/NavMenu.tsx",
+      "src/components/shared/header/navMenu/NavMenuItem.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/logoLink/LogoLink.tsx",
+      "src/context/CurrencyContext.tsx",
+      "src/shared/ui/Container.tsx",
+      "src/shared/ui/MainButton.tsx",
+      "src/shared/ui/SecondaryButton.tsx",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts",
+      "src/shared/ui/index.ts"
+    ],
+    "packages": [
+      "@heroui/react",
+      "axios",
+      "framer-motion",
+      "next/image",
+      "next/link",
+      "react",
+      "react-hook-form",
+      "react-imask"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/header/navMenu/NavMenuItem.tsx",
+    "sourceFiles": 2,
+    "files": [
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/header/navMenu/NavMenuItem.tsx"
+    ],
+    "packages": [
+      "framer-motion",
+      "next/link",
+      "react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/footer/CallBack.tsx",
+    "sourceFiles": 15,
+    "files": [
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/buttons/FormButton.tsx",
+      "src/components/shared/buttons/IconButton.tsx",
+      "src/components/shared/footer/CallBack.tsx",
+      "src/components/shared/forms/CallBackForm.tsx",
+      "src/components/shared/icons/IconCross.tsx",
+      "src/components/shared/icons/IconLoader.tsx",
+      "src/components/shared/modals/NotificationModal.tsx",
+      "src/components/shared/pop-ups/NotificationPopUp.tsx",
+      "src/regex/regex.ts",
+      "src/schemas/callBackFormValidation.ts",
+      "src/shared/ui/form-fields/Input.tsx",
+      "src/shared/ui/form-fields/MaskedInput.tsx",
+      "src/shared/ui/form-fields/SubmitButton.tsx",
+      "src/shared/ui/form-fields/index.ts"
+    ],
+    "packages": [
+      "@hookform/resolvers/zod",
+      "next/image",
+      "react",
+      "react-hook-form",
+      "react-imask",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/footer/FooterAnimation.tsx",
+    "sourceFiles": 3,
+    "files": [
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/footer/FooterAnimation.tsx"
+    ],
+    "packages": [
+      "framer-motion",
+      "next/navigation",
+      "react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/reviews/ReviewsSwiperMob.tsx",
+    "sourceFiles": 10,
+    "files": [
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/loader/Loader.tsx",
+      "src/components/shared/reviews/ReviewsSwiperMob.tsx",
+      "src/entities/review/index.ts",
+      "src/entities/review/model/types.ts",
+      "src/entities/review/ui/ReviewCard.tsx",
+      "src/shared/lib/formatDate.ts",
+      "src/shared/lib/getDayWord.ts",
+      "src/shared/lib/index.ts"
+    ],
+    "packages": [
+      "framer-motion",
+      "react",
+      "swiper/css",
+      "swiper/css/navigation",
+      "swiper/modules",
+      "swiper/react"
+    ],
+    "unresolved": []
+  }
+]

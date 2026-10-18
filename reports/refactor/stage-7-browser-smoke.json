@@ -1,0 +1,247 @@
+[
+  {
+    "route": "/",
+    "path": "/",
+    "width": 1365,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Ми підберемо для вас ідеальний тур: пляжний релакс, захоплюючі екскурсії, або яскраві пригоди. Плануйте подорож легко та комфортно разом із професіоналами.",
+      "Наші тури",
+      "Чому обирають нас",
+      "SMART тури",
+      "Відгуки",
+      "Часто задавані питання",
+      "Корпоративне обслуговування"
+    ],
+    "mainText": "Ми підберемо для вас ідеальний тур: пляжний релакс, захоплюючі екскурсії, або яскраві пригоди. Плануйте подорож легко та комфортно разом із професіоналами.\n\nВІД",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/step",
+    "path": "/step",
+    "width": 1365,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "S.T.E.P"
+    ],
+    "mainText": "STORY TRAVEL EMOTIONS PHOTO\n\nS.T.E.P\n\nМрієте про ідеальну подорож? Ми допоможемо!\n\nПереглянути тур\nНові горизонти\n\nВирушайте у подорож до Швейцарії – країни ней",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/about",
+    "path": "/about",
+    "width": 1365,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Про нас",
+      "Нові горизонти",
+      "Наша команда",
+      "Документи",
+      "Відгуки"
+    ],
+    "mainText": "ПРО НАС\n\nЛаскаво просимо до нашого туристичного оператора! Ми спеціалізуємося на розробці та реалізації автобусних турів, створюючи унікальні подорожі, які запа",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/tours",
+    "path": "/tours",
+    "width": 1365,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Тури"
+    ],
+    "mainText": "Тури\nВсі тури\nМорські тури Італія\nТури для дитячих груп\nБез нічних переїздів\nМорські тури Хорватія та Чорногорія\nSMART-тури\nМорські тури Іспанія\nМорські тури Гр",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/search",
+    "path": "/search",
+    "width": 1365,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [],
+    "mainText": "Країна\nМісяць\nПошук\n\nТурів за вибраними параметрами не знайдено.",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/agent",
+    "path": "/auth/sign-in",
+    "width": 1365,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Вхід для агентів"
+    ],
+    "mainText": "Вхід для агентів\n👁\n\nЗабули пароль? Відновити\n\nАвторизуватися\nСтворити новий доступ\n\nНевірний email або пароль.",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/agency",
+    "path": "/auth/sign-in",
+    "width": 1365,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Вхід для агентів"
+    ],
+    "mainText": "Вхід для агентів\n👁\n\nЗабули пароль? Відновити\n\nАвторизуватися\nСтворити новий доступ\n\nНевірний email або пароль.",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/tours/stage7-missing-tour",
+    "path": "/tours/stage7-missing-tour",
+    "width": 1365,
+    "title": "404: This page could not be found.",
+    "headings": [
+      "404",
+      "This page could not be found."
+    ],
+    "mainText": "404\nThis page could not be found.",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "width": 1365,
+    "faqToggled": true
+  },
+  {
+    "width": 1365,
+    "navigation": "/step"
+  },
+  {
+    "route": "/",
+    "path": "/",
+    "width": 390,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Ми підберемо для вас ідеальний тур: пляжний релакс, захоплюючі екскурсії, або яскраві пригоди. Плануйте подорож легко та комфортно разом із професіоналами.",
+      "Наші тури",
+      "Чому обирають нас",
+      "SMART тури",
+      "Відгуки",
+      "Часто задавані питання",
+      "Корпоративне обслуговування"
+    ],
+    "mainText": "Ми підберемо для вас ідеальний тур: пляжний релакс, захоплюючі екскурсії, або яскраві пригоди. Плануйте подорож легко та комфортно разом із професіоналами.\n\nВІД",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/step",
+    "path": "/step",
+    "width": 390,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "S.T.E.P"
+    ],
+    "mainText": "STORY TRAVEL EMOTIONS PHOTO\n\nS.T.E.P\n\nМрієте про ідеальну подорож? Ми допоможемо!\n\nПереглянути тур\nНові горизонти\n\nВирушайте у подорож до Швейцарії – країни ней",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/about",
+    "path": "/about",
+    "width": 390,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Про нас",
+      "Нові горизонти",
+      "Наша команда",
+      "Документи",
+      "Відгуки"
+    ],
+    "mainText": "ПРО НАС\n\nЛаскаво просимо до нашого туристичного оператора! Ми спеціалізуємося на розробці та реалізації автобусних турів, створюючи унікальні подорожі, які запа",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/tours",
+    "path": "/tours",
+    "width": 390,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Тури"
+    ],
+    "mainText": "Тури\nВсі тури\nМорські тури Італія\nТури для дитячих груп\nБез нічних переїздів\nМорські тури Хорватія та Чорногорія\nSMART-тури\nМорські тури Іспанія\nМорські тури Гр",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/search",
+    "path": "/search",
+    "width": 390,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [],
+    "mainText": "Країна\nМісяць\nПошук\n\nТурів за вибраними параметрами не знайдено.",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/agent",
+    "path": "/auth/sign-in",
+    "width": 390,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Вхід для агентів"
+    ],
+    "mainText": "Вхід для агентів\n👁\n\nЗабули пароль? Відновити\n\nАвторизуватися\nСтворити новий доступ\n\nНевірний email або пароль.",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/agency",
+    "path": "/auth/sign-in",
+    "width": 390,
+    "title": "Rich Tour – ваш надійний партнер у подорожах!",
+    "headings": [
+      "Вхід для агентів"
+    ],
+    "mainText": "Вхід для агентів\n👁\n\nЗабули пароль? Відновити\n\nАвторизуватися\nСтворити новий доступ\n\nНевірний email або пароль.",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "route": "/tours/stage7-missing-tour",
+    "path": "/tours/stage7-missing-tour",
+    "width": 390,
+    "title": "404: This page could not be found.",
+    "headings": [
+      "404",
+      "This page could not be found."
+    ],
+    "mainText": "404\nThis page could not be found.",
+    "header": true,
+    "footer": true,
+    "tourLink": null
+  },
+  {
+    "width": 390,
+    "faqToggled": true
+  },
+  {
+    "width": 390,
+    "navigation": "/step"
+  },
+  {
+    "browserErrors": []
+  }
+]

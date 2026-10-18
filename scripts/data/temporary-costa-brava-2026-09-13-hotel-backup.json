@@ -1,0 +1,139 @@
+{
+    "originalHotels":  [
+                           {
+                               "_key":  "273ed1b0a024",
+                               "fullDescription":  [
+                                                       {
+                                                           "_key":  "26c535d5fd02",
+                                                           "_type":  "block",
+                                                           "children":  [
+                                                                            {
+                                                                                "_key":  "dafb6f17f2ea",
+                                                                                "_type":  "span",
+                                                                                "marks":  [
+                                                                                              "strong"
+                                                                                          ],
+                                                                                "text":  "Hotel Maria del Mar"
+                                                                            },
+                                                                            {
+                                                                                "_key":  "1301ffb2de27",
+                                                                                "_type":  "span",
+                                                                                "marks":  [
+
+                                                                                          ],
+                                                                                "text":  " — це 4★ готель у центрі курортного міста "
+                                                                            },
+                                                                            {
+                                                                                "_key":  "c67be408d7d0",
+                                                                                "_type":  "span",
+                                                                                "marks":  [
+                                                                                              "strong"
+                                                                                          ],
+                                                                                "text":  "Льорет‑де‑Мар (Іспанія)"
+                                                                            },
+                                                                            {
+                                                                                "_key":  "a820c8d97629",
+                                                                                "_type":  "span",
+                                                                                "marks":  [
+
+                                                                                          ],
+                                                                                "text":  ", розташований приблизно за 400 м від пляжу й у пішій доступності до барів, ресторанів, магазинів і транспортних зупинок, що робить його зручним як для сімейного, так і для молодіжного відпочинку. Він пропонує комфортабельні номери з балконами, кондиціонером, Wi‑Fi, телевізором і міні‑холодильником, а також відкриті й криті басейни із сонячною терасою, ресторан із середземноморською кухнею та бари для відпочинку. Для гостей доступні фітнес‑центр, дитячий басейн, жива музика, зустрічні зали й послуги консьєржа, а також організація екскурсій і прокат велосипедів, що робить його зручним вибором для різноманітного відпочинку на узбережжі Коста‑Брава."
+                                                                            }
+                                                                        ],
+                                                           "markDefs":  [
+
+                                                                        ],
+                                                           "style":  "normal"
+                                                       }
+                                                   ],
+                               "gallery":  [
+                                               {
+                                                   "_key":  "efb524f87f7e",
+                                                   "_type":  "image",
+                                                   "asset":  {
+                                                                 "_ref":  "image-43275f4c664a5adac4f3ba54d4e0d05f05f46e9e-1024x625-jpg",
+                                                                 "_type":  "reference"
+                                                             }
+                                               },
+                                               {
+                                                   "_key":  "02cb3d4ad327",
+                                                   "_type":  "image",
+                                                   "asset":  {
+                                                                 "_ref":  "image-1ee9c6302e9fd4b1aabfa68e3bb6bfa9b4596fd4-1360x997-webp",
+                                                                 "_type":  "reference"
+                                                             }
+                                               },
+                                               {
+                                                   "_key":  "01e534f66055",
+                                                   "_type":  "image",
+                                                   "asset":  {
+                                                                 "_ref":  "image-b71dd8573e337bd99ced1f1c634630d547ec2aff-1024x683-jpg",
+                                                                 "_type":  "reference"
+                                                             }
+                                               },
+                                               {
+                                                   "_key":  "a6a237259648",
+                                                   "_type":  "image",
+                                                   "asset":  {
+                                                                 "_ref":  "image-d698649518785da02f1e3b2a2ddebfa15bfac008-1024x683-jpg",
+                                                                 "_type":  "reference"
+                                                             }
+                                               },
+                                               {
+                                                   "_key":  "1b60e617679f",
+                                                   "_type":  "image",
+                                                   "asset":  {
+                                                                 "_ref":  "image-27f2b4492bc894a5f70bf08a182d889cadd15dff-1024x683-jpg",
+                                                                 "_type":  "reference"
+                                                             }
+                                               },
+                                               {
+                                                   "_key":  "f20cd260f682",
+                                                   "_type":  "image",
+                                                   "asset":  {
+                                                                 "_ref":  "image-7412c2fcc31ef31832ef5ef12ff2d51b55b23cca-512x768-jpg",
+                                                                 "_type":  "reference"
+                                                             }
+                                               }
+                                           ],
+                               "price":  595,
+                               "shortDescription":  [
+                                                        {
+                                                            "_key":  "6ae9cfd5174c",
+                                                            "_type":  "block",
+                                                            "children":  [
+                                                                             {
+                                                                                 "_key":  "1c4da51794f7",
+                                                                                 "_type":  "span",
+                                                                                 "marks":  [
+                                                                                               "strong"
+                                                                                           ],
+                                                                                 "text":  "Hotel Maria del Mar"
+                                                                             },
+                                                                             {
+                                                                                 "_key":  "84e92d12eba3",
+                                                                                 "_type":  "span",
+                                                                                 "marks":  [
+
+                                                                                           ],
+                                                                                 "text":  " — це 4★ готель у центрі Льорет‑де‑Мара (Іспанія), розташований всього приблизно за 400 м від пляжу, поруч із магазинами, кафе та транспортом. Він пропонує комфортабельні номери з балконом і кондиціонером, відкриті та криті басейни, терасу для засмаги, ресторан із середземноморською кухнею та бар біля басейну, а також розважальні програми в літній сезон і цілодобову рецепцію. Готель підходить як для сімейного, так і для молодіжного відпочинку завдяки зручному розташуванню та різноманітним послугам."
+                                                                             }
+                                                                         ],
+                                                            "markDefs":  [
+
+                                                                         ],
+                                                            "style":  "normal"
+                                                        }
+                                                    ],
+                               "stars":  4,
+                               "title":  "HOTEL MARIA DEL MAR"
+                           }
+                       ],
+    "createdAt":  "2026-10-05T11:14:57.8383311Z",
+    "addedHotelTitle":  "HOTEL MARIA DEL MAR — тестовий варіант",
+    "addedHotelKey":  "1bb0d5c1cebb",
+    "documentId":  "a4605a13-67ad-4c44-91f7-fbf568d6a8d1",
+    "originalRevision":  "AuD9QdpOoEagcr9nzSsrUK",
+    "slug":  "kosta-brava-morskii-tur-ispaniya",
+    "date":  "2026-09-13"
+}

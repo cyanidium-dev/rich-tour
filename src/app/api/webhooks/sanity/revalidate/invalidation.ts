@@ -25,7 +25,10 @@ const invalidationByType: Record<string, Invalidation> = {
     tag: SANITY_CACHE_TAGS.reviews,
     paths: [{ path: "/" }, { path: "/about" }, { path: "/reviews" }],
   },
-  siteSettings: { tag: SANITY_CACHE_TAGS.siteSettings, paths: [{ path: "/agent" }] },
+  siteSettings: {
+    tag: SANITY_CACHE_TAGS.siteSettings,
+    paths: [{ path: "/" }, { path: "/contacts" }, { path: "/agent" }],
+  },
 };
 
 export function getInvalidationForType(documentType: string): Invalidation | undefined {

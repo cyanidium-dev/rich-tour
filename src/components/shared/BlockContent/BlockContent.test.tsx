@@ -38,6 +38,93 @@ it("styles program headings and both bullet list levels", () => {
   expect(html).toMatch(/<\/ul><p class="[^"]*programParagraph[^"]*">Description<\/p>/);
 });
 
+it("adds a program bullet only when the whole paragraph is strong", () => {
+  const highlighted = {
+    ...paragraph("Highlighted"),
+    children: [
+      { _type: "span", _key: "strong", text: "Highlighted", marks: ["strong"] },
+      { _type: "span", _key: "space", text: " ", marks: [] },
+    ],
+  };
+  const partial = {
+    ...paragraph("Partial"),
+    children: [
+      { _type: "span", _key: "partial-strong", text: "Partial", marks: ["strong"] },
+      { _type: "span", _key: "partial-plain", text: " text", marks: [] },
+    ],
+  };
+  const value = [highlighted, paragraph("Description"), partial, paragraph("Plain")];
+  const html = renderToStaticMarkup(<BlockContent value={value} programListStyle />);
+
+  expect(html).toMatch(/<p class="[^"]*programHighlight[^"]*"><strong>Highlighted<\/strong> <\/p>/);
+  expect(html.match(/programHighlight/g)).toHaveLength(1);
+  expect(html.match(/programParagraph/g)).toHaveLength(3);
+  expect(html).toMatch(/<\/p><p class="[^"]*programParagraph[^"]*">Description<\/p>/);
+
+  const regularHtml = renderToStaticMarkup(<BlockContent value={[highlighted]} />);
+  expect(regularHtml).not.toContain("programHighlight");
+});
+
+it("adds a program bullet when a strong opening line ends with a break", () => {
+  const breakInsideStrong = {
+    ...paragraph("Inside"),
+    children: [
+      { _type: "span", _key: "inside-strong", text: "Heading\n", marks: ["strong"] },
+      { _type: "span", _key: "inside-plain", text: "Description", marks: [] },
+    ],
+  };
+  const breakAfterStrong = {
+    ...paragraph("After"),
+    children: [
+      { _type: "span", _key: "after-strong", text: "Heading", marks: ["strong"] },
+      { _type: "span", _key: "after-break", text: "\nDescription", marks: [] },
+    ],
+  };
+  const plainBeforeBreak = {
+    ...paragraph("Plain before break"),
+    children: [
+      { _type: "span", _key: "partial-strong", text: "Heading", marks: ["strong"] },
+      { _type: "span", _key: "partial-plain", text: " and more\nDescription", marks: [] },
+    ],
+  };
+  const value = [breakInsideStrong, breakAfterStrong, plainBeforeBreak];
+  const html = renderToStaticMarkup(<BlockContent value={value} programListStyle />);
+
+  expect(html.match(/programDottedLine/g)).toHaveLength(2);
+  expect(html.match(/programStrongLine/g)).toHaveLength(2);
+  expect(html).toContain("<strong>Heading</strong>");
+  expect(html).toContain("<strong>Heading</strong> and more");
+  expect(renderToStaticMarkup(<BlockContent value={value} />)).not.toContain("programHighlight");
+});
+
+it("keeps strong lines after a break in the same program paragraph", () => {
+  const value = [
+    {
+      ...paragraph("Travel day"),
+      children: [
+        { _type: "span", _key: "travel", text: "Travel\n", marks: [] },
+        { _type: "span", _key: "arrival", text: "Arrival", marks: ["strong"] },
+        { _type: "span", _key: "arrival-break", text: "\nDescription\n", marks: [] },
+        { _type: "span", _key: "departure", text: "Departure", marks: ["strong"] },
+        { _type: "span", _key: "departure-break", text: "\nMore text with ", marks: [] },
+        { _type: "span", _key: "inline-strong", text: "inline emphasis", marks: ["strong"] },
+        { _type: "span", _key: "inline-end", text: " and more\n", marks: [] },
+        { _type: "span", _key: "night", text: "Night transit", marks: ["strong"] },
+      ],
+    },
+  ];
+  const html = renderToStaticMarkup(<BlockContent value={value} programListStyle />);
+
+  expect(html.match(/programDottedLine/g)).toHaveLength(2);
+  expect(html.match(/programStrongLine/g)).toHaveLength(3);
+  expect(html).toMatch(/programDottedLine[^\"]*"><strong>Arrival<\/strong><\/p>/);
+  expect(html).toMatch(/programDottedLine[^\"]*"><strong>Departure<\/strong><\/p>/);
+  expect(html).toMatch(
+    /programPlainLine[^\"]*">More text with <strong>inline emphasis<\/strong> and more<\/p>/,
+  );
+  expect(html).toMatch(/programStrongLine[^\"]*"><strong>Night transit<\/strong><\/p>/);
+});
+
 it("keeps relative links in the tab and opens external links securely", () => {
   for (const href of ["/contacts", "https://example.invalid"]) {
     const value = [

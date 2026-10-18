@@ -1,0 +1,89 @@
+[
+  {
+    "entry": "src/components/agent/menu/content/OrdersContent.tsx",
+    "sourceFiles": 19,
+    "files": [
+      "src/components/agent/menu/content/Category.tsx",
+      "src/components/agent/menu/content/DetailsModal.tsx",
+      "src/components/agent/menu/content/OrderItem.tsx",
+      "src/components/agent/menu/content/OrdersContent.tsx",
+      "src/components/agent/menu/content/OrdersFilters.tsx",
+      "src/components/agent/menu/content/SearchInput.tsx",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/backdrop/Backdrop.tsx",
+      "src/components/shared/icons/ArrowInCircleIcon.tsx",
+      "src/components/shared/icons/SearchIcon.tsx",
+      "src/components/shared/icons/SelectIcon.tsx",
+      "src/components/shared/loader/Loader.tsx",
+      "src/components/shared/pagination/Pagination.tsx",
+      "src/components/tour/hotels/CloseHotelModalIcon.tsx",
+      "src/entities/order/index.ts",
+      "src/entities/order/model/mapOrders.ts",
+      "src/entities/order/model/schema.ts",
+      "src/hooks/useOrdersPerPage.ts"
+    ],
+    "packages": [
+      "@heroui/react",
+      "@internationalized/date",
+      "@react-aria/i18n",
+      "axios",
+      "framer-motion",
+      "next/navigation",
+      "react",
+      "zod"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/reviews/ReviewsList.tsx",
+    "sourceFiles": 14,
+    "files": [
+      "src/components/reviews/ReviewsList.tsx",
+      "src/components/shared/animation/AnimatedListItem.tsx",
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/icons/ArrowInCircleIcon.tsx",
+      "src/components/shared/loader/Loader.tsx",
+      "src/components/shared/pagination/Pagination.tsx",
+      "src/entities/review/index.ts",
+      "src/entities/review/model/types.ts",
+      "src/entities/review/ui/ReviewCard.tsx",
+      "src/hooks/useReviewsItemsPerPage.ts",
+      "src/shared/lib/formatDate.ts",
+      "src/shared/lib/getDayWord.ts",
+      "src/shared/lib/index.ts"
+    ],
+    "packages": [
+      "framer-motion",
+      "next/navigation",
+      "react"
+    ],
+    "unresolved": []
+  },
+  {
+    "entry": "src/components/shared/reviews/ReviewsSwiperMob.tsx",
+    "sourceFiles": 10,
+    "files": [
+      "src/components/shared/animation/AnimatedWrapper.tsx",
+      "src/components/shared/animation/animationVariants.ts",
+      "src/components/shared/loader/Loader.tsx",
+      "src/components/shared/reviews/ReviewsSwiperMob.tsx",
+      "src/entities/review/index.ts",
+      "src/entities/review/model/types.ts",
+      "src/entities/review/ui/ReviewCard.tsx",
+      "src/shared/lib/formatDate.ts",
+      "src/shared/lib/getDayWord.ts",
+      "src/shared/lib/index.ts"
+    ],
+    "packages": [
+      "framer-motion",
+      "react",
+      "swiper/css",
+      "swiper/css/navigation",
+      "swiper/modules",
+      "swiper/react"
+    ],
+    "unresolved": []
+  }
+]

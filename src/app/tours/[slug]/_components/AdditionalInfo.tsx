@@ -3,8 +3,14 @@ import Image from "next/image";
 import { Container } from "@/shared/ui/index";
 import AnimatedWrapper from "@/components/shared/animation/AnimatedWrapper";
 import { fadeInAnimation } from "@/components/shared/animation/animationVariants";
+import styles from "./AdditionalInfo.module.css";
 
 export default function AdditionalInfo({ text }: { text: string }) {
+  const items = text
+    .split(/\r?\n/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+
   return (
     <section className="mb-[148px] xl:mb-[180px] relative">
       <Container className="md:flex md:justify-end">
@@ -32,11 +38,13 @@ export default function AdditionalInfo({ text }: { text: string }) {
             Додаткова інформація
           </AnimatedWrapper>
           <AnimatedWrapper
-            as="p"
+            as="ul"
             animation={fadeInAnimation({ y: 30, delay: 0.4 })}
-            className="mb-[30px] text-16reg"
+            className={styles.list}
           >
-            {text}
+            {items.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
           </AnimatedWrapper>
         </div>
       </Container>

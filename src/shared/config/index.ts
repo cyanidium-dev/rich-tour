@@ -1,1 +1,1 @@
-export { address, email, phoneNumbers, schedule, socials } from "./contact-information";
+export type { SiteContacts } from "./contact-information";

@@ -1,0 +1,24 @@
+[
+  {
+    "name": "invalid-json",
+    "status": 400,
+    "error": "INVALID_BODY"
+  },
+  {
+    "name": "missing-identifiers",
+    "status": 400,
+    "error": "MISSING_BOOKING_IDENTIFIERS"
+  },
+  {
+    "name": "validation",
+    "status": 400,
+    "error": "VALIDATION_FAILED",
+    "fields": [
+      "Оберіть дату виїзду",
+      "Вкажіть кількість туристів",
+      "Дане поле обов'язкове до заповнення",
+      "Дане поле обов'язкове до заповнення",
+      "Має бути хоча б один турист"
+    ]
+  }
+]
