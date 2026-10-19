@@ -1,0 +1,9 @@
+.withCommission:global(.rdp-day_button) {
+  height: 49px;
+}
+
+@media (max-width: 767px) {
+  .withCommission:global(.rdp-day_button) {
+    height: 68px;
+  }
+}

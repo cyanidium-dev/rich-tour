@@ -101,7 +101,7 @@ export default function Calendar({ isLogin, tour, ...userData }: CalendarProps) 
 
     day: "w-full text-16reg",
     weekday: "mt-[10px] py-3 text-16reg",
-    week: "h-[57.5px]",
+    week: isLogin && tour.agencyCommission ? "h-[74px] md:h-[57.5px]" : "h-[57.5px]",
     chevron: "size-[18px]",
     today: "text-main",
     month_grid: "w-full table-fixed",

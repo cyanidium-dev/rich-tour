@@ -65,22 +65,35 @@ it("renders remaining content when every image slot is empty", () => {
   expect(screen.getByTestId("calendar")).toBeTruthy();
 });
 
-it.each([false, true])("renders both cost images for isLogin=%s", (isLogin) => {
-  const withImages: Tour = {
-    ...tour,
-    heroImages: { main: { url: "/departure.jpg", alt: "Departure" } },
-    costImages: {
-      short: { url: "/short.jpg", alt: "Short" },
-      tall: { url: "/tall.jpg", alt: "Tall" },
-    },
-  };
-  const { container } = render(
-    <>
-      <Hero tour={withImages} {...contact} />
-      <TourCost tour={withImages} isLogin={isLogin} {...contact} />
-    </>,
-  );
-  expect(
-    Array.from(container.querySelectorAll("img"), (image) => image.getAttribute("src")),
-  ).toEqual(["/departure.jpg", "/short.jpg", "/tall.jpg"]);
-});
+it.each([
+  {
+    isLogin: false,
+    expectedImages: ["/departure.jpg", "/short.jpg", "/tall.jpg"],
+    hasThirdColumn: true,
+  },
+  { isLogin: true, expectedImages: ["/departure.jpg", "/short.jpg"], hasThirdColumn: false },
+])(
+  "renders the right cost image only for guests (isLogin=$isLogin)",
+  ({ isLogin, expectedImages, hasThirdColumn }) => {
+    const withImages: Tour = {
+      ...tour,
+      heroImages: { main: { url: "/departure.jpg", alt: "Departure" } },
+      costImages: {
+        short: { url: "/short.jpg", alt: "Short" },
+        tall: { url: "/tall.jpg", alt: "Tall" },
+      },
+    };
+    const { container } = render(
+      <>
+        <Hero tour={withImages} {...contact} />
+        <TourCost tour={withImages} isLogin={isLogin} {...contact} />
+      </>,
+    );
+    expect(
+      Array.from(container.querySelectorAll("img"), (image) => image.getAttribute("src")),
+    ).toEqual(expectedImages);
+    expect(screen.getByTestId("calendar").parentElement?.classList.contains("lg:grid-cols-3")).toBe(
+      hasThirdColumn,
+    );
+  },
+);

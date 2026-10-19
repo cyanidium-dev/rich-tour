@@ -3,6 +3,7 @@ import { DayButton as DefaultDayButton, type DayButtonProps } from "react-day-pi
 import type { TourDepartures } from "@/entities/tour/index";
 import { formatBookingDate, getDayData } from "./calendarDates";
 import { formatCommission } from "./formatCommission";
+import styles from "./DayButton.module.css";
 
 type BtnProps = DayButtonProps & {
   isLogin: boolean;
@@ -33,6 +34,7 @@ export default function DayButton(props: BtnProps) {
 
   const status = dayData?.status || [];
   const hasPrice = dayData?.price !== undefined;
+  const hasCommission = isLogin && Boolean(agencyCommission);
 
   const iconStatuses = ["guaranteed", "hot", "discount"];
   const borderStatuses = {
@@ -97,7 +99,7 @@ export default function DayButton(props: BtnProps) {
           openBooking?.(formatBookingDate(date), dayData.departureId);
         }
       }}
-      className={`${buttonProps.className ?? ""} ${isLogin ? "w-full" : "w-[44px]"} h-[49px] rounded-[6px] border-2 relative px-[2px] ${
+      className={`${buttonProps.className ?? ""} ${isLogin ? "w-full" : "w-[44px]"} ${hasCommission ? styles.withCommission : "h-[49px]"} rounded-[6px] border-2 relative px-[2px] ${
         hasPrice
           ? "flex flex-col items-center justify-start pt-[2px]"
           : "flex items-center justify-center"
@@ -105,7 +107,7 @@ export default function DayButton(props: BtnProps) {
       style={{
         ...buttonProps.style,
         width: isLogin ? "100%" : "44px",
-        height: "49px",
+        height: hasCommission ? undefined : "49px",
         borderRadius: "6px",
         borderColor,
         color: textColor,
@@ -127,20 +129,22 @@ export default function DayButton(props: BtnProps) {
       ${isLogin && agencyCommission ? "xl:text-12semi" : ""}
     `}
         >
-          {dayData.price}
-          {currency === "EUR" ? "€" : "₴"}
-          {isLogin && agencyCommission && (
-            <>
+          <span className={hasCommission ? "max-md:block max-md:whitespace-nowrap" : ""}>
+            {dayData.price}
+            {currency === "EUR" ? "€" : "₴"}
+          </span>
+          {hasCommission && agencyCommission && (
+            <span className="max-md:block max-md:whitespace-nowrap">
               {" / "}
               {formatCommission(agencyCommission, currency, convert)}
               {/*{props.currency === "EUR" ? "€" : "₴"}*/}
-            </>
+            </span>
           )}
         </span>
       )}
 
       {showIcons.length > 0 && (
-        <div className="absolute bottom-0 left-1 flex gap-[2px]">
+        <div className="absolute bottom-1 left-1 flex gap-[2px] md:bottom-0">
           {showIcons.map((s) => {
             const icon = statusIcons[s];
             if (!icon) return null;

@@ -16,11 +16,12 @@ interface TourCostProps {
 
 export default function TourCost({ isLogin, tour, ...userData }: TourCostProps) {
   const { costImages } = tour;
+  const tallImage = isLogin ? undefined : costImages.tall;
 
   return (
     <section className="mb-[148px] xl:mb-[180px]">
       <Container
-        className={`md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] ${costImages.tall ? "lg:grid-cols-3" : ""} items-stretch gap-x-5 xl:gap-x-10`}
+        className={`md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] ${tallImage ? "lg:grid-cols-3" : ""} items-stretch gap-x-5 xl:gap-x-10`}
       >
         <div className="hidden md:flex flex-col justify-between min-w-0">
           <AnimatedWrapper
@@ -53,7 +54,7 @@ export default function TourCost({ isLogin, tour, ...userData }: TourCostProps) 
           )}
         </div>
         <Calendar isLogin={isLogin} tour={tour} {...userData} />
-        {costImages.tall && (
+        {tallImage && (
           <div className="hidden lg:block relative min-w-0 h-[702px]">
             <AnimatedArrowDesk />
             <AnimatedWrapper
@@ -62,8 +63,8 @@ export default function TourCost({ isLogin, tour, ...userData }: TourCostProps) 
               className="relative h-[702px] rounded-[12px] overflow-hidden"
             >
               <Image
-                src={costImages.tall.url}
-                alt={costImages.tall.alt}
+                src={tallImage.url}
+                alt={tallImage.alt}
                 fill
                 sizes="30vw"
                 className="object-cover"

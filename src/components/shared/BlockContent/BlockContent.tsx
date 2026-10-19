@@ -1,23 +1,11 @@
 import {
   PortableText,
-  type PortableTextBlock as RenderedPortableTextBlock,
   type PortableTextComponents,
   type PortableTextMarkComponentProps,
 } from "@portabletext/react";
 import type { ReactNode } from "react";
 import type { PortableTextBlock } from "@/shared/lib";
 import styles from "./BlockContent.module.css";
-
-function isFullyStrong(block: RenderedPortableTextBlock) {
-  const textSpans = block.children?.filter(
-    (child) => child._type === "span" && typeof child.text === "string" && child.text.trim(),
-  );
-
-  return Boolean(
-    textSpans?.length &&
-      textSpans.every((span) => Array.isArray(span.marks) && span.marks.includes("strong")),
-  );
-}
 
 function renderHeader(children: ReactNode, largeBullet = false) {
   return (
@@ -129,82 +117,11 @@ const components: Partial<PortableTextComponents> = {
   },
 };
 
-type ProgramLine = {
-  children: RenderedPortableTextBlock["children"];
-  endsWithBreak: boolean;
-};
-
-function splitProgramLines(block: RenderedPortableTextBlock): ProgramLine[] {
-  const lines: ProgramLine[] = [{ children: [], endsWithBreak: false }];
-
-  for (const child of block.children) {
-    if (child._type !== "span" || typeof child.text !== "string") {
-      lines[lines.length - 1].children.push(child);
-      continue;
-    }
-
-    child.text.split("\n").forEach((part, index, parts) => {
-      if (part) {
-        lines[lines.length - 1].children.push({
-          ...child,
-          _key: `${child._key ?? "span"}-${lines.length}`,
-          text: part,
-        });
-      }
-      if (index < parts.length - 1) {
-        lines[lines.length - 1].endsWithBreak = true;
-        lines.push({ children: [], endsWithBreak: false });
-      }
-    });
-  }
-
-  return lines;
-}
-
-const programLineComponents: Partial<PortableTextComponents> = {
-  marks: components.marks,
-  block: { normal: ({ children }) => <>{children}</> },
-};
-
-function ProgramLines({ value }: { value: RenderedPortableTextBlock }) {
-  return (
-    <div className={styles.programLines}>
-      {splitProgramLines(value).map((line, index) => {
-        const isStrong = isFullyStrong({ ...value, children: line.children });
-        const className = `${styles.programLine} ${isStrong ? styles.programStrongLine : styles.programPlainLine}${isStrong && line.endsWithBreak ? ` ${styles.programDottedLine}` : ""}`;
-
-        return (
-          <p className={className} key={`${value._key ?? "block"}-${index}`}>
-            {line.children.length ? (
-              <PortableText
-                value={[{ ...value, children: line.children }]}
-                components={programLineComponents}
-              />
-            ) : (
-              <br />
-            )}
-          </p>
-        );
-      })}
-    </div>
-  );
-}
-
 const programComponents: Partial<PortableTextComponents> = {
   ...components,
   block: {
     ...blockComponents,
-    normal: ({ children, value }) => {
-      if (value.children?.some((child) => child._type === "span" && child.text?.includes("\n"))) {
-        return <ProgramLines value={value} />;
-      }
-
-      return (
-        <p className={isFullyStrong(value) ? styles.programHighlight : styles.programParagraph}>
-          {children}
-        </p>
-      );
-    },
+    normal: ({ children }) => <p className={styles.programParagraph}>{children}</p>,
     h1: ({ children }) => renderHeader(children, true),
     h2: ({ children }) => renderHeader(children, true),
     h3: ({ children }) => renderHeader(children, true),
