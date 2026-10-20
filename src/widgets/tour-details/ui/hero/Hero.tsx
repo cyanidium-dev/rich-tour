@@ -12,9 +12,16 @@ interface HeroProps {
   companyName: string | undefined;
   email: string | undefined;
   phone: string | undefined;
+  preview?: boolean;
+  missingDuration?: boolean;
 }
 
-export default function Hero({ tour, ...userData }: HeroProps) {
+export default function Hero({
+  tour,
+  preview = false,
+  missingDuration = false,
+  ...userData
+}: HeroProps) {
   const { title, duration, heroImages, programUpload } = tour;
   const hasLowerImages = Boolean(heroImages.left || heroImages.right);
 
@@ -38,26 +45,39 @@ export default function Hero({ tour, ...userData }: HeroProps) {
                 animation={fadeInAnimation({ y: 30 })}
                 className="mb-8 text-16semi xl:text-20semi"
               >
-                {duration}&nbsp;{getDayWord(duration)}
+                {preview && missingDuration ? (
+                  "Тривалість ще не додано"
+                ) : (
+                  <>
+                    {duration}&nbsp;{getDayWord(duration)}
+                  </>
+                )}
               </AnimatedWrapper>
             </div>
             <div className="flex flex-col xl:flex-row gap-2 md:mb-6">
-              <BookingWithButton
-                {...userData}
-                tour={tour}
-                buttonStyles="w-full xl:w-[198px] h-12 text-14med"
-              />
-              <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.4 })}>
-                <a
-                  href={programUpload?.url || ""}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                >
-                  <MainButton variant="ghost black" className="w-full xl:w-[249px] h-12 text-14med">
-                    Завантажити програму туру
-                  </MainButton>
-                </a>
-              </AnimatedWrapper>
+              {!preview && (
+                <BookingWithButton
+                  {...userData}
+                  tour={tour}
+                  buttonStyles="w-full xl:w-[198px] h-12 text-14med"
+                />
+              )}
+              {(!preview || programUpload?.url) && (
+                <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.4 })}>
+                  <a
+                    href={programUpload?.url || ""}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    <MainButton
+                      variant="ghost black"
+                      className="w-full xl:w-[249px] h-12 text-14med"
+                    >
+                      Завантажити програму туру
+                    </MainButton>
+                  </a>
+                </AnimatedWrapper>
+              )}
             </div>
           </div>
           {heroImages.main && (

@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { CURRENCY_REFRESH_MS, isValidRate } from "@/lib/currency/rate";
 
-type Currency = "EUR" | "UAH";
+type Currency = "EUR" | "USD";
 
 type CurrencyContextType = {
   selected: Currency;
@@ -11,21 +11,24 @@ type CurrencyContextType = {
   setSelected: (currency: Currency) => void;
   convert: (amount: number) => number;
   rate: number | null;
+  usdRate: number | null;
 };
 
 const CurrencyContext = createContext<CurrencyContextType | null>(null);
 
 const SELECTED_STORAGE_KEY = "selected_currency";
 const RATE_STORAGE_KEY = "last_eur_uah_rate";
+const USD_RATE_STORAGE_KEY = "last_usd_uah_rate";
 
 export function CurrencyProvider({ children }: { children: ReactNode }) {
   const [preferred, setPreferred] = useState<Currency>("EUR");
   const [rate, setRate] = useState<number | null>(null);
+  const [usdRate, setUsdRate] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
-  const selected = preferred === "UAH" && isValidRate(rate) ? "UAH" : "EUR";
+  const selected = preferred === "USD" && isValidRate(rate) && isValidRate(usdRate) ? "USD" : "EUR";
 
   const setSelected = (currency: Currency) => {
-    if (currency === "UAH" && !isValidRate(rate)) return;
+    if (currency === "USD" && (!isValidRate(rate) || !isValidRate(usdRate))) return;
     setPreferred(currency);
     try {
       localStorage.setItem(SELECTED_STORAGE_KEY, currency);
@@ -39,8 +42,10 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
     try {
       const storedRate = Number(localStorage.getItem(RATE_STORAGE_KEY));
       if (isValidRate(storedRate)) setRate(storedRate);
+      const storedUsdRate = Number(localStorage.getItem(USD_RATE_STORAGE_KEY));
+      if (isValidRate(storedUsdRate)) setUsdRate(storedUsdRate);
       const storedCurrency = localStorage.getItem(SELECTED_STORAGE_KEY);
-      if (storedCurrency === "EUR" || storedCurrency === "UAH") setPreferred(storedCurrency);
+      if (storedCurrency === "EUR" || storedCurrency === "USD") setPreferred(storedCurrency);
     } catch {
       // The server-backed rate can still be loaded without browser storage.
     }
@@ -51,17 +56,22 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
         if (!response.ok) throw new Error(`Currency API returned ${response.status}`);
         const data: unknown = await response.json();
         const nextRate = (data as { eur?: unknown })?.eur;
-        if (!isValidRate(nextRate)) throw new Error("Currency API returned an invalid rate");
+        const nextUsdRate = (data as { usd?: unknown })?.usd;
+        if (!isValidRate(nextRate) || !isValidRate(nextUsdRate)) {
+          throw new Error("Currency API returned invalid rates");
+        }
         if (active) {
           setRate(nextRate);
+          setUsdRate(nextUsdRate);
           try {
             localStorage.setItem(RATE_STORAGE_KEY, String(nextRate));
+            localStorage.setItem(USD_RATE_STORAGE_KEY, String(nextUsdRate));
           } catch {
             // The in-memory rate remains available for this visit.
           }
         }
       } catch (error) {
-        console.error("Failed to fetch EUR/UAH", error);
+        console.error("Failed to fetch currency rates", error);
       } finally {
         if (active) setLoading(false);
       }
@@ -76,8 +86,8 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const convert = (amount: number) => {
-    if (selected === "EUR" || !isValidRate(rate)) return amount;
-    return Math.round(amount * rate);
+    if (selected === "EUR" || !isValidRate(rate) || !isValidRate(usdRate)) return amount;
+    return Math.round((amount * rate * 100) / usdRate) / 100;
   };
 
   return (
@@ -88,6 +98,7 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
         setSelected,
         convert,
         rate,
+        usdRate,
       }}
     >
       {children}

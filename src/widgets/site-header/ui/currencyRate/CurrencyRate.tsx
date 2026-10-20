@@ -5,12 +5,13 @@ import Image from "next/image";
 import { useCurrency } from "@/context/CurrencyContext";
 
 export default function CurrencyToggle() {
-  const { selected, setSelected, rate } = useCurrency();
-  const currencySecond = selected === "EUR" ? "UAH" : "EUR";
+  const { selected, setSelected, rate, usdRate } = useCurrency();
+  const currencySecond = selected === "EUR" ? "UAH" : "USD";
 
   if (!rate) return <span className="text-[#E43A3A] text-sm font-medium">EUR</span>;
 
-  const formatRate = selected === "EUR" ? rate.toFixed(2) : (1 / rate).toFixed(4);
+  const eurUsdRate = usdRate ? rate / usdRate : null;
+  const formatRate = selected === "EUR" ? rate.toFixed(2) : eurUsdRate?.toFixed(4);
 
   return (
     <Dropdown>
@@ -33,7 +34,7 @@ export default function CurrencyToggle() {
           selectionMode="single"
           onSelectionChange={(keys) => {
             const value = Array.from(keys)[0];
-            if (value === "EUR" || value === "UAH") setSelected(value);
+            if (value === "EUR" || value === "USD") setSelected(value);
           }}
         >
           <Dropdown.Item id="EUR" textValue="EUR / UAH">
@@ -46,12 +47,12 @@ export default function CurrencyToggle() {
             </Label>
           </Dropdown.Item>
 
-          <Dropdown.Item id="UAH" textValue="UAH / EUR">
+          <Dropdown.Item id="USD" textValue="EUR / USD" isDisabled={!eurUsdRate}>
             <Dropdown.ItemIndicator />
             <Label>
               <div className="flex justify-between w-full gap-4">
-                <span>UAH / EUR</span>
-                <span className="opacity-60">{(1 / rate).toFixed(4)}</span>
+                <span>EUR / USD</span>
+                <span className="opacity-60">{eurUsdRate?.toFixed(4) ?? "—"}</span>
               </div>
             </Label>
           </Dropdown.Item>

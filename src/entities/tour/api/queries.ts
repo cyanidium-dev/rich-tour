@@ -183,6 +183,45 @@ export const tourPageQuery = `*[_type == "tour-basic" && slug.current == $slug][
   }
 }`;
 
+export const previewTourDepartureQuery = `*[_type == "tour-to-date" && _id == $id][0]{
+  _id,
+  "basicId": basic._ref,
+  "basicTour": basic->{
+    _id, title, slug, description, duration, earlyBooking,
+    image { asset->{ url }, displayCrops }
+  },
+  title,
+  crmNumber,
+  dateRange,
+  price,
+  availability,
+  guaranteed,
+  hot,
+  agencyCommission,
+  discount,
+  hotels[]{
+    title, stars, price, shortDescription, fullDescription,
+    gallery[]{ "url": asset->url, displayCrops }
+  },
+  additionalConditions,
+  heroMainImage { "url": asset->url, displayCrops },
+  heroLeftImage { "url": asset->url, displayCrops },
+  heroRightImage { "url": asset->url, displayCrops },
+  benefitsImage { "url": asset->url, displayCrops },
+  costShortImage { "url": asset->url, displayCrops },
+  costTallImage { "url": asset->url, displayCrops },
+  programUpload { "url": asset->url, originalFilename, mimeType },
+  benefits,
+  sections,
+  excursions,
+  route,
+  includes,
+  unincludes,
+  inspiration[]{
+    title, description, image { "url": asset->url, displayCrops }
+  }
+}`;
+
 const activeSMARTToursFilter = `
   _type == "tour-basic" &&
   "53499507-30ed-4085-b861-f34fc0749408" in categories[]._ref &&

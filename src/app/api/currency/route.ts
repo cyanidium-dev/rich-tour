@@ -2,14 +2,15 @@ import { NextResponse } from "next/server";
 
 import { sanityClient } from "@/shared/api/server";
 import { currencySettingsQuery } from "@/lib/sanity/queries";
-import { CURRENCY_REFRESH_MS, resolveEurRate } from "@/lib/currency/rate";
+import { CURRENCY_REFRESH_MS, resolveCurrencyRate } from "@/lib/currency/rate";
 
 type CurrencyDocuments = {
-  settings: { eurMarkupUah?: number } | null;
-  cache: { rate?: number } | null;
+  settings: { eurMarkupUah?: number; usdMarkupUah?: number } | null;
+  eurCache: { rate?: number } | null;
+  usdCache: { rate?: number } | null;
 };
 
-const PRIVAT_EUR_URL = "https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11";
+const PRIVAT_RATES_URL = "https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11";
 
 export async function GET() {
   try {
@@ -18,30 +19,41 @@ export async function GET() {
 
     const client = sanityClient.withConfig({ token, useCdn: false });
     const documents = await client.fetch<CurrencyDocuments>(currencySettingsQuery);
-    const eur = await resolveEurRate(
-      documents.settings?.eurMarkupUah,
-      documents.cache?.rate,
-      async () => {
-        const response = await fetch(PRIVAT_EUR_URL, {
-          next: { revalidate: CURRENCY_REFRESH_MS / 1000 },
-        });
-        if (!response.ok) throw new Error(`PrivatBank returned ${response.status}`);
-        return response.json();
-      },
-      (rate) =>
-        client.createOrReplace({
-          _id: "privatEurRateCache",
-          _type: "currencyRateCache",
-          rate,
-          fetchedAt: new Date().toISOString(),
-        }),
-    );
+    const bankRates = fetch(PRIVAT_RATES_URL, {
+      next: { revalidate: CURRENCY_REFRESH_MS / 1000 },
+    }).then((response) => {
+      if (!response.ok) throw new Error(`PrivatBank returned ${response.status}`);
+      return response.json() as Promise<unknown>;
+    });
+    const saveRate = (id: string) => (rate: number) =>
+      client.createOrReplace({
+        _id: id,
+        _type: "currencyRateCache",
+        rate,
+        fetchedAt: new Date().toISOString(),
+      });
+    const [eur, usd] = await Promise.all([
+      resolveCurrencyRate(
+        "EUR",
+        documents.settings?.eurMarkupUah,
+        documents.eurCache?.rate,
+        () => bankRates,
+        saveRate("privatEurRateCache"),
+      ),
+      resolveCurrencyRate(
+        "USD",
+        documents.settings?.usdMarkupUah,
+        documents.usdCache?.rate,
+        () => bankRates,
+        saveRate("privatUsdRateCache"),
+      ),
+    ]);
 
-    return NextResponse.json({ eur }, { headers: { "Cache-Control": "no-store" } });
+    return NextResponse.json({ eur, usd }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("Currency API error:", error);
     return NextResponse.json(
-      { error: "EUR/UAH rate is unavailable" },
+      { error: "Currency rates are unavailable" },
       { status: 503, headers: { "Cache-Control": "no-store" } },
     );
   }

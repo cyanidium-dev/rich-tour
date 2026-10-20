@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { mapTourPage, type RawTourPage } from "./mapTourPage";
+import { mapTourPage, mapTourPreview, type RawTourPage } from "./mapTourPage";
 
 const raw: RawTourPage = {
   _id: "basic-1",
@@ -138,5 +138,28 @@ describe("mapTourPage", () => {
     expect(tour?.hotels).toHaveLength(1);
     expect(tour?.hotels?.[0]).toMatchObject({ title: "Unrated hotel", price: 200 });
     expect(tour?.hotels?.[0]).not.toHaveProperty("stars");
+  });
+});
+
+it("renders an incomplete preview without a basic tour or CRM number", () => {
+  const preview = mapTourPreview({
+    _id: "draft-date",
+    title: "Saved draft title",
+    dateRange: { startDate: "2027-05-03" },
+    price: 700,
+  });
+  expect(preview?.missing).toEqual({
+    title: false,
+    duration: true,
+    basic: true,
+    date: false,
+    crm: true,
+    price: false,
+  });
+  expect(preview?.tour).toMatchObject({
+    selectedDepartureId: "draft-date",
+    title: "Saved draft title",
+    crmNumber: "",
+    tourDepartures: { "2027-05": [{ day: 3, price: 700, departureId: "draft-date" }] },
   });
 });

@@ -26,6 +26,7 @@ interface CalendarProps {
   companyName: string | undefined;
   email: string | undefined;
   phone: string | undefined;
+  preview?: boolean;
 }
 
 const getTourDepartures = (
@@ -42,7 +43,7 @@ const getTourDepartures = (
   return result;
 };
 
-export default function Calendar({ isLogin, tour, ...userData }: CalendarProps) {
+export default function Calendar({ isLogin, tour, preview = false, ...userData }: CalendarProps) {
   const [selected, setSelected] = useState<Date>();
   const [openBookingFlag, setOpenBookingFlag] = useState(false);
   const [bookingDate, setBookingDate] = useState<string | null>(null);
@@ -78,12 +79,13 @@ export default function Calendar({ isLogin, tour, ...userData }: CalendarProps) 
   const tourDepartures = getTourDepartures(tour.tourDepartures, convert);
 
   useEffect(() => {
+    if (preview) return;
     const requestedBookingDate = searchParams.get("book");
     if (requestedBookingDate) {
       setBookingDate(requestedBookingDate);
       setOpenBookingFlag(true);
     }
-  }, [searchParams]);
+  }, [searchParams, preview]);
 
   const clearBookingParam = () => {
     setOpenBookingFlag(false);
@@ -148,7 +150,9 @@ export default function Calendar({ isLogin, tour, ...userData }: CalendarProps) 
                 currency={currency}
                 convert={convert}
                 tourDepartures={tourDepartures}
+                readOnly={preview}
                 openBooking={(dateStr, departureId) => {
+                  if (preview) return;
                   if (departureId !== tour.selectedDepartureId) {
                     const params = new URLSearchParams(searchParams.toString());
                     params.set("departure", departureId);
@@ -173,14 +177,16 @@ export default function Calendar({ isLogin, tour, ...userData }: CalendarProps) 
       {isLogin && tour.agencyCommission && (
         <p className="font-semibold text-center">*Друга вказана ціна це комісія для агента</p>
       )}
-      <BookingWithButton
-        {...userData}
-        initialDate={bookingDate}
-        buttonStyles="w-full h-12 text-14med"
-        tour={tour}
-        forceOpen={openBookingFlag}
-        onForceOpenHandled={clearBookingParam}
-      />
+      {!preview && (
+        <BookingWithButton
+          {...userData}
+          initialDate={bookingDate}
+          buttonStyles="w-full h-12 text-14med"
+          tour={tour}
+          forceOpen={openBookingFlag}
+          onForceOpenHandled={clearBookingParam}
+        />
+      )}
     </div>
   );
 }

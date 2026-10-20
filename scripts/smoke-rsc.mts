@@ -168,14 +168,14 @@ try {
   assert.ok(desktop.footerText.includes("Адреса"));
   await evaluate(`[...document.querySelectorAll('header button')]
     .find(b => b.getClientRects().length && b.innerText.includes('EUR/UAH'))?.click()`);
-  await until(() => evaluate("!!document.querySelector('[role=menuitemradio][data-key=UAH]')"));
-  await evaluate("document.querySelector('[role=menuitemradio][data-key=UAH]').click()");
+  await until(() => evaluate("!!document.querySelector('[role=menuitemradio][data-key=USD]')"));
+  await evaluate("document.querySelector('[role=menuitemradio][data-key=USD]').click()");
   await until(() =>
     evaluate(
-      "[...document.querySelectorAll('header button')].some(b => b.getClientRects().length && b.innerText.includes('UAH/EUR'))",
+      "[...document.querySelectorAll('header button')].some(b => b.getClientRects().length && b.innerText.includes('EUR/USD'))",
     ),
   );
-  console.log("desktopCurrency", "UAH/EUR selected");
+  console.log("desktopCurrency", "EUR/USD selected");
   await evaluate(`[...document.querySelectorAll('header a[href="/step"]')]
     .find(a => a.getClientRects().length)?.click()`);
   await until(() => evaluate("location.pathname === '/step'"));

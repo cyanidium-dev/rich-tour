@@ -6,7 +6,7 @@ import type { TourHotel } from "@/entities/tour";
 import Hotels from "./Hotels";
 import HotelsList from "./HotelsList";
 
-const currency = vi.hoisted(() => ({ selected: "EUR" as "EUR" | "UAH" }));
+const currency = vi.hoisted(() => ({ selected: "EUR" as "EUR" | "USD" }));
 const scrollIntoView = vi.fn();
 
 vi.mock("next/image", () => ({
@@ -15,7 +15,7 @@ vi.mock("next/image", () => ({
 vi.mock("@/context/CurrencyContext", () => ({
   useCurrency: () => ({
     selected: currency.selected,
-    convert: (price: number) => (currency.selected === "EUR" ? price : price * 40),
+    convert: (price: number) => (currency.selected === "EUR" ? price : price * 1.2),
   }),
 }));
 vi.mock("./HotelsTitle", () => ({ default: () => <h2>Інформація про готелі</h2> }));
@@ -95,9 +95,9 @@ it("supports swiping on phones and shows the selected currency", () => {
   expect(scrollIntoView.mock.contexts[0]).toBe(grid);
   expect(screen.getByRole("heading", { name: "Hotel 2 3★" })).toBeTruthy();
 
-  currency.selected = "UAH";
+  currency.selected = "USD";
   view.rerender(<HotelsList hotels={hotels} />);
-  expect(screen.getByText("від 24000 ₴")).toBeTruthy();
+  expect(screen.getByText("від 720 $")).toBeTruthy();
 });
 
 it("scrolls to the new hotel when a page is selected on a phone", () => {

@@ -48,7 +48,7 @@ function HotelCard({ hotel, onDetails }: { hotel: TourHotel; onDetails: () => vo
           {getSummary(hotel)}
         </p>
         <p className="mt-auto pt-6 text-[14px] font-semibold text-black">
-          від {convert(hotel.price)} {currency === "EUR" ? "€" : "₴"}
+          від {convert(hotel.price)} {currency === "EUR" ? "€" : "$"}
         </p>
         <button
           type="button"

@@ -14,6 +14,8 @@ interface CallBackFormProps {
   className?: string;
   variant?: "red" | "black";
   fieldsClassName?: string;
+  onSubmit?: (values: ValuesCallBackFormType) => Promise<void>;
+  validationSchema?: ReturnType<typeof callBackValidation>;
 }
 
 export default function CallBackForm({
@@ -23,19 +25,21 @@ export default function CallBackForm({
   className = "",
   variant = "red",
   fieldsClassName = "flex flex-col w-full h-full gap-y-5 mb-[18px]",
+  onSubmit,
+  validationSchema,
 }: CallBackFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const methods = useForm<ValuesCallBackFormType>({
-    resolver: zodResolver(callBackValidation()),
+    resolver: zodResolver(validationSchema ?? callBackValidation()),
     defaultValues: { name: "", phone: "", message: "" },
     mode: "onChange",
   });
 
-  const submitForm = async (_values: ValuesCallBackFormType) => {
+  const submitForm = async (values: ValuesCallBackFormType) => {
     try {
       setIsLoading(true);
       setIsError(false);
-      // The existing callback flow only acknowledges and clears the form.
+      await onSubmit?.(values);
       methods.reset();
       setIsPopUpShown?.(false);
       setIsNotificationShown(true);

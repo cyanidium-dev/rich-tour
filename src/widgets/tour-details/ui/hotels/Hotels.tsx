@@ -74,7 +74,7 @@ export default function Hotels({
             <div className="text-white z-10 absolute top-[-232px] lg:top-[-100px] right-[-150px] lg:right-[-30px] w-[257px] aspect-[1.15/1] bg-main rounded-full">
               <p className="absolute lg:right-[40px] bottom-[50px] text-[22px] font-medium">
                 {" "}
-                від {convert(price)} {currency === "EUR" ? "€" : "₴"}
+                від {convert(price)} {currency === "EUR" ? "€" : "$"}
               </p>
             </div>
           </div>

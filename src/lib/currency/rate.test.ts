@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { parsePrivatEurSale, resolveEurRate } from "./rate";
+import { parsePrivatEurSale, parsePrivatSale, resolveCurrencyRate, resolveEurRate } from "./rate";
 
 const bankResponse = [
   { ccy: "USD", base_ccy: "UAH", sale: "42.00" },
@@ -9,6 +9,7 @@ const bankResponse = [
 describe("EUR/UAH rate", () => {
   it("uses PrivatBank's EUR sale rate rather than its buy or USD rate", () => {
     expect(parsePrivatEurSale(bankResponse)).toBe(51.02041);
+    expect(parsePrivatSale(bankResponse, "USD")).toBe(42);
   });
 
   it("adds a zero or fixed UAH markup per euro and saves a new bank rate", async () => {
@@ -41,5 +42,25 @@ describe("EUR/UAH rate", () => {
     await expect(resolveEurRate(-1, 50, async () => bankResponse, vi.fn())).rejects.toThrow(
       "Invalid EUR markup",
     );
+  });
+
+  it("adds the USD markup and uses its own cached sale rate during an outage", async () => {
+    const save = vi.fn().mockResolvedValue(undefined);
+    expect(await resolveCurrencyRate("USD", 0.5, null, async () => bankResponse, save)).toBe(42.5);
+    expect(save).toHaveBeenCalledWith(42);
+    expect(
+      await resolveCurrencyRate(
+        "USD",
+        0.5,
+        41,
+        async () => {
+          throw new Error("Bank unavailable");
+        },
+        save,
+      ),
+    ).toBe(41.5);
+    await expect(
+      resolveCurrencyRate("USD", -1, 41, async () => bankResponse, save),
+    ).rejects.toThrow("Invalid USD markup");
   });
 });

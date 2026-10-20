@@ -29,8 +29,9 @@ export const allTeamQuery = `*[_type == "team"] | order(_updatedAt desc, _id asc
 }`;
 
 export const currencySettingsQuery = `{
-  "settings": *[_id == "siteSettings"][0]{eurMarkupUah},
-  "cache": *[_id == "privatEurRateCache"][0]{rate}
+  "settings": *[_id == "siteSettings"][0]{eurMarkupUah, usdMarkupUah},
+  "eurCache": *[_id == "privatEurRateCache"][0]{rate},
+  "usdCache": *[_id == "privatUsdRateCache"][0]{rate}
 }`;
 
 export const allCountriesQuery = `*[_type == "country"] | order(title asc) {

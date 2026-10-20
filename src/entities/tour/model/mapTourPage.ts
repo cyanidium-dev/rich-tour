@@ -67,6 +67,12 @@ export type RawTourPage = {
   selectedDeparture?: RawSelectedDeparture | null;
 };
 
+export type RawPreviewDeparture = NonNullable<RawTourPage["selectedDeparture"]> & {
+  basicId?: string;
+  basicTour?: Partial<Omit<RawTourPage, "departures" | "selectedDeparture">> | null;
+  price?: number;
+};
+
 function blockText(block: RawTextBlock) {
   return (block.children ?? [])
     .map((child) => child.text ?? "")
@@ -223,5 +229,44 @@ export function mapTourPage(raw: RawTourPage): Tour | null {
     tourDepartures: mapDepartures(raw.departures),
     inspiration: mapInspiration(departure.inspiration),
     additionalInfo: blocksToStrings(departure.additionalConditions).join("\n"),
+  };
+}
+
+export function mapTourPreview(
+  departure: RawPreviewDeparture,
+  departures: RawTourPage["departures"] = [],
+) {
+  const basic = departure.basicTour;
+  const previewCrmNumber = "preview-only";
+  const withCrm = (item: NonNullable<RawTourPage["departures"]>[number]) => ({
+    ...item,
+    crmNumber: item.crmNumber || previewCrmNumber,
+  });
+  const allDepartures = (departures ?? []).some((item) => item._id === departure._id)
+    ? (departures ?? []).map(withCrm)
+    : [...(departures ?? []).map(withCrm), withCrm(departure)];
+  const mapped = mapTourPage({
+    _id: basic?._id || departure._id,
+    title: basic?.title || departure.title || "Назву туру ще не додано",
+    slug: { current: basic?.slug?.current || "" },
+    description: basic?.description || "",
+    duration: basic?.duration || 0,
+    earlyBooking: basic?.earlyBooking,
+    image: basic?.image,
+    departures: allDepartures,
+    selectedDeparture: { ...departure, crmNumber: departure.crmNumber || previewCrmNumber },
+  });
+  if (!mapped) return null;
+
+  return {
+    tour: { ...mapped, crmNumber: departure.crmNumber || "" },
+    missing: {
+      title: !basic?.title && !departure.title,
+      duration: !basic?.duration,
+      basic: !basic,
+      date: !departure.dateRange?.startDate,
+      crm: !departure.crmNumber,
+      price: departure.price === undefined,
+    },
   };
 }

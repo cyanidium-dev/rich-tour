@@ -3,6 +3,7 @@ import { createClient } from "@sanity/client";
 const legacyFields = ["workSchedule", "address", "phones", "email", "facebook", "instagram"];
 const currentFields = new Set([
   "eurMarkupUah",
+  "usdMarkupUah",
   "agentContract",
   "touristContract",
   "telegram",

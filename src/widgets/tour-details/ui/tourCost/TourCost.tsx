@@ -12,9 +12,17 @@ interface TourCostProps {
   companyName: string | undefined;
   email: string | undefined;
   phone: string | undefined;
+  preview?: boolean;
+  missingDate?: boolean;
 }
 
-export default function TourCost({ isLogin, tour, ...userData }: TourCostProps) {
+export default function TourCost({
+  isLogin,
+  tour,
+  preview = false,
+  missingDate = false,
+  ...userData
+}: TourCostProps) {
   const { costImages } = tour;
   const tallImage = isLogin ? undefined : costImages.tall;
 
@@ -53,7 +61,13 @@ export default function TourCost({ isLogin, tour, ...userData }: TourCostProps) 
             </AnimatedWrapper>
           )}
         </div>
-        <Calendar isLogin={isLogin} tour={tour} {...userData} />
+        {preview && missingDate ? (
+          <div className="rounded-[28px] border border-black p-8 text-center">
+            Дату виїзду ще не додано
+          </div>
+        ) : (
+          <Calendar isLogin={isLogin} tour={tour} preview={preview} {...userData} />
+        )}
         {tallImage && (
           <div className="hidden lg:block relative min-w-0 h-[702px]">
             <AnimatedArrowDesk />

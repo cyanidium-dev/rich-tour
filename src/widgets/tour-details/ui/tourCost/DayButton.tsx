@@ -7,10 +7,11 @@ import styles from "./DayButton.module.css";
 
 type BtnProps = DayButtonProps & {
   isLogin: boolean;
-  currency: "EUR" | "UAH";
+  currency: "EUR" | "USD";
   convert: (amount: number) => number;
   tourDepartures: TourDepartures;
   openBooking?: (date: string, departureId: string) => void;
+  readOnly?: boolean;
   agencyCommission?: {
     type: string;
     value: number;
@@ -20,6 +21,7 @@ type BtnProps = DayButtonProps & {
 export default function DayButton(props: BtnProps) {
   const {
     openBooking,
+    readOnly,
     agencyCommission,
     day,
     modifiers,
@@ -94,7 +96,7 @@ export default function DayButton(props: BtnProps) {
       modifiers={modifiers}
       aria-label={`${buttonProps["aria-label"]}${hasPrice ? `, ${dayData.price} ${currency}` : ""}${status.length ? `, ${status.map((item) => statusLabels[item] ?? item).join(", ")}` : ""}`}
       onClick={(e) => {
-        if (!isDisabled && dayData) {
+        if (!readOnly && !isDisabled && dayData) {
           buttonProps.onClick?.(e);
           openBooking?.(formatBookingDate(date), dayData.departureId);
         }
@@ -112,7 +114,7 @@ export default function DayButton(props: BtnProps) {
         borderColor,
         color: textColor,
       }}
-      disabled={buttonProps.disabled || modifiers.outside}
+      disabled={readOnly || buttonProps.disabled || modifiers.outside}
     >
       <span
         className={`${hasPrice ? "text-12med" : "text-16reg"} leading-[14px] ${
@@ -131,13 +133,12 @@ export default function DayButton(props: BtnProps) {
         >
           <span className={hasCommission ? "max-md:block max-md:whitespace-nowrap" : ""}>
             {dayData.price}
-            {currency === "EUR" ? "€" : "₴"}
+            {currency === "EUR" ? "€" : "$"}
           </span>
           {hasCommission && agencyCommission && (
             <span className="max-md:block max-md:whitespace-nowrap">
               {" / "}
               {formatCommission(agencyCommission, currency, convert)}
-              {/*{props.currency === "EUR" ? "€" : "₴"}*/}
             </span>
           )}
         </span>

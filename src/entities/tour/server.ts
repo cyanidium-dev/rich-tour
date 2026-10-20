@@ -1,7 +1,7 @@
 import "server-only";
 
-export { mapTourPage } from "./model/mapTourPage";
-export type { RawTourPage } from "./model/mapTourPage";
+export { mapTourPage, mapTourPreview } from "./model/mapTourPage";
+export type { RawTourPage, RawPreviewDeparture } from "./model/mapTourPage";
 export {
   mainTourCategoriesQuery,
   allActiveTourCategoriesQuery,
@@ -10,6 +10,7 @@ export {
   tourQuery,
   tourDatesQuery,
   tourPageQuery,
+  previewTourDepartureQuery,
   allBasicSMARTToursQuery,
   hasBasicSMARTToursQuery,
   allBasicToursWithPromotionQuery,
