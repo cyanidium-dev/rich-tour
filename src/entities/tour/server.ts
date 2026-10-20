@@ -11,6 +11,7 @@ export {
   tourDatesQuery,
   tourPageQuery,
   previewTourDepartureQuery,
+  publishedTourDepartureExistsQuery,
   allBasicSMARTToursQuery,
   hasBasicSMARTToursQuery,
   allBasicToursWithPromotionQuery,

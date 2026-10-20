@@ -20,6 +20,7 @@ type TourDetailsProps = {
   phone: string | undefined;
   additionalInfo?: ReactNode;
   preview?: boolean;
+  showDraftBanner?: boolean;
   previewDate?: string;
   previewMissing?: {
     title: boolean;
@@ -36,6 +37,7 @@ export default function TourDetails({
   isLogin,
   additionalInfo,
   preview = false,
+  showDraftBanner = false,
   previewDate,
   previewMissing,
   ...userData
@@ -44,7 +46,7 @@ export default function TourDetails({
 
   return (
     <>
-      {preview && (
+      {preview && showDraftBanner && (
         <Container className="pt-6">
           <div className="rounded-xl border border-amber-300 bg-amber-50 px-5 py-4">
             <p className="font-semibold">Попередній перегляд чернетки</p>

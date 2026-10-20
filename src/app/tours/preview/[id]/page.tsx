@@ -7,6 +7,7 @@ import {
   RawTourPage,
   mapTourPreview,
   previewTourDepartureQuery,
+  publishedTourDepartureExistsQuery,
   tourDatesQuery,
 } from "@/entities/tour/server";
 import { sanityClient } from "@/shared/api/server";
@@ -27,11 +28,16 @@ export default async function TourPreviewPage({ params }: { params: Promise<{ id
   const token = process.env.SANITY_API_TOKEN;
   if (!token) notFound();
   const client = sanityClient.withConfig({ token, perspective: "drafts", useCdn: false });
-  const rawDeparture = await client.fetch<RawPreviewDeparture | null>(
-    previewTourDepartureQuery,
-    { id },
-    { cache: "no-store" },
-  );
+  const [rawDeparture, isPublished] = await Promise.all([
+    client.fetch<RawPreviewDeparture | null>(
+      previewTourDepartureQuery,
+      { id },
+      { cache: "no-store" },
+    ),
+    client
+      .withConfig({ perspective: "raw" })
+      .fetch<boolean>(publishedTourDepartureExistsQuery, { id }, { cache: "no-store" }),
+  ]);
   if (!rawDeparture) notFound();
 
   const departures = rawDeparture.basicId
@@ -48,6 +54,7 @@ export default async function TourPreviewPage({ params }: { params: Promise<{ id
     <TourDetails
       tour={preview.tour}
       preview
+      showDraftBanner={!isPublished}
       previewDate={rawDeparture.dateRange?.startDate}
       previewMissing={preview.missing}
       isLogin={false}

@@ -222,6 +222,8 @@ export const previewTourDepartureQuery = `*[_type == "tour-to-date" && _id == $i
   }
 }`;
 
+export const publishedTourDepartureExistsQuery = `count(*[_type == "tour-to-date" && _id == $id]) > 0`;
+
 const activeSMARTToursFilter = `
   _type == "tour-basic" &&
   "53499507-30ed-4085-b861-f34fc0749408" in categories[]._ref &&
