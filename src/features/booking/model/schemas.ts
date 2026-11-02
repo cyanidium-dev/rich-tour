@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { insuranceCodeFormatError, validateInsuranceTravelers } from "./insurance";
 import {
   latinNameRegex,
   phoneRegex,
@@ -22,6 +23,7 @@ export const travelerBase = z.object({
   passportExpiration: z.string(),
   boardingCity: required("Вкажіть місто посадки"),
   insurance: z.boolean(),
+  identificationCode: z.string({ error: insuranceCodeFormatError }).optional(),
   frontSeats: z.boolean(),
   passportInProgress: z.boolean(),
 });
@@ -92,7 +94,8 @@ export const bookingSchema = z.object({
   date: required("Оберіть дату виїзду"),
   travelers: z
     .array(travelerSchema, { error: "Має бути хоча б один турист" })
-    .min(1, "Має бути хоча б один турист"),
+    .min(1, "Має бути хоча б один турист")
+    .superRefine(validateInsuranceTravelers),
 });
 export const bookingAgentSchema = z.object({
   ...common,
@@ -106,7 +109,8 @@ export const bookingAgentSchema = z.object({
     .refine((v) => !!v, "Дане поле обов'язкове до заповнення"),
   travelers: z
     .array(agentTravelerSchema, { error: "Має бути хоча б один турист" })
-    .min(1, "Має бути хоча б один турист"),
+    .min(1, "Має бути хоча б один турист")
+    .superRefine(validateInsuranceTravelers),
 });
 export type BookingValues = z.infer<typeof bookingSchema>;
 export type TravelerInfo = z.infer<typeof travelerBase>;
@@ -119,6 +123,7 @@ export const emptyTraveler = (): TravelerInfo => ({
   passportExpiration: "",
   boardingCity: "",
   insurance: false,
+  identificationCode: "",
   frontSeats: false,
   passportInProgress: false,
 });

@@ -33,6 +33,71 @@ const raw: RawTourPage = {
 };
 
 describe("mapTourPage", () => {
+  it("maps compact calendar hotel prices for every departure and prefers current preview data", () => {
+    const departure = {
+      ...raw.departures![0],
+      discount: true,
+      earlyBookingPrice: 750,
+      earlyBookingUntil: "2027-04-30",
+      hotels: [
+        {
+          title: "Tayhan",
+          stars: 3,
+          price: 800,
+          earlyBookingPrice: 700,
+          placementDescription: "Двомісний стандарт",
+          gallery: [{ url: "not-needed-in-calendar.jpg" }],
+        },
+      ],
+    };
+    const publicTour = mapTourPage({ ...raw, departures: [departure] });
+    const previewTour = mapTourPreview({ ...departure, basicTour: raw }, [
+      { ...departure, earlyBookingPrice: 799, hotels: [] },
+    ])?.tour;
+    for (const tour of [publicTour, previewTour]) {
+      const calendar = tour?.tourDepartures["2027-05"][0];
+      expect(calendar).toMatchObject({
+        price: 800,
+        earlyBookingPrice: 750,
+        earlyBookingUntil: "2027-04-30",
+        hotels: [
+          {
+            title: "Tayhan",
+            stars: 3,
+            price: 800,
+            earlyBookingPrice: 700,
+            placementDescription: "Двомісний стандарт",
+          },
+        ],
+      });
+      expect(calendar?.hotels?.[0]).not.toHaveProperty("gallery");
+    }
+  });
+
+  it("preserves independent calendar labels in public pages and departure previews", () => {
+    const departure = {
+      ...raw.departures![0],
+      availability: "available",
+      hot: true,
+      discount: true,
+      specialPrice: true,
+      tourInRecruitment: true,
+    };
+    const publicTour = mapTourPage({ ...raw, departures: [departure] });
+    const previewTour = mapTourPreview({ ...departure, basicTour: raw })?.tour;
+
+    for (const tour of [publicTour, previewTour]) {
+      expect(tour?.tourDepartures["2027-05"][0].status).toEqual([
+        "available",
+        "guaranteed",
+        "hot",
+        "discount",
+        "specialPrice",
+        "tourInRecruitment",
+      ]);
+    }
+  });
+
   it("selects independent frames for each tour placement", () => {
     const url = "https://cdn.sanity.io/images/project/production/example-2400x1200.jpg";
     const left = { left: 0.1, top: 0, right: 0.1, bottom: 0 };
@@ -162,4 +227,30 @@ it("renders an incomplete preview without a basic tour or CRM number", () => {
     crmNumber: "",
     tourDepartures: { "2027-05": [{ day: 3, price: 700, departureId: "draft-date" }] },
   });
+});
+
+it("preserves hotel videos and their resolved file assets in both public and preview mappings", () => {
+  const hotel = {
+    title: "Hotel",
+    price: 200,
+    gallery: [{ url: "hotel.jpg" }],
+    shortDescription: [{ _type: "hotelYoutube", _key: "youtube", videoId: "dQw4w9WgXcQ" }],
+    fullDescription: [
+      {
+        _type: "hotelVideoFile",
+        _key: "file",
+        url: "https://cdn.sanity.io/files/project/production/video.mp4",
+        mimeType: "video/mp4",
+        size: 10,
+        posterUrl: "https://cdn.sanity.io/images/project/production/poster.jpg",
+      },
+    ],
+  };
+  const departure = { ...raw.selectedDeparture!, hotels: [hotel] };
+  const publicHotel = mapTourPage({ ...raw, selectedDeparture: departure })?.hotels?.[0];
+  const previewHotel = mapTourPreview({ ...departure, basicTour: raw })?.tour.hotels?.[0];
+  for (const mapped of [publicHotel, previewHotel]) {
+    expect(mapped?.shortDescription).toEqual(hotel.shortDescription);
+    expect(mapped?.fullDescription).toEqual(hotel.fullDescription);
+  }
 });

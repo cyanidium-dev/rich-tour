@@ -25,10 +25,14 @@ export default function OrdersContent({
   apiUrl = "/api/agent/tours",
 }: OrdersContentProps) {
   const [isPopUpShown, setIsPopUpShown] = useState(false);
-  const [tourDetails, setTourDetails] = useState<{
-    comment?: string;
-    details?: OrderTableRow["details"];
-  }>({});
+  const [tourDetails, setTourDetails] = useState<
+    Partial<
+      Pick<
+        OrderTableRow,
+        "comment" | "details" | "totalCost" | "costWithoutCommission" | "commission" | "mealType"
+      >
+    >
+  >({});
   const { tours, agentOptions, skippedAgents, isLoading, loadError, retry } = useOrders(
     apiUrl,
     mode,
@@ -75,8 +79,9 @@ export default function OrdersContent({
       return;
     }
 
-    const { comment, details } = selectedTour;
-    setTourDetails({ comment, details });
+    const { comment, details, totalCost, costWithoutCommission, commission, mealType } =
+      selectedTour;
+    setTourDetails({ comment, details, totalCost, costWithoutCommission, commission, mealType });
   };
 
   if (isLoading) return <Loader />;

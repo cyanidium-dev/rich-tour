@@ -1,8 +1,12 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { DayButton as DefaultDayButton, type DayButtonProps } from "react-day-picker";
 import type { TourDepartures } from "@/entities/tour/index";
 import { formatBookingDate, getDayData } from "./calendarDates";
 import { formatCommission } from "./formatCommission";
+import { calendarStatuses } from "./calendarStatuses";
+import { formatCalendarPrice, getDeparturePricing } from "./calendarPricing";
+import { useDepartureTooltip } from "./DepartureTooltip";
 import styles from "./DayButton.module.css";
 
 type BtnProps = DayButtonProps & {
@@ -33,57 +37,36 @@ export default function DayButton(props: BtnProps) {
   } = props;
   const date = day.date;
   const dayData = getDayData(date, tourDepartures);
+  const tooltip = useDepartureTooltip();
+  const pricing = dayData ? getDeparturePricing(dayData) : undefined;
 
-  const status = dayData?.status || [];
-  const hasPrice = dayData?.price !== undefined;
+  const status = pricing?.status || [];
+  const hasPrice = pricing?.price !== undefined;
+  const priceText = hasPrice ? formatCalendarPrice(pricing.price!, currency, convert) : "";
   const hasCommission = isLogin && Boolean(agencyCommission);
 
-  const iconStatuses = ["guaranteed", "hot", "discount"];
-  const borderStatuses = {
-    available: "#73A91C",
-    fewSeats: "#FFB429",
-    onRequest: "#4C6FFF",
-    noSeats: "#E43A3A",
-    noDeparture: "transparent",
-  };
-
-  const showIcons = status.filter((s) => iconStatuses.includes(s));
-  const borderStatus = status.find((s) => !iconStatuses.includes(s));
+  const showIcons = status.filter(
+    (s) => calendarStatuses[s] && calendarStatuses[s].borderColor === undefined,
+  );
+  const borderStatus = status.find((s) => calendarStatuses[s]?.borderColor !== undefined);
 
   const borderColor =
     !hasPrice || borderStatus === "noDeparture"
       ? "transparent"
       : borderStatus
-        ? borderStatuses[borderStatus as keyof typeof borderStatuses]
+        ? calendarStatuses[borderStatus].borderColor
         : "transparent";
 
-  const textColor =
+  const backgroundColor =
     !hasPrice || borderStatus === "noDeparture"
-      ? "black"
+      ? "transparent"
       : borderStatus
-        ? borderStatuses[borderStatus as keyof typeof borderStatuses]
-        : "black";
-
-  const statusIcons: Record<string, string> = {
-    guaranteed: "/images/icons/calendar/guaranteed.svg",
-    hot: "/images/icons/calendar/hot.svg",
-    discount: "/images/icons/calendar/discount.svg",
-  };
-  const statusLabels: Record<string, string> = {
-    available: "місця є",
-    fewSeats: "мало місць",
-    onRequest: "виїзд під запит",
-    noSeats: "місць немає",
-    noDeparture: "немає виїзду",
-    guaranteed: "гарантований виїзд",
-    hot: "гарячий тур",
-    discount: "діє знижка",
-  };
+        ? (calendarStatuses[borderStatus].backgroundColor ?? "transparent")
+        : "transparent";
 
   const isSelected = modifiers.selected;
   const isDisabled =
     modifiers.disabled ||
-    modifiers.outside ||
     !dayData ||
     status.includes("noSeats") ||
     status.includes("noDeparture") ||
@@ -94,27 +77,44 @@ export default function DayButton(props: BtnProps) {
       {...buttonProps}
       day={day}
       modifiers={modifiers}
-      aria-label={`${buttonProps["aria-label"]}${hasPrice ? `, ${dayData.price} ${currency}` : ""}${status.length ? `, ${status.map((item) => statusLabels[item] ?? item).join(", ")}` : ""}`}
+      aria-label={`${buttonProps["aria-label"] ?? ""}${hasPrice ? `, ${priceText}` : ""}${status.length ? `, ${status.map((item) => calendarStatuses[item]?.label ?? item).join(", ")}` : ""}`}
+      aria-describedby={
+        tooltip?.anchor?.dataset.departureDay === date.toISOString() ? tooltip.id : undefined
+      }
+      data-departure-day={date.toISOString()}
+      onMouseEnter={(event) => {
+        buttonProps.onMouseEnter?.(event);
+        if (pricing) tooltip?.show({ anchor: event.currentTarget, pricing }, "hover");
+      }}
+      onMouseLeave={(event) => {
+        buttonProps.onMouseLeave?.(event);
+        tooltip?.leave(event.currentTarget, "hover");
+      }}
+      onFocus={(event) => {
+        buttonProps.onFocus?.(event);
+        if (pricing) tooltip?.show({ anchor: event.currentTarget, pricing }, "focus");
+      }}
+      onBlur={(event) => {
+        buttonProps.onBlur?.(event);
+        tooltip?.leave(event.currentTarget, "focus");
+      }}
       onClick={(e) => {
+        tooltip?.close();
         if (!readOnly && !isDisabled && dayData) {
           buttonProps.onClick?.(e);
           openBooking?.(formatBookingDate(date), dayData.departureId);
         }
       }}
-      className={`${buttonProps.className ?? ""} ${isLogin ? "w-full" : "w-[44px]"} ${hasCommission ? styles.withCommission : "h-[49px]"} rounded-[6px] border-2 relative px-[2px] ${
-        hasPrice
-          ? "flex flex-col items-center justify-start pt-[2px]"
-          : "flex items-center justify-center"
-      }`}
+      className={`${buttonProps.className ?? ""} ${styles.dayButton} ${hasPrice ? styles.withPrice : ""} ${hasCommission ? styles.withCommission : ""}`}
       style={{
         ...buttonProps.style,
         width: isLogin ? "100%" : "44px",
-        height: hasCommission ? undefined : "49px",
         borderRadius: "6px",
         borderColor,
-        color: textColor,
+        backgroundColor,
+        color: "black",
       }}
-      disabled={readOnly || buttonProps.disabled || modifiers.outside}
+      disabled={buttonProps.disabled || isDisabled}
     >
       <span
         className={`${hasPrice ? "text-12med" : "text-16reg"} leading-[14px] ${
@@ -126,14 +126,13 @@ export default function DayButton(props: BtnProps) {
 
       {hasPrice && (
         <span
-          className={`
-      text-10semi text-black mt-[1px] leading-[12px]
-      ${isLogin && agencyCommission ? "xl:text-12semi" : ""}
-    `}
+          className={`${styles.price} text-10semi text-black leading-[12px] ${hasCommission ? "xl:text-12semi" : ""}`}
         >
-          <span className={hasCommission ? "max-md:block max-md:whitespace-nowrap" : ""}>
-            {dayData.price}
-            {currency === "EUR" ? "€" : "$"}
+          <span
+            className={styles.amount}
+            style={{ "--amount-length": priceText.length } as CSSProperties}
+          >
+            {priceText}
           </span>
           {hasCommission && agencyCommission && (
             <span className="max-md:block max-md:whitespace-nowrap">
@@ -145,11 +144,14 @@ export default function DayButton(props: BtnProps) {
       )}
 
       {showIcons.length > 0 && (
-        <div className="absolute bottom-1 left-1 flex gap-[2px] md:bottom-0">
+        <div className={styles.statusIcons}>
           {showIcons.map((s) => {
-            const icon = statusIcons[s];
-            if (!icon) return null;
-            return <Image key={s} src={icon} alt="" width={10} height={10} />;
+            const { image, label } = calendarStatuses[s];
+            return (
+              <span key={s} title={label}>
+                <Image src={image} alt="" width={10} height={10} />
+              </span>
+            );
           })}
         </div>
       )}

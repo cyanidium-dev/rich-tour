@@ -1,13 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import type { Swiper as SwiperInstance } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
-import type { TourHotel } from "@/entities/tour";
+import type { HotelVideoBlock, TourHotel } from "@/entities/tour";
 import HotelContent from "./HotelContent";
+import HotelVideo from "./HotelVideo";
 import styles from "./HotelModalContent.module.css";
 
 type HotelModalContentProps = {
@@ -15,6 +16,8 @@ type HotelModalContentProps = {
   stars?: number;
   description: TourHotel["fullDescription"];
   gallery: string[];
+  shortDescriptionVideos?: HotelVideoBlock[];
+  focusVideos?: boolean;
 };
 
 function GalleryArrow({ previous }: { previous: boolean }) {
@@ -44,8 +47,17 @@ export default function HotelModalContent({
   stars,
   description,
   gallery,
+  shortDescriptionVideos = [],
+  focusVideos = false,
 }: HotelModalContentProps) {
   const swiperRef = useRef<SwiperInstance | null>(null);
+  const videosRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (focusVideos) {
+      videosRef.current?.scrollIntoView({ block: "start" });
+      videosRef.current?.focus({ preventScroll: true });
+    }
+  }, [focusVideos]);
 
   return (
     <div className={styles.modalContent}>
@@ -104,6 +116,13 @@ export default function HotelModalContent({
           {stars != null && <> {stars}*</>}
         </h3>
         <div className={styles.hotelDescription}>
+          {shortDescriptionVideos.length > 0 && (
+            <div ref={videosRef} tabIndex={-1} aria-label="Відео готелю">
+              {shortDescriptionVideos.map((video, index) => (
+                <HotelVideo key={video._key ?? index} value={video} />
+              ))}
+            </div>
+          )}
           <HotelContent value={description} />
         </div>
       </div>

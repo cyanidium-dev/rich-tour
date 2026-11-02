@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { bookingSchema, travelerBase, validateTraveler } from "./schemas";
+import { needsInsuranceCode, validateInsuranceTravelers } from "./insurance";
 // Preserve extra payload fields and numeric form-value casting.
 const castString = (value: unknown) =>
   typeof value === "number" || typeof value === "boolean" ? String(value) : value;
@@ -17,7 +18,12 @@ const requestTraveler = travelerBase
     passportInProgress: z.unknown().optional(),
   })
   .passthrough()
-  .superRefine(validateTraveler);
+  .superRefine(validateTraveler)
+  .transform((traveler) => {
+    if (needsInsuranceCode(traveler)) return traveler;
+    const { identificationCode: _identificationCode, ...rest } = traveler;
+    return rest;
+  });
 export const bookingRequestSchema = bookingSchema
   .extend({
     requestId: z.custom<string>((value) => !!value),
@@ -35,6 +41,7 @@ export const bookingRequestSchema = bookingSchema
     message: z.preprocess(castString, bookingSchema.shape.message.optional()),
     travelers: z
       .array(requestTraveler, { error: "Має бути хоча б один турист" })
-      .min(1, "Має бути хоча б один турист"),
+      .min(1, "Має бути хоча б один турист")
+      .superRefine(validateInsuranceTravelers),
   })
   .passthrough();

@@ -16,15 +16,15 @@ export default function Category({ showTourDetails, category, variant = "agent" 
   return (
     <AnimatedWrapper animation={fadeInAnimation({ y: 30, delay: 0.4 })} className="relative">
       <div className="w-full overflow-x-auto scrollbar scrollbar-h-[2.5px]">
-        <table className={`${isAgency ? "w-[1118px]" : "w-[1080px]"} table-fixed border-collapse`}>
+        <table className={`${isAgency ? "w-[1224px]" : "w-[1240px]"} table-fixed border-collapse`}>
           <colgroup>
             {isAgency && <col className="w-[105px]" />}
             <col className={isAgency ? "w-[85px]" : "w-[96px]"} />
             <col className={isAgency ? "w-[145px]" : "w-[150px]"} />
             {!isAgency && <col className="w-[70px]" />}
             <col className={isAgency ? "w-[155px]" : "w-[170px]"} />
-            <col className={isAgency ? "w-[80px]" : "w-[92px]"} />
-            <col className={isAgency ? "w-[65px]" : "w-[70px]"} />
+            <col className="w-[120px]" />
+            <col className="w-[130px]" />
             <col className={isAgency ? "w-[85px]" : "w-[94px]"} />
             <col className={isAgency ? "w-[95px]" : "w-[100px]"} />
             <col className={isAgency ? "w-[115px]" : "w-[116px]"} />
@@ -55,8 +55,8 @@ export default function Category({ showTourDetails, category, variant = "agent" 
               <th className="px-2 py-[18px] text-left font-normal">
                 Дані <br /> туристів
               </th>
-              <th className="px-2 py-[18px] text-left font-normal">Вартість заявки</th>
-              <th className="px-2 py-[18px] text-left font-normal">Комісія</th>
+              <th className="px-2 py-[18px] text-left font-normal">Повна вартість заявки</th>
+              <th className="px-2 py-[18px] text-left font-normal">Вартість без комісії агента</th>
               <th className="px-2 py-[18px] text-left font-normal">Внесено коштів</th>
               <th className="px-2 py-[18px] text-left font-normal">Залишок до сплати</th>
               <th className="px-2 py-[18px] text-left font-normal">Дата початку і завершення</th>

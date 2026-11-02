@@ -44,7 +44,7 @@ export default function TourCost({
             animation={fadeInAnimation({ y: 30, delay: 0.4 })}
             className="mb-[30px] text-16reg"
           >
-            Можете переглянути вільні дати для цього тура та обрати підходящий формат для себе
+            Вказана за 1 особу та залежить від обраної вами дати
           </AnimatedWrapper>
           {costImages.short && (
             <AnimatedWrapper

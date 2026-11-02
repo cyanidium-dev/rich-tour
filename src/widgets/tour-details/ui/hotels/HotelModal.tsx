@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useRef, type Dispatch, type ReactNode, type SetStateAction } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from "react";
 
 import { CloseModalIcon } from "@/shared/ui";
 
@@ -14,13 +21,18 @@ interface ModalProps {
 export default function HotelModal({ isPopUpShown, setIsPopUpShown, title, children }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    if (!isPopUpShown) return;
+
+    previousFocusRef.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    modalRef.current?.focus();
+  }, [isPopUpShown]);
 
   useEffect(() => {
     if (!isPopUpShown) return;
-
-    const previousFocus =
-      document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    modalRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -33,7 +45,7 @@ export default function HotelModal({ isPopUpShown, setIsPopUpShown, title, child
 
       const focusable = Array.from(
         modalRef.current?.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+          'a[href], button:not([disabled]), iframe, video[controls], [tabindex]:not([tabindex="-1"])',
         ) ?? [],
       );
       const first = focusable[0];
@@ -42,7 +54,9 @@ export default function HotelModal({ isPopUpShown, setIsPopUpShown, title, child
 
       if (
         event.shiftKey &&
-        (document.activeElement === first || !modalRef.current?.contains(document.activeElement))
+        (document.activeElement === first ||
+          document.activeElement === modalRef.current ||
+          !modalRef.current?.contains(document.activeElement))
       ) {
         event.preventDefault();
         last.focus();
@@ -58,7 +72,7 @@ export default function HotelModal({ isPopUpShown, setIsPopUpShown, title, child
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      previousFocus?.focus();
+      previousFocusRef.current?.focus();
     };
   }, [isPopUpShown, setIsPopUpShown]);
 
@@ -92,7 +106,7 @@ export default function HotelModal({ isPopUpShown, setIsPopUpShown, title, child
             <CloseModalIcon aria-hidden="true" className="size-[18px]" />
           </button>
         </div>
-        <div className="min-h-0 w-full lg:h-full">{children}</div>
+        <div className="min-h-0 w-full lg:h-full">{isPopUpShown ? children : null}</div>
       </div>
     </div>
   );

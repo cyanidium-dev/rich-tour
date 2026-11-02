@@ -18,6 +18,12 @@ export const isValidBirthDate = (value?: string): boolean => {
 
   const [day, month, year] = value.split(".").map(Number);
   const birthDate = new Date(year, month - 1, day);
+  if (
+    birthDate.getFullYear() !== year ||
+    birthDate.getMonth() !== month - 1 ||
+    birthDate.getDate() !== day
+  )
+    return false;
   const today = new Date();
 
   if (birthDate > today) return false;

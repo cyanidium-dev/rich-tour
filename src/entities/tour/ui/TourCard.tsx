@@ -22,24 +22,20 @@ export default function TourCard({ tour }: TourCardProps) {
       className="block relative min-h-full rounded-[12px] overflow-hidden shadow-card"
     >
       <div className="absolute -z-10 top-0 left-0 w-full aspect-[210/129] xl:aspect-[265/170]">
-        <AnimatedWrapper
-          animation={fadeInAnimation({ scale: 0.9, delay: 0.4 })}
-          className={`${
-            showPromotion ? "block" : "hidden"
-          } absolute top-5 xl:top-[18px] left-4 xl:left-auto xl:right-[18px] z-10 w-[96px] h-9 flex items-center justify-center 
-          rounded-full bg-main bg-opacity-[66%] text-12med text-white`}
-        >
-          Акція!
-        </AnimatedWrapper>
-        <AnimatedWrapper
-          animation={fadeInAnimation({ scale: 0.9, delay: 0.4 })}
-          className={`${
-            earlyBooking && !showPromotion ? "block" : "hidden"
-          } absolute top-5 xl:top-[18px] left-4 xl:left-auto xl:right-[18px] z-10 w-[164px] h-9 flex items-center justify-center 
-          rounded-full border-[1.5px] border-main bg-black bg-opacity-[27%] text-12med text-white`}
-        >
-          Раннє бронювання
-        </AnimatedWrapper>
+        <div className="absolute top-5 xl:top-[18px] left-4 xl:left-auto xl:right-[18px] z-10 flex flex-col items-start xl:items-end gap-2">
+          {[
+            ...(showPromotion ? ["Акція!"] : []),
+            ...(earlyBooking ? ["Раннє бронювання"] : []),
+          ].map((label) => (
+            <AnimatedWrapper
+              key={label}
+              animation={fadeInAnimation({ scale: 0.9, delay: 0.4 })}
+              className="min-w-[96px] px-4 h-9 flex items-center justify-center rounded-full bg-main bg-opacity-[66%] text-12med text-white"
+            >
+              {label}
+            </AnimatedWrapper>
+          ))}
+        </div>
         <picture>
           <source media="(max-width: 1279px)" srcSet={tourImageUrl(image, "cardMobile")} />
           <Image

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useFormContext,
   useWatch,
@@ -11,6 +11,7 @@ import CustomizedInput from "./BookingInput";
 import IconButton from "@/components/shared/buttons/IconButton";
 import TrashIcon from "@/components/shared/icons/TrashIcon";
 import { type BookingValues } from "../model/schemas";
+import { insuranceCodeNotice, needsInsuranceCode } from "../model/insurance";
 export default function PassengerSection({
   agent = false,
   fields,
@@ -20,8 +21,18 @@ export default function PassengerSection({
   fields: FieldArrayWithId<BookingValues, "travelers">[];
   remove: UseFieldArrayRemove;
 }) {
-  const { control, setValue } = useFormContext<BookingValues>();
+  const { control, setValue, trigger, formState } = useFormContext<BookingValues>();
   const values = useWatch({ control }) as BookingValues;
+  useEffect(() => {
+    values.travelers.forEach((traveler, index) => {
+      if (!needsInsuranceCode(traveler) && traveler.identificationCode)
+        setValue(`travelers.${index}.identificationCode`, "", { shouldDirty: true });
+    });
+    // A change to any traveler can satisfy or invalidate the whole group's requirement.
+    void trigger("travelers");
+  }, [values.travelers, setValue, trigger]);
+  const hasInsuredAdults = values.travelers.some(needsInsuranceCode);
+  const insuranceError = formState.errors.travelers?.root?.message;
   const [focusedTravelerIndex, setFocusedTravelerIndex] = useState<number | null>(null);
   const setFieldValue = (name: string, value: unknown) =>
     setValue(
@@ -159,6 +170,18 @@ export default function PassengerSection({
                       Паспорт виготовляється
                     </BookingCheckbox>
                   </div>
+                  {needsInsuranceCode(values.travelers[index]) && (
+                    <CustomizedInput
+                      fieldName={`travelers[${index}].identificationCode`}
+                      placeholder="Ідентифікаційний код"
+                      mask="identificationCode"
+                      inputMode="numeric"
+                      inlineError
+                      onFocus={() => setFocusedTravelerIndex(index)}
+                      labelClassName="lg:max-w-[296px]"
+                      fieldFontSize="text-10reg lg:text-12reg"
+                    />
+                  )}
                 </>
               )}
             </div>
@@ -184,6 +207,14 @@ export default function PassengerSection({
           </div>
         ))}
       </div>
+      {hasInsuredAdults && (
+        <p className="text-10reg lg:text-12reg text-main">{insuranceCodeNotice}</p>
+      )}
+      {formState.isSubmitted && insuranceError && (
+        <p role="alert" className="text-10reg lg:text-12reg text-red">
+          {insuranceError}
+        </p>
+      )}
     </>
   );
 }

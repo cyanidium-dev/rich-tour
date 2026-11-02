@@ -1,5 +1,8 @@
 import { TravelerInfo } from "@/contracts/booking";
 import { yesNo } from "./utils/helpers";
+import { needsInsuranceCode } from "@/features/booking/model/insurance";
+
+export const CRM_IDENTIFICATION_CODE_FIELD = "Identifikatsiiniikod";
 
 type CrmTraveler = {
   typesex: string;
@@ -17,6 +20,7 @@ type CrmTraveler = {
     Pasport?: string;
     DaTazavpasp?: string;
     Pasportvigotovlyatsya?: string;
+    [CRM_IDENTIFICATION_CODE_FIELD]?: string;
   };
 };
 
@@ -41,6 +45,10 @@ export function mapTravelerToCrmPayload(traveler: TravelerInfo, requestId: strin
       Datanaroya: toCrmDate(traveler.birthDate),
     },
   };
+
+  if (needsInsuranceCode(traveler) && traveler.identificationCode) {
+    payload.customfields[CRM_IDENTIFICATION_CODE_FIELD] = traveler.identificationCode;
+  }
 
   // Паспорт есть
   if (hasPassport) {

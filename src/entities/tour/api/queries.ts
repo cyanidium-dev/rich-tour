@@ -65,6 +65,16 @@ export const basicTourBySlugQuery = `*[_type == "tour-basic" && slug.current == 
   }
 }`;
 
+const hotelDescriptionProjection = `[]{
+  ...,
+  _type == "hotelVideoFile" => {
+    "url": asset->url,
+    "mimeType": asset->mimeType,
+    "size": asset->size,
+    "posterUrl": poster.asset->url
+  }
+}`;
+
 export const tourQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId] | order(dateRange.startDate asc)[0] {
 _id,
 title,
@@ -74,13 +84,15 @@ hot,
 crmNumber,
 agencyCommission,
 discount,
+specialPrice,
+tourInRecruitment,
 availability,
  hotels[]{
     title,
     stars,
     price,
-    shortDescription,
-    fullDescription,
+    shortDescription${hotelDescriptionProjection},
+    fullDescription${hotelDescriptionProjection},
     gallery[]{
       asset->{url}, displayCrops
     }
@@ -106,12 +118,24 @@ costTallImage { "url": asset->url, displayCrops },
   inspiration,
 }`;
 
+const calendarPricingProjection = `
+    earlyBookingPrice,
+    earlyBookingUntil,
+    hotels[]{title, stars, price, earlyBookingPrice, placementDescription},
+`;
+
 export const tourDatesQuery = `*[_type == "tour-to-date" && basic._ref == $tourBasicId && dateTime(dateRange.startDate + "T23:59:59Z") >= dateTime(now())] | order(dateRange.startDate asc) {
     _id,
     crmNumber,
     dateRange,
     price,
+    ${calendarPricingProjection}
     availability,
+    guaranteed,
+    hot,
+    discount,
+    specialPrice,
+    tourInRecruitment,
 }`;
 
 export const tourPageQuery = `*[_type == "tour-basic" && slug.current == $slug][0]{
@@ -131,10 +155,13 @@ export const tourPageQuery = `*[_type == "tour-basic" && slug.current == $slug][
     crmNumber,
     dateRange,
     price,
+    ${calendarPricingProjection}
     availability,
     guaranteed,
     hot,
-    discount
+    discount,
+    specialPrice,
+    tourInRecruitment
   },
   "selectedDeparture": *[
     _type == "tour-to-date" &&
@@ -152,13 +179,15 @@ export const tourPageQuery = `*[_type == "tour-basic" && slug.current == $slug][
     crmNumber,
     agencyCommission,
     discount,
+    specialPrice,
+    tourInRecruitment,
     availability,
     hotels[]{
       title,
       stars,
       price,
-      shortDescription,
-      fullDescription,
+      shortDescription${hotelDescriptionProjection},
+      fullDescription${hotelDescriptionProjection},
       gallery[]{ "url": asset->url, displayCrops }
     },
     additionalConditions,
@@ -194,13 +223,19 @@ export const previewTourDepartureQuery = `*[_type == "tour-to-date" && _id == $i
   crmNumber,
   dateRange,
   price,
+  earlyBookingPrice,
+  earlyBookingUntil,
   availability,
   guaranteed,
   hot,
   agencyCommission,
   discount,
+  specialPrice,
+  tourInRecruitment,
   hotels[]{
-    title, stars, price, shortDescription, fullDescription,
+    title, stars, price, earlyBookingPrice, placementDescription,
+    shortDescription${hotelDescriptionProjection},
+    fullDescription${hotelDescriptionProjection},
     gallery[]{ "url": asset->url, displayCrops }
   },
   additionalConditions,

@@ -1,5 +1,16 @@
 import type { OrderTableRow } from "./types";
 import type { CrmOrder, CrmOrderProduct } from "./schema";
+
+function parseAmount(value: string | number | null | undefined): number | null {
+  if (value == null || (typeof value === "string" && !value.trim())) return null;
+  const amount = Number(value);
+  return Number.isFinite(amount) ? amount : null;
+}
+
+function parseText(value: string | null | undefined): string | null {
+  return value?.trim() || null;
+}
+
 function getDaysQuantity(start: string, end: string): number {
   const startDate = new Date(start);
   const endDate = new Date(end);
@@ -48,7 +59,7 @@ export const transformOrders = (result: CrmOrder[]): OrderTableRow[] => {
   return result.map((item, idx) => ({
     id: item.id,
     index: idx + 1,
-    orderNumber: item.externalid || item.number || item.id || "",
+    orderNumber: `#${item.id}`,
     tourTitle: item.customfields?.Nazvaturu?.value || "",
     daysQuantity:
       item.customfields?.Dataturut?.value && item.customfields?.Datazakinchennyaturu?.value
@@ -58,11 +69,13 @@ export const transformOrders = (result: CrmOrder[]): OrderTableRow[] => {
           )
         : 0,
     tourists: item.orderproducts?.map((product: CrmOrderProduct) => product.name).join(" ") || "",
-    totalCost: item.customfields?.zagalsumabezkomisi?.value
-      ? Number(item.customfields.zagalsumabezkomisi.value)
+    totalCost: item.customfields?.Zagalnasumapozayavtsi?.value
+      ? Number(item.customfields.Zagalnasumapozayavtsi.value)
       : 0,
-    commission: item.customfields?.zagalnasumapokomisi?.value
-      ? Number(item.customfields.zagalnasumapokomisi.value)
+    commission: parseAmount(item.customfields?.zagalnasumapokomisi?.value),
+    mealType: parseText(item.customfields?.Tipharchuvannya?.value),
+    costWithoutCommission: item.customfields?.zagalsumabezkomisi?.value
+      ? Number(item.customfields.zagalsumabezkomisi.value)
       : 0,
     paidAmount: item.customfields?.Oplachenopozayavtsi?.value
       ? Number(item.customfields.Oplachenopozayavtsi.value)
@@ -95,6 +108,21 @@ export const transformOrders = (result: CrmOrder[]): OrderTableRow[] => {
           ? formatDate(product.customfields.Datazavershpasp.value)
           : "",
         city: product.customfields?.Mistoposadki?.value || "",
+        cost: {
+          tariff: parseAmount(product.customfields?.Tarif?.value),
+          accommodation: parseAmount(product.customfields?.Prozhya?.value),
+          meals: parseAmount(product.customfields?.Harya?.value),
+          airConditioning: parseAmount(product.customfields?.Kondits?.value),
+          room: parseText(product.customfields?.Kotedzh?.value),
+          insurance: parseText(product.customfields?.Strahivka?.value),
+          insuranceAmount: parseAmount(product.customfields?.Strahivkasuma?.value),
+          frontSeats: parseText(product.customfields?.Platnimistsya?.value),
+          frontSeatsAmount: parseAmount(product.customfields?.Platazamistse?.value),
+          touristTax: parseAmount(product.customfields?.Turzbir?.value),
+          total: parseAmount(product.customfields?.Zagalnasuma?.value),
+          commission: parseAmount(product.customfields?.Komisiya?.value),
+          withoutCommission: parseAmount(product.customfields?.dosplatibezkomisi?.value),
+        },
       })) || [],
   }));
 };

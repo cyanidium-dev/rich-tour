@@ -3,12 +3,12 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it } from "vitest";
 import OrderItem from "./OrderItem";
 import { transformOrders, parseCrmOrders } from "@/entities/order";
-it("renders orders with the existing displayed values in both account variants", () => {
+it("renders the CRM order number and order details in both account variants", () => {
   const order = transformOrders(
     parseCrmOrders([
       {
-        id: 12,
-        externalid: "REQ-12",
+        id: 10268,
+        externalid: "f26a034c-5158-41c1-8bba-82ecf87a1c8c",
         statusid: "47",
         customfields: { Nazvaturu: { value: "Карпати" }, zagalsumabezkomisi: { value: "1200" } },
         agent: { id: "agent", name: "Agency agent", crmId: 5 },
@@ -23,7 +23,8 @@ it("renders orders with the existing displayed values in both account variants",
         </tbody>
       </table>,
     );
-    expect(html).toContain("REQ-12");
+    expect(html).toContain("#10268");
+    expect(html).not.toContain("f26a034c-5158-41c1-8bba-82ecf87a1c8c");
     expect(html).toContain("Карпати");
     expect(html).toContain("1200 €");
     expect(html).toContain("Повна оплата");

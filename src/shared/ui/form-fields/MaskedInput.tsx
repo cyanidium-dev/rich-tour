@@ -3,7 +3,7 @@
 import { ChangeEvent, InputHTMLAttributes, forwardRef, useCallback } from "react";
 import { IMaskInput } from "react-imask";
 
-export type InputMask = "phone" | "date" | "passport" | "edrpou";
+export type InputMask = "phone" | "date" | "passport" | "edrpou" | "identificationCode";
 
 type MaskedInputProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -36,6 +36,9 @@ const maskOptions: Record<
     prepareChar: (value) => value.toUpperCase(),
   },
   edrpou: {
+    mask: "0000000000",
+  },
+  identificationCode: {
     mask: "0000000000",
   },
 };

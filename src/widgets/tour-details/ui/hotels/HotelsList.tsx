@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, type TouchEvent } from "react";
 
 import ArrowInCircleIcon from "@/components/shared/icons/ArrowInCircleIcon";
 import { useCurrency } from "@/context/CurrencyContext";
-import type { TourHotel } from "@/entities/tour";
+import { hotelDescriptionVideos, type TourHotel } from "@/entities/tour";
 import { Container } from "@/shared/ui";
 import HotelModal from "./HotelModal";
 import HotelModalContent from "./HotelModalContent";
@@ -19,13 +19,22 @@ function getPageSize() {
 
 function getSummary(hotel: TourHotel) {
   return hotel.shortDescription
+    .filter((block) => block._type === "block")
     .map((block) => block.children?.map((child) => child.text ?? "").join("") ?? "")
     .join(" ")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function HotelCard({ hotel, onDetails }: { hotel: TourHotel; onDetails: () => void }) {
+function HotelCard({
+  hotel,
+  onDetails,
+  onVideos,
+}: {
+  hotel: TourHotel;
+  onDetails: () => void;
+  onVideos: () => void;
+}) {
   const { convert, selected: currency } = useCurrency();
 
   return (
@@ -50,6 +59,16 @@ function HotelCard({ hotel, onDetails }: { hotel: TourHotel; onDetails: () => vo
         <p className="mt-auto pt-6 text-[14px] font-semibold text-black">
           від {convert(hotel.price)} {currency === "EUR" ? "€" : "$"}
         </p>
+        {hotelDescriptionVideos(hotel.shortDescription).length > 0 && (
+          <button
+            type="button"
+            onClick={onVideos}
+            className="mt-4 cursor-pointer self-start text-[14px] font-semibold text-main underline focus-visible:outline-2 focus-visible:outline-main"
+            aria-label={`Відео: ${hotel.title}`}
+          >
+            Відео
+          </button>
+        )}
         <button
           type="button"
           onClick={onDetails}
@@ -67,6 +86,7 @@ export default function HotelsList({ hotels }: { hotels: TourHotel[] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedHotel, setSelectedHotel] = useState<TourHotel>(hotels[0]);
   const [isPopUpShown, setIsPopUpShown] = useState(false);
+  const [focusVideos, setFocusVideos] = useState(false);
   const cardsRef = useRef<HTMLDivElement>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const suppressClick = useRef(false);
@@ -136,6 +156,13 @@ export default function HotelsList({ hotels }: { hotels: TourHotel[] }) {
               onDetails={() => {
                 if (suppressClick.current) return;
                 setSelectedHotel(hotel);
+                setFocusVideos(false);
+                setIsPopUpShown(true);
+              }}
+              onVideos={() => {
+                if (suppressClick.current) return;
+                setSelectedHotel(hotel);
+                setFocusVideos(true);
                 setIsPopUpShown(true);
               }}
             />
@@ -191,6 +218,8 @@ export default function HotelsList({ hotels }: { hotels: TourHotel[] }) {
             title={selectedHotel.title}
             stars={selectedHotel.stars}
             description={selectedHotel.fullDescription}
+            shortDescriptionVideos={hotelDescriptionVideos(selectedHotel.shortDescription)}
+            focusVideos={focusVideos}
             gallery={
               selectedHotel.galleryVariants?.map((item) => item.modal) ?? selectedHotel.gallery
             }

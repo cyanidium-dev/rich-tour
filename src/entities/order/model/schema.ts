@@ -6,6 +6,7 @@ const fields = z
     Nazvaturu: dateField.nullish(),
     Dataturut: dateField.nullish(),
     Datazakinchennyaturu: dateField.nullish(),
+    Zagalnasumapozayavtsi: field.nullish(),
     zagalsumabezkomisi: field.nullish(),
     zagalnasumapokomisi: field.nullish(),
     Oplachenopozayavtsi: field.nullish(),
@@ -16,6 +17,20 @@ const fields = z
     Pasport: dateField.nullish(),
     Datazavershpasp: dateField.nullish(),
     Mistoposadki: dateField.nullish(),
+    Tipharchuvannya: dateField.nullish(),
+    Tarif: field.nullish(),
+    Prozhya: field.nullish(),
+    Harya: field.nullish(),
+    Kondits: field.nullish(),
+    Kotedzh: dateField.nullish(),
+    Strahivka: dateField.nullish(),
+    Strahivkasuma: field.nullish(),
+    Platnimistsya: dateField.nullish(),
+    Platazamistse: field.nullish(),
+    Turzbir: field.nullish(),
+    Zagalnasuma: field.nullish(),
+    Komisiya: field.nullish(),
+    dosplatibezkomisi: field.nullish(),
   })
   .passthrough();
 export const crmOrderProductSchema = z

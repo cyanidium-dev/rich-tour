@@ -48,12 +48,23 @@ it("keeps empty and one-character searches unfiltered", () => {
   expect(filterOrders(rows, filters({ search: "absent" }))).toEqual([]);
 });
 
-it.each(["req-1", "КАРПАТИ", " Olena ", "ALPHA", "Window"])(
+it.each(["#1", "КАРПАТИ", " Olena ", "ALPHA", "Window"])(
   "searches the existing order fields: %s",
   (search) => {
     expect(filterOrders(rows, filters({ search })).map((row) => row.id)).toEqual([1]);
   },
 );
+
+it.each(["10268", "#10268"])("finds an order by its CRM number: %s", (search) => {
+  const orders = transformOrders(
+    parseCrmOrders([
+      { id: 10268, externalid: "f26a034c-5158-41c1-8bba-82ecf87a1c8c" },
+      { id: 10269 },
+    ]),
+  );
+
+  expect(filterOrders(orders, filters({ search })).map((row) => row.id)).toEqual([10268]);
+});
 
 it("combines exact agent and status filters and preserves the existing debt meaning", () => {
   expect(

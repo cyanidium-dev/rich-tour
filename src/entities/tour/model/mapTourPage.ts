@@ -1,5 +1,6 @@
 import {
   InspirationItem,
+  HotelDescriptionBlock,
   PortableTextBlock,
   Tour,
   TourBenefitListItem,
@@ -17,17 +18,24 @@ type RawDeparture = {
   crmNumber?: string;
   dateRange?: { startDate?: string; endDate?: string };
   price?: number;
+  earlyBookingPrice?: number;
+  earlyBookingUntil?: string;
+  hotels?: RawHotel[];
   availability?: string;
   guaranteed?: boolean;
   hot?: boolean;
   discount?: boolean;
+  specialPrice?: boolean;
+  tourInRecruitment?: boolean;
 };
 type RawHotel = {
   title?: string;
   stars?: number | null;
   price?: number;
-  shortDescription?: PortableTextBlock[];
-  fullDescription?: PortableTextBlock[];
+  earlyBookingPrice?: number;
+  placementDescription?: string;
+  shortDescription?: HotelDescriptionBlock[];
+  fullDescription?: HotelDescriptionBlock[];
   gallery?: ImageUrl[];
 };
 type RawSelectedDeparture = RawDeparture & {
@@ -118,10 +126,30 @@ function mapDepartures(departures?: RawDeparture[]): TourDepartures {
       ...(departure.guaranteed ? ["guaranteed"] : []),
       ...(departure.hot ? ["hot"] : []),
       ...(departure.discount ? ["discount"] : []),
+      ...(departure.specialPrice ? ["specialPrice"] : []),
+      ...(departure.tourInRecruitment ? ["tourInRecruitment"] : []),
     ];
     const item = {
       day: Number(day),
       price: departure.price,
+      earlyBookingPrice: departure.earlyBookingPrice,
+      earlyBookingUntil: departure.earlyBookingUntil,
+      hotels: (departure.hotels ?? []).flatMap((hotel) =>
+        hotel.title &&
+        typeof hotel.price === "number" &&
+        Number.isFinite(hotel.price) &&
+        hotel.price >= 0
+          ? [
+              {
+                title: hotel.title,
+                stars: hotel.stars ?? undefined,
+                price: hotel.price,
+                earlyBookingPrice: hotel.earlyBookingPrice,
+                placementDescription: hotel.placementDescription,
+              },
+            ]
+          : [],
+      ),
       status,
       crmNumber: departure.crmNumber,
       departureId: departure._id,
@@ -243,7 +271,7 @@ export function mapTourPreview(
     crmNumber: item.crmNumber || previewCrmNumber,
   });
   const allDepartures = (departures ?? []).some((item) => item._id === departure._id)
-    ? (departures ?? []).map(withCrm)
+    ? (departures ?? []).map((item) => withCrm(item._id === departure._id ? departure : item))
     : [...(departures ?? []).map(withCrm), withCrm(departure)];
   const mapped = mapTourPage({
     _id: basic?._id || departure._id,

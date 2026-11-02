@@ -4,6 +4,10 @@ export type {
   TourDepartures,
   TourDepartureDay,
   TourHotel,
+  HotelVideoBlock,
+  HotelVideoFileBlock,
+  HotelYoutubeBlock,
+  HotelDescriptionBlock,
   TourPageImage,
   TourProgramListItem,
   TourBenefitListItem,
@@ -15,4 +19,5 @@ export { formatTourDeparturesToOptions } from "./lib/formatTourDeparturesOptions
 export type { DateOption } from "./lib/formatTourDeparturesOptions";
 export { default as TourCard } from "./ui/TourCard";
 export { tourImageUrl } from "./model/tourImageUrl";
+export { isHotelVideoBlock, hotelDescriptionVideos } from "./model/hotelVideo";
 export type { TourImageSource } from "./model/tourImageUrl";

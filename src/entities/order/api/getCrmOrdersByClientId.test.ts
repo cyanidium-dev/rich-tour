@@ -30,6 +30,34 @@ it("retains pagination, request fields, deduplication and CRM order values", asy
     filter: { clientid: "client-1", workflowid: "5" },
   });
   expect(payloads[0].filter).not.toHaveProperty("lastid");
+  expect(payloads[0].fields).toEqual(
+    expect.arrayContaining([
+      "customfields.Zagalnasumapozayavtsi",
+      "customfields.zagalsumabezkomisi",
+      "customfields.Tipharchuvannya",
+    ]),
+  );
+  expect(payloads[0].orderproductfields).toEqual(
+    expect.arrayContaining([
+      "name",
+      "customfields.Pasport",
+      ...[
+        "Tarif",
+        "Prozhya",
+        "Harya",
+        "Kondits",
+        "Kotedzh",
+        "Strahivka",
+        "Strahivkasuma",
+        "Platnimistsya",
+        "Platazamistse",
+        "Turzbir",
+        "Zagalnasuma",
+        "Komisiya",
+        "dosplatibezkomisi",
+      ].map((key) => `customfields.${key}`),
+    ]),
+  );
   expect(payloads[1].filter).toEqual({ clientid: "client-1", workflowid: "5", lastid: 200 });
   expect(payloads[1].fields).toEqual(payloads[0].fields);
   expect(payloads[1].orderproductfields).toEqual(payloads[0].orderproductfields);

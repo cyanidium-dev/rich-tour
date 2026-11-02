@@ -1,5 +1,5 @@
 "use client";
-import type { ChangeEvent, FocusEvent } from "react";
+import type { ChangeEvent, FocusEvent, InputHTMLAttributes } from "react";
 import { Controller, useFormContext, type FieldPath } from "react-hook-form";
 import { MaskedInput, type InputMask } from "@/shared/ui";
 import type { BookingValues } from "../model/schemas";
@@ -9,6 +9,8 @@ interface Props {
   as?: "textarea";
   mask?: InputMask;
   inputType?: string;
+  inputMode?: InputHTMLAttributes<HTMLInputElement>["inputMode"];
+  inlineError?: boolean;
   labelClassName?: string;
   fieldFontSize?: string;
   disabled?: boolean;
@@ -21,6 +23,8 @@ export default function BookingInput({
   as,
   mask,
   inputType = "text",
+  inputMode,
+  inlineError = false,
   labelClassName = "",
   fieldFontSize = "text-12reg",
   disabled,
@@ -33,7 +37,9 @@ export default function BookingInput({
   const visible = !!error && (isTouched || formState.isSubmitted);
   const props = {
     placeholder,
+    "aria-label": placeholder,
     type: inputType,
+    inputMode,
     autoComplete: "on",
     disabled,
     onFocus,
@@ -65,7 +71,11 @@ export default function BookingInput({
         )}
       </div>
       {visible && (
-        <p className="absolute bottom-[-12px] left-2 text-9reg text-red">{error.message}</p>
+        <p
+          className={`${inlineError ? "mt-1" : "absolute bottom-[-12px] left-2"} text-9reg text-red`}
+        >
+          {error.message}
+        </p>
       )}
     </label>
   );

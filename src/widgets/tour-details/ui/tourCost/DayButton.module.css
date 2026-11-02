@@ -1,9 +1,60 @@
-.withCommission:global(.rdp-day_button) {
-  height: 49px;
+/* Keep layout rules outside Tailwind layers so DayPicker's defaults cannot override them. */
+.dayButton:global(.rdp-day_button) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-height: 49px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.dayButton > * {
+  flex-shrink: 0;
+}
+
+.withPrice:global(.rdp-day_button) {
+  justify-content: flex-start;
+}
+
+.price {
+  container-type: inline-size;
+  width: 100%;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.amount {
+  display: inline-block;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  /* Keep long amounts inside the cell, allowing 0.65em per character. */
+  font-size: min(1em, calc(100cqi / (var(--amount-length) * 0.65)));
+}
+
+.statusIcons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 2px;
+  margin-top: auto;
+}
+
+.statusIcons > span {
+  flex: 0 0 10px;
+  height: 10px;
+}
+
+.statusIcons img {
+  display: block;
+  width: 10px;
+  height: 10px;
 }
 
 @media (max-width: 767px) {
   .withCommission:global(.rdp-day_button) {
-    height: 68px;
+    min-height: 68px;
   }
 }

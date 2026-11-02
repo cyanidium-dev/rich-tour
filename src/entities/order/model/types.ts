@@ -6,7 +6,9 @@ export interface OrderTableRow {
   daysQuantity: number;
   tourists: string;
   totalCost: number;
-  commission: number;
+  commission?: number | null;
+  mealType?: string | null;
+  costWithoutCommission: number;
   paidAmount: number;
   remainingAmount: number;
   startDate: string;
@@ -25,5 +27,20 @@ export interface OrderTableRow {
     passport: string;
     passportFinish: string;
     city: string;
+    cost?: {
+      tariff: number | null;
+      accommodation: number | null;
+      meals: number | null;
+      airConditioning: number | null;
+      room: string | null;
+      insurance: string | null;
+      insuranceAmount: number | null;
+      frontSeats: string | null;
+      frontSeatsAmount: number | null;
+      touristTax: number | null;
+      total: number | null;
+      commission: number | null;
+      withoutCommission: number | null;
+    };
   }[];
 }

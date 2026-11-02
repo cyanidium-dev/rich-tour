@@ -20,7 +20,23 @@ vi.mock("@/context/CurrencyContext", () => ({
 }));
 vi.mock("./HotelsTitle", () => ({ default: () => <h2>Інформація про готелі</h2> }));
 vi.mock("./HotelModalContent", () => ({
-  default: ({ title }: { title: string }) => <p>Подробиці: {title}</p>,
+  default: ({
+    title,
+    shortDescriptionVideos,
+    focusVideos,
+  }: {
+    title: string;
+    shortDescriptionVideos?: unknown[];
+    focusVideos?: boolean;
+  }) => (
+    <div
+      data-testid="hotel-details"
+      data-video-count={shortDescriptionVideos?.length}
+      data-focus-videos={focusVideos}
+    >
+      <p>Подробиці: {title}</p>
+    </div>
+  ),
 }));
 
 function makeHotels(count: number): TourHotel[] {
@@ -123,4 +139,19 @@ it("omits missing stars in the single hotel and hotel card headings", () => {
   render(<HotelsList hotels={[hotel, makeHotels(2)[1]]} />);
   expect(screen.getByRole("heading", { name: "Hotel 1" })).toBeTruthy();
   expect(screen.getByRole("heading", { name: "Hotel 2 3★" })).toBeTruthy();
+});
+
+it("keeps cards compact and opens short-description videos in the selected hotel's modal", () => {
+  const hotels = makeHotels(2);
+  hotels[1].shortDescription.push({ _type: "hotelYoutube", _key: "video", videoId: "dQw4w9WgXcQ" });
+  render(<HotelsList hotels={hotels} />);
+  expect(screen.queryByRole("button", { name: "Відео: Hotel 1" })).toBeNull();
+  expect(screen.queryByTestId("hotel-details")).toBeNull();
+  fireEvent.click(screen.getByRole("button", { name: "Відео: Hotel 2" }));
+  expect(screen.getByRole("dialog", { name: /Hotel 2/ })).toBeTruthy();
+  expect(screen.getByTestId("hotel-details").getAttribute("data-video-count")).toBe("1");
+  expect(screen.getByTestId("hotel-details").getAttribute("data-focus-videos")).toBe("true");
+  fireEvent.keyDown(document, { key: "Escape" });
+  fireEvent.click(screen.getAllByRole("button", { name: "Детальніше" })[1]);
+  expect(screen.getByTestId("hotel-details").getAttribute("data-focus-videos")).toBe("false");
 });

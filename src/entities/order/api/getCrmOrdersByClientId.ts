@@ -9,6 +9,7 @@ const orderFields = [
   "statusid",
   "statusname",
   "customfields.Nazvaturu",
+  "customfields.Zagalnasumapozayavtsi",
   "customfields.zagalsumabezkomisi",
   "customfields.zagalnasumapokomisi",
   "customfields.Oplachenopozayavtsi",
@@ -16,6 +17,7 @@ const orderFields = [
   "customfields.Dataturut",
   "customfields.Datazakinchennyaturu",
   "customfields.Dodatkovidani",
+  "customfields.Tipharchuvannya",
   "customfields.Oplachenopozayavtsi",
   "orderproducts",
 ];
@@ -26,6 +28,19 @@ const orderProductFields = [
   "customfields.Pasport",
   "customfields.Mistoposadki",
   "customfields.Datazavershpasp",
+  "customfields.Tarif",
+  "customfields.Prozhya",
+  "customfields.Harya",
+  "customfields.Kondits",
+  "customfields.Kotedzh",
+  "customfields.Strahivka",
+  "customfields.Strahivkasuma",
+  "customfields.Platnimistsya",
+  "customfields.Platazamistse",
+  "customfields.Turzbir",
+  "customfields.Zagalnasuma",
+  "customfields.Komisiya",
+  "customfields.dosplatibezkomisi",
 ];
 export async function getCrmOrdersByClientId(clientId: string | number) {
   const basePayload = {

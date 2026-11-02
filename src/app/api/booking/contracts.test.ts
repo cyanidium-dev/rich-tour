@@ -116,7 +116,10 @@ it("preserves traveler-before-order sequence, auth mapping and success contract"
   const response = await POST(request(body()));
   expect(response.status).toBe(200);
   expect(await response.json()).toEqual({ status: "ok", crmOrderId: "7" });
-  expect(sendTravelersToCrm).toHaveBeenCalledWith(body().travelers, "request");
+  expect(sendTravelersToCrm).toHaveBeenCalledWith(
+    body().travelers.map(({ identificationCode: _identificationCode, ...traveler }) => traveler),
+    "request",
+  );
   expect(sendOrderToCrm).toHaveBeenCalledWith(
     expect.objectContaining({
       requestId: "request",
@@ -139,4 +142,51 @@ it("preserves CRM failures and does not create an order after a traveler failure
   vi.mocked(sendTravelersToCrm).mockResolvedValue(["1"]);
   vi.mocked(sendOrderToCrm).mockRejectedValue(new Error("order"));
   expect((await POST(request(body()))).status).toBe(502);
+});
+
+it.each(["", "1759013770"])(
+  "rejects the insured adult code '%s' before auth or CRM calls",
+  async (identificationCode) => {
+    const value = body();
+    value.travelers[0] = { ...value.travelers[0], insurance: true, identificationCode };
+    const response = await POST(request(value));
+    expect(response.status).toBe(400);
+    const error = await response.json();
+    expect(error.error).toBe("VALIDATION_FAILED");
+    expect(error.fields).toContain(
+      "Вкажіть ідентифікаційний код хоча б одного повнолітнього туриста зі страховкою",
+    );
+    if (identificationCode)
+      expect(error.fields).toContain(
+        "Перевірте ідентифікаційний код: контрольна цифра не збігається",
+      );
+    expect(getAuthUser).not.toHaveBeenCalled();
+    expect(sendTravelersToCrm).not.toHaveBeenCalled();
+    expect(sendOrderToCrm).not.toHaveBeenCalled();
+  },
+);
+
+it("preserves an adult's code and excludes ineligible codes before sending contacts", async () => {
+  vi.mocked(sendTravelersToCrm).mockResolvedValue(["1", "2", "3"]);
+  vi.mocked(sendOrderToCrm).mockResolvedValue("7");
+  const value = body();
+  value.travelersQty = 3;
+  value.travelers[0] = { ...value.travelers[0], insurance: true, identificationCode: "0123456781" };
+  value.travelers.push(
+    {
+      ...value.travelers[0],
+      birthDate: `01.01.${new Date().getFullYear() - 5}`,
+      identificationCode: "invalid",
+    },
+    { ...value.travelers[0], insurance: false, identificationCode: "invalid" },
+  );
+  const response = await POST(request(value));
+  expect(response.status).toBe(200);
+  const travelers = vi.mocked(sendTravelersToCrm).mock.calls[0][0];
+  expect(travelers[0].identificationCode).toBe("0123456781");
+  expect(travelers[1]).not.toHaveProperty("identificationCode");
+  expect(travelers[2]).not.toHaveProperty("identificationCode");
+  expect(sendOrderToCrm).toHaveBeenCalledWith(
+    expect.objectContaining({ crmTravelerIds: ["1", "2", "3"] }),
+  );
 });

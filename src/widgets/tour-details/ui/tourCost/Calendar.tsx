@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, type ComponentProps } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   DayPicker,
   TZDate,
   type ClassNames,
   type Locale,
+  type DayButtonProps,
   getDefaultClassNames,
 } from "react-day-picker";
 import { uk } from "react-day-picker/locale";
@@ -15,10 +16,11 @@ import Legend from "./Legend";
 import DayButton from "./DayButton";
 import BookingWithButton from "../../../../components/shared/booking/BookingWithButton";
 import "react-day-picker/style.css";
-import { Tour, TourDepartures } from "@/entities/tour/index";
+import { Tour } from "@/entities/tour/index";
 // import {tourDepartures} from "@/widgets/tour-details/ui/tourCost/mockedData";
 import { useCurrency } from "@/context/CurrencyContext";
 import { isBookableDay } from "./calendarDates";
+import { DepartureTooltipProvider } from "./DepartureTooltip";
 
 interface CalendarProps {
   isLogin: boolean;
@@ -29,24 +31,21 @@ interface CalendarProps {
   preview?: boolean;
 }
 
-const getTourDepartures = (
-  tourDepartures: TourDepartures,
-  convert: (price: number) => number,
-): TourDepartures => {
-  const result: TourDepartures = {};
-  for (const [key, value] of Object.entries(tourDepartures)) {
-    result[key] = value.map((item) => ({
-      ...item,
-      price: item.price === undefined ? undefined : convert(item.price),
-    }));
-  }
-  return result;
-};
+type CalendarDayConfig = Omit<ComponentProps<typeof DayButton>, keyof DayButtonProps>;
+const CalendarDayContext = createContext<CalendarDayConfig | null>(null);
+
+// Keep the component identity stable so opening details never replaces the focused button.
+function CalendarDayButton(props: DayButtonProps) {
+  const config = useContext(CalendarDayContext);
+  if (!config) throw new Error("CalendarDayButton requires CalendarDayContext");
+  return <DayButton {...props} {...config} />;
+}
 
 export default function Calendar({ isLogin, tour, preview = false, ...userData }: CalendarProps) {
   const [selected, setSelected] = useState<Date>();
   const [openBookingFlag, setOpenBookingFlag] = useState(false);
   const [bookingDate, setBookingDate] = useState<string | null>(null);
+  const [tooltipMonth, setTooltipMonth] = useState("");
   const defaultClassNames = getDefaultClassNames();
   const router = useRouter();
   const pathname = usePathname();
@@ -76,7 +75,7 @@ export default function Calendar({ isLogin, tour, preview = false, ...userData }
   const initialMonth = new TZDate(today.getFullYear(), today.getMonth(), 1, timeZone);
   const maxDate = new TZDate(nextYear, 11, 31, timeZone);
 
-  const tourDepartures = getTourDepartures(tour.tourDepartures, convert);
+  const tourDepartures = tour.tourDepartures;
 
   useEffect(() => {
     if (preview) return;
@@ -127,51 +126,53 @@ export default function Calendar({ isLogin, tour, preview = false, ...userData }
         <p className="pl-4 pr-3 pt-4 pb-3 text-16semi text-center border-b border-lightGrey">
           Дати виїздів та ціни
         </p>
-        <DayPicker
-          animate
-          mode="single"
-          locale={customUk}
-          timeZone={timeZone}
-          today={today}
-          captionLayout="dropdown-years"
-          selected={selected}
-          onSelect={setSelected}
-          fixedWeeks={true}
-          showOutsideDays
-          disabled={(date) => !isBookableDay(date, tourDepartures, today)}
-          startMonth={initialMonth}
-          endMonth={maxDate}
-          components={{
-            DayButton: (props) => (
-              <DayButton
-                {...props}
-                isLogin={isLogin}
-                agencyCommission={tour.agencyCommission}
-                currency={currency}
-                convert={convert}
-                tourDepartures={tourDepartures}
-                readOnly={preview}
-                openBooking={(dateStr, departureId) => {
-                  if (preview) return;
-                  if (departureId !== tour.selectedDepartureId) {
-                    const params = new URLSearchParams(searchParams.toString());
-                    params.set("departure", departureId);
-                    params.set("book", dateStr);
-                    router.push(`${pathname}?${params.toString()}`, { scroll: false });
-                    return;
-                  }
-                  setBookingDate(dateStr);
-                  setOpenBookingFlag(true);
-                }}
-              />
-            ),
-          }}
-          className={`pl-3 pr-3 ${isLogin ? "rdp-full" : ""}`}
-          classNames={{
-            ...(isLogin ? calendarClassNamesLoggedIn : calendarClassNamesGuest),
-            months: isLogin ? "w-full max-w-none" : defaultClassNames.months,
-          }}
-        />
+        <DepartureTooltipProvider resetKey={tooltipMonth} currency={currency} convert={convert}>
+          <CalendarDayContext.Provider
+            value={{
+              isLogin,
+              agencyCommission: tour.agencyCommission,
+              currency,
+              convert,
+              tourDepartures,
+              readOnly: preview,
+              openBooking: (dateStr, departureId) => {
+                if (preview) return;
+                if (departureId !== tour.selectedDepartureId) {
+                  const params = new URLSearchParams(searchParams.toString());
+                  params.set("departure", departureId);
+                  params.set("book", dateStr);
+                  router.push(`${pathname}?${params.toString()}`, { scroll: false });
+                  return;
+                }
+                setBookingDate(dateStr);
+                setOpenBookingFlag(true);
+              },
+            }}
+          >
+            <DayPicker
+              animate
+              mode="single"
+              locale={customUk}
+              timeZone={timeZone}
+              today={today}
+              captionLayout="dropdown-years"
+              selected={selected}
+              onSelect={setSelected}
+              onMonthChange={(month) => setTooltipMonth(month.toISOString())}
+              fixedWeeks={true}
+              showOutsideDays
+              disabled={(date) => !isBookableDay(date, tourDepartures, today)}
+              startMonth={initialMonth}
+              endMonth={maxDate}
+              components={{ DayButton: CalendarDayButton }}
+              className={`pl-3 pr-3 ${isLogin ? "rdp-full" : ""}`}
+              classNames={{
+                ...(isLogin ? calendarClassNamesLoggedIn : calendarClassNamesGuest),
+                months: isLogin ? "w-full max-w-none" : defaultClassNames.months,
+              }}
+            />
+          </CalendarDayContext.Provider>
+        </DepartureTooltipProvider>
         <Legend />
       </AnimatedWrapper>
       {isLogin && tour.agencyCommission && (

@@ -21,12 +21,23 @@ export interface InspirationItem {
   images?: { url: string; mobileUrl?: string; alt: string }[];
 }
 
+export interface CalendarHotelPrice {
+  title: string;
+  stars?: number;
+  price: number;
+  earlyBookingPrice?: number;
+  placementDescription?: string;
+}
+
 export interface TourDepartureDay {
   day: number;
   price?: number;
   status: string[];
   crmNumber: string;
   departureId: string;
+  earlyBookingPrice?: number;
+  earlyBookingUntil?: string;
+  hotels?: CalendarHotelPrice[];
 }
 
 export interface TourDepartures {
@@ -46,12 +57,30 @@ export interface TourShortInfo {
   image: TourImageSource;
 }
 
+export interface HotelVideoFileBlock extends PortableTextBlock {
+  _type: "hotelVideoFile";
+  url: string;
+  mimeType: string;
+  size: number;
+  title?: string;
+  posterUrl?: string;
+}
+
+export interface HotelYoutubeBlock extends PortableTextBlock {
+  _type: "hotelYoutube";
+  videoId: string;
+  title?: string;
+}
+
+export type HotelVideoBlock = HotelVideoFileBlock | HotelYoutubeBlock;
+export type HotelDescriptionBlock = PortableTextBlock | HotelVideoBlock;
+
 export interface TourHotel {
   title: string;
   stars?: number;
   price: number;
-  shortDescription: PortableTextBlock[];
-  fullDescription: PortableTextBlock[];
+  shortDescription: HotelDescriptionBlock[];
+  fullDescription: HotelDescriptionBlock[];
   gallery: string[];
   galleryVariants?: { feature: string; thumb: string; card: string; modal: string }[];
 }
