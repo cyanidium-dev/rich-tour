@@ -1,8 +1,10 @@
-import { beforeEach, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, expect, it, vi } from "vitest";
+const { fetchDeparture } = vi.hoisted(() => ({ fetchDeparture: vi.fn() }));
 vi.mock("server-only", () => ({}));
 vi.mock("@/lib/crm/sendTravelersToCrm", () => ({ sendTravelersToCrm: vi.fn() }));
 vi.mock("@/lib/crm/sendOrderToCrm", () => ({ sendOrderToCrm: vi.fn() }));
 vi.mock("@/lib/sanity/users/getAuthUser", () => ({ getAuthUser: vi.fn() }));
+vi.mock("@/shared/api/server", () => ({ sanityClient: { fetch: fetchDeparture } }));
 import { POST } from "./route";
 import { sendTravelersToCrm } from "@/lib/crm/sendTravelersToCrm";
 import { sendOrderToCrm } from "@/lib/crm/sendOrderToCrm";
@@ -29,7 +31,18 @@ const body = () => ({
 });
 const request = (value: unknown) =>
   new Request("http://localhost/api/booking", { method: "POST", body: JSON.stringify(value) });
-beforeEach(() => vi.resetAllMocks());
+beforeEach(() => {
+  vi.useFakeTimers({ toFake: ["Date"] });
+  vi.setSystemTime(new Date("2026-11-15T12:00:00Z"));
+  vi.resetAllMocks();
+  fetchDeparture.mockResolvedValue({
+    _id: "departure",
+    crmNumber: "tour",
+    startDate: "2026-12-15",
+    price: 100,
+  });
+});
+afterEach(() => vi.useRealTimers());
 it("preserves JSON, identifier and validation error responses without CRM calls", async () => {
   const invalid = await POST(new Request("http://localhost", { method: "POST", body: "{" }));
   expect(invalid.status).toBe(400);
@@ -132,6 +145,92 @@ it("preserves traveler-before-order sequence, auth mapping and success contract"
   expect(vi.mocked(sendTravelersToCrm).mock.invocationCallOrder[0]).toBeLessThan(
     vi.mocked(sendOrderToCrm).mock.invocationCallOrder[0],
   );
+});
+
+it("uses the verified departure CRM number for the order", async () => {
+  fetchDeparture.mockResolvedValue({
+    _id: "chosen",
+    crmNumber: "300",
+    startDate: "2026-12-20",
+    price: 100,
+  });
+  vi.mocked(sendTravelersToCrm).mockResolvedValue(["1"]);
+  const value = { ...body(), departureId: "chosen", tourId: "300", date: "20.12.2026" };
+  expect((await POST(request(value))).status).toBe(200);
+  expect(fetchDeparture).toHaveBeenCalledWith(
+    expect.any(String),
+    {
+      departureId: "chosen",
+      crmNumber: "300",
+      startDate: "2026-12-20",
+    },
+    { cache: "no-store", perspective: "published" },
+  );
+  expect(sendOrderToCrm).toHaveBeenCalledWith(
+    expect.objectContaining({ tourId: "300", date: "20.12.2026" }),
+  );
+});
+
+it("rejects unavailable or mismatched departures before creating CRM contacts", async () => {
+  fetchDeparture.mockResolvedValue(null);
+  expect((await POST(request(body()))).status).toBe(400);
+  expect(getAuthUser).not.toHaveBeenCalled();
+  expect(sendTravelersToCrm).not.toHaveBeenCalled();
+  expect(sendOrderToCrm).not.toHaveBeenCalled();
+});
+
+it("does not create CRM contacts when the departure check fails", async () => {
+  fetchDeparture.mockRejectedValue(new Error("Sanity unavailable"));
+  expect((await POST(request(body()))).status).toBe(502);
+  expect(sendTravelersToCrm).not.toHaveBeenCalled();
+  expect(sendOrderToCrm).not.toHaveBeenCalled();
+});
+
+it("validates older clients using their CRM number and date", async () => {
+  expect((await POST(request(body()))).status).toBe(200);
+  expect(fetchDeparture).toHaveBeenCalledWith(
+    expect.any(String),
+    {
+      departureId: null,
+      crmNumber: "tour",
+      startDate: "2026-12-15",
+    },
+    expect.objectContaining({ cache: "no-store" }),
+  );
+});
+
+it("rejects a departure once its date passes in Kyiv", async () => {
+  vi.setSystemTime(new Date("2026-11-15T22:00:00Z"));
+  fetchDeparture.mockResolvedValue({
+    _id: "departure",
+    crmNumber: "tour",
+    startDate: "2026-11-15",
+    price: 100,
+  });
+  expect((await POST(request({ ...body(), date: "15.11.2026" }))).status).toBe(400);
+  expect(sendTravelersToCrm).not.toHaveBeenCalled();
+});
+
+it.each([
+  { crmNumber: "other" },
+  { startDate: "2026-12-20" },
+  { startDate: "2026-11-14" },
+  { availability: "noSeats" },
+  { availability: "noDeparture" },
+  { price: null },
+  { price: undefined },
+  { _id: "another-departure" },
+])("rejects a stale or inconsistent departure: %j", async (change) => {
+  fetchDeparture.mockResolvedValue({
+    _id: "departure",
+    crmNumber: "tour",
+    startDate: "2026-12-15",
+    price: 100,
+    ...change,
+  });
+  expect((await POST(request({ ...body(), departureId: "departure" }))).status).toBe(400);
+  expect(sendTravelersToCrm).not.toHaveBeenCalled();
+  expect(sendOrderToCrm).not.toHaveBeenCalled();
 });
 it("preserves CRM failures and does not create an order after a traveler failure", async () => {
   vi.mocked(sendTravelersToCrm).mockRejectedValue(new Error("CRM"));

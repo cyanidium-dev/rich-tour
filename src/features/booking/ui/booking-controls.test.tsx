@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import React from "react";
-import { afterEach, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import BookingForm from "./BookingForm";
 import type { TourDepartures } from "@/entities/tour";
@@ -9,12 +9,20 @@ const departures: TourDepartures = {
   "2026-12": [15, 20].map((day) => ({
     day,
     status: [],
+    price: 100,
     crmNumber: "tour",
     departureId: String(day),
   })),
 };
 
-afterEach(cleanup);
+beforeEach(() => {
+  vi.useFakeTimers({ toFake: ["Date"] });
+  vi.setSystemTime(new Date("2026-11-15T12:00:00Z"));
+});
+afterEach(() => {
+  cleanup();
+  vi.useRealTimers();
+});
 
 it("connects the real date and traveler-count controls to the form", async () => {
   const { container } = render(
@@ -24,7 +32,7 @@ it("connects the real date and traveler-count controls to the form", async () =>
       setIsPopUpShown={vi.fn()}
       setErrorText={vi.fn()}
       tourDepartures={departures}
-      selectedCrmNumber="tour"
+      initialDepartureId="20"
       initialDate="20.12.2026"
       companyName=""
       email=""

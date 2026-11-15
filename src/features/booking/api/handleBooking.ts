@@ -6,6 +6,7 @@ import { BookingRequest } from "@/contracts/booking";
 import { sendOrderToCrm } from "@/lib/crm/sendOrderToCrm";
 import { sendTravelersToCrm } from "@/lib/crm/sendTravelersToCrm";
 import { getAuthUser } from "@/lib/sanity/users/getAuthUser";
+import { resolveBookingDeparture } from "./resolveBookingDeparture";
 
 // Preserve the original order: nested phone errors before contact errors,
 // then grouped the remaining traveler fields in this order.
@@ -60,13 +61,31 @@ export async function POST(req: Request) {
     );
   }
   const body = result.data as BookingRequest;
+  let departure;
+  try {
+    departure = await resolveBookingDeparture(body);
+  } catch {
+    return NextResponse.json(
+      { error: "Не вдалося перевірити виїзд. Спробуйте ще раз." },
+      { status: 502 },
+    );
+  }
+  if (!departure) {
+    return NextResponse.json(
+      {
+        error:
+          "Обраний виїзд недоступний або його дані змінилися. Оновіть сторінку та оберіть дату знову.",
+      },
+      { status: 400 },
+    );
+  }
   const auth = await getAuthUser();
   try {
     const crmTravelerIds = await sendTravelersToCrm(body.travelers, body.requestId);
     const firstTraveler = body.travelers[0];
     const crmOrderId = await sendOrderToCrm({
       requestId: body.requestId,
-      tourId: body.tourId,
+      tourId: departure.crmNumber,
       crmTravelerIds,
       date: body.date,
       travelersQty: body.travelersQty,

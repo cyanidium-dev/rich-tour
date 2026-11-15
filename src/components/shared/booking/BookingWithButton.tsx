@@ -26,8 +26,10 @@ export default function BookingWithButton({
   ...userData
 }: BookingWithButtonProps) {
   const [isPopUpShown, setIsPopUpShown] = useState(false);
+  const [calendarBookingSession, setCalendarBookingSession] = useState(0);
   useEffect(() => {
     if (forceOpen) {
+      setCalendarBookingSession((session) => session + 1);
       setIsPopUpShown(true);
       onForceOpenHandled?.();
     }
@@ -40,6 +42,7 @@ export default function BookingWithButton({
         </MainButton>
       </AnimatedWrapper>
       <Booking
+        key={calendarBookingSession}
         isPopUpShown={isPopUpShown}
         setIsPopUpShown={setIsPopUpShown}
         tour={tour}

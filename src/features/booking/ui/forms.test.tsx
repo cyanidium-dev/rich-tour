@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import React from "react";
-import { afterEach, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, waitFor } from "@testing-library/react";
 import axios from "axios";
 vi.mock("axios", () => ({
@@ -8,6 +8,9 @@ vi.mock("axios", () => ({
     post: vi.fn(),
     isAxiosError: (e: unknown) => !!e && typeof e === "object" && "response" in e,
   },
+}));
+vi.mock("@/components/shared/animation/AnimatedWrapper", () => ({
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 // Native controls exercise RHF and the passenger array independently of HeroUI's layout runtime.
 vi.mock("./BookingFields", () => ({
@@ -63,7 +66,9 @@ vi.mock("./BookingFields", () => ({
 }));
 import BookingForm from "./BookingForm";
 import BookingAgentForm from "./BookingAgentForm";
-import type { TourDepartures } from "@/entities/tour";
+import Booking from "@/components/shared/booking/Booking";
+import BookingWithButton from "@/components/shared/booking/BookingWithButton";
+import type { Tour, TourDepartures } from "@/entities/tour";
 import {
   insuranceCodeChecksumError,
   insuranceCodeNotice,
@@ -73,6 +78,7 @@ const departures: TourDepartures = {
   "2026-12": [15, 20].map((day) => ({
     day,
     status: [],
+    price: 100,
     crmNumber: "tour",
     departureId: String(day),
   })),
@@ -86,15 +92,20 @@ const callbacks = () => ({
 const props = () => ({
   ...callbacks(),
   tourDepartures: departures,
-  selectedCrmNumber: "tour",
+  initialDepartureId: "20",
   companyName: "Agency",
   email: "test@example.com",
   phone: "+38 (067) 123-45-67",
   initialDate: "20.12.2026",
 });
+beforeEach(() => {
+  vi.useFakeTimers({ toFake: ["Date"] });
+  vi.setSystemTime(new Date("2026-11-15T12:00:00Z"));
+});
 afterEach(() => {
   cleanup();
   vi.resetAllMocks();
+  vi.useRealTimers();
 });
 function change(container: HTMLElement, name: string, value: string, masked = false) {
   const input = container.querySelector(`[name="${name}"]`)!;
@@ -115,9 +126,142 @@ function fillTraveler(container: HTMLElement, agent = false) {
     change(container, "travelers.0.passportExpiration", "01.01.2030", true);
   } else fireEvent.click(container.querySelectorAll('input[type="checkbox"]')[2]);
 }
+
+const bookingTour: Tour = {
+  id: "first",
+  selectedDepartureId: "first",
+  crmNumber: "101",
+  title: "Tour",
+  slug: "tour",
+  description: "",
+  duration: 7,
+  earlyBooking: false,
+  heroImages: {},
+  costImages: {},
+  benefits: { list: [] },
+  program: { url: "", list: [] },
+  points: [],
+  includedInCost: [],
+  notIncludedInCost: [],
+  inspiration: [],
+  tourDepartures: {
+    "2026-12": [
+      { day: 15, price: 100, status: [], departureId: "first", crmNumber: "101" },
+      { day: 20, price: 200, status: [], departureId: "second", crmNumber: "202" },
+      { day: 25, price: 300, status: [], departureId: "third", crmNumber: "303" },
+      { day: 26, price: 300, status: ["noSeats"], departureId: "full", crmNumber: "404" },
+    ],
+  },
+};
+
+it("restores the clicked calendar date when reopening the same departure after changing the form date", () => {
+  const p = {
+    tour: bookingTour,
+    initialDate: "20.12.2026",
+    forceOpen: true,
+    onForceOpenHandled: vi.fn(),
+    companyName: "",
+    email: "",
+    phone: "",
+  };
+  const { getByLabelText, rerender } = render(<BookingWithButton {...p} />);
+  expect((getByLabelText("Дата туру") as HTMLSelectElement).value).toBe("second");
+  rerender(<BookingWithButton {...p} forceOpen={false} />);
+  fireEvent.change(getByLabelText("Дата туру"), { target: { value: "third" } });
+  expect((getByLabelText("Дата туру") as HTMLSelectElement).value).toBe("third");
+  rerender(<BookingWithButton {...p} />);
+  expect((getByLabelText("Дата туру") as HTMLSelectElement).value).toBe("second");
+});
+
+it("preselects the exact departure when switching between departures on the same date", () => {
+  const tour = {
+    ...bookingTour,
+    tourDepartures: {
+      "2026-12": [
+        bookingTour.tourDepartures["2026-12"][0],
+        { day: 15, price: 200, status: [], departureId: "same-day", crmNumber: "202" },
+      ],
+    },
+  };
+  const p = {
+    tour,
+    isPopUpShown: true,
+    setIsPopUpShown: vi.fn(),
+    initialDate: "15.12.2026",
+    companyName: "",
+    email: "",
+    phone: "",
+  };
+  const { getByLabelText, rerender } = render(<Booking {...p} />);
+  expect((getByLabelText("Дата туру") as HTMLSelectElement).value).toBe("first");
+  rerender(
+    <Booking {...p} tour={{ ...tour, selectedDepartureId: "same-day", crmNumber: "202" }} />,
+  );
+  expect((getByLabelText("Дата туру") as HTMLSelectElement).value).toBe("same-day");
+});
+
+it("shows all dates from the booking modal and submits the selected departure instead of the page departure", async () => {
+  const { container, getByLabelText } = render(
+    <Booking
+      tour={bookingTour}
+      isPopUpShown
+      setIsPopUpShown={vi.fn()}
+      initialDate="20.12.2026"
+      companyName="Agency"
+      email="test@example.com"
+      phone="+38 (067) 123-45-67"
+    />,
+  );
+  const date = getByLabelText("Дата туру") as HTMLSelectElement;
+  expect(date.value).toBe("second");
+  expect(Array.from(date.options).map((option) => option.text)).toEqual([
+    "",
+    "15.12.2026",
+    "20.12.2026",
+    "25.12.2026",
+  ]);
+  fireEvent.change(getByLabelText("Кількість туристів"), { target: { value: "1" } });
+  fillTraveler(container);
+  fireEvent.change(date, { target: { value: "third" } });
+  expect((container.querySelector('[name="travelers.0.name"]') as HTMLInputElement).value).toBe(
+    "Anna",
+  );
+  vi.mocked(axios.post).mockResolvedValue({ data: {} });
+  fireEvent.submit(container.querySelector("form")!);
+  await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+  expect(vi.mocked(axios.post).mock.calls[0][1]).toEqual(
+    expect.objectContaining({
+      date: "25.12.2026",
+      tourId: "303",
+      departureId: "third",
+    }),
+  );
+});
+
+it("preselects the page departure for a normal booking button and falls back when unavailable", () => {
+  const p = props();
+  const { getByLabelText, unmount } = render(<BookingForm {...p} initialDate={undefined} />);
+  expect((getByLabelText("Дата туру") as HTMLSelectElement).value).toBe("20");
+  unmount();
+  const fallback = render(
+    <BookingForm {...p} initialDate={undefined} initialDepartureId="missing" />,
+  );
+  expect((fallback.getByLabelText("Дата туру") as HTMLSelectElement).value).toBe("15");
+});
+
+it("does not submit a booking when there are no available departures", async () => {
+  const { container, getByLabelText, getByRole } = render(
+    <BookingForm {...props()} tourDepartures={{}} />,
+  );
+  fireEvent.change(getByLabelText("Кількість туристів"), { target: { value: "1" } });
+  fillTraveler(container);
+  fireEvent.submit(container.querySelector("form")!);
+  await waitFor(() => expect(getByRole("alert").textContent).toBe("Оберіть дату виїзду"));
+  expect(axios.post).not.toHaveBeenCalled();
+});
 it("preserves initial date, array additions, deletion and surviving field values", async () => {
   const { container, getByLabelText } = render(<BookingForm {...props()} />);
-  expect((getByLabelText("Дата туру") as HTMLSelectElement).value).toBe("20.12.2026");
+  expect((getByLabelText("Дата туру") as HTMLSelectElement).value).toBe("20");
   change(container, "travelers.0.surname", "Smith");
   fireEvent.change(getByLabelText("Кількість туристів"), { target: { value: "3" } });
   expect(container.querySelectorAll('[placeholder="Прізвище латиницею"]').length).toBe(3);

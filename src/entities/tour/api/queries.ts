@@ -138,6 +138,20 @@ export const tourDatesQuery = `*[_type == "tour-to-date" && basic._ref == $tourB
     tourInRecruitment,
 }`;
 
+export const bookingDepartureQuery = `*[
+  _type == "tour-to-date" &&
+  (
+    (defined($departureId) && _id == $departureId) ||
+    (!defined($departureId) && crmNumber == $crmNumber && dateRange.startDate == $startDate)
+  )
+][0]{
+  _id,
+  crmNumber,
+  "startDate": dateRange.startDate,
+  price,
+  availability
+}`;
+
 export const tourPageQuery = `*[_type == "tour-basic" && slug.current == $slug][0]{
   _id,
   title,

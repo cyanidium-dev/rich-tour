@@ -6,20 +6,6 @@ import BookingFormModal from "@/components/shared/modals/BookingFormModal";
 import NotificationPopUp from "@/components/shared/pop-ups/NotificationPopUp";
 import { Tour } from "@/entities/tour";
 
-function selectedDepartureOnly(tour: Tour) {
-  return Object.fromEntries(
-    Object.entries(tour.tourDepartures)
-      .map(
-        ([month, departures]) =>
-          [
-            month,
-            departures.filter((item) => item.departureId === tour.selectedDepartureId),
-          ] as const,
-      )
-      .filter(([, departures]) => departures.length > 0),
-  );
-}
-
 interface BookingProps {
   tour: Tour;
   isPopUpShown: boolean;
@@ -42,8 +28,7 @@ export default function Booking({
   const [isNotificationShown, setIsNotificationShown] = useState(false);
   const isAuthenticated = false;
 
-  const { title, tourDepartures, crmNumber } = tour;
-  const bookingDepartures = selectedDepartureOnly(tour);
+  const { title, tourDepartures } = tour;
 
   return (
     <>
@@ -63,12 +48,12 @@ export default function Booking({
           />
         ) : (
           <BookingForm
-            key={initialDate ?? tour.selectedDepartureId}
+            key={`${tour.selectedDepartureId}:${initialDate ?? ""}`}
             setIsError={setIsError}
             setIsNotificationShown={setIsNotificationShown}
             setIsPopUpShown={setIsPopUpShown}
-            tourDepartures={bookingDepartures}
-            selectedCrmNumber={crmNumber}
+            tourDepartures={tourDepartures}
+            initialDepartureId={tour.selectedDepartureId}
             setErrorText={setErrorText}
             initialDate={initialDate}
             {...userData}

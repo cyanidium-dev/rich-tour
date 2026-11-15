@@ -28,6 +28,7 @@ export const bookingRequestSchema = bookingSchema
   .extend({
     requestId: z.custom<string>((value) => !!value),
     tourId: z.custom<string>((value) => !!value),
+    departureId: z.string().min(1).optional(),
     companyName: z.unknown().optional(),
     agency: z.unknown().optional(),
     manager: z.unknown().optional(),

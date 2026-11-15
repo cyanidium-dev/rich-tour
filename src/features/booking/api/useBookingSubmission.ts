@@ -2,6 +2,7 @@
 import { useRef, useState, type Dispatch, type SetStateAction } from "react";
 import axios from "axios";
 import type { BookingValues } from "../model/schemas";
+import type { BookingDepartureOption } from "@/entities/tour";
 type Setter<T> = Dispatch<SetStateAction<T>>;
 export function useBookingSubmission({
   reset,
@@ -9,7 +10,7 @@ export function useBookingSubmission({
   setIsNotificationShown,
   setIsPopUpShown,
   setErrorText,
-  tourId,
+  resolveDeparture,
   agent = false,
 }: {
   reset: () => void;
@@ -17,7 +18,7 @@ export function useBookingSubmission({
   setIsNotificationShown: Setter<boolean>;
   setIsPopUpShown: Setter<boolean>;
   setErrorText?: Setter<string | null>;
-  tourId?: string;
+  resolveDeparture?: (departureId: string) => BookingDepartureOption | undefined;
   agent?: boolean;
 }) {
   const requestId = useRef<string | null>(null);
@@ -31,10 +32,18 @@ export function useBookingSubmission({
     setErrorText?.(null);
     try {
       if (!agent) {
+        const departure = resolveDeparture?.(values.date);
+        if (!departure) throw new Error("BOOKING_DEPARTURE_UNAVAILABLE");
         requestId.current ??= crypto.randomUUID();
         // Only the active form's existing fields belong to the HTTP payload.
         const { agency: _agency, manager: _manager, ...payload } = values;
-        await axios.post("/api/booking", { ...payload, requestId: requestId.current, tourId });
+        await axios.post("/api/booking", {
+          ...payload,
+          requestId: requestId.current,
+          date: departure.label,
+          departureId: departure.key,
+          tourId: departure.crmNumber,
+        });
       }
       reset();
       setIsPopUpShown(false);

@@ -6,7 +6,7 @@ import { BookingDateSelect, BookingTravelerCount } from "./BookingFields";
 import CustomizedInput from "./BookingInput";
 import PassengerSection from "./PassengerSection";
 import { SubmitButton } from "@/shared/ui";
-import { formatTourDeparturesToOptions, type TourDepartures } from "@/entities/tour";
+import { getBookingDepartureOptions, type TourDepartures } from "@/entities/tour";
 import { bookingSchema, emptyTraveler, type BookingValues } from "../model/schemas";
 import { useTravelers } from "../model/useTravelers";
 import { useBookingSubmission } from "../api/useBookingSubmission";
@@ -22,7 +22,7 @@ interface BookingFormProps {
   variant?: "red" | "black";
   setErrorText: Dispatch<SetStateAction<string | null>>;
   initialDate?: string | null;
-  selectedCrmNumber: string;
+  initialDepartureId?: string;
   companyName: string | undefined;
   email: string | undefined;
   phone: string | undefined;
@@ -36,21 +36,24 @@ export default function BookingForm({
   className = "",
   variant = "red",
   initialDate,
-  selectedCrmNumber,
+  initialDepartureId,
   companyName = "",
   email = "",
   phone = "",
   // tourId,
 }: BookingFormProps) {
-  const selectOptions = formatTourDeparturesToOptions(tourDepartures);
+  const selectOptions = getBookingDepartureOptions(tourDepartures);
+  const initialDeparture =
+    selectOptions.find((option) =>
+      initialDate
+        ? option.label === initialDate && option.key === initialDepartureId
+        : option.key === initialDepartureId,
+    ) ?? selectOptions.find((option) => option.label === initialDate);
   const methods = useForm<BookingValues>({
     resolver: zodResolver(bookingSchema),
     mode: "onChange",
     defaultValues: {
-      date:
-        initialDate && selectOptions.some((option) => option.key === initialDate)
-          ? initialDate
-          : (selectOptions[0]?.key ?? ""),
+      date: initialDeparture?.key ?? selectOptions[0]?.key ?? "",
       travelersQty: null,
       companyName: companyName,
       agency: "",
@@ -70,7 +73,7 @@ export default function BookingForm({
     setIsNotificationShown,
     setIsPopUpShown,
     setErrorText,
-    tourId: selectedCrmNumber,
+    resolveDeparture: (departureId) => selectOptions.find((option) => option.key === departureId),
   });
   return (
     <FormProvider {...methods}>
@@ -81,6 +84,11 @@ export default function BookingForm({
             value={values.date}
             onChange={(value) => setFieldValue("date", value)}
           />
+          {methods.formState.errors.date && (
+            <p role="alert" className="text-9reg text-red ml-2 mt-1">
+              {methods.formState.errors.date.message}
+            </p>
+          )}
           <BookingTravelerCount
             value={values.travelersQty ?? undefined}
             onChange={resizeTravelers}

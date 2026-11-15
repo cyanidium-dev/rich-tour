@@ -10,6 +10,7 @@ export {
   tourQuery,
   tourDatesQuery,
   tourPageQuery,
+  bookingDepartureQuery,
   previewTourDepartureQuery,
   publishedTourDepartureExistsQuery,
   allBasicSMARTToursQuery,
