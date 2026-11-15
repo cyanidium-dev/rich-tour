@@ -187,7 +187,6 @@ export function DepartureDetails({
                 {option.title}
                 {option.stars ? ` ${option.stars}★` : ""}
               </p>
-              {option.placementDescription && <p>{option.placementDescription}</p>}
               <p className={styles.prices}>
                 {option.discounted && <del>{price(option.regularPrice)}</del>}
                 <strong className={option.discounted ? styles.discount : undefined}>
@@ -195,6 +194,7 @@ export function DepartureDetails({
                 </strong>
               </p>
               <p className={styles.perPerson}>за одну людину</p>
+              {option.placementDescription && <p>{option.placementDescription}</p>}
             </div>
           ))}
         </div>
