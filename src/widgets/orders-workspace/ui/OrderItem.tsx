@@ -22,7 +22,7 @@ export default function OrderItem({ showTourDetails, order, variant = "agent" }:
 
       <td className="px-2 py-[20px]">{order.totalCost ? `${order.totalCost} €` : "—"}</td>
       <td className="px-2 py-[20px]">
-        {order.costWithoutCommission ? `${order.costWithoutCommission} €` : "—"}
+        {order.commission != null ? `${order.commission} €` : "—"}
       </td>
       <td className="px-2 py-[20px]">{order.paidAmount ? `${order.paidAmount} €` : "—"}</td>
       <td className="px-2 py-[20px]">

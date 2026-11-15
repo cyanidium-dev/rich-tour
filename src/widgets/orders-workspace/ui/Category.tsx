@@ -56,7 +56,7 @@ export default function Category({ showTourDetails, category, variant = "agent" 
                 Дані <br /> туристів
               </th>
               <th className="px-2 py-[18px] text-left font-normal">Повна вартість заявки</th>
-              <th className="px-2 py-[18px] text-left font-normal">Вартість без комісії агента</th>
+              <th className="px-2 py-[18px] text-left font-normal">Комісія</th>
               <th className="px-2 py-[18px] text-left font-normal">Внесено коштів</th>
               <th className="px-2 py-[18px] text-left font-normal">Залишок до сплати</th>
               <th className="px-2 py-[18px] text-left font-normal">Дата початку і завершення</th>

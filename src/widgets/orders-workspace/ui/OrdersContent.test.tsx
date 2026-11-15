@@ -82,12 +82,12 @@ it.each([
   expect(rows.map((row) => within(row).getAllByRole("cell")[0].textContent)).toEqual(expected);
   const cells = within(rows[0]).getAllByRole("cell");
   expect(cells[4].textContent).toBe("123 €");
-  expect(cells[5].textContent).toBe("110.7 €");
+  expect(cells[5].textContent).toBe("12.3 €");
   expect(within(table).getByRole("columnheader", { name: "Повна вартість заявки" })).toBeTruthy();
+  expect(within(table).getByRole("columnheader", { name: "Комісія" })).toBeTruthy();
   expect(
-    within(table).getByRole("columnheader", { name: "Вартість без комісії агента" }),
-  ).toBeTruthy();
-  expect(within(table).queryByRole("columnheader", { name: "Комісія" })).toBeNull();
+    within(table).queryByRole("columnheader", { name: "Вартість без комісії агента" }),
+  ).toBeNull();
   fireEvent.click(rows[0]);
   expect(screen.getByRole("dialog").textContent).toContain(`Details ${expected[0].slice(1)}`);
   expect(axios.get).toHaveBeenCalledWith("/api/agent/tours", { withCredentials: true });
@@ -105,6 +105,8 @@ it("retains agency names, skipped-agent notice and displayed values", async () =
   const table = await screen.findByRole("table");
   const cells = within(table).getAllByRole("row")[1];
   expect(within(cells).getAllByRole("cell")[0].textContent).toBe("Test agent");
+  expect(within(cells).getAllByRole("cell")[5].textContent).toBe("12.3 €");
+  expect(within(table).getByRole("columnheader", { name: "Комісія" })).toBeTruthy();
   expect(cells.textContent).toContain("#10");
   expect(cells.textContent).toContain("Повна оплата");
   expect(screen.getByText(/Unlinked agent/)).toBeTruthy();
