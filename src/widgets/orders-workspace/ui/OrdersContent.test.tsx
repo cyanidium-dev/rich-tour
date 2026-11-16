@@ -61,6 +61,56 @@ const order = (id: number, statusid: string, end: string) => ({
   agent: { id: "agent", name: "Test agent", crmId: "42" },
 });
 
+it.each(["agent", "agency"] as const)(
+  "shows only valid CRM confirmation links and replaces them when switching %s orders",
+  async (variant) => {
+    const values = [
+      "  https://crm.example.com/confirmation-1.pdf?token=abc&order=1  ",
+      "https://crm.example.com/confirmation-2.pdf",
+      undefined,
+      null,
+      "",
+      "Очікується підтвердження",
+      "javascript:alert(1)",
+    ];
+    vi.mocked(axios.get).mockResolvedValue({
+      data: {
+        orders: values.map((value, index) => {
+          const base = order(index + 1, "47", "2099-01-03");
+          return {
+            ...base,
+            customfields: {
+              ...base.customfields,
+              ...(value === undefined ? {} : { PosilannyanaPidtverdzhennya: { value } }),
+            },
+          };
+        }),
+      },
+    });
+    render(<OrdersContent variant={variant} apiUrl={`/api/${variant}/tours`} />);
+    const table = await screen.findByRole("table");
+
+    for (const [index, value] of values.entries()) {
+      fireEvent.click(within(table).getByText(`#${index + 1}`));
+      const dialog = screen.getByRole("dialog");
+      const link = within(dialog).queryByRole("link", {
+        name: "Завантажити підтвердження заявки",
+      });
+      if (index < 2) {
+        expect(link?.getAttribute("href")).toBe(value?.trim());
+        expect(link?.getAttribute("target")).toBe("_blank");
+        expect(link?.getAttribute("rel")).toBe("noopener noreferrer");
+      } else {
+        expect(link).toBeNull();
+        expect(within(dialog).queryByText("Завантажити підтвердження заявки")).toBeNull();
+      }
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Закрити інформацію про заявку" }),
+      );
+    }
+  },
+);
+
 it.each([
   ["active", ["#10", "#2"]],
   ["archive", ["#30", "#20"]],
@@ -148,9 +198,20 @@ it("keeps the missing CRM identity message without offering a transport retry", 
   expect(screen.queryByRole("table")).toBeNull();
 });
 
-it.each(["agent", "agency"] as const)(
-  "shows actual price details and replaces them when selecting another %s order",
-  async (variant) => {
+it.each(
+  (["agent", "agency"] as const).flatMap((variant) =>
+    [
+      { amount: 0, roomType: "Standard" },
+      { amount: "0", roomType: "Standard" },
+      { amount: "-", roomType: "Standard" },
+      { amount: "—", roomType: "Standard" },
+      { amount: 25, roomType: "Superior · 25 €" },
+      { amount: "12.50", roomType: "Superior · 12,5 €" },
+    ].map((room) => ({ variant, ...room })),
+  ),
+)(
+  "shows $roomType for $amount and replaces details when selecting another $variant order",
+  async ({ variant, amount, roomType }) => {
     const first = order(10, "47", "2099-01-03");
     vi.mocked(axios.get).mockResolvedValue({
       data: {
@@ -167,7 +228,7 @@ it.each(["agent", "agency"] as const)(
                   Kotedzh: { value: "TWIN" },
                   Prozhya: { value: "5" },
                   Harya: { value: "2" },
-                  Kondits: { value: "0" },
+                  Kondits: { value: amount },
                   Strahivka: { value: "Так" },
                   Strahivkasuma: { value: "10" },
                   Platnimistsya: { value: "Ні" },
@@ -201,6 +262,8 @@ it.each(["agent", "agency"] as const)(
       within(dialog).getByRole("table", { name: "Інформація про туристів" }).textContent,
     ).toContain("AA123456");
     const costTable = within(dialog).getByRole("table", { name: "Деталізація вартості" });
+    expect(within(costTable).getByRole("columnheader", { name: "Тип номеру" })).toBeTruthy();
+    expect(within(costTable).queryByRole("columnheader", { name: "Кондиціонер" })).toBeNull();
     const priceRow = within(costTable).getAllByRole("row")[1];
     expect(
       within(priceRow)
@@ -211,7 +274,7 @@ it.each(["agent", "agency"] as const)(
       "TWIN",
       "5 €",
       "2 €",
-      "0 €",
+      roomType,
       "Так · 10 €",
       "Ні · 0 €",
       "16 €",
@@ -238,7 +301,7 @@ it.each(["agent", "agency"] as const)(
       within(legacyRow)
         .getAllByRole("cell")
         .map((cell) => cell.textContent),
-    ).toEqual(Array(11).fill("—"));
+    ).toEqual(Array.from({ length: 11 }, (_, index) => (index === 4 ? "Standard" : "—")));
     expect(within(dialog).getByText("Повна вартість заявки").parentElement?.textContent).toContain(
       "75 €",
     );

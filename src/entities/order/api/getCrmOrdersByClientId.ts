@@ -18,6 +18,7 @@ const orderFields = [
   "customfields.Datazakinchennyaturu",
   "customfields.Dodatkovidani",
   "customfields.Tipharchuvannya",
+  "customfields.PosilannyanaPidtverdzhennya",
   "customfields.Oplachenopozayavtsi",
   "orderproducts",
 ];

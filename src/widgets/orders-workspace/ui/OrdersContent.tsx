@@ -29,7 +29,13 @@ export default function OrdersContent({
     Partial<
       Pick<
         OrderTableRow,
-        "comment" | "details" | "totalCost" | "costWithoutCommission" | "commission" | "mealType"
+        | "comment"
+        | "details"
+        | "totalCost"
+        | "costWithoutCommission"
+        | "commission"
+        | "mealType"
+        | "confirmationUrl"
       >
     >
   >({});
@@ -79,9 +85,24 @@ export default function OrdersContent({
       return;
     }
 
-    const { comment, details, totalCost, costWithoutCommission, commission, mealType } =
-      selectedTour;
-    setTourDetails({ comment, details, totalCost, costWithoutCommission, commission, mealType });
+    const {
+      comment,
+      details,
+      totalCost,
+      costWithoutCommission,
+      commission,
+      mealType,
+      confirmationUrl,
+    } = selectedTour;
+    setTourDetails({
+      comment,
+      details,
+      totalCost,
+      costWithoutCommission,
+      commission,
+      mealType,
+      confirmationUrl,
+    });
   };
 
   if (isLoading) return <Loader />;

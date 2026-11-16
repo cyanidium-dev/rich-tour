@@ -2,6 +2,41 @@ import { describe, expect, it } from "vitest";
 import { transformOrders } from "./mapOrders";
 import { parseCrmOrders } from "./schema";
 describe("CRM orders", () => {
+  it.each([
+    [
+      "https://crm.example.com/confirmation.pdf?token=abc&order=1",
+      "https://crm.example.com/confirmation.pdf?token=abc&order=1",
+    ],
+    ["  http://crm.example.com/confirmation.pdf  ", "http://crm.example.com/confirmation.pdf"],
+    [undefined, null],
+    [null, null],
+    ["", null],
+    ["  ", null],
+    [123, null],
+    ["Очікується підтвердження", null],
+    ["https://", null],
+    ["https://invalid host/file.pdf", null],
+    ["/confirmation.pdf", null],
+    ["javascript:alert(1)", null],
+    ["data:text/html,confirmation", null],
+  ])("maps confirmation field %s to %s", (value, expected) => {
+    const [row] = transformOrders(
+      parseCrmOrders([{ id: 1, customfields: { PosilannyanaPidtverdzhennya: { value } } }]),
+    );
+    expect(row.confirmationUrl).toBe(expected);
+  });
+
+  it("keeps orders without a confirmation field or custom fields", () => {
+    const rows = transformOrders(
+      parseCrmOrders([
+        { id: 1 },
+        { id: 2, customfields: {} },
+        { id: 3, customfields: { PosilannyanaPidtverdzhennya: null } },
+      ]),
+    );
+    expect(rows.map((row) => row.confirmationUrl)).toEqual([null, null, null]);
+  });
+
   it("preserves order, identifiers, labels, money and passenger details", () => {
     const input = [
       {

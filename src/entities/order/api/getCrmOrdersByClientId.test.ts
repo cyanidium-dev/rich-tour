@@ -35,6 +35,7 @@ it("retains pagination, request fields, deduplication and CRM order values", asy
       "customfields.Zagalnasumapozayavtsi",
       "customfields.zagalsumabezkomisi",
       "customfields.Tipharchuvannya",
+      "customfields.PosilannyanaPidtverdzhennya",
     ]),
   );
   expect(payloads[0].orderproductfields).toEqual(

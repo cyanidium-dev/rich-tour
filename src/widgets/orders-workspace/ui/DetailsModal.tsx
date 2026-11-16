@@ -9,6 +9,7 @@ interface ModalProps {
   setIsPopUpShown: Dispatch<SetStateAction<boolean>>;
   className?: string;
   comment?: string;
+  confirmationUrl?: string | null;
   details?: DetailsItem[];
   mealType?: string | null;
   totalCost?: number | null;
@@ -20,6 +21,12 @@ const moneyFormatter = new Intl.NumberFormat("uk-UA", { maximumFractionDigits: 2
 
 function formatMoney(amount: number | null | undefined): string {
   return amount != null && Number.isFinite(amount) ? `${moneyFormatter.format(amount)} €` : "—";
+}
+
+function formatRoomType(amount: number | null | undefined): string {
+  return amount != null && Number.isFinite(amount) && amount !== 0
+    ? `Superior · ${formatMoney(amount)}`
+    : "Standard";
 }
 
 function formatService(selected: string | null | undefined, amount: number | null | undefined) {
@@ -42,7 +49,7 @@ const costHeaders = [
   "Номер / котедж",
   "Проживання",
   "Харчування",
-  "Кондиціонер",
+  "Тип номеру",
   "Страховка",
   "Передні місця",
   "Туристичний збір",
@@ -74,6 +81,7 @@ export default function DetailsModal({
   setIsPopUpShown,
   className = "",
   comment,
+  confirmationUrl,
   details = [],
   mealType,
   totalCost,
@@ -115,6 +123,30 @@ export default function DetailsModal({
           <CloseModalIcon className="size-[18px]" />
         </button>
       </div>
+      {confirmationUrl && (
+        <a
+          href={confirmationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 inline-flex min-h-11 shrink-0 self-start items-center gap-2 rounded-md py-2 text-14med text-main underline decoration-main/40 underline-offset-4 transition-colors hover:decoration-main focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-main"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.75}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-5 shrink-0"
+          >
+            <path d="M12 3v12m-5-5 5 5 5-5" />
+            <path d="M5 15v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5" />
+          </svg>
+          <span>Завантажити підтвердження заявки</span>
+        </a>
+      )}
       <div className="min-h-0 overflow-y-auto overscroll-contain pt-6 pr-1 scrollbar scrollbar-w-[3px] scrollbar-thumb-rounded-full scrollbar-thumb-main scrollbar-track-transparent popup-scroll">
         {comment && (
           <div className="mb-7">
@@ -186,7 +218,7 @@ export default function DetailsModal({
                     item.cost?.room || "—",
                     formatMoney(item.cost?.accommodation),
                     formatMoney(item.cost?.meals),
-                    formatMoney(item.cost?.airConditioning),
+                    formatRoomType(item.cost?.airConditioning),
                     formatService(item.cost?.insurance, item.cost?.insuranceAmount),
                     formatService(item.cost?.frontSeats, item.cost?.frontSeatsAmount),
                     formatMoney(item.cost?.touristTax),

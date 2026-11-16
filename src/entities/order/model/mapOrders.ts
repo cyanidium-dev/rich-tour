@@ -11,6 +11,18 @@ function parseText(value: string | null | undefined): string | null {
   return value?.trim() || null;
 }
 
+function parseConfirmationUrl(value: string | number | null | undefined): string | null {
+  if (typeof value !== "string") return null;
+  const url = value.trim();
+  if (!/^https?:\/\//i.test(url) || /\s/.test(url)) return null;
+  try {
+    const parsed = new URL(url);
+    return parsed.hostname ? url : null;
+  } catch {
+    return null;
+  }
+}
+
 function getDaysQuantity(start: string, end: string): number {
   const startDate = new Date(start);
   const endDate = new Date(end);
@@ -74,6 +86,7 @@ export const transformOrders = (result: CrmOrder[]): OrderTableRow[] => {
       : 0,
     commission: parseAmount(item.customfields?.zagalnasumapokomisi?.value),
     mealType: parseText(item.customfields?.Tipharchuvannya?.value),
+    confirmationUrl: parseConfirmationUrl(item.customfields?.PosilannyanaPidtverdzhennya?.value),
     costWithoutCommission: item.customfields?.zagalsumabezkomisi?.value
       ? Number(item.customfields.zagalsumabezkomisi.value)
       : 0,

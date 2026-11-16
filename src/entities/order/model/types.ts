@@ -8,6 +8,7 @@ export interface OrderTableRow {
   totalCost: number;
   commission?: number | null;
   mealType?: string | null;
+  confirmationUrl?: string | null;
   costWithoutCommission: number;
   paidAmount: number;
   remainingAmount: number;

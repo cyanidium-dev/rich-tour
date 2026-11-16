@@ -18,6 +18,7 @@ const fields = z
     Datazavershpasp: dateField.nullish(),
     Mistoposadki: dateField.nullish(),
     Tipharchuvannya: dateField.nullish(),
+    PosilannyanaPidtverdzhennya: field.nullish(),
     Tarif: field.nullish(),
     Prozhya: field.nullish(),
     Harya: field.nullish(),
