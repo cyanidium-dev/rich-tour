@@ -169,6 +169,11 @@
     top: calc(100% - 32px) !important;
   }
 
+  /* Swiper adds SVG arrows alongside our custom ::after icons. */
+  :is(.swiper-button-next, .swiper-button-prev) > .swiper-navigation-icon {
+    display: none;
+  }
+
   @media screen and (min-width: 1280px) {
     :is(.swiper-button-next, .swiper-button-prev) {
       top: calc(100% - 20px) !important;
