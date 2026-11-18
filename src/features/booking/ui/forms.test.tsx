@@ -2,13 +2,11 @@
 import React from "react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, waitFor } from "@testing-library/react";
-import axios from "axios";
-vi.mock("axios", () => ({
-  default: {
-    post: vi.fn(),
-    isAxiosError: (e: unknown) => !!e && typeof e === "object" && "response" in e,
-  },
-}));
+import axios, { AxiosError } from "axios";
+vi.mock("axios", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("axios")>();
+  return { ...actual, default: { ...actual.default, post: vi.fn() } };
+});
 vi.mock("@/components/shared/animation/AnimatedWrapper", () => ({
   default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
@@ -301,13 +299,28 @@ it("keeps requestId after errors, blocks duplicate requests and rotates after su
   if (!(getByLabelText("Паспорт виготовляється") as HTMLInputElement).checked)
     fireEvent.click(getByLabelText("Паспорт виготовляється"));
   vi.mocked(axios.post).mockRejectedValueOnce({
-    response: { data: { error: "CRM_BOOKING_FAILED" } },
+    isAxiosError: true,
+    response: {
+      status: 502,
+      data: {
+        error: "CRM_BOOKING_FAILED",
+        details: 'Етап: Створення замовлення у CRM\n{"message":"Client does not exist"}',
+      },
+    },
   });
   fireEvent.submit(container.querySelector("form")!);
-  await waitFor(() => expect(p.setErrorText).toHaveBeenCalledWith("CRM_BOOKING_FAILED"));
+  await waitFor(() =>
+    expect(p.setErrorText).toHaveBeenCalledWith(
+      expect.stringContaining(
+        'Етап: Створення замовлення у CRM\n{"message":"Client does not exist"}',
+      ),
+    ),
+  );
+  expect(p.setErrorText).toHaveBeenCalledWith(expect.stringContaining("HTTP сайту: 502"));
   const first = vi.mocked(axios.post).mock.calls[0][1] as {
     requestId: string;
   };
+  expect(p.setErrorText).toHaveBeenCalledWith(expect.stringContaining(first.requestId));
   let finish!: (value: unknown) => void;
   vi.mocked(axios.post).mockImplementationOnce(
     () =>
@@ -344,6 +357,40 @@ it("keeps requestId after errors, blocks duplicate requests and rotates after su
     ).requestId,
   ).not.toBe(first.requestId);
 });
+it.each([
+  [new AxiosError("Network Error", "ERR_NETWORK"), ["Network Error", "ERR_NETWORK"]],
+  [new TypeError("crypto.randomUUID is not a function"), ["crypto.randomUUID is not a function"]],
+  [
+    {
+      isAxiosError: true,
+      response: {
+        status: 400,
+        data: { error: "VALIDATION_FAILED", fields: ["Перевірте паспорт", "Перевірте дату"] },
+      },
+    },
+    ["VALIDATION_FAILED", "Перевірте паспорт", "Перевірте дату", "HTTP сайту: 400"],
+  ],
+])(
+  "shows diagnostic details for browser, network and validation failures: %j",
+  async (error, texts) => {
+    const p = props();
+    const { container, getByLabelText } = render(<BookingForm {...p} />);
+    fireEvent.change(getByLabelText("Кількість туристів"), { target: { value: "1" } });
+    fillTraveler(container);
+    if (!(getByLabelText("Паспорт виготовляється") as HTMLInputElement).checked)
+      fireEvent.click(getByLabelText("Паспорт виготовляється"));
+    vi.mocked(axios.post).mockRejectedValueOnce(error);
+    fireEvent.submit(container.querySelector("form")!);
+    await waitFor(() => expect(p.setErrorText).toHaveBeenCalled());
+    for (const text of texts) {
+      expect(p.setErrorText).toHaveBeenCalledWith(expect.stringContaining(text));
+    }
+    expect(
+      (container.querySelector('[name="travelers.0.surname"]') as HTMLInputElement).value,
+    ).toBe("Smith");
+  },
+);
+
 it("retains the agent's local submission and empty-submission errors", async () => {
   const p = callbacks();
   const { container, getByLabelText } = render(

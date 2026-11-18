@@ -3,6 +3,7 @@ import { useRef, useState, type Dispatch, type SetStateAction } from "react";
 import axios from "axios";
 import type { BookingValues } from "../model/schemas";
 import type { BookingDepartureOption } from "@/entities/tour";
+import { formatErrorDetails } from "@/shared/lib";
 type Setter<T> = Dispatch<SetStateAction<T>>;
 export function useBookingSubmission({
   reset,
@@ -51,11 +52,28 @@ export function useBookingSubmission({
       if (!agent) requestId.current = crypto.randomUUID();
     } catch (error) {
       setIsError(true);
-      setErrorText?.(
-        axios.isAxiosError(error) && typeof error.response?.data?.error === "string"
-          ? error.response.data.error
-          : "BOOKING_FAILED",
-      );
+      const response = axios.isAxiosError(error) ? error.response : undefined;
+      const data: unknown = response?.data;
+      const serverError =
+        data && typeof data === "object" ? (data as Record<string, unknown>) : null;
+      const lines = [
+        typeof serverError?.error === "string" ? serverError.error : "BOOKING_FAILED",
+        response?.status ? `HTTP сайту: ${response.status}` : null,
+        requestId.current ? `ID бронювання: ${requestId.current}` : null,
+        typeof serverError?.details === "string" ? serverError.details : null,
+        Array.isArray(serverError?.fields) ? serverError.fields.join("\n") : null,
+      ];
+      if (!serverError?.details && !serverError?.fields) {
+        const sensitiveValues = [
+          values.email,
+          values.phone,
+          values.companyName,
+          values.message,
+          ...values.travelers.flatMap((traveler) => Object.values(traveler)),
+        ].filter((value): value is string => typeof value === "string" && value.length > 0);
+        lines.push(formatErrorDetails(error, sensitiveValues));
+      }
+      setErrorText?.(lines.filter(Boolean).join("\n\n"));
       setIsNotificationShown(true);
       setIsPopUpShown(false);
     } finally {

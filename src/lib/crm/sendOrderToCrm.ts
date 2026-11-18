@@ -21,7 +21,9 @@ export async function sendOrderToCrm(params: SendOrderParams) {
   const orderId = data?.dataArray?.[0];
 
   if (!orderId) {
-    throw new Error("CRM did not return order id");
+    throw new Error("CRM did not return order id", {
+      cause: { endpoint: "order/set/", response: data },
+    });
   }
 
   return String(orderId);

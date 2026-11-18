@@ -10,6 +10,7 @@ import { sendTravelersToCrm } from "@/lib/crm/sendTravelersToCrm";
 import { sendOrderToCrm } from "@/lib/crm/sendOrderToCrm";
 import { getAuthUser } from "@/lib/sanity/users/getAuthUser";
 import { emptyTraveler } from "@/features/booking";
+import { AxiosError, AxiosHeaders } from "axios";
 const body = () => ({
   requestId: "request",
   tourId: "tour",
@@ -236,11 +237,73 @@ it("preserves CRM failures and does not create an order after a traveler failure
   vi.mocked(sendTravelersToCrm).mockRejectedValue(new Error("CRM"));
   const response = await POST(request(body()));
   expect(response.status).toBe(502);
-  expect(await response.json()).toEqual({ error: "CRM_BOOKING_FAILED" });
+  expect(await response.json()).toEqual({
+    error: "CRM_BOOKING_FAILED",
+    requestId: "request",
+    details: expect.stringContaining('"message": "CRM"'),
+  });
   expect(sendOrderToCrm).not.toHaveBeenCalled();
   vi.mocked(sendTravelersToCrm).mockResolvedValue(["1"]);
   vi.mocked(sendOrderToCrm).mockRejectedValue(new Error("order"));
   expect((await POST(request(body()))).status).toBe(502);
+});
+
+it("returns the CRM endpoint, status and rejection text without credentials or traveler data", async () => {
+  const config = {
+    url: "order/set/",
+    headers: new AxiosHeaders({ token: "private-crm-token" }),
+    data: JSON.stringify(body()),
+  };
+  vi.mocked(sendTravelersToCrm).mockResolvedValue(["1"]);
+  vi.mocked(sendOrderToCrm).mockRejectedValue(
+    new AxiosError("Request failed with status code 422", "ERR_BAD_REQUEST", config, undefined, {
+      config,
+      status: 422,
+      statusText: "Unprocessable Entity",
+      headers: {},
+      data: {
+        error: "Client does not exist",
+        token: "private-crm-token",
+        passport: "AB123456",
+        message: `Rejected client ${body().email}, token=private-crm-token`,
+      },
+    }),
+  );
+  const response = await POST(request(body()));
+  const json = await response.json();
+  expect(response.status).toBe(502);
+  expect(json.details).toContain("Створення замовлення у CRM");
+  expect(json.details).toContain("order/set/");
+  expect(json.details).toContain('"status": 422');
+  expect(json.details).toContain("Client does not exist");
+  expect(json.details).not.toContain("private-crm-token");
+  expect(json.details).not.toContain("AB123456");
+  expect(json.details).not.toContain(body().email);
+});
+
+it("keeps business errors in successful HTTP responses and includes the failed stage", async () => {
+  vi.mocked(sendTravelersToCrm).mockRejectedValue(
+    new Error("CRM did not return correct travelers crmIds", {
+      cause: { endpoint: "contact/set/", response: { error: "Invalid contact field" } },
+    }),
+  );
+  const json = await (await POST(request(body()))).json();
+  expect(json.details).toContain("Створення туристів у CRM");
+  expect(json.details).toContain("contact/set/");
+  expect(json.details).toContain("Invalid contact field");
+  expect(sendOrderToCrm).not.toHaveBeenCalled();
+});
+
+it("returns details for departure and authentication failures", async () => {
+  fetchDeparture.mockRejectedValueOnce(new Error("Departure service unreachable"));
+  const departure = await POST(request(body()));
+  expect(departure.status).toBe(502);
+  expect((await departure.json()).details).toContain("Departure service unreachable");
+  vi.mocked(getAuthUser).mockRejectedValueOnce(new Error("Cannot read session"));
+  const auth = await POST(request(body()));
+  expect(auth.status).toBe(500);
+  expect((await auth.json()).details).toContain("Cannot read session");
+  expect(sendTravelersToCrm).not.toHaveBeenCalled();
 });
 
 it.each(["", "1759013770"])(

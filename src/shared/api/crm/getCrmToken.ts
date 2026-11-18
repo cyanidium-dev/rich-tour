@@ -19,7 +19,11 @@ export async function getCrmToken(): Promise<string> {
     })
     .then(({ data }) => {
       const token = data?.dataArray?.token;
-      if (!token) throw new Error("CRM token not received");
+      if (!token) {
+        throw new Error("CRM token not received", {
+          cause: { endpoint: "token/get/", response: data },
+        });
+      }
 
       cachedToken = {
         value: token,

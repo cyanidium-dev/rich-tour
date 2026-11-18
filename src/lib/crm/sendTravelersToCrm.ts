@@ -1,4 +1,4 @@
-import { getCrmToken, postToCrm } from "@/shared/api/crm-server";
+import { postToCrm } from "@/shared/api/crm-server";
 import { TravelerInfo } from "@/contracts/booking";
 import { mapTravelerToCrmPayload } from "./mapTravelerToCrmPayload";
 
@@ -15,7 +15,13 @@ export async function sendTravelersToCrm(
   const crmIds: string[] | undefined = data?.dataArray;
 
   if (!crmIds || crmIds.length !== travelers.length) {
-    throw new Error("CRM did not return correct travelers crmIds");
+    throw new Error("CRM did not return correct travelers crmIds", {
+      cause: {
+        endpoint: "contact/set/",
+        expectedContacts: travelers.length,
+        response: data,
+      },
+    });
   }
 
   return crmIds.map(String);

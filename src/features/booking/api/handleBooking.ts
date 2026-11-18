@@ -7,6 +7,7 @@ import { sendOrderToCrm } from "@/lib/crm/sendOrderToCrm";
 import { sendTravelersToCrm } from "@/lib/crm/sendTravelersToCrm";
 import { getAuthUser } from "@/lib/sanity/users/getAuthUser";
 import { resolveBookingDeparture } from "./resolveBookingDeparture";
+import { formatErrorDetails } from "@/shared/lib";
 
 // Preserve the original order: nested phone errors before contact errors,
 // then grouped the remaining traveler fields in this order.
@@ -61,14 +62,38 @@ export async function POST(req: Request) {
     );
   }
   const body = result.data as BookingRequest;
+  const sensitiveValues = [
+    body.email,
+    body.phone,
+    body.companyName,
+    body.message,
+    ...body.travelers.flatMap((traveler) => Object.values(traveler)),
+    ...Object.entries(process.env)
+      .filter(
+        ([key]) => !key.startsWith("NEXT_PUBLIC_") && /password|token|secret|key|login/i.test(key),
+      )
+      .map(([, value]) => value),
+  ]
+    .filter((value): value is string => typeof value === "string" && value.length > 0)
+    .flatMap((value) => [
+      value,
+      /^\d{2}\.\d{2}\.\d{4}$/.test(value) ? value.split(".").reverse().join("-") : value,
+      /^\+?[\d\s()-]{10,}$/.test(value) ? value.replace(/\D/g, "") : value,
+    ]);
+  const failure = (error: string, stage: string, cause: unknown, status = 502) =>
+    NextResponse.json(
+      {
+        error,
+        requestId: body.requestId,
+        details: `Етап: ${stage}\n${formatErrorDetails(cause, sensitiveValues)}`,
+      },
+      { status },
+    );
   let departure;
   try {
     departure = await resolveBookingDeparture(body);
-  } catch {
-    return NextResponse.json(
-      { error: "Не вдалося перевірити виїзд. Спробуйте ще раз." },
-      { status: 502 },
-    );
+  } catch (error) {
+    return failure("Не вдалося перевірити виїзд. Спробуйте ще раз.", "Перевірка виїзду", error);
   }
   if (!departure) {
     return NextResponse.json(
@@ -79,9 +104,14 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-  const auth = await getAuthUser();
+  let stage = "Визначення користувача";
+  let crmStarted = false;
   try {
+    const auth = await getAuthUser();
+    stage = "Створення туристів у CRM (включно з отриманням токена)";
+    crmStarted = true;
     const crmTravelerIds = await sendTravelersToCrm(body.travelers, body.requestId);
+    stage = "Створення замовлення у CRM (включно з отриманням токена)";
     const firstTraveler = body.travelers[0];
     const crmOrderId = await sendOrderToCrm({
       requestId: body.requestId,
@@ -96,7 +126,12 @@ export async function POST(req: Request) {
       crmUserId: auth?.crmId ? Number(auth.crmId) : null,
     });
     return NextResponse.json({ status: "ok", crmOrderId });
-  } catch {
-    return NextResponse.json({ error: "CRM_BOOKING_FAILED" }, { status: 502 });
+  } catch (error) {
+    return failure(
+      crmStarted ? "CRM_BOOKING_FAILED" : "BOOKING_AUTH_FAILED",
+      stage,
+      error,
+      crmStarted ? 502 : 500,
+    );
   }
 }

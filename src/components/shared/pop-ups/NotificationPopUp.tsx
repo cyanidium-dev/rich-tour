@@ -21,7 +21,9 @@ export default function NotificationPopUp({
         <h3 className="max-w-[386px] mx-auto mb-6 text-24semi xl:text-40semi text-center">
           {title}
         </h3>
-        <p className="max-w-[386px] mx-auto text-16reg xl:text-20reg text-center">{description}</p>
+        <p className="max-w-[560px] mx-auto text-16reg xl:text-20reg text-center whitespace-pre-wrap break-words [overflow-wrap:anywhere] select-text">
+          {description}
+        </p>
       </div>
       <Image
         src="/images/notifications/arrow.svg"
